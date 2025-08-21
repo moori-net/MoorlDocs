@@ -30,9 +30,8 @@ markdown_extensions:
       emoji_generator: !!python/name:materialx.emoji.to_svg
 plugins:
   - tags:
-      tags_file: tags.md
   - i18n:
-      material_alternate: true
+      reconfigure_material: true
       languages:
         - locale: de
           name: Deutsch
@@ -41,19 +40,18 @@ plugins:
         - locale: en
           name: English
           build: true
-      nav_translations:
-        en:
-          Blog: Blog
-          moori Plugin Dokumentation: moori Plugin Documentation
-          Appflix Plugin Dokumentation: Appflix Plugin Documentation
-          plugin/MoorlCms: Shopping worlds CMS Apps
-          plugin/MoorlFormBuilder: Form Builder
-          Extensions: Extensions
-          plugin/MoorlSignIn: Sign-In with Facebook, Google etc
-          plugin/MoorlMagazine: Blog with Wordpress Import
-          plugin/MoorlMerchantFinder: Merchant- and Storefinder
-          plugin/MoorlCreator: Public profiles
-          Impressum: Imprint
+          nav_translations:
+            Blog: Blog
+            moori Plugin Dokumentation: moori Plugin Documentation
+            Appflix Plugin Dokumentation: Appflix Plugin Documentation
+            plugin/MoorlCms: Shopping worlds CMS Apps
+            plugin/MoorlFormBuilder: Form Builder
+            Extensions: Extensions
+            plugin/MoorlSignIn: Sign-In with Facebook, Google etc
+            plugin/MoorlMagazine: Blog with Wordpress Import
+            plugin/MoorlMerchantFinder: Merchant- and Storefinder
+            plugin/MoorlCreator: Public profiles
+            Impressum: Imprint
   - search
 docs_dir: 'docs-source'
 site_dir: 'docs-html'
