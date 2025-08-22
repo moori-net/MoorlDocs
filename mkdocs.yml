@@ -158,7 +158,6 @@ nav:
       - 'plugin/MoorlCombinationDiscount/index.md'
       - 'plugin/MoorlProductVideo/index.md'
   - Appflix Plugin Dokumentation:
-      - 'plugin/index.md'
       - 'plugin/AppflixDewaShop/index.md'
       - 'plugin/AppflixStudygood/index.md'
       - 'plugin/AppflixCustomerMarket/index.md'
