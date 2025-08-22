@@ -134,14 +134,14 @@ composer require --dev doctrine/sql-formatter
 bin/console mdt:migration:create MoorlPlugin -m dry|live|file|cleanup -a
 
 # Install single Plugin or all with dependencies
-mdt:plugin:install MoorlPlugin|all
+bin/console mdt:plugin:install MoorlPlugin|all
 
 # Uninstall single Plugin or all with dependencies
-mdt:plugin:uninstall MoorlPlugin|all
+bin/console mdt:plugin:uninstall MoorlPlugin|all
 
 # Update single Plugin or all with dependencies
-mdt:plugin:update MoorlPlugin|all
+bin/console mdt:plugin:update MoorlPlugin|all
 
 # Demo install single Plugin or all with dependencies
-mdt:demo:install MoorlPlugin|all -r
+bin/console mdt:demo:install MoorlPlugin|all -r
 ```
