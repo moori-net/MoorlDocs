@@ -1,3 +1,3 @@
-# Bank Connection
+# Bank details and payment reference
 
 In Progress...
