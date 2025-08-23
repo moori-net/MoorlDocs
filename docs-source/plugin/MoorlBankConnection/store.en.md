@@ -1,4 +1,4 @@
-## Important note
+**Important note**
 
 You need the Foundation Plugin, which is available free of charge: [https://store.shopware.com/de/moorl50852475974f/foundation-bitte-hinweise-im-faq-beachten.html](https://store.shopware.com/de/moorl50852475974f/foundation-bitte-hinweise-im-faq-beachten.html)
 
