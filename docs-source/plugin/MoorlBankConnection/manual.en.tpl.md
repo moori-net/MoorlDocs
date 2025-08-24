@@ -1,1 +1,1 @@
-**Documentation:** [https://docs.moori.net/en/plugin/MoorlBankConnection/](https://docs.moori.net/en/plugin/MoorlBankConnection/)
+{file:snippets/base_manual.en.md}
