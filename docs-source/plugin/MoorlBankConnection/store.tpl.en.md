@@ -1,4 +1,4 @@
-{file:snippets/foundation_note.en.md}s
+{file:snippets/foundation_note.en.md}
 
 With this plugin you can directly present your bank details in the checkout for selected payment methods. Save your customers the search for your bank details!
 
