@@ -52,6 +52,7 @@ plugins:
             plugin/MoorlMerchantFinder: Merchant- and Storefinder
             plugin/MoorlCreator: Public profiles
             Impressum: Imprint
+            Zubehör-Finder: Accessory finder
   - search
 docs_dir: 'docs-source'
 site_dir: 'docs-html'
@@ -144,7 +145,11 @@ nav:
       - 'plugin/MoorlStaging/index.md'
       - 'plugin/MoorlExtCat/index.md'
       - 'plugin/Moorl360DegreeViewer/index.md'
-      - 'plugin/MoorlAccessoryFinder/index.md'
+
+      - Zubehör-Finder:
+          - 'plugin/MoorlAccessoryFinder/index.md'
+          - 'plugin/MoorlAccessoryFinder/import-export.md'
+
       - 'plugin/MoorlAutoLogout/index.md'
       - 'plugin/MoorlBankConnection/index.md'
       - 'plugin/MoorlDownloadCenter/index.md'
