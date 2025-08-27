@@ -2,6 +2,10 @@ $('.md-content p > a').each(function () {
     $(this).attr('target','_blank');
 });
 
+$('.md-content li > a').each(function () {
+    $(this).attr('target','_blank');
+});
+
 $('.md-content a[href*="examples"]').each(function () {
     $(this).attr('download', '');
 });
