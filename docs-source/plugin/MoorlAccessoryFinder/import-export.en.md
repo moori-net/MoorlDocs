@@ -7,7 +7,7 @@ tags:
   - Shopware 6.7
 ---
 
-# Accessory Finder – Import and Export
+# Accessory finder | Import and Export
 
 Starting with Shopware 6.7, there is a generic CSV import and export feature that allows you to easily create category paths and product associations.
 

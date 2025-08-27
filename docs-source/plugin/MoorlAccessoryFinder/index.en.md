@@ -1,4 +1,15 @@
-# Accessory Finder - Car Parts, Printer Supplies and More
+---
+description: With this plugin you create for your store a comprehensive filter option for accessories of any kind. Your customers will find important accessories faster than with the normal search.
+tags:
+  - Accessories
+  - Car Parts
+  - Printer supplies
+---
+
+# Accessory finder | Car Parts, Printer supplies and more
+
+- [Buy plugin in the Shopware Community Store](https://store.shopware.com/en/moorl49792082127m/accessories-finder.html)
+- [Buy plugin in the moori Plugin Store](https://moori-plugin-store.com/MoorlAccessoryFinder)
 
 _Note: This plugin requires the current version of [Foundation / Basis Plugin](../MoorlFoundation/index.md)._
 

@@ -7,7 +7,7 @@ tags:
 - Shopware 6.7
 ---
 
-# Zubehör-Finder – Import und Export
+# Zubehör-Finder | Import und Export
 
 Ab Shopware 6.7 gibt es einen generischen CSV-Import und -Export, mit dem sich auf einfache Weise Kategoriepfade und Produktverknüpfungen erstellen lassen.
 

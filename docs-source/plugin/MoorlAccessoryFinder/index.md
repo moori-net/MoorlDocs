@@ -1,4 +1,15 @@
-# Zubehör Finder - Autoteile, Druckerzubehör und mehr
+---
+description: Mit diesem Plugin erstellen Sie sich für Ihren Shop eine umfassende Filtermöglichkeit für Zubehör jeder Art. Ihre Kunden finden wichtiges Zubehör schneller als mit der normalen Suche.
+tags:
+  - Zubehör
+  - Autoteile
+  - Druckerzubehör
+---
+
+# Zubehör-Finder | Autoteile, Druckerzubehör und mehr
+
+- [Plugin im Shopware Community Store erwerben](https://store.shopware.com/de/moorl49792082127m/zubehoer-finder.html)
+- [Plugin im moori Plugin Store erwerben](https://moori-plugin-store.com/MoorlAccessoryFinder)
 
 ![Logo](images/plugin.jpg)
 
