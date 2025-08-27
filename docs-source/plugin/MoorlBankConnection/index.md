@@ -1,3 +1,3 @@
-# Bankverbindung
+# Bankverbindung und Zahlungsreferenz
 
 In Arbeit...
