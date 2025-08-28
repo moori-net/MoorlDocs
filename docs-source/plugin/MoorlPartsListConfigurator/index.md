@@ -10,6 +10,8 @@ tags:
 
 Mit dem Stücklisten Konfigurator lassen sich basierend auf Kompatibilitätsregeln einfache Konfiguratoren erstellen, die anhand vordefinierten Kriterien eine Stückliste zusammen stellt.
 
+---
+
 ![Vorschau](images/storefront-4.png)
 
 ## Plugin erwerben
@@ -23,8 +25,6 @@ Das Plugin kann in den folgenden Stores erworben werden. Wenn Sie bereits einen 
 
 **Wichtiger Hinweis:** Sie benötigen das Foundation Plugin, welches Ihnen kostenlos zur Verfügung steht: [moori Foundation](../MoorlFoundation/index.md)
 
-
----
 
 ## Quickstart
 
