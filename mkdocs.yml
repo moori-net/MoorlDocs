@@ -53,6 +53,12 @@ plugins:
             plugin/MoorlCreator: Public profiles
             Impressum: Imprint
             Zubehör-Finder: Accessory finder
+            Formular Baukasten 2: Form builder 2
+            Formular Baukasten (alt): Form builder (old)
+            Händlersuche: Merchant finder
+            Stücklisten Konfigurator: Parts list configurator
+            CMS Elemente: CMS elements
+            Packagist Verkäufer: Packagist vendor
   - search
 docs_dir: 'docs-source'
 site_dir: 'docs-html'
@@ -92,64 +98,65 @@ nav:
       - 'error-messages/index.md'
   - moori Plugin Dokumentation:
       - 'plugin/index.md'
-      - 'plugin/MoorlFoundation/index.md'
-      - 'plugin/MoorlFoundation/demo-assistant.md'
-      - 'plugin/MoorlFoundation/client.md'
-      - 'plugin/MoorlFoundation/listing.md'
-      - 'plugin/MoorlFoundation/advanced-search.md'
-      - 'plugin/MoorlFoundation/features-free.md'
-      - 'plugin/MoorlFoundation/features-premium.md'
-
+      - Foundation:
+        - 'plugin/MoorlFoundation/index.md'
+        - 'plugin/MoorlFoundation/demo-assistant.md'
+        - 'plugin/MoorlFoundation/client.md'
+        - 'plugin/MoorlFoundation/listing.md'
+        - 'plugin/MoorlFoundation/advanced-search.md'
+        - 'plugin/MoorlFoundation/features-free.md'
+        - 'plugin/MoorlFoundation/features-premium.md'
+      - Formular Baukasten 2:
+        - 'plugin/MoorlForms/index.md'
+        - 'plugin/MoorlForms/all-features.md'
+        - 'plugin/MoorlForms/how-tos.md'
+        - 'plugin/MoorlFormsClassic/index.md'
+        - 'plugin/MoorlFormsCustomProducts/index.md'
+        - 'plugin/MoorlFormsCustomer/index.md'
+        - 'plugin/MoorlFormsProduct/index.md'
+        - 'plugin/MoorlFormsOrder/index.md'
+        - 'plugin/MoorlFormsPopup/index.md'
+        - 'plugin/MoorlFormsSlides/index.md'
+        - 'plugin/MoorlForms/faq.md'
+        - 'plugin/MoorlFormsHubspot/index.md'
+        - 'plugin/MoorlFormsMautic/index.md'
+        - 'plugin/MoorlFormsWebhook/index.md'
+        - 'plugin/MoorlFormsCsv/index.md'
+      - Formular Baukasten (alt):
+        - 'plugin/MoorlFormBuilder/index.md'
+        - 'plugin/MoorlFormBuilder/setup.md'
+        - 'plugin/MoorlFormBuilder/user.md'
+        - 'plugin/MoorlFormBuilder/mail_templates.md'
+        - 'plugin/MoorlFormBuilder/elements.md'
+        - 'plugin/MoorlFormBuilder/newsletter.md'
+        - 'plugin/MoorlFormBuilder/events.md'
+        - 'plugin/MoorlFormBuilder/interactive.md'
+        - 'plugin/MoorlFormBuilder/faq.md'
+      - Zubehör-Finder:
+        - 'plugin/MoorlAccessoryFinder/index.md'
+        - 'plugin/MoorlAccessoryFinder/import-export.md'
+      - Händlersuche:
+        - 'plugin/MoorlMerchantFinder/index.md'
+        - 'plugin/MoorlMerchantPicker/index.md'
+      - Stücklisten Konfigurator:
+        - 'plugin/MoorlPartsListConfigurator/index.md'
+      - Packagist Verkäufer:
+        - 'plugin/MoorlPartsListConfigurator/index.md'
+      - CMS Elemente:
+        - 'plugin/MoorlCmsBrandSlider/index.md'
+        - 'plugin/MoorlCmsCtaBanner/index.md'
+        - 'plugin/MoorlCmsFlipBox/index.md'
+        - 'plugin/MoorlCmsTestimonial/index.md'
+        - 'plugin/MoorlCmsTwig/index.md'
+        - 'plugin/MoorlShopTheLook/index.md'
+        - 'plugin/MoorlFancyboxGallery/index.md'
+        - 'plugin/MoorlCmsCategoryListing/index.md'
       - 'plugin/MoorlCreator/index.md'
       - 'plugin/MoorlGetTheLook/index.md'
       - 'plugin/MoorlMagazine/index.md'
-
-      - 'plugin/MoorlForms/index.md'
-      - 'plugin/MoorlForms/all-features.md'
-      - 'plugin/MoorlForms/how-tos.md'
-      - 'plugin/MoorlFormsClassic/index.md'
-      - 'plugin/MoorlFormsCustomProducts/index.md'
-      - 'plugin/MoorlFormsCustomer/index.md'
-      - 'plugin/MoorlFormsProduct/index.md'
-      - 'plugin/MoorlFormsOrder/index.md'
-      - 'plugin/MoorlFormsPopup/index.md'
-      - 'plugin/MoorlFormsSlides/index.md'
-      - 'plugin/MoorlForms/faq.md'
-      - 'plugin/MoorlFormsHubspot/index.md'
-      - 'plugin/MoorlFormsMautic/index.md'
-      - 'plugin/MoorlFormsWebhook/index.md'
-      - 'plugin/MoorlFormsCsv/index.md'
-
-      - 'plugin/MoorlMerchantFinder/index.md'
-      - 'plugin/MoorlMerchantPicker/index.md'
-
-      - 'plugin/MoorlFormBuilder/index.md'
-      - 'plugin/MoorlFormBuilder/setup.md'
-      - 'plugin/MoorlFormBuilder/user.md'
-      - 'plugin/MoorlFormBuilder/mail_templates.md'
-      - 'plugin/MoorlFormBuilder/elements.md'
-      - 'plugin/MoorlFormBuilder/newsletter.md'
-      - 'plugin/MoorlFormBuilder/events.md'
-      - 'plugin/MoorlFormBuilder/interactive.md'
-      - 'plugin/MoorlFormBuilder/faq.md'
-
-      - 'plugin/MoorlCmsBrandSlider/index.md'
-      - 'plugin/MoorlCmsCtaBanner/index.md'
-      - 'plugin/MoorlCmsFlipBox/index.md'
-      - 'plugin/MoorlCmsTestimonial/index.md'
-      - 'plugin/MoorlCmsTwig/index.md'
-      - 'plugin/MoorlShopTheLook/index.md'
-      - 'plugin/MoorlFancyboxGallery/index.md'
-      - 'plugin/MoorlCmsCategoryListing/index.md'
-
       - 'plugin/MoorlStaging/index.md'
       - 'plugin/MoorlExtCat/index.md'
       - 'plugin/Moorl360DegreeViewer/index.md'
-
-      - Zubehör-Finder:
-          - 'plugin/MoorlAccessoryFinder/index.md'
-          - 'plugin/MoorlAccessoryFinder/import-export.md'
-
       - 'plugin/MoorlAutoLogout/index.md'
       - 'plugin/MoorlBankConnection/index.md'
       - 'plugin/MoorlDownloadCenter/index.md'
