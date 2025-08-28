@@ -10,11 +10,15 @@ tags:
 
 With this plugin you create for your store a comprehensive filter option for accessories of any kind. Your customers will find important accessories faster than with the normal search.
 
+![Preview](images/af14.JPG)
+
+---
+
 ## Purchase the Plugin
 
 The plugin can be purchased from the following stores. If you already have a Shopware account, please **always use** the link to the **Shopware Community Store** first, as alternative stores may cause licensing issues. If a plugin is **not** available in the Shopware Community Store, it is offered exclusively in one of the alternative stores.
 
-- [Shopware Community Store](https://store.shopware.com/en/search?search=MoorlAccessoryFinder)
+- [Shopware Community Store](https://store.shopware.com/en/search?search=MoorlAccessoryFinder) *(recommended)*
 - [moori Plugin Store](https://moori-plugin-store.com/MoorlAccessoryFinder)
 - [Shopelfen Store](https://www.shopelfen.de/) *(under construction)*
 
@@ -22,7 +26,18 @@ The plugin can be purchased from the following stores. If you already have a Sho
 **Important note:** You need the Foundation Plugin, which is available free of charge: [moori Foundation](../MoorlFoundation/index.md)
 
 
----
+## Quickstart
+
+A **demo package** is available for testing this plugin.
+
+Go to **“Settings → [Demo Assistant](../MoorlFoundation/demo-assistant.md)”** and select **“MoorlAccessoryFinder”**.
+
+For some packages, the product variants may need to be generated manually.
+
+To do so, navigate to **“Catalog → Products → Demo Product → Variants → Generate Variants”**.
+
+**Note:** In some cases, new categories and pages will be added to your shop. Please note that the demo data is provided for testing purposes only. The images included may be protected by copyright and must not be made publicly available.
+
 
 **Possible areas of use:**
 
