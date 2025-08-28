@@ -1,5 +1,5 @@
 ---
-description: This plugin is based on a fundamental redevelopment of the form builder and offers maximum flexibility and integrity for Shopware 6.
+description: The Form Builder makes it child's play to create complex forms with independent task areas. It has a modular structure and can be used flexibly for any cases.
 tags:
 - Shopware 6 Plugin
 - Build forms
@@ -8,9 +8,40 @@ tags:
 - Send E-Mail
 ---
 
-# Form Builder 2 | Base Version
+# Form builder 2 | Base version
 
-This plugin is based on a fundamental redevelopment of the [Form Builder](../MoorlFormBuilder/index.md) and offers maximum flexibility and integrity for Shopware 6.
+The Form Builder makes it child's play to create complex forms with independent task areas. It has a modular structure and can be used flexibly for any cases.
+
+![Preview](images/fb-20.jpg)
+
+---
+
+## Purchase the Plugin
+
+The plugin can be purchased from the following stores. If you already have a Shopware account, please **always use** the link to the **Shopware Community Store** first, as alternative stores may cause licensing issues. If a plugin is **not** available in the Shopware Community Store, it is offered exclusively in one of the alternative stores.
+
+- [Shopware Community Store](https://store.shopware.com/en/search?search=MoorlForms) *(recommended)*
+- [moori Plugin Store](https://moori-plugin-store.com/MoorlForms)
+- [Shopelfen Store](https://www.shopelfen.de/) *(under construction)*
+
+
+**Important note:** You need the Foundation Plugin, which is available free of charge: [moori Foundation](../MoorlFoundation/index.md)
+
+
+## Quickstart
+
+A **demo package** is available for testing this plugin.
+
+Go to **“Settings → [Demo Assistant](../MoorlFoundation/demo-assistant.md)”** and select **“MoorlForms”**.
+
+For some packages, the product variants may need to be generated manually.
+
+To do so, navigate to **“Catalog → Products → Demo Product → Variants → Generate Variants”**.
+
+**Note:** In some cases, new categories and pages will be added to your shop. Please note that the demo data is provided for testing purposes only. The images included may be protected by copyright and must not be made publicly available.
+
+
+---
 
 ## Custom forms for Shopware 6
 

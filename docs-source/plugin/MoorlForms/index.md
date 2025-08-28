@@ -1,5 +1,5 @@
 ---
-description: Dieses Plugin basiert auf einer grundlegenden Neuentwicklung des Formular Baukastens und bietet maximale Flexibilität und Integrität für Shopware 6.
+description: Der Formular Baukasten ermöglicht es Kinderleicht komplexe Formulare mit eigenständigen Aufgabenbereichen zu erstellen. Es ist modular aufgebaut und flexibel einsetzbar.
 tags:
 - Shopware 6 Plugin
 - Formulare erstellen
@@ -10,7 +10,38 @@ tags:
 
 # Formular Baukasten 2 | Basis Version
 
-Dieses Plugin basiert auf einer grundlegenden Neuentwicklung des [Formular Baukastens](../MoorlFormBuilder/index.md) und bietet maximale Flexibilität und Integrität für Shopware 6.
+Der Formular Baukasten ermöglicht es Kinderleicht komplexe Formulare mit eigenständigen Aufgabenbereichen zu erstellen. Es ist modular aufgebaut und flexibel einsetzbar.
+
+![Vorschau](images/fb-20.jpg)
+
+---
+
+## Plugin erwerben
+
+Das Plugin kann in den folgenden Stores erworben werden. Wenn Sie bereits einen Shopware-Account besitzen, nutzen Sie bitte **immer zuerst** den Link zum **Shopware Community Store**, da es bei alternativen Stores zu Problemen mit der Lizenzierung kommen kann. Ist ein Plugin **nicht** im Shopware Community Store verfügbar, wird es exklusiv in einem der alternativen Stores angeboten.
+
+- [Shopware Community Store](https://store.shopware.com/de/search?search=MoorlForms) *(empfohlen)*
+- [moori Plugin Store](https://moori-plugin-store.com/MoorlForms)
+- [Shopelfen Store](https://www.shopelfen.de/) *(im Aufbau)*
+
+
+**Wichtiger Hinweis:** Sie benötigen das Foundation Plugin, welches Ihnen kostenlos zur Verfügung steht: [moori Foundation](../MoorlFoundation/index.md)
+
+
+## Quickstart
+
+Für dieses Plugin steht ein **Demo-Paket** zum Testen bereit.
+
+Gehen Sie zu **„Einstellungen → [Demo Assistent](../MoorlFoundation/demo-assistant.md)“** und wählen Sie dort **„MoorlForms“** aus.
+
+Bei einigen Paketen müssen die Varianten der Produkte eventuell manuell generiert werden.
+
+Gehen Sie dazu zu **„Katalog → Produkte → Demo Produkt → Varianten → Varianten generieren“**.
+
+**Hinweis:** In einigen Fällen werden neue Kategorien und Seiten zu Ihrem Shop hinzugefügt. Bitte beachten Sie, dass die Demo-Daten ausschließlich zu Testzwecken dienen. Die darin enthaltenen Bilder können urheberrechtlich geschützt sein und dürfen nicht der Öffentlichkeit zugänglich gemacht werden.
+
+
+---
 
 ## Eigene Formulare für Shopware 6
 
