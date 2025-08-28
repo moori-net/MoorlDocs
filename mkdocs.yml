@@ -118,6 +118,7 @@ nav:
         - 'plugin/MoorlFormsPopup/index.md'
         - 'plugin/MoorlFormsSlides/index.md'
         - 'plugin/MoorlForms/faq.md'
+      - Flow-Builder Add-Ons:
         - 'plugin/MoorlFormsHubspot/index.md'
         - 'plugin/MoorlFormsMautic/index.md'
         - 'plugin/MoorlFormsWebhook/index.md'
