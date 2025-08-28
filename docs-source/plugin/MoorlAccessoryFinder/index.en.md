@@ -8,18 +8,21 @@ tags:
 
 # Accessory finder | Car Parts, Printer supplies and more
 
-- [Buy plugin in the Shopware Community Store](https://store.shopware.com/en/moorl49792082127m/accessories-finder.html)
-- [Buy plugin in the moori Plugin Store](https://moori-plugin-store.com/MoorlAccessoryFinder)
+With this plugin you create for your store a comprehensive filter option for accessories of any kind. Your customers will find important accessories faster than with the normal search.
 
-_Note: This plugin requires the current version of [Foundation / Basis Plugin](../MoorlFoundation/index.md)._
+## Purchase the Plugin
 
-[Click here for the demo](https://demo.moori.net/Zubehoer-Finder-Demo/)
+The plugin can be purchased from the following stores. If you already have a Shopware account, please **always use** the link to the **Shopware Community Store** first, as alternative stores may cause licensing issues. If a plugin is **not** available in the Shopware Community Store, it is offered exclusively in one of the alternative stores.
+
+- [Shopware Community Store](https://store.shopware.com/en/search?search=MoorlAccessoryFinder)
+- [moori Plugin Store](https://moori-plugin-store.com/MoorlAccessoryFinder)
+- [Shopelfen Store](https://www.shopelfen.de/) *(under construction)*
+
+
+**Important note:** You need the Foundation Plugin, which is available free of charge: [moori Foundation](../MoorlFoundation/index.md)
+
 
 ---
-
-With this plugin you create for your store a comprehensive filter option for accessories of any kind.
-Your customers will find important accessories faster than with the normal store search.
-
 
 **Possible areas of use:**
 
