@@ -141,7 +141,7 @@ nav:
       - Stücklisten Konfigurator:
         - 'plugin/MoorlPartsListConfigurator/index.md'
       - Packagist Verkäufer:
-        - 'plugin/MoorlPartsListConfigurator/index.md'
+        - 'plugin/MoorlPackagistVendor/index.md'
       - CMS Elemente:
         - 'plugin/MoorlCmsBrandSlider/index.md'
         - 'plugin/MoorlCmsCtaBanner/index.md'
