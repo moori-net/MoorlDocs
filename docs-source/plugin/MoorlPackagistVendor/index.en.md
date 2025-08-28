@@ -11,6 +11,8 @@ tags:
 
 This plugin allows you to manage public and private composer repositories on Packagist and enables sales, including license management, based on Shopware 6.
 
+![Preview](images/preview.png)
+
 ## Purchase the Plugin
 
 The plugin can be purchased from the following stores. If you already have a Shopware account, please **always use** the link to the **Shopware Community Store** first, as alternative stores may cause licensing issues. If a plugin is **not** available in the Shopware Community Store, it is offered exclusively in one of the alternative stores.
