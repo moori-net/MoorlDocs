@@ -35,43 +35,43 @@ Das Plugin kann in den folgenden Stores erworben werden. Wenn Sie bereits einen 
 
 ### Einrichtung der Bank
 
-1. **Öffne die Bankeinstellungen**  
-   Gehe zu **Einstellungen → EBICS Banken**.
+1. **Bankeinstellungen öffnen**  
+   Navigieren Sie zu **Einstellungen → EBICS Banken**.
 
 2. **Keyring-Passwort setzen**  
-   Bevor du deine Bank einrichtest, benötigst du ein globales Passwort zur Verschlüsselung deiner EBICS-Dateien:
-    - Klicke oben rechts auf **Keyring-Passwort erstellen oder ändern**
-    - Vergib ein **sechsstelliges Passwort**
+   Bevor Sie Ihre Bank einrichten, müssen Sie ein globales Passwort zur Verschlüsselung Ihrer EBICS-Dateien festlegen:
+    - Klicken Sie oben rechts auf **Keyring-Passwort erstellen oder ändern**
+    - Vergeben Sie ein **sechsstelliges Passwort**
 
 3. **Bank hinzufügen**
-    - Klicke oben rechts auf **Hinzufügen**
-    - Fülle alle Pflichtfelder aus (Kunden-ID, Teilnehmer-ID, URL des EBICS-Servers etc.)
+    - Klicken Sie oben rechts auf **Hinzufügen**
+    - Füllen Sie alle Pflichtfelder aus (Kunden-ID, Teilnehmer-ID, URL des EBICS-Servers etc.)
 
 4. **Verbindung initialisieren**  
    Die Initialisierung erfolgt in mehreren Schritten:
 
     1. **Keyring-Datei anlegen**
-        - Es wird eine verschlüsselte Schlüsselbund-Datei erstellt.
+        - Eine verschlüsselte Schlüsselbund-Datei wird erstellt.
 
-    2. **INI- und HIA-Anfrage**
-        - Deine öffentlichen Schlüssel werden an die Bank übertragen.
-        - **Fehler an dieser Stelle:** Prüfe, ob dein EBICS-Zugang bereits freigeschaltet ist und ob Kunden-ID & Teilnehmer-ID korrekt sind.
+    2. **INI- und HIA-Anfrage senden**
+        - Ihre öffentlichen Schlüssel werden an die Bank übertragen.
+        - **Fehler an dieser Stelle:** Prüfen Sie, ob Ihr EBICS-Zugang bereits freigeschaltet ist und ob Kunden-ID und Teilnehmer-ID korrekt eingetragen sind.
 
     3. **INI-Brief erzeugen**
         - Das Plugin erstellt ein PDF mit den Schlüssel-Hashes.
-        - Dieses Dokument muss von einem berechtigten Unterzeichner unterschrieben und an die Bank übermittelt werden.
+        - Dieses Dokument muss von einer berechtigten Person unterschrieben und an die Bank übermittelt werden.
         - **Hinweis:** Bei Testzugängen ist dieser Schritt häufig nicht erforderlich.
 
-    4. **HPB-Anfrage**
+    4. **HPB-Anfrage senden**
         - Die öffentlichen Bankschlüssel werden abgerufen und in der Keyring-Datei gespeichert.
         - Nach erfolgreicher HPB-Anfrage ist die Verbindung zur Bank aktiv.
 
-> 💡 **Tipp:** Es wird immer die letzte Fehlermeldung der Bank angezeigt.  
-> Sobald keine Fehlermeldung mehr erscheint, ist der Zugang erfolgreich eingerichtet.
+> 💡 **Tipp:** Es wird stets die letzte Fehlermeldung der Bank angezeigt.  
+> Sobald keine Fehlermeldung mehr erscheint, wurde der Zugang erfolgreich eingerichtet.
 
-5. **Optionale Felder**
-    - Gläubiger-Identifikationsnummer für SEPA-Lastschriften hinterlegen
-    - Relevante Zahlungsarten zuweisen (z. B. Vorkasse, Rechnung, SEPA-Lastschrift)
+5. **Optionale Felder ausfüllen**
+    - Hinterlegen Sie eine Gläubiger-Identifikationsnummer, falls Sie SEPA-Lastschriften nutzen möchten
+    - Weisen Sie alle relevanten Zahlungsarten zu (z. B. Vorkasse, Rechnung, SEPA-Lastschrift)
 
 ---
 
@@ -82,9 +82,9 @@ Das Plugin kann in den folgenden Stores erworben werden. Wenn Sie bereits einen 
 
 ---
 
-### Technischer Hinweis
+## Technischer Hinweis
 
-Das Plugin nutzt die Standard-Status von Shopware:
+Das Plugin verwendet die Standard-Status von Shopware:
 
 - `open`
 - `authorized`
@@ -95,12 +95,12 @@ Das Plugin nutzt die Standard-Status von Shopware:
 
 > ❗ Benutzerdefinierte Status werden **nicht unterstützt**.
 
-Weitere Hinweise:
+Zusätzliche Hinweise:
 
-- Welche Geschäftsvorfälle verfügbar sind, hängt von deiner Bank ab.  
+- Welche Geschäftsvorfälle verfügbar sind, hängt von Ihrer Bank ab.  
   Nicht unterstützte Aufträge führen zu einer Fehlermeldung.
-- **Direktfreigaben** für Auszahlungen (Rückerstattung) sind nur mit **Einzelunterschrift** möglich.  
-  Bei 4-Augen-Freigabe ist ein externer EBICS-Client (z. B. SFirm) erforderlich.
+- **Direktfreigaben** für Auszahlungen (Rückerstattungen) sind nur mit **Einzelunterschrift** möglich.  
+  Für eine Freigabe nach dem Vier-Augen-Prinzip ist ein externer EBICS-Client (z. B. SFirm) erforderlich.
 - **SEPA-Lastschriftmandate** können nur erstellt werden, wenn eine gültige Gläubiger-Identifikationsnummer in den Bankeinstellungen hinterlegt ist.  
-  Andernfalls werden Bestellungen abgebrochen.
-- **Logs:** Vorgänge werden unter `var/logs/moorl_ebics_*.log` protokolliert.
+  Andernfalls werden diese Bestellungen abgebrochen.
+- **Logs:** Sie können sämtliche Vorgänge in den Protokolldateien unter `var/logs/moorl_ebics_*.log` nachverfolgen.

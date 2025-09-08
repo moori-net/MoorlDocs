@@ -82,7 +82,7 @@ The plugin can be purchased from the following stores. If you already have a Sho
 
 ---
 
-### Technical Notes
+## Technical Notes
 
 The plugin uses Shopware’s standard order statuses:
 
