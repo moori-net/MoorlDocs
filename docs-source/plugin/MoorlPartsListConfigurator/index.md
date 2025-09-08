@@ -10,9 +10,9 @@ tags:
 
 Mit dem Stücklisten Konfigurator lassen sich basierend auf Kompatibilitätsregeln einfache Konfiguratoren erstellen, die anhand vordefinierten Kriterien eine Stückliste zusammen stellt.
 
----
-
 ![Vorschau](images/storefront-4.png)
+
+---
 
 ## Plugin erwerben
 

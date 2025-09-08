@@ -10,9 +10,9 @@ tags:
 
 The parts list configurator allows you to create simple configurators based on compatibility rules, which compile a parts list using predefined criteria.
 
----
-
 ![Preview](images/storefront-4.png)
+
+---
 
 ## Purchase the Plugin
 
