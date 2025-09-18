@@ -55,7 +55,7 @@ Folgende Geschäftsvorfälle werden benötigt:
 
 #### Gläubiger ID beantragen
 
-Die Gläubiger ID ist essenziell für SEPA-Lastschriften, die Beantragung läuft vollständig online. Die Bearbeitungszeit beträgt meistens zu wenige Werktage. 
+Die Gläubiger ID ist essenziell für SEPA-Lastschriften, die Beantragung läuft vollständig online. Die Bearbeitungszeit beträgt meistens nur wenige Werktage. 
 
 <http://www.glaeubiger-id.bundesbank.de>
 
