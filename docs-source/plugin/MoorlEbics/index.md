@@ -42,11 +42,11 @@ Folgende Geschäftsvorfälle werden benötigt:
 > _Es können Einrichtungs- und monatliche Gebühren anfallen._
 
 1. Mindestanforderungen:
-   - Kurzfristige Vormerkposten (camt.052) - ServiceName: `STM`, Scope: `DE`, MsgName: `camt.052`, Container: `ZIP`
-   - Tagesauszüge (camt.053) - ServiceName: `EOP`, Scope: `DE`, MsgName: `camt.053`, Container: `ZIP`
+    - Kurzfristige Vormerkposten (camt.052) - ServiceName: `STM`, Scope: `DE`, MsgName: `camt.052`, Container: `ZIP`
+    - Tagesauszüge (camt.053) - ServiceName: `EOP`, Scope: `DE`, MsgName: `camt.053`, Container: `ZIP`
 
 2. Optional: Lastschrift (Gläubiger ID von der Bundesbank kann später beantragt werden)
-   - SEPA-Lastschrift (Basis) - ServiceName: `SDD`, ServiceOption: `COR`, MsgName: `pain.008`
+    - SEPA-Lastschrift (Basis) - ServiceName: `SDD`, ServiceOption: `COR`, MsgName: `pain.008`
 
 3. Optional: Überweisung (Für Rückerstattungen)
     - SEPA-Überweisung - ServiceName: `SCT`, MsgName: `pain.001`
