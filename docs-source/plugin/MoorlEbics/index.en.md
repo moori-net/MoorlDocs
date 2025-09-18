@@ -33,6 +33,32 @@ The plugin can be purchased from the following stores. If you already have a Sho
 
 ## Initial Setup
 
+### Checklist
+
+#### Request EBICS 3.0 from your bank
+
+The following business transactions are required:
+
+> _Setup and monthly fees may apply._
+
+1. Minimum requirements:
+    - Intraday prebooked items (camt.052) — ServiceName: `STM`, Scope: `DE`, MsgName: `camt.052`, Container: `ZIP`
+    - End-of-day statements (camt.053) — ServiceName: `EOP`, Scope: `DE`, MsgName: `camt.053`, Container: `ZIP`
+
+2. Optional: Direct debit (Creditor ID from the Bundesbank can be applied for later)
+    - SEPA Direct Debit (Core) — ServiceName: `SDD`, ServiceOption: `COR`, MsgName: `pain.008`
+
+3. Optional: Credit transfer (for refunds)
+    - SEPA Credit Transfer — ServiceName: `SCT`, MsgName: `pain.001`
+
+> ❗ Recommendation: Option 3 poses a security risk if the EBICS account does not use dual control (VEU). If not needed, explicitly exclude it!
+
+#### Apply for a Creditor ID
+
+The Creditor ID is essential for SEPA direct debits. The application process is fully online. Processing usually takes only a few business days.
+
+<http://www.glaeubiger-id.bundesbank.de>
+
 ### Bank Setup
 
 1. **Open the Bank Settings**  

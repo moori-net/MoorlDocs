@@ -33,6 +33,32 @@ Das Plugin kann in den folgenden Stores erworben werden. Wenn Sie bereits einen 
 
 ## Ersteinrichtung
 
+### Checkliste
+
+#### EBICS 3.0 bei der Bank beantragen
+
+Folgende Geschäftsvorfälle werden benötigt:
+
+> _Es können Einrichtungs- und monatliche Gebühren anfallen._
+
+1. Mindestanforderungen:
+   - Kurzfristige Vormerkposten (camt.052) - ServiceName: `STM`, Scope: `DE`, MsgName: `camt.052`, Container: `ZIP`
+   - Tagesauszüge (camt.053) - ServiceName: `EOP`, Scope: `DE`, MsgName: `camt.053`, Container: `ZIP`
+
+2. Optional: Lastschrift (Gläubiger ID von der Bundesbank kann später beantragt werden)
+   - SEPA-Lastschrift (Basis) - ServiceName: `SDD`, ServiceOption: `COR`, MsgName: `pain.008`
+
+3. Optional: Überweisung (Für Rückerstattungen)
+    - SEPA-Überweisung - ServiceName: `SCT`, MsgName: `pain.001`
+
+> ❗ Empfehlung: Option 3. stellt ein Sicherheitsrisiko dar, wenn das EBICS-Konto nicht im Vier-Augen-Prinzip arbeitet (VEU). Bei Nichtgebrauch explizit ausschließen!
+
+#### Gläubiger ID beantragen
+
+Die Gläubiger ID ist essenziell für SEPA-Lastschriften, die Beantragung läuft vollständig online. Die Bearbeitungszeit beträgt meistens zu wenige Werktage. 
+
+<http://www.glaeubiger-id.bundesbank.de>
+
 ### Einrichtung der Bank
 
 1. **Bankeinstellungen öffnen**  
