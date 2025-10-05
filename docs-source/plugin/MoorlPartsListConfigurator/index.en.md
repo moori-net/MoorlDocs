@@ -14,6 +14,13 @@ The parts list configurator allows you to create simple configurators based on c
 
 ---
 
+## Plugin Demo
+
+A storefront demo is available for testing this plugin. The plugin can be tested at the following link:
+
+- [https://demo-sw67.moori.net/MoorlPartsListConfigurator](https://demo-sw67.moori.net/MoorlPartsListConfigurator)
+
+
 ## Purchase the Plugin
 
 The plugin can be purchased from the following stores. If you already have a Shopware account, please **always use** the link to the **Shopware Community Store** first, as alternative stores may cause licensing issues. If a plugin is **not** available in the Shopware Community Store, it is offered exclusively in one of the alternative stores.
