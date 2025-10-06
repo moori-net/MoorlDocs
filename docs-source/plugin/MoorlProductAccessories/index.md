@@ -6,35 +6,21 @@ tags:
 - Bundles
 ---
 
-# Produkt Add-Ons & Zubehör
+# {var:label_de_de}
 
-Dieses Plugin für Shopware 6 bietet dir die Möglichkeit, Produkt- und Zubehör-Bundles zu erstellen. Innerhalb von Bundles, kannst du individuelle Preise für das Zubehör bestimmen.
+{var:description_de_de}
 
-[Hier geht's zur Demo](https://demo.moori.net/Demo-PC/MPA001)
+![Vorschau](images/storefront-01.jpg)
 
-## Wofür ist dieses Plugin gut?
+---
 
-Mit diesem Plugin hast du die Möglichkeit zu deinen Produkten Add-Ons oder Zubehörteile anzubieten. 
+{file:snippets/docs_demo_plugin.md}
 
-Add-Ons können durch eigene Kategorien gruppiert werden, so ist es dem Kunden möglich nur jeweils ein Add-On für das angebotene Produkt auszuwählen. 
+{file:snippets/docs_buy_plugin.md}
 
-Zubehör ohne Kategorien werden optional zum Produkt angeboten. Dort kannst du zum Beispiel Dienstleistungen oder Versicherungen rund um das Produkt anbieten. 
+{file:snippets/docs_foundation_note.md}
 
-Wähle die Option "Bundles erstellen" in der Plugin Konfiguration um die Preise der Add-Ons oder des Zubehörs frei zu bestimmen, so hast du für die Preisgestaltung die volle Kontrolle. 
-
-Stelle Produkte oder Zubehör auf Abverkauf, so werden nicht verfügbare Teile ausgegraut und sind für den Zeitraum nicht bestellbar. 
-
-Auch die Anzeige der Verfügbarkeit kann in den Plugin Einstellungen bestimmt werden.
-
-## Installation
-
-!!! note
-
-      Falls du Probleme mit dem Plugin hast, bitte beachte folgende [Hinweise](../) im FAQ Bereich.
-
-1. Installiere [Foundation](../MoorlFoundation/index.md)
-2. Installiere Produkt Add-Ons & Zubehör
-3. Optional: In dieser App ist ein [Demopaket](../MoorlFoundation/demo-assistant.md) enthalten.
+{file:snippets/docs_quickstart.md}
 
 ## Konfiguration
 
