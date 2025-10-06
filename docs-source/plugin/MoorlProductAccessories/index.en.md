@@ -6,21 +6,45 @@ tags:
 - Bundles
 ---
 
-# {var:label_en_gb}
+# Product add-ons & accessories
 
-{var:description_en_gb}
+This plugin for Shopware 6 offers you the possibility to create product and accessory bundles. Within bundles, you can set individual prices for the accessories.
 
 ![Vorschau](images/storefront-01.jpg)
 
 ---
 
-{file:snippets/docs_demo_plugin.en.md}
+## Plugin Demo
 
-{file:snippets/docs_buy_plugin.en.md}
+A storefront demo is available for testing this plugin. The plugin can be tested at the following link:
 
-{file:snippets/docs_foundation_note.en.md}
+- [https://demo-sw67.moori.net/MoorlProductAccessories](https://demo-sw67.moori.net/MoorlProductAccessories)
 
-{file:snippets/docs_quickstart.en.md}
+
+## Purchase the Plugin
+
+The plugin can be purchased from the following stores. If you already have a Shopware account, please **always use** the link to the **Shopware Community Store** first, as alternative stores may cause licensing issues. If a plugin is **not** available in the Shopware Community Store, it is offered exclusively in one of the alternative stores.
+
+- [Shopware Community Store](https://store.shopware.com/en/search?search=MoorlProductAccessories) *(recommended)*
+- [moori Plugin Store](https://moori-plugin-store.com/MoorlProductAccessories)
+- [Shopelfen Store](https://www.shopelfen.de/) *(under construction)*
+
+
+**Important note:** You need the Foundation Plugin, which is available free of charge: [moori Foundation](../MoorlFoundation/index.md)
+
+
+## Quickstart
+
+A **demo package** is available for testing this plugin.
+
+Go to **“Settings → [Demo Assistant](../MoorlFoundation/demo-assistant.md)”** and select **“MoorlProductAccessories”**.
+
+For some packages, the product variants may need to be generated manually.
+
+To do so, navigate to **“Catalog → Products → Demo Product → Variants → Generate Variants”**.
+
+**Note:** In some cases, new categories and pages will be added to your shop. Please note that the demo data is provided for testing purposes only. The images included may be protected by copyright and must not be made publicly available.
+
 
 ## Configuration
 
