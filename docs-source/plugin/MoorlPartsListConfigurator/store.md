@@ -3,7 +3,7 @@
 
 ## Plugin Demo
 
-A storefront demo is available for testing this plugin. The plugin can be tested at the following link:
+Zu diesem Plugin steht eine Storefront-Demo zum Testen bereit. Unter folgenden Link kann das Plugin getestet werden:
 
 - [https://demo-sw67.moori.net/MoorlPartsListConfigurator](https://demo-sw67.moori.net/MoorlPartsListConfigurator)
 
