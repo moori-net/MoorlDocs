@@ -8,7 +8,8 @@ A storefront demo is available for testing this plugin. The plugin can be tested
 - [https://demo-sw67.moori.net/MoorlPartsListConfigurator](https://demo-sw67.moori.net/MoorlPartsListConfigurator)
 
 
-**Simple. Intuitive. Error-free.**  
+**Simple. Intuitive. Error-free.**
+
 With the **Parts List (BOM) Configurator**, you can create complex product configurations - without any programming and without the risk of incorrect orders.
 
 ## What does the Parts List (BOM) Configurator do?
@@ -22,6 +23,7 @@ This creates a dynamic filter that shows your customers **only compatible produc
 Once the customer selects certain variations, the system automatically filters out all incompatible products.
 
 The result:
+
 - No incorrect combinations
 - No complaints due to incompatible items
 - A seamless, user-friendly purchase process
@@ -34,6 +36,7 @@ A special highlight of the plugin:
 You can use any configuration to **automatically calculate the correct products and their required quantities**.
 
 Perfect for:
+
 - Product sets or assemblies
 - Technical configurations (e.g., machinery, furniture, systems)
 - Spare part or accessory configurators

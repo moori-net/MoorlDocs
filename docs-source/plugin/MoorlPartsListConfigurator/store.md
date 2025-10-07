@@ -9,6 +9,7 @@ Zu diesem Plugin steht eine Storefront-Demo zum Testen bereit. Unter folgenden L
 
 
 **Einfach. Intuitiv. Fehlerfrei.**  
+
 Mit dem **Stücklisten Konfigurator** erstellen Sie komplexe Produktkonfigurationen - ganz ohne Programmierung und ohne Risiko für Fehlbestellungen.
 
 ## Was macht der Stücklisten Konfigurator?
@@ -22,6 +23,7 @@ So entsteht ein dynamischer Filter, der Ihren Kunden **immer nur kompatible Prod
 Sobald der Kunde bestimmte Ausprägungen auswählt, filtert das System automatisch alle nicht passenden Produkte heraus.
 
 Das Ergebnis:
+
 - Keine falschen Kombinationen
 - Keine Reklamationen durch inkompatible Artikel
 - Ein nahtloser, benutzerfreundlicher Kaufprozess
@@ -34,6 +36,7 @@ Ein besonderes Highlight des Plugins:
 Sie können aus einer Konfiguration **automatisch die passenden Produkte in der korrekten Stückzahl berechnen** lassen.
 
 Ideal für:
+
 - Produktsets oder Baugruppen
 - Technische Konfigurationen (z. B. Maschinen, Möbel, Anlagen)
 - Ersatzteil- oder Zubehörkonfiguratoren
