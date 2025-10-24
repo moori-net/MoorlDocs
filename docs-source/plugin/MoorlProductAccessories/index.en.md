@@ -6,35 +6,45 @@ tags:
 - Bundles
 ---
 
-# Product Add-Ons & Accessories
+# Product add-ons & accessories
 
 This plugin for Shopware 6 offers you the possibility to create product and accessory bundles. Within bundles, you can set individual prices for the accessories.
 
-[Click here for the demo](https://demo.moori.net/Demo-PC/MPA001)
+![Vorschau](images/storefront-01.jpg)
 
-## What is this plugin good for?
+---
 
-With this plugin you have the possibility to offer add-ons or accessories for your products.
+## Plugin Demo
 
-Add-ons can be grouped by their own categories, so it is possible for the customer to select only one add-on for the offered product.
+A storefront demo is available for testing this plugin. The plugin can be tested at the following link:
 
-Accessories without categories are offered as an option to the product. There you can offer services or insurances around the product, for example.
+- [https://demo-sw67.moori.net/MoorlProductAccessories](https://demo-sw67.moori.net/MoorlProductAccessories)
 
-Select the option "Create bundles" in the plug-in configuration to freely determine the prices of the add-ons or accessories, so you have full control over the pricing.
 
-Set products or accessories to sale, so unavailable parts are greyed out and cannot be ordered for the period.
+## Purchase the Plugin
 
-The display of availability can also be determined in the plug-in settings.
+The plugin can be purchased from the following stores. If you already have a Shopware account, please **always use** the link to the **Shopware Community Store** first, as alternative stores may cause licensing issues. If a plugin is **not** available in the Shopware Community Store, it is offered exclusively in one of the alternative stores.
 
-## Installation
+- [Shopware Community Store](https://store.shopware.com/en/search?search=MoorlProductAccessories) *(recommended)*
+- [moori Plugin Store](https://moori-plugin-store.com/MoorlProductAccessories)
+- [Shopelfen Store](https://www.shopelfen.de/) *(under construction)*
 
-!!! note
 
-      If you have problems with the plugin, please read the following [notes](../) in the FAQ section.
+**Important note:** You need the Foundation Plugin, which is available free of charge: [moori Foundation](../MoorlFoundation/index.md)
 
-1. install [Foundation](../MoorlFoundation/index.md)
-2. install Product Add-Ons & Accessories
-3. optional: In this app there is a [Demo Package](../MoorlFoundation/demo-assistant.md) included.
+
+## Quickstart
+
+A **demo package** is available for testing this plugin.
+
+Go to **“Settings → [Demo Assistant](../MoorlFoundation/demo-assistant.md)”** and select **“MoorlProductAccessories”**.
+
+For some packages, the product variants may need to be generated manually.
+
+To do so, navigate to **“Catalog → Products → Demo Product → Variants → Generate Variants”**.
+
+**Note:** In some cases, new categories and pages will be added to your shop. Please note that the demo data is provided for testing purposes only. The images included may be protected by copyright and must not be made publicly available.
+
 
 ## Configuration
 

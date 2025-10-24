@@ -1,18 +1,25 @@
 ---
-description: The parts list configurator allows you to create simple configurators based on compatibility rules, which compile a parts list using predefined criteria.
+description: The Parts List (BOM) Configurator allows you to create simple configurators based on compatibility rules, which compile a parts list using predefined criteria.
 tags:
   - Parts list
   - Fence configurator
   - Shopware 6.7
 ---
 
-# Parts list configurator
+# Parts List (BOM) Configurator
 
-The parts list configurator allows you to create simple configurators based on compatibility rules, which compile a parts list using predefined criteria.
+The Parts List (BOM) Configurator allows you to create simple configurators based on compatibility rules, which compile a parts list using predefined criteria.
 
 ![Preview](images/storefront-4.png)
 
 ---
+
+## Plugin Demo
+
+A storefront demo is available for testing this plugin. The plugin can be tested at the following link:
+
+- [https://demo-sw67.moori.net/MoorlPartsListConfigurator](https://demo-sw67.moori.net/MoorlPartsListConfigurator)
+
 
 ## Purchase the Plugin
 
@@ -31,10 +38,6 @@ The plugin can be purchased from the following stores. If you already have a Sho
 A **demo package** is available for testing this plugin.
 
 Go to **“Settings → [Demo Assistant](../MoorlFoundation/demo-assistant.md)”** and select **“MoorlPartsListConfigurator”**.
-
-For some packages, the product variants may need to be generated manually.
-
-To do so, navigate to **“Catalog → Products → Demo Product → Variants → Generate Variants”**.
 
 **Note:** In some cases, new categories and pages will be added to your shop. Please note that the demo data is provided for testing purposes only. The images included may be protected by copyright and must not be made publicly available.
 
