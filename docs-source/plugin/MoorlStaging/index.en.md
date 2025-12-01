@@ -107,6 +107,31 @@ If the server generally offers SSH access and is based on Apache, the plugin sho
 
 Servers based on NGINX require an additional configuration so that the test system is accessible.
 
+### General Notes for Hosts with NGINX Web Server Configuration (e.g. TimmeHosting)
+
+Directory structure:
+
+1. The main directory of the staging system is located at  
+   ```<shopware_root>/_moorl_staging/<staging_name>/```
+
+2. The database backup of the staging system is located at  
+   ```<shopware_root>/_moorl_staging/<staging_name>/backup/backup.sql```
+
+3. The Shopware directory of the staging system is located at  
+   ```<shopware_root>/_moorl_staging/<staging_name>/shop```
+
+4. The webroot of the staging system is located at  
+   ```<shopware_root>/_moorl_staging/<staging_name>/shop/public```
+
+5. In the webroot of the production system, a symlink is created pointing to the staging system’s webroot:  
+   ```<shopware_root>/_public/<staging_name>``` points to  
+   ```<shopware_root>/_moorl_staging/<staging_name>/shop/public```.  
+   This symlink (or an alternative domain) must be enabled in the NGINX configuration.
+
+!!! note
+
+      If an alternative domain is configured in the NGINX web server, the environment variable `APP_URL` must also be adjusted in ```<shopware_root>/_moorl_staging/<staging_name>/shop/.env.local```.
+
 ### ALL-INKL.COM
 
 If no connection to the database is possible, please allow accessibility from everywhere!
