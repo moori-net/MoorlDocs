@@ -1,2 +1,3 @@
-**Dokumentation:** [https://docs.moori.net/plugin/MoorlCustomerPrices/](https://docs.moori.net/plugin/MoorlCustomerPrices/)
+**Dokumentation:**
+[https://docs.moori.net/plugin/MoorlCustomerPrices/](https://docs.moori.net/plugin/MoorlCustomerPrices/)
 
