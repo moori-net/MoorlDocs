@@ -107,6 +107,31 @@ Sofern der Server generell einen SSH Zugang anbietet und auf Apache basiert, sol
 
 Server auf NGINX-Basis benötigen eine zusätzliche Konfiguration damit das Testsystem erreichbar ist.
 
+### Allgemeine Hinweise zu Hostern mit NGINX-Webserver Konfiguration (z.B. TimmeHosting)
+
+Aufbau der Verzeichnisse:
+
+1. Das Hauptverzeichnis des Staging-Systems befindet sich in  
+   ```<shopware_root>/_moorl_staging/<staging_name>/```
+
+2. Die Datenbanksicherung des Staging-Systems befindet sich in  
+   ```<shopware_root>/_moorl_staging/<staging_name>/backup/backup.sql```
+
+3. Das Shopware-Verzeichnis des Staging-Systems befindet sich in  
+   ```<shopware_root>/_moorl_staging/<staging_name>/shop```
+
+4. Der Webroot des Staging-Systems befindet sich in  
+   ```<shopware_root>/_moorl_staging/<staging_name>/shop/public```
+
+5. Im Webroot des Produktivsystems wird ein Symlink zum Webroot des Staging-Systems angelegt:  
+   ```<shopware_root>/_public/<staging_name>``` zeigt auf  
+   ```<shopware_root>/_moorl_staging/<staging_name>/shop/public```.  
+   Dieser Symlink (oder eine alternative Domain) muss in der NGINX-Konfiguration freigegeben werden.
+
+!!! note
+
+      Wenn eine alternative Domain im NGINX Webserver konfiguriert wird, muss die Umgebungsvariable APP_URL in ```<shopware_root>/_moorl_staging/<staging_name>/shop/.env.local``` ebenfalls angepasst werden.
+
 ### ALL-INKL.COM
 
 Sofern keine Verbindung zu der Datenbank möglich ist, bitte die Erreichbarkeit von überall erlauben!
