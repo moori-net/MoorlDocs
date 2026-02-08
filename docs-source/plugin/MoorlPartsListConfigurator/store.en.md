@@ -1,4 +1,4 @@
-**Important note:** You need the Foundation Plugin, which is available free of charge: [https://store.shopware.com/de/moorl50852475974f/foundation-bitte-hinweise-im-faq-beachten.html](https://store.shopware.com/de/moorl50852475974f/foundation-bitte-hinweise-im-faq-beachten.html)
+**Important note:** You need the Foundation Plugin, which is available free of charge: [https://store.shopware.com/de/moorl50852475974f/moori-foundation.html](https://store.shopware.com/de/moorl50852475974f/moori-foundation.html)
 
 
 ## Plugin Demo
@@ -55,8 +55,3 @@ Perfect for:
 - Mechanical or industrial equipment configuration
 - Electrical and spare part configurators
 - Vehicle or bicycle component shops
-
-## Conclusion
-
-With the **BOM Configurator**, you transform your Shopware shop into an intelligent, error-tolerant configuration system.  
-Your customers enjoy a smooth and intuitive shopping experience - while you save time, support effort, and unnecessary costs.

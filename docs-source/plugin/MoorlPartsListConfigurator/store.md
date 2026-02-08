@@ -1,4 +1,4 @@
-**Wichtiger Hinweis:** Sie benötigen das Foundation Plugin, welches Ihnen kostenlos zur Verfügung steht: [https://store.shopware.com/de/moorl50852475974f/foundation-bitte-hinweise-im-faq-beachten.html](https://store.shopware.com/de/moorl50852475974f/foundation-bitte-hinweise-im-faq-beachten.html)
+**Wichtiger Hinweis:** Sie benötigen das Foundation Plugin, welches Ihnen kostenlos zur Verfügung steht: [https://store.shopware.com/de/moorl50852475974f/moori-foundation.html](https://store.shopware.com/de/moorl50852475974f/moori-foundation.html)
 
 
 ## Plugin Demo
@@ -55,8 +55,3 @@ Ideal für:
 - Maschinen- oder Anlagenbau
 - Elektro- und Ersatzteilkonfigurator
 - Fahrzeug- oder Fahrradteile-Shop
-
-## Fazit
-
-Mit dem **Stücklisten Konfigurator** verwandeln Sie Ihren Shopware-Shop in ein intelligentes, fehlertolerantes Konfigurationssystem.  
-Ihre Kunden profitieren von einem reibungslosen Einkaufserlebnis - und Sie sparen Zeit, Supportaufwand und Nerven.
