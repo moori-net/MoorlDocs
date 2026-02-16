@@ -126,7 +126,7 @@ Das ist ein Anzeichen dafür, dass dieses Plugin schonmal installiert war, es wu
 Wenn der Fehler z.B. beim Plugin `moori Foundation` auftritt, benötigst du den technischen Namen des Plugins. Hier ist es `MoorlFoundation`. Daraus erstellst du einen Datenbankbefehl zum Löschen der Daten aus der `migration`.
 
 ```sql
-DELETE FROM `migration` WHERE `class` LIKE 'MoorlFoundation%';
+DELETE FROM `migration` WHERE `class` REGEXP '^MoorlFoundation\.*$';
 ```
 
 Fehler 2 `SQLSTATE[42S21]: Column already exists`
@@ -134,10 +134,9 @@ Fehler 2 `SQLSTATE[42S21]: Column already exists`
 Dieser Fehler entsteht wie oben beschrieben, nur mit dem Unterschied, dass die `migration` Tabelle geleert wurde, aber es noch Tabellen des Plugins gibt. Da die Migration an dieser Stelle abgebrochen wurde und die Daten bereits vorhanden sind, muss dieser Schritt übersprungen werden. Führe folgenden Befehl aus und wiederhole diesen Schritt nach jedem Update versuch so oft wie notwendig!
 
 ```sql
-UPDATE `migration` SET
-    `update` = now(),
-    `message` = NULL
-WHERE `class` LIKE 'MoorlFoundation%' AND `message` IS NOT NULL;
+UPDATE `migration` 
+SET `update` = now(), `message` = NULL
+WHERE `class` REGEXP '^MoorlFoundation\.*$' AND `message` IS NOT NULL;
 ```
 
 ## Fehler in der Administration
