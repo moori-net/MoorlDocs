@@ -5958,7 +5958,7 @@
         "2fbb5fe2e29a4d70aa5854ce7ce3e20b": {
           "name": "Salutation",
           "content": null,
-          "prepend": "icon|fab|shopware",
+          "prepend": "icon|fa7b|shopware",
           "append": null,
           "placeholder": null,
           "defaultValue": null,
@@ -9750,8 +9750,8 @@
         "2fbb5fe2e29a4d70aa5854ce7ce3e20b": {
           "name": "First name",
           "content": null,
-          "prepend": "icon|fab|shopware",
-          "append": "icon|fab|shopware",
+          "prepend": "icon|fa7b|shopware",
+          "append": "icon|fa7b|shopware",
           "placeholder": null,
           "defaultValue": null,
           "tooltip": null,
@@ -9999,7 +9999,7 @@
           "name": "Last name",
           "content": null,
           "prepend": null,
-          "append": "icon|fab|shopware",
+          "append": "icon|fa7b|shopware",
           "placeholder": null,
           "defaultValue": null,
           "tooltip": null,
