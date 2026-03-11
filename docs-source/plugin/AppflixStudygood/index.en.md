@@ -58,11 +58,19 @@ Go to `Settings` → [`Demo Assistant`](../MoorlFoundation/demo-assistant.md) an
 
 Media management is configured here: [Embedded Media](../MoorlFoundation/embedded-media.md)
 
+![](images/admin-embedded-media-relations.png)
+
 ### Create a course
 
 Via the main navigation in the admin: `Content` → `Studygood Courses` → `Add`
 
+![](images/admin-courses.png)
+
 #### Basic information
+
+![](images/admin-course-general.png)
+
+![](images/admin-course-visibility.png)
 
 - **Name:** The name of the course
 - **Description:** Short course description. The main description is taken from the product.
@@ -79,6 +87,8 @@ Relevant for courses that take place live or on-site, for example via IFrame.
 
 An overview of the chapters and lessons.
 
+![](images/admin-course-chapters.png)
+
 #### Metadata
 
 General information about the course, such as course duration or the number of documents and downloads.
@@ -88,6 +98,8 @@ General information about the course, such as course duration or the number of d
 A structured course consists of several chapters, which in turn contain the lessons.
 
 A new chapter is created via `Current course` → `Content` → `Chapters` → `Add`.
+
+![](images/admin-chapter-general.png)
 
 - **Name:** The name of the chapter
 - **Description (optional):** Short description
@@ -102,6 +114,8 @@ Once a chapter has been created, a new entry appears in the list. Click the chap
 
 In the chapter detail view, the lessons for this chapter can now be created.
 
+![](images/admin-chapter-lessons.png)
+
 A new lesson is created via `Current chapter` → `Lessons` → `Add`.
 
 - **Name:** The name of the lesson
@@ -115,13 +129,19 @@ A new lesson is created via `Current chapter` → `Lessons` → `Add`.
 
 Once a lesson has been created, a new entry appears in the list. Click the lesson name to continue editing.
 
+![](images/admin-lesson-general.png)
+
 - **Board:** An overview for comments and questions related to the current lesson
 - **Files:** Downloads and documents can be provided for the lesson
 - **Length:** The duration of the lesson is entered in seconds
 - **Assessment:** Creation of a multiple-choice test for self-evaluation
 - **Points:** The number of points required to pass the test
 
+![](images/admin-lesson-board.png)
+
 ### Create a multiple-choice test (optional)
+
+![](images/admin-lesson-assessment.png)
 
 #### Questions
 
@@ -140,6 +160,8 @@ Another list appears there, where the answers for the question can be created.
 - **Content:** The answer
 - **Media:** An image for the answer
 
+![](images/admin-question.png)
+
 ### Finalize the course
 
 Repeat the steps until all chapters and lessons have been fully created. A path is stored in the title, allowing you to quickly jump back to the lesson or the course.
@@ -147,6 +169,8 @@ Repeat the steps until all chapters and lessons have been fully created. A path 
 ### Product assignment
 
 Go to the product to which the course has been assigned. Then switch to the `Studygood` tab. The following information can or must be entered there.
+
+![](images/admin-product-studygood-1.png)
 
 #### Basic information
 
@@ -159,6 +183,8 @@ Go to the product to which the course has been assigned. Then switch to the `Stu
 
 Click the `Update` button in the metadata section. This will combine the data of all courses for this product.
 
+![](images/admin-product-studygood-2.png)
+
 ### Completion
 
 The course has now been created.
@@ -166,6 +192,8 @@ The course has now been created.
 ## All data at a glance
 
 Via the main navigation in the admin under `Settings` → `Extensions`, all plugin data can be accessed:
+
+![](images/admin-settings.png)
 
 - `Studygood Boards`
 - `Studygood Chapters`
@@ -188,3 +216,7 @@ Subscriptions can also be created manually in the admin:
 1. Via the product: `Current product` → `Studygood` → `Subscriptions`
 2. Via the customer: `Current customer` → `Subscriptions`
 3. Globally: `Settings` → `Extensions` → `Studygood Subscriptions`
+
+## Other settings
+
+![](images/admin-plugin-settings.png)

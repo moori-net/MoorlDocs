@@ -58,9 +58,13 @@ Gehen Sie zu `Einstellungen` → [`Demo Assistent`](../MoorlFoundation/demo-assi
 
 Die Verwaltung der Medien wird hier eingerichtet: [Eingebettete Medien](../MoorlFoundation/embedded-media.md)
 
+![](images/admin-embedded-media-relations.png)
+
 ### Kurs anlegen
 
 Über die Hauptnavigation im Admin: `Inhalte` → `Studygood Kurse` → `Hinzufügen`
+
+![](images/admin-courses.png)
 
 #### Stammdaten
 
@@ -71,6 +75,10 @@ Die Verwaltung der Medien wird hier eingerichtet: [Eingebettete Medien](../Moorl
 - **Produkte:** Produkte, die diesen Kurs beinhalten. Der Kurs kann mehreren Produkten zugewiesen werden.
 - **Eingebettete Medien (optional):** Ein Video, z. B. eine kurze Übersicht über den Kursinhalt
 
+![](images/admin-course-general.png)
+
+![](images/admin-course-visibility.png)
+
 #### Event
 
 Relevant für Kurse, die z. B. live oder vor Ort stattfinden (via IFrame).
@@ -78,6 +86,8 @@ Relevant für Kurse, die z. B. live oder vor Ort stattfinden (via IFrame).
 #### Inhalt
 
 Eine Übersicht der Kapitel und Lektionen.
+
+![](images/admin-course-chapters.png)
 
 #### Metadaten
 
@@ -88,6 +98,8 @@ Allgemeine Informationen über den Kurs, z. B. Kursdauer oder Anzahl an Dokument
 Ein strukturierter Kurs besteht aus mehreren Kapiteln, die wiederum die Lektionen enthalten.
 
 Ein neues Kapitel wird über `Aktueller Kurs` → `Inhalt` → `Kapitel` → `Hinzufügen` angelegt.
+
+![](images/admin-chapter-general.png)
 
 - **Name:** Der Name des Kapitels
 - **Beschreibung (optional):** Kurze Beschreibung
@@ -102,6 +114,8 @@ Sobald ein Kapitel angelegt wurde, erscheint ein neuer Eintrag in der Liste. Kli
 
 In der Detailansicht des Kapitels können nun die Lektionen für dieses Kapitel angelegt werden.
 
+![](images/admin-chapter-lessons.png)
+
 Eine neue Lektion wird über `Aktuelles Kapitel` → `Lektionen` → `Hinzufügen` angelegt.
 
 - **Name:** Der Name der Lektion
@@ -115,13 +129,19 @@ Eine neue Lektion wird über `Aktuelles Kapitel` → `Lektionen` → `Hinzufüge
 
 Sobald eine Lektion angelegt wurde, erscheint ein neuer Eintrag in der Liste. Klicken Sie auf den Namen der Lektion, um mit der Bearbeitung fortzufahren.
 
+![](images/admin-lesson-general.png)
+
 - **Board:** Eine Übersicht für Kommentare und Fragen zur aktuellen Lektion
 - **Dateien:** Zu der Lektion können Downloads und Dokumente zur Verfügung gestellt werden.
 - **Länge:** Die Länge der Lektion wird in Sekunden eingetragen.
 - **Bewertung:** Erstellung eines Multiple-Choice-Tests zur Selbsteinschätzung
 - **Punkte:** Die Anzahl der Punkte, die zum Bestehen des Tests erforderlich sind
 
+![](images/admin-lesson-board.png)
+
 ### Multiple-Choice-Test anlegen (optional)
+
+![](images/admin-lesson-assessment.png)
 
 #### Fragen
 
@@ -140,6 +160,8 @@ Dort erscheint eine weitere Liste, in der die Antworten für die Frage angelegt 
 - **Inhalt:** Die Antwort
 - **Medien:** Ein Bild zur Antwort
 
+![](images/admin-question.png)
+
 ### Kurs fertigstellen
 
 Wiederholen Sie die Schritte, bis alle Kapitel und Lektionen vollständig angelegt sind. Im Titel ist ein Pfad hinterlegt, sodass Sie schnell wieder zur Lektion oder zum Kurs springen können.
@@ -147,6 +169,8 @@ Wiederholen Sie die Schritte, bis alle Kapitel und Lektionen vollständig angele
 ### Produktzuordnung
 
 Gehen Sie in das Produkt, dem der Kurs zugewiesen wurde. Wechseln Sie dort auf den Reiter `Studygood`. Hier können bzw. müssen folgende Angaben gemacht werden.
+
+![](images/admin-product-studygood-1.png)
 
 #### Stammdaten
 
@@ -159,6 +183,8 @@ Gehen Sie in das Produkt, dem der Kurs zugewiesen wurde. Wechseln Sie dort auf d
 
 Klicken Sie bei den Metadaten auf den Button `Aktualisieren`. Dadurch werden die Daten aller Kurse für dieses Produkt zusammengefasst.
 
+![](images/admin-product-studygood-2.png)
+
 ### Abschluss
 
 Der Kurs ist nun erstellt.
@@ -166,6 +192,8 @@ Der Kurs ist nun erstellt.
 ## Alle Daten im Überblick
 
 Über die Hauptnavigation im Admin unter `Einstellungen` → `Erweiterungen` sind alle Daten des Plugins zugänglich:
+
+![](images/admin-settings.png)
 
 - `Studygood Boards`
 - `Studygood Kapitel`
@@ -188,3 +216,7 @@ Abos können im Admin auch manuell angelegt werden:
 1. Über das Produkt: `Aktuelles Produkt` → `Studygood` → `Abos`
 2. Über den Kunden: `Aktueller Kunde` → `Abos`
 3. Global: `Einstellungen` → `Erweiterungen` → `Studygood Abos`
+
+## Sonstige Einstellungen
+
+![](images/admin-plugin-settings.png)
