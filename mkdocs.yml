@@ -101,6 +101,7 @@ nav:
       - Foundation:
         - 'plugin/MoorlFoundation/index.md'
         - 'plugin/MoorlFoundation/demo-assistant.md'
+        - 'plugin/MoorlFoundation/embedded-media.md'
         - 'plugin/MoorlFoundation/client.md'
         - 'plugin/MoorlFoundation/listing.md'
         - 'plugin/MoorlFoundation/advanced-search.md'
