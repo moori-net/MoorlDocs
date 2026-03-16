@@ -59,6 +59,7 @@ plugins:
             Stücklisten Konfigurator: Parts list configurator
             CMS Elemente: CMS elements
             Packagist Verkäufer: Packagist vendor
+            Appflix Kleinanzeigen: Appflix Classifieds
   - search
 docs_dir: 'docs-source'
 site_dir: 'docs-html'
@@ -177,8 +178,11 @@ nav:
   - Appflix Plugin Dokumentation:
       - 'plugin/AppflixDewaShop/index.md'
       - 'plugin/AppflixStudygood/index.md'
-      - 'plugin/AppflixCustomerMarket/index.md'
       - 'plugin/AppflixMultiPdf/index.md'
+      - Appflix Kleinanzeigen:
+        - 'plugin/AppflixCustomerMarket/index.md'
+        - 'plugin/AppflixCustomerMarket/storefront.md'
+        - 'plugin/AppflixCustomerMarket/custom-fields.md'
   - Shopware Store: 'https://store.shopware.com/moori.html'
   - Plugin Store: 'https://moori-plugin-store.com/'
   - Demo Shop: 'https://demo.moori.net/'
