@@ -79,8 +79,23 @@ Weisen Sie in jeder Kategorie die CMS Seite des Plugins hinzu: `Alle Kleinanzeig
 
 - **Aktiv:** Plugin ist in diesem Verkaufskanal aktiv
 - **Privater Modus:** Kontaktdaten des Verkäufers sind erst sichtbar, wenn der Kunde mindestens eingeloggt ist
+- **Zeige mehr Anzeigen vom Verkäufer:** Auf der Detailseite der Kleinanzeige werden optional weitere Anzeigen desselben Anbieters gelistet
 - **Kategorieseite mit allen Kleinanzeigen:** Hauptkategorie für alle Kleinanzeigen (im ersten Schritt angelegt)
-- **Boost Optionen:** Welche Boosts sind verfügbar?
+- **Detail Formular für Kleinanzeigen:** Optionale Felder, die bei einer Kleinanzeige angegeben werden können
+- **Boost Optionen:** Welche Boosts sind verfügbar? (Boost Top kann mit der Standard-CMS-Seite `Alle Kleinanzeigen` sofort verwendet werden)
+- **Unterkategorien im Listing anzeigen:** Möglichkeit im Listing nach Unterkategorien zu filtern
+- **Globale Navigation im Listing anzeigen:** Im Kategoriebaum des Listings werden alle Hauptkategorien dargestellt (nicht empfohlen)
+- **Button in der Sidebar anzeigen:** Ein Button zum Erstellen einer neuen Kleinanzeige
+- **Erweiterte Suche:** [Foundation | Erweiterte Suche](../MoorlFoundation/advanced-search.md)
+- **Geo-Koordinaten automatisch ermitteln:** Anhand der Adresse wird die Position bestimmt, so kann auch nach Entfernung gesucht werden (Achtung: Falsche Adressangaben verlangsamen die Erstellung einer Kleinanzeige!)
+- **Alte Kleinanzeigen entfernen:** Sobald eine Kleinanzeige über X Tage alt ist und keinen aktiven Boost hat, wird diese automatisch entfernt.
+- **Kleinanzeigen nach X Tagen entfernen**
+- **Anzahl von kostenpflichtigen Kleinanzeigen, die ein Nutzer gratis veröffentlichen kann**
+- **Anzahl von kostenpflichtigen Kontaktanfragen, die ein Nutzer gratis verwenden kann**
+- **Kleinanzeigen automatisch prüfen:** Wenn diese Option aktiv ist, werden die Kleinanzeigen automatisch geprüft und freigegeben. Andernfalls muss der Shopbetreiber die Anzeigen manuell freigeben.
+- **Freigabemethode**
+- **Links entfernen:** Wenn diese Option aktiviert ist, werden URLs aus Beschreibungen entfernt. Somit verhinderst du, dass Nutzer Eigenwerbung schalten können.
+- **Keyword Blacklist:** Diese Wörter können aus der Beschreibung entfernt werden. Wörter, die Teile der eingegebenen Wörter beinhalten, werden auch entfernt.
 
 ### Anzeigentypen erstellen
 

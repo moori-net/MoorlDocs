@@ -1,5 +1,5 @@
 ---
-description: The extension allows customers to advertise their own ads. Enhance your store with user-generated content and benefit from better SEO ranking and traffic numbers.
+description: The extension allows customers to advertise their own classifieds. Enhance your store with user-generated content and benefit from better SEO ranking and traffic numbers.
 tags:
   - Classifieds
   - SEO
@@ -8,7 +8,7 @@ tags:
 
 # Appflix Classifieds
 
-The extension allows customers to advertise their own ads. Enhance your store with user-generated content and benefit from better SEO ranking and traffic numbers.
+The extension allows customers to advertise their own classifieds. Enhance your store with user-generated content and benefit from better SEO ranking and traffic numbers.
 
 ![Preview](images/preview.png)
 
