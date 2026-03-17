@@ -123,7 +123,7 @@ Via the main navigation in the admin: `Settings` → `Classified Ad Types` → `
 - **Active:** Type is active
 - **Priority:** Higher priority = listed further up
 - **Color:** Visual highlighting of the type
-- **Icon:** Symbol of the type, e.g. `fa7s|search` (Font Awesome 7 Solid → Search)
+- **Icon:** Symbol of the type, e.g. `fa7s|search` (Font Awesome 7 Solid → Search) - [Foundation | SVG Icons](../MoorlFoundation/svg-icons.md)
 
 #### Prices
 

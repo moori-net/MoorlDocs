@@ -123,7 +123,7 @@ Weisen Sie jeder Kategorie die CMS-Seite des Plugins zu: `Alle Kleinanzeigen`
 - **Aktiv:** Typ ist aktiv
 - **Priorität:** Höhere Priorität = weiter oben gelistet
 - **Farbe:** Farbliche Hervorhebung des Typs
-- **Icon:** Symbol des Typs, z. B. `fa7s|search` (Font Awesome 7 Solid → Suche)
+- **Icon:** Symbol des Typs, z. B. `fa7s|search` (Font Awesome 7 Solid → Suche) - [Foundation | SVG Icons](../MoorlFoundation/svg-icons.md)
 
 #### Preise
 
