@@ -155,6 +155,7 @@ nav:
         - 'plugin/MoorlShopTheLook/index.md'
         - 'plugin/MoorlFancyboxGallery/index.md'
         - 'plugin/MoorlCmsCategoryListing/index.md'
+      - 'plugin/MoorlTranslator/index.md'
       - 'plugin/MoorlManufacturer/index.md'
       - 'plugin/MoorlCustomerPrices/index.md'
       - 'plugin/MoorlEbics/index.md'
