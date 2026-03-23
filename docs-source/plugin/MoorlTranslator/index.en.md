@@ -6,7 +6,7 @@ tags:
   - Shopware 6.7
 ---
 
-# Übersetzer
+# Translator
 
 Simple plugin that translates all translatable fields and properties in the background using the DeepL plugin. Ideal for online shops with international sales.
 
