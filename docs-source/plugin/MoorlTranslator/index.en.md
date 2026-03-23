@@ -37,6 +37,8 @@ This plugin can be purchased in the **Shopware Community Store**.
 - **Source Language**: The language used as the source language for translation. By default, the system language is selected.
 - **Target Languages**: The languages into which the source language is translated.
 
+![Translator Client](images/admin-client.png)
+
 ### Entity Configuration (Products, Categories, etc.)
 
 In the main navigation of the admin under `Settings` → `Translator Configuration`, there is an overview of all created entries. Here, new entries can be created and existing entries can be duplicated or deleted.

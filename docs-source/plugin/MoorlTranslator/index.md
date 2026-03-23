@@ -37,6 +37,8 @@ Dieses Plugin kann im offiziellen **Shopware Community Store** erworben werden.
 - **Quellsprache**: Die Sprache, die als Ausgangssprache für die Übersetzung dient. Standardmäßig ist die Systemsprache ausgewählt.
 - **Zielsprachen**: Die Sprachen, in die die Quellsprache übersetzt wird.
 
+![Übersetzer-Client](images/admin-client.png)
+
 ### Konfiguration der Entitäten (Produkte, Kategorien usw.)
 
 Über die Hauptnavigation im Admin unter `Einstellungen` → `Übersetzer Konfiguration` gibt es eine Übersicht über alle angelegten Einträge. Hier können neue Einträge angelegt sowie bestehende Einträge dupliziert oder gelöscht werden.
