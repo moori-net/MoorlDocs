@@ -63,6 +63,7 @@ Click `Add`.
 **Translatable Fields:**
 
 - A list of fields that are translated automatically. Custom fields can also be translated. The `slotConfig` field is currently not yet supported.
+- `If empty` means that the field is only translated if no value exists in the target language.
 
 ### CMS Element Configuration
 
@@ -87,6 +88,7 @@ Click `Add`.
 **Translatable Fields:**
 
 - A list of fields that are translated automatically.
+- `If empty` means that the field is only translated if no value exists in the target language.
 
 ### Service Icon
 

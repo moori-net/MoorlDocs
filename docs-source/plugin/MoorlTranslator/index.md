@@ -63,6 +63,7 @@ Klicken Sie auf `Hinzufügen`.
 **Übersetzbare Felder:**
 
 - Eine Liste mit Feldern, die automatisch übersetzt werden. Benutzerdefinierte Felder können ebenfalls übersetzt werden. Das Feld `slotConfig` wird derzeit noch nicht unterstützt.
+- `Wenn leer` steht dafür, dass das Feld nur übersetzt wird, wenn in der Zielsprache kein Wert vorhanden ist.
 
 ### Konfiguration der CMS-Elemente
 
