@@ -1,24 +1,46 @@
 ---
-description: Mit diesem Plugin kannst du in Shopware 6 Flash-Sales und Rabattaktionen mit einem Countdown zu verwalten. Egal ob zum Black Friday oder zwischendurch.
+description: Automatisiere deine Rabattaktionen - Kundenspezifisch - mit oder ohne Countdown-Timer - lass deine Rabattaktion enden, sobald ein Produkt in einer bestimmte Anzahl gekauft wurde
 tags:
-- Shopware 6 Plugin
-- Flash-Sales
-- Rabattaktionen
-- Liveshopping
-- Black Friday
-- Promotions
-- Marketing
+  - Hersteller
+  - CMS
+  - Shopware 6.7
 ---
 
-# Flash-Sales, Rabattaktionen und Liveshopping 
+# Automatische Rabattaktionen / Liveshopping / Flash-Sales
 
-Das Shopware 6 Rabattaktionen Plugin ermöglicht es dir, deinen Shop für komplexe Flash-Sales aufzurüsten. Erstelle Rabatt-Kampagnen pünktlich zum Black Friday oder zum Winterschlussverkauf/Sommerschlussverkauf! Sobald du eine Aktion erstellst, entscheidest du ab wann diese in deinem Shop angekündigt wird.
+Automatisiere deine Rabattaktionen - Kundenspezifisch - mit oder ohne Countdown-Timer - lass deine Rabattaktion enden, sobald ein Produkt in einer bestimmte Anzahl gekauft wurde
 
-[Hier geht's zur Demo](https://demo.moori.net/Produkt-Promo-Demo/)
+![Vorschau](images/flash-sales-01.jpg)
 
-![](images/flash-sales-01.jpg)
+---
 
-Deine Rabattaktion kannst du nach deinen Vorstellungen konfigurieren. Wähle zwischen zeitlich begrenzten Aktionen oder bestimme die maximale verfügbare Menge. Du kannst deine Aktion auch einfach direkt starten oder beides miteinander kombinieren.
+## Plugin Demo
+
+Zu diesem Plugin steht eine Storefront-Demo zum Testen bereit. Unter folgenden Link kann das Plugin getestet werden:
+
+- [https://demo-sw67.moori.net/MoorlProductPromo](https://demo-sw67.moori.net/MoorlProductPromo)
+
+
+## Plugin erwerben
+
+Dieses Plugin kann im offiziellen **Shopware Community Store** erworben werden.
+
+- [Shopware Community Store](https://store.shopware.com/de/search?search=MoorlProductPromo)
+
+
+**Wichtiger Hinweis:** Sie benötigen das Foundation Plugin, welches Ihnen kostenlos zur Verfügung steht: [moori Foundation](../MoorlFoundation/index.md)
+
+
+## Quickstart
+
+Für dieses Plugin steht ein **Demo-Paket** zum Testen bereit.
+
+Gehen Sie zu `Einstellungen` → [`Demo Assistent`](../MoorlFoundation/demo-assistant.md) und wählen Sie dort `MoorlProductPromo` aus.
+
+**Hinweis:** In einigen Fällen werden neue Kategorien und Seiten zu Ihrem Shop hinzugefügt. Bitte beachten Sie, dass die Demo-Daten ausschließlich zu Testzwecken dienen. Die darin enthaltenen Bilder können urheberrechtlich geschützt sein und dürfen nicht der Öffentlichkeit zugänglich gemacht werden.
+
+
+---
 
 ## Countdown Aktionen
 

@@ -1,23 +1,46 @@
 ---
-description: With this plugin you can manage flash sales and discount promotions with a countdown in Shopware 6. No matter if for Black Friday or in between.
+description: Automate your discount promotions - Customized - with or without countdown timer - let your discount promotion end when a product has been purchased in a certain quantity
 tags:
-- Shopware 6 Plugin
-- Flash sales
-- Discount promotions
-- Live shopping
-- Black Friday
-- Marketing
+  - Parts list
+  - Fence configurator
+  - Shopware 6.7
 ---
 
-# Flash Sales, Discount Promotions and Liveshopping
+# Automatic discount promotions / live shopping / flash sales
 
-The Shopware 6 discount campaigns plugin allows you to upgrade your shop for complex flash sales. Create discount campaigns just in time for Black Friday or winter/summer sales! As soon as you create a campaign, you decide when it will be announced in your shop.
+Automate your discount promotions - Customized - with or without countdown timer - let your discount promotion end when a product has been purchased in a certain quantity
 
-[Click here for the demo](https://demo.moori.net/Produkt-Promo-Demo/)
+![Preview](images/flash-sales-01.jpg)
 
-![](images/flash-sales-01.jpg)
+---
 
-You can configure your discount campaign according to your wishes. Choose between time-limited promotions or determine the maximum available quantity. You can also start your promotion directly or combine both.
+## Plugin Demo
+
+A storefront demo is available for testing this plugin. The plugin can be tested at the following link:
+
+- [https://demo-sw67.moori.net/MoorlProductPromo](https://demo-sw67.moori.net/MoorlProductPromo)
+
+
+## Purchase the Plugin
+
+This plugin can be purchased in the **Shopware Community Store**.
+
+- [Shopware Community Store](https://store.shopware.com/en/search?search=MoorlProductPromo)
+
+
+**Important note:** You need the Foundation Plugin, which is available free of charge: [moori Foundation](../MoorlFoundation/index.md)
+
+
+## Quickstart
+
+A **demo package** is available for testing this plugin.
+
+Go to `Settings` → [`Demo Assistant`](../MoorlFoundation/demo-assistant.md) and select `MoorlProductPromo`.
+
+**Note:** In some cases, new categories and pages will be added to your shop. Please note that the demo data is provided for testing purposes only. The images included may be protected by copyright and must not be made publicly available.
+
+
+---
 
 ## Countdown promotions
 
