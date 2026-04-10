@@ -3,8 +3,8 @@ description: Shopware 6 Plugin für Zubehör, Produkt-Bundles und Konfiguratoren
 tags:
   - Zubehör
   - Zubehörprodukte
-  - Produkt-Bundles
-  - Add-ons
+  - Produkt Bundles
+  - Add ons
   - Zusatzprodukte
 ---
 

@@ -4,7 +4,7 @@ tags:
   - Accessories
   - Accessory Products
   - Product Bundles
-  - Add-ons
+  - Add ons
   - Additional Products
 ---
 
