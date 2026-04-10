@@ -10,7 +10,7 @@ tags:
 
 This plugin for Shopware 6 offers you the possibility to create product and accessory bundles. Within bundles, you can set individual prices for the accessories.
 
-![Vorschau](images/storefront-01.jpg)
+![Preview](images/storefront-product-detail-categories.jpg)
 
 ---
 
@@ -23,11 +23,9 @@ A storefront demo is available for testing this plugin. The plugin can be tested
 
 ## Purchase the Plugin
 
-The plugin can be purchased from the following stores. If you already have a Shopware account, please **always use** the link to the **Shopware Community Store** first, as alternative stores may cause licensing issues. If a plugin is **not** available in the Shopware Community Store, it is offered exclusively in one of the alternative stores.
+This plugin can be purchased in the **Shopware Community Store**.
 
-- [Shopware Community Store](https://store.shopware.com/en/search?search=MoorlProductAccessories) *(recommended)*
-- [moori Plugin Store](https://moori-plugin-store.com/MoorlProductAccessories)
-- [Shopelfen Store](https://www.shopelfen.de/) *(under construction)*
+- [Shopware Community Store](https://store.shopware.com/en/search?search=MoorlProductAccessories)
 
 
 **Important note:** You need the Foundation Plugin, which is available free of charge: [moori Foundation](../MoorlFoundation/index.md)
@@ -37,81 +35,125 @@ The plugin can be purchased from the following stores. If you already have a Sho
 
 A **demo package** is available for testing this plugin.
 
-Go to **“Settings → [Demo Assistant](../MoorlFoundation/demo-assistant.md)”** and select **“MoorlProductAccessories”**.
-
-For some packages, the product variants may need to be generated manually.
-
-To do so, navigate to **“Catalog → Products → Demo Product → Variants → Generate Variants”**.
+Go to `Settings` → [`Demo Assistant`](../MoorlFoundation/demo-assistant.md) and select `MoorlProductAccessories`.
 
 **Note:** In some cases, new categories and pages will be added to your shop. Please note that the demo data is provided for testing purposes only. The images included may be protected by copyright and must not be made publicly available.
 
 
-## Configuration
+---
 
-You can generally find the configuration under the product or category details.
+## Initial Setup
 
-If you want to group your product add-ons, you should first create categories.
+### Plugin Configuration
 
-![](images/admin-01.jpg)
+![Plugin Configuration](images/admin-plugin-config-1.jpg)
+![Plugin Configuration](images/admin-plugin-config-2.jpg)
 
-Enter a name and a sort order, the other fields are currently not relevant.
+#### Settings
 
-![](images/admin-02.jpg)
+- **Display of the accessory product name in the configurator**
+- **Update the price based on the current selection**
+- **Create bundle products for the shopping cart**: This setting is required if accessories should have individual prices.
+- **Show available stock on the product detail page**
+- **Enable for these customer groups**: The configurator is only available for the selected customer groups. Note: This setting will be replaced by the Rule Builder in the future.
 
-From a technical point of view, the add-ons are not pseudo-products but __real__ products,
-when purchasing, the stock levels are updated.
+#### Product Price Calculation
 
-![](images/admin-03.jpg)
+- **Calculation priority**: If multiple price calculations apply, a priority can be defined here.
+- **Stop calculation after first match**: When recalculating the price, all subsequent price calculations will be skipped from this point onward.
+- **Source for price calculation**
+- **Source for list price**
 
-Here you can configure the add-ons/accessory products. You have the following options regarding
-the pricing:
+### General Overview
 
-- Adjusted price: Yes = price can be defined by yourself, No = standard price of the product.
-- Is standard: This option is preselected
-- Add-on: The product that can be selected as an add-on
-- Category (optional): In this category the selection is categorised
+![Plugin Configuration](images/admin-settings.jpg)
 
-![](images/admin-04.jpg)
+In the main administration navigation under `Settings` → `Extensions` → (`Accessory Products` or `Accessory Categories`), you will find an overview of all created entries.
 
-### Product level
+## Accessory Categories
 
-![](images/admin-06.jpg)
+![Accessory Categories List](images/admin-category-list.jpg)
+![Accessory Categories Detail](images/admin-category-detail-1.jpg)
+![Accessory Categories Detail](images/admin-category-detail-2.jpg)
 
-Here you can access the configuration on product level.
+### General Settings
 
-![](images/admin-05.jpg)
+- **Name**
+- **Type**: There are currently four different selection types available: `Single selection`, `Multiple selection`, `Single selection with image`, and `Multiple selection with image`.
+- **Teaser**: Additional informational text for the category
+- **Allow no selection**: The selection in the configurator is optional.
+- **Sort order**
+- **Accessory products**: A list of all products assigned to the current category.
 
-The following options can be configured on the product level:
+## Accessory Products
 
-- Hide Add to Cart button in listing: Prevents the product from being added to the shopping cart individually without configuration.
-- Show Badge: Displays a badge in the listing
-- Exclude configurations from category levels: Ignores the configurations from the selected category levels.
+![Accessory Products List](images/admin-accessory-list.jpg)
+![Accessory Products Detail](images/admin-accessory-detail-general-1.jpg)
+![Accessory Products Detail](images/admin-accessory-detail-general-2.jpg)
+![Accessory Products Detail](images/admin-accessory-detail-price.jpg)
 
-Example:
+### General Settings
 
-![](images/storefront-02.jpg)
+- **Product**: This accessory belongs to the selected product.
+- **Accessory**: The product that is offered as an accessory.
+- **Dynamic product group**: This accessory belongs to the selected product group.
+- **Category**: This accessory is listed under the selected category.
 
-### Category level
+Note: **Product** and **Dynamic product group** are optional. However, only one of these two assignments should be used.
 
-If the configurations are repeated several times, it is worthwhile to create the configurations at category level.
-category level. All products associated with this category are taken into account.
-are taken into account.
+### Visibility
 
-![](images/admin-07.jpg)
+- **Name**: Alternative name if the accessory should be displayed differently from the original product name.
+- **Info**: Internal note.
+- **Priority**: Priority within the selection.
+- **Is default**: This option is preselected by default.
 
-## Plugin configuration
+### Price
 
-![](images/admin-08.jpg)
+- **Show as discount**: If the new price is lower than the original price, it can be displayed as a discount.
+- **Price calculation type**: `Original price of the accessory product`, `Custom price`, or `Percentage price of the main product`.
+- **Price**: If `Custom price` is selected, an individual price can be entered here.
+- **Percentage**: If `Percentage price of the main product` is selected, a percentage value can be entered here. `100` equals 100% of the main product price.
+- **Source for price calculation**: Inherited from the plugin configuration and can optionally be adjusted here.
+- **Source for list price**: Inherited from the plugin configuration and can optionally be adjusted here.
 
-- Create bundle products: Yes = The product including the add-ons will be added to the shopping cart, No = All products will be added to the shopping cart individually
-- Display stock: Yes = Will be displayed, No = Will not be displayed.
+## Main Product
 
-## Storefront
+In the main administration navigation under `Catalogues` → `Products` → `Detail` → `Accessories`, accessory categories or accessory products can be assigned directly.
 
-This is what the configurator looks like on the product detail page:
+![Main Product](images/admin-product-detail-accessories.jpg)
 
-![](images/storefront-01.jpg)
+- **Disable add to cart**: The product cannot be added directly to the shopping cart from the storefront listing.
+- **Show bundle badge**
 
-And like this in the shopping cart:
+Note: Accessories can also be created or assigned directly in the modal.
 
-![](images/storefront-03.jpg)
+![Main Product Modal](images/admin-accessory-modal.jpg)
+
+## Dynamic Product Group
+
+In the main administration navigation under `Catalogues` → `Dynamic Product Groups` → `Detail`, accessory categories or accessory products can be assigned directly.
+
+![Dynamic Product Group](images/admin-product-stream-detail.jpg)
+
+## Storefront Display
+
+In this example, there are accessories assigned directly and accessories assigned via a dynamic product group.
+
+![Configurator](images/storefront-product-detail-categories.jpg)
+
+1. Single selection with image (optional)
+2. Single selection with image
+3. Multiple selection with image
+
+![Off-canvas Cart](images/storefront-product-detail-cart.jpg)
+
+The product is bundled together with the selected accessories and then added to the shopping cart.
+
+![Cart](images/storefront-cart.jpg)
+
+1. **The bundle**: The cart line item containing the total of all bundled products.
+2. **The main product**: The main product is always listed first within the bundle with its original price.
+3. **Accessory with custom price**
+4. **Accessory with percentage price of the main product**: In this example, 10%.
+5. **Accessory with original price**
