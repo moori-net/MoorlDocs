@@ -1,14 +1,16 @@
 ---
-description: This plugin for Shopware 6 offers you the possibility to create product and accessory bundles. Within bundles, you can set individual prices for the accessories.
+description: Shopware 6 plugin for accessories, product bundles and configurators: assign accessories flexibly, price them individually, and sell them directly in the storefront.
 tags:
-- Shopware 6 Plugin
-- Accessories
-- Bundles
+  - Accessories
+  - Accessory Products
+  - Product Bundles
+  - Add-ons
+  - Additional Products
 ---
 
 # Product add-ons & accessories
 
-This plugin for Shopware 6 offers you the possibility to create product and accessory bundles. Within bundles, you can set individual prices for the accessories.
+Shopware 6 plugin for accessories, product bundles and configurators: assign accessories flexibly, price them individually, and sell them directly in the storefront.
 
 ![Preview](images/storefront-product-detail-categories.jpg)
 

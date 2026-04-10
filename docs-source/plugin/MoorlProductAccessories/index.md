@@ -1,14 +1,16 @@
 ---
-description: Dieses Plugin für Shopware 6 bietet dir die Möglichkeit, Produkt- und Zubehör-Bundles zu erstellen. Innerhalb von Bundles, kannst du individuelle Preise für das Zubehör bestimmen.
+description: Shopware 6 Plugin für Zubehör, Produkt-Bundles und Konfiguratoren: Zubehör flexibel zuweisen, individuell bepreisen und direkt im Storefront verkaufen.
 tags:
-  - Shopware 6 Plugin
   - Zubehör
-  - Bundles
+  - Zubehörprodukte
+  - Produkt-Bundles
+  - Add-ons
+  - Zusatzprodukte
 ---
 
 # Produkt Add-Ons & Zubehör
 
-Dieses Plugin für Shopware 6 bietet dir die Möglichkeit, Produkt- und Zubehör-Bundles zu erstellen. Innerhalb von Bundles, kannst du individuelle Preise für das Zubehör bestimmen.
+Shopware 6 Plugin für Zubehör, Produkt-Bundles und Konfiguratoren: Zubehör flexibel zuweisen, individuell bepreisen und direkt im Storefront verkaufen.
 
 ![Vorschau](images/storefront-product-detail-categories.jpg)
 
