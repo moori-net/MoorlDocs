@@ -1,7 +1,7 @@
 ---
 description: Shopware 6 plugin for accessories, product bundles and configurators: assign accessories flexibly, price them individually, and sell them directly in the storefront.
 tags:
-  - Accessories
+  - Shopware 6.7
 ---
 
 # Product add-ons & accessories
