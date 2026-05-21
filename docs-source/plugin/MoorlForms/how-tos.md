@@ -33,8 +33,9 @@ Gib dazu `icon|<pack>|<name>` ein.
 Um den passenden Namen zu ermitteln, gehe dazu auf folgende Seiten:
 
 - FontAwesome 5: [https://fontawesome.com/v5/search](https://fontawesome.com/v5/search)
-- FontAwesome 6: [https://fontawesome.com/search](https://fontawesome.com/search)
-- Shopware: [https://component-library.shopware.com/icons/](https://component-library.shopware.com/icons/)
+- FontAwesome 6: [https://fontawesome.com/v6/search](https://fontawesome.com/v6/search)
+- FontAwesome 7: [https://fontawesome.com/v7/search](https://fontawesome.com/v7/search)
+- Shopware: [https://developer.shopware.com/resources/meteor-icon-kit/](https://developer.shopware.com/resources/meteor-icon-kit/)
 
 ![](images/how-to-02.jpg)
 
