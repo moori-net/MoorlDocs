@@ -60,6 +60,52 @@ Collecting and evaluating the data via scheduled tasks and indexing can take a c
 
 ![Console commands](images/console-commands.jpg)
 
+#### Step 0: Reset data manually
+
+Remove the flag from all orders:
+
+```bash
+UPDATE `order`
+SET `custom_fields` = JSON_REMOVE(
+    `custom_fields`,
+    '$.moorl_cross_selling_processed'
+)
+WHERE JSON_CONTAINS_PATH(
+    `custom_fields`,
+    'one',
+    '$.moorl_cross_selling_processed'
+);
+```
+
+Remove all relationships:
+
+```bash
+DELETE FROM `moorl_cs_relation`;
+```
+
+Remove all cross-selling products:
+
+```bash
+DELETE FROM `product_cross_selling`;
+```
+
+All commands:
+
+```bash
+UPDATE `order`
+SET `custom_fields` = JSON_REMOVE(
+    `custom_fields`,
+    '$.moorl_cross_selling_processed'
+)
+WHERE JSON_CONTAINS_PATH(
+    `custom_fields`,
+    'one',
+    '$.moorl_cross_selling_processed'
+);
+DELETE FROM `moorl_cs_relation`;
+DELETE FROM `product_cross_selling`;
+```
+
 #### Step 1: Detect and create relationships
 
 In this step, all orders and customer sessions are read and evaluated.
@@ -84,12 +130,6 @@ The following command creates the cross-selling lists:
 
 ```bash
 bin/console moorl:cross-selling:update-products
-```
-
-Optionally, the existing cross-selling lists can be removed before they are recreated:
-
-```bash
-bin/console moorl:cross-selling:update-products -t
 ```
 
 Once the cross-selling lists have been created, they are visible on the product:

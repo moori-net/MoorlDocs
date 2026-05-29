@@ -58,6 +58,52 @@ Die Erfassung und Auswertung der Daten über geplante Aufgaben und Indexierung k
 
 ![Konsolenbefehle](images/console-commands.jpg)
 
+#### Schritt 0: Daten manuell zurücksetzen
+
+Flag aus allen Bestellungen entfernen:
+
+```bash
+UPDATE `order`
+SET `custom_fields` = JSON_REMOVE(
+    `custom_fields`,
+    '$.moorl_cross_selling_processed'
+)
+WHERE JSON_CONTAINS_PATH(
+    `custom_fields`,
+    'one',
+    '$.moorl_cross_selling_processed'
+);
+```
+
+Alle Beziehungen entfernen:
+
+```bash
+DELETE FROM `moorl_cs_relation`;
+```
+
+Alle Cross-Selling Produkte entfernen:
+
+```bash
+DELETE FROM `product_cross_selling`;
+```
+
+Alle Befehle:
+
+```bash
+UPDATE `order`
+SET `custom_fields` = JSON_REMOVE(
+    `custom_fields`,
+    '$.moorl_cross_selling_processed'
+)
+WHERE JSON_CONTAINS_PATH(
+    `custom_fields`,
+    'one',
+    '$.moorl_cross_selling_processed'
+);
+DELETE FROM `moorl_cs_relation`;
+DELETE FROM `product_cross_selling`;
+```
+
 #### Schritt 1: Zusammenhänge erkennen und erstellen
 
 In diesem Schritt werden alle Bestellungen und Kundensitzungen eingelesen und ausgewertet.
@@ -82,12 +128,6 @@ Mit folgendem Befehl werden die Cross-Selling-Listen erstellt:
 
 ```bash
 bin/console moorl:cross-selling:update-products
-```
-
-Optional können die bestehenden Cross-Selling-Listen vor der Neuerstellung entfernt werden:
-
-```bash
-bin/console moorl:cross-selling:update-products -t
 ```
 
 Sobald die Cross-Selling-Listen erstellt wurden, sind diese am Produkt sichtbar:
