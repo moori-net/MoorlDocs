@@ -105,6 +105,7 @@ nav:
         - 'plugin/MoorlFoundation/embedded-media.md'
         - 'plugin/MoorlFoundation/svg-icons.md'
         - 'plugin/MoorlFoundation/client.md'
+        - 'plugin/MoorlFoundation/ai-chat.md'
         - 'plugin/MoorlFoundation/listing.md'
         - 'plugin/MoorlFoundation/advanced-search.md'
         - 'plugin/MoorlFoundation/features-free.md'
