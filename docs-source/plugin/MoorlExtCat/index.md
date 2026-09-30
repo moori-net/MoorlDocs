@@ -76,13 +76,13 @@ shopware:
         batchsize: 100
         custom_urls:
         excluded_urls:
-           - resource: category
+           - resource: 'Shopware\Core\Content\Category\CategoryEntity'
              identifier: df1f52ccf3b3c5c6cf628c07d5a492ac
              salesChannelId: b0035a82b2ce4b015bbe421e12ce0e2b
-           - resource: category
+           - resource: 'Shopware\Core\Content\Category\CategoryEntity'
              identifier: 92a4abd3842acdf321e5d2700f8879de
              salesChannelId: b0035a82b2ce4b015bbe421e12ce0e2b
-           - resource: product
+           - resource: 'Shopware\Core\Content\Product\ProductEntity'
              identifier: ce9aad668705fdfba00058d30e8c4af0
              salesChannelId: b0035a82b2ce4b015bbe421e12ce0e2b
 ```
