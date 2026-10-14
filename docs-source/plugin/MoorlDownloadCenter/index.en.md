@@ -1,227 +1,248 @@
 ---
-description: Verschachtelte Verzeichnisse, private und öffentliche Downloads, digitale Produkte, CMS Elemente, Verwaltung von Seriennummern und statischen Links, Amazon S3, FTP, WebDAV und Nextcloud
+description: Nested directories, private and public downloads, digital products, CMS elements, management of serial numbers and static links, Amazon S3, FTP, WebDAV and Nextcloud
 tags:
-- Shopware 6 Plugin
-- Downloads
-- ESD
-- FTP
-- Amazon S3
-- Nextcloud
+  - Downloads
+  - ESD
+  - Digital products
+  - Shopware 6.7
 ---
 
-# Download Center
+# Download center
 
-Mit diesem Plugin kannst du Downloads in verschiedenen Variationen anbieten. Zum einen gibt es öffentliche Downloads frei zugänglich auf einer Produktseite oder Einkaufswelten. Zum anderen kannst du Downloads nur für bestimmte Kunden (-gruppen) freigeben. Du kannst aber auch genauso Download-Produkte oder Lizenzschlüssel verkaufen. Hier werden dir rund um das Thema Downloads viele Möglichkeiten geboten.
+Nested directories, private and public downloads, digital products, CMS elements, management of serial numbers and static links, Amazon S3, FTP, WebDAV and Nextcloud
 
-## Verfügbare Dateisysteme
+![Download Center](images/dlc-01.jpg)
 
-* Lokales Dateisystem
+---
+
+## Plugin erwerben
+
+Dieses Plugin kann im offiziellen **Shopware Community Store** erworben werden.
+
+- [Shopware Community Store](https://store.shopware.com/de/search?search=MoorlDownloadCenter)
+
+
+**Wichtiger Hinweis:** Sie benötigen das Foundation Plugin, welches Ihnen kostenlos zur Verfügung steht: [moori Foundation](../MoorlFoundation/index.md)
+
+
+---
+
+## Initial setup
+
+### Available file systems
+
+* Local file system
 * FTP
 * SSH
 * Amazon S3
 * WebDAV
 * Nextcloud
-* Azure (wird bei Bedarf nachgeliefert)
-* Google Storage (wird bei Bedarf nachgeliefert)
+* Azure (available on request)
+* Google Storage (available on request)
 
-Der Shopware Medien-Manager wird nicht angeboten. Es ist jedoch möglich mit folgendem Plugin eine WebDAV Verbindung aufzubauen:
+The Shopware media manager is not used. The following plugin can, for example, be used to set up a WebDAV connection:
 https://store.shopware.com/frosh11030048018f/webdav.html
 
-## Installation
+### Installing additional services
 
-!!! note
-
-      Falls du Probleme mit dem Plugin hast, bitte beachte folgende [Hinweise](../) im FAQ Bereich.
-
-1. Installiere [Foundation](../MoorlFoundation/index.md)
-2. Installiere dieses Plugin
-3. Optional: In diesem Plugin ist ein [Demopaket](../MoorlFoundation/demo-assistant.md) enthalten.
-4. Wenn du kein Demopaket installiert hast, musst du zunächst einen [Client](../MoorlFoundation/client.md) erstellen.
-5. Die Verwaltung deiner Downloads findest du nun unter: Inhalte / Download Center (DLC)
-
-## Fehlende Dienste nachladen
-
-Einige Dienste benötigen composer Pakete, folgende Befehle kannst du im Hauptverzeichnis deines Shopware 6 Shops ausführen:
+Some services require Composer packages. Run the following commands in the root directory of your Shopware 6 installation:
 
 ```text
 composer require league/flysystem-ftp
 composer require league/flysystem-webdav
 ```
 
-## Übersicht
+### Overview
 
-In der Übersicht findest du eine Zusammenfassung aller Downloads. In diesem Beispiel ist das Demopaket bereits installiert.
+The overview provides a summary of all downloads. In this example, the demo package is already installed.
 
-![](images/dlc-01.jpg)
+![Overview](images/dlc-01.jpg)
 
-## Einstellungen
+### Configuring a Download Center
 
-### Plugin Einstellungen
+#### Plugin configuration
 
-![](images/dlc-00.jpg)
+![Plugin configuration](images/dlc-00.jpg)
 
-- Deeplink URL: Diese URL wird genutzt um z.B. Links für Gastbesteller zu generieren, trage hier deine aktuelle Domain ein + "/account/subscription/"
-- Kunden mit Code hinzufügen: Schaltet die Funktion frei, dass Kunden im Kundenbereich ein Code zur Freischaltung von Downloads eingeben können
+- **Deeplink URL**: The base URL for personal links to download subscriptions, especially for guest customers. Enter your domain including `/account/subscription/`.
+- **Add customers with code**: Shows the input field in the customer account that customers can use to redeem a download code.
 
-### Basiskonfiguration
+#### Basic configuration
 
-![](images/dlc-02.jpg)
+![Basic configuration](images/dlc-02.jpg)
+![Basic configuration](images/dlc-03.jpg)
 
-![](images/dlc-03.jpg)
+- **Active**: Enables the Download Center.
+- **Name**: The name of the Download Center.
+- **Type**: Private downloads are only available to authorised customers. Public downloads are visible on the product detail page.
+- **Has files**: Enables client selection and the file explorer.
+- **Client**: The file system client from which files are loaded.
+- **Has links**: Enables the section for external links.
+- **Has codes**: Enables the management of codes and licence keys.
+- **Products**: Links products to the Download Center. Access to private downloads is enabled after purchase.
+- **Customers** and **customer groups**: Assign downloads directly to individual customers or customer groups.
+- **Create customer downloads via code**: Allows customers to activate personal downloads using a code. These codes are not intended as serial numbers for ESD products.
+- **Language** and **sales channel**: Restrict download visibility to a language or sales channel.
 
-- Aktiv
-- Name
-- Typ (privat oder öffentlich)
-- Hat Dateien (Client-Auswahl und Reiter mit dem Datei-Explorer wird aktiviert)
-- Client (Wähle den Client mit einem Dateisystem)
-- Hat Links (Reiter mit Links wird aktiviert)
-- Hat Codes (Reiter mit Codes wird aktiviert)
-- Produkte (Zuweisung zum Produkt. Privat: Download erst verfügbar nach Bestellung. Öffentlich: Downloads sind sofort verfügbar im Reiter "Downloads" auf der Produkt-Detailseite)
-- Kunden (Direktzuweisung zum Kunden. Kunde kann im Kundenbereich die Downloads sehen und herunterladen)
-- Kundengruppen (selbe Funktion wie bei Kunden)
-- Kunden-Downloads via Code erstellen (Der Kunde kann den persönlichen Download mit einem Code freischalten. Die Codes dienen ausschließlich für den Kunden und dürfen nicht mehr als Seriennummern für ESD Produkte verwendet werden)
-- Beschreibung
-- Sprache (Downloads werden nur für eine bestimmte Sprache geladen)
-- Verkaufskanal (Downloads werden nur für einen bestimmten Verkaufskanal geladen)
+#### File explorer
 
-### Datei-Explorer
+Select the directory that should be available for download. Subdirectories remain accessible to authorised customers and can, for example, be used for categories or languages.
 
-Wähle hier das Verzeichnis aus, welches zum Download zur Verfügung steht. Es sind alle Unterverzeichnisse für den Kunden zugänglich, so kannst du z.B. für unterschiedliche Download-Kategorien oder Sprachen eigene Verzeichnisse anlegen.
+![File explorer](images/dlc-04.jpg)
 
-![](images/dlc-04.jpg)
+#### Links
 
-### Links
+You can add external links, for example when you provide a licence key for a Microsoft product but do not host the file yourself. This reduces your bandwidth requirements.
 
-Hier kannst du externe Links eintragen. z.B. wenn du eine Seriennummer für ein Microsoft Produkt anbietest, aber selbst nicht den Download zur Verfügung stellst. Das entlastet auch deine Bandbreite.
+![Links](images/dlc-05.jpg)
 
-![](images/dlc-05.jpg)
+#### Purchases
 
-### Einkäufe
+This section provides an overview of customer purchases. You can also create or adjust subscriptions manually when needed.
 
-Hier findest du eine Übersicht aller Einkäufe deiner Kunden, diese kannst du bei Bedarf auch selbst erstellen oder anpassen.
+![Purchases](images/dlc-06.jpg)
 
-![](images/dlc-06.jpg)
+#### Codes
 
-### Codes
+Manage serial numbers and volume licence keys for your software products in this section. A volume licence key can be sold multiple times.
 
-In diesem Reiter verwaltest du z.B. die Seriennummern von deinen Softwareprodukten. Es ist auch möglich Volumenlizenzschlüssel einzufügen, damit kann ein Schlüssel mehrmals verkauft werden.
+For personal customer downloads, create a new code; it is generated automatically.
 
-Wenn du die Codes für persönliche Kunden-Downloads nutzen möchtest, kannst zu z.B. einfach ein neues Element erstellen, der Code wird automatisch generiert.
+![Codes](images/dlc-07.jpg)
 
-![](images/dlc-07.jpg)
+#### Additional configuration options
 
-### Zusätzliche Gestaltungsmöglichkeit
+Use a `metadata.xml` file in the directory to configure individual files:
 
-Du kannst eine metadata.xml im Verzeichnis anlegen. Dort hast du drei zusätzliche Optionen:
-
-- visibility (private): Blendet eine Datei aus (z.B. für die metadata.xml selbst)
-- description: Eine zusätzliche Beschreibung für die Datei (aktuell nur einsprachig!)
-- image: Eine Bild-URL oder Base64 für das Icon
-
-Beispiel:
+- `visibility`: Hides a file, for example the metadata file itself.
+- `description`: Adds a file description.
+- `image`: Sets an image URL or Base64 image for the icon.
 
 ```xml
 <files>
     <file name="_metadata.xml">
         <visibility>private</visibility>
-        <description>Benutze dies um deine XML Datei zu verstecken</description>
+        <description>Hides this XML file</description>
     </file>
     <file name="FroshTools-0.2.12.zip">
         <visibility>private</visibility>
     </file>
     <file name="sample.pdf">
-        <description>Irgendein PDF aus dem Internet</description>
+        <description>A PDF from the internet</description>
         <image>data:image/png;base64,(...)</image>
     </file>
     <file name="FroshPlatformAdminer-0.3.4.zip">
-        <description>Ein tolles Tool um Datenbanken in Shopware 6 zu verwalten</description>
-        <image>https://avatars.githubusercontent.com/u/36633261?s=200&v=4</image>
+        <description>A useful tool for managing databases</description>
+        <image>https://avatars.githubusercontent.com/u/36633261?s=200&amp;v=4</image>
     </file>
 </files>
 ```
 
 ## Storefront
 
-### Einkaufswelten
+### Shopping Experiences
 
-In diesem Beispiel sieht man ein Download Center als CMS Element.
+This example embeds a Download Center as a CMS element.
 
-![](images/dlc-20.jpg)
+![CMS element](images/dlc-20.jpg)
 
-Ein Unterverzeichnis wird geöffnet.
+Opening a subdirectory:
 
-![](images/dlc-21.jpg)
+![Subdirectory](images/dlc-21.jpg)
 
-### Produkte
+### Products
 
-Ein normales ESD Produkt (Kann ein Download und/oder ein Code beinhalten)
+An ESD product can contain a download, a code, or both.
 
-![](images/dlc-22.jpg)
+![ESD product](images/dlc-22.jpg)
 
-Ein Produkt mit öffentlichen Downloads, wie z.B. Bedienungsanleitungen.
+A product with public downloads, for example manuals:
 
-![](images/dlc-23.jpg)
+![Public downloads](images/dlc-23.jpg)
 
 !!! note
 
-      Du kannst auch private und öffentliche Downloads bei einem Produkt kombinieren
+      You can combine private and public downloads in one product.
 
-### Einkauf von ESD Produkten
+### Purchasing ESD products
 
-#### Warenkorb
+#### Cart
 
-In diesem Beispiel kaufe ich ein gratis ESD Produkt, ein Produkt mit Codes un ein kostenpflichtiges ESD Produkt.
+In this example, the cart contains a free ESD product, a product with codes, and a paid ESD product.
 
-![](images/dlc-24.jpg)
+![Cart](images/dlc-24.jpg)
+![Cart](images/dlc-25.jpg)
 
-![](images/dlc-25.jpg)
+#### My purchases
 
-#### Meine Einkäufe
+The **My purchases** page in the customer account displays download subscriptions alongside the order overview.
 
-Neben der Bestellübersicht erscheint eine neue Seite im Kundenbereich mit den sogenannten Subscriptions.
+![My purchases](images/dlc-26.jpg)
 
-![](images/dlc-26.jpg)
+1. Free ESD products are activated immediately; access may be time-limited.
+2. Paid ESD products become available once the order reaches the **paid** payment status.
+3. The subscription displays its status and contents.
 
-1. Das ist das gratis ESD Produkt und sofort freigeschaltet, die Freischaltung ist jedoch auf ein Datum limitiert.
-2. Ein kostenpflichtiges ESD Produkt muss erst den Status "bezahlt" erreichen.
-3. Informationen über Status und Inhalt der Subscription.
+After setting the payment status to **paid**, downloads and codes become available.
 
-Jetzt setze ich im Admin den Zahlungsstatus auf "bezahlt" und prüfe erneut meine Subscriptions.
+![Activated downloads](images/dlc-27.jpg)
+![Activated downloads](images/dlc-28.jpg)
 
-![](images/dlc-27.jpg)
+### Flow Builder and email notifications
 
-Downloads und Code stehen hier nun zur Verfügung.
+Dedicated Flow Builder events are available for download subscriptions. They allow you to send email notifications independently of the order email.
 
-![](images/dlc-28.jpg)
+| Event | Triggered when |
+| --- | --- |
+| `EsdCreated` | a download subscription is created |
+| `EsdActivated` | a subscription is activated (`active = true`) |
+| `EsdDeactivated` | a subscription is deactivated (`active = false`) |
 
-### Persönliche Downloads
+When a subscription is created, `EsdCreated` is followed by the activation or deactivation event that matches its status.
 
-Da es neben den Subscriptions auch eine Direktzuweisung über den Kunden oder die Kundengruppe gibt, hat der Kunde die Möglichkeit auf die Downloads direkt zuzugreifen.
+Create a Flow Builder flow for one of these events and add the **Send email** action. The supplied **Download notice** email template is available in German and English.
 
-![](images/dlc-29.jpg)
+The following variables are available in the email templates:
 
-Das Eingabefeld um einen Code einzulösen wird über die Plugin einstellungen bei Bedarf ein- oder ausgeblendet.
+```twig
+{{ customer.firstName }}
+{{ customer.lastName }}
+{{ esd.downloadCenter.translated.name }}
+{{ deeplink }}
+```
 
-## Sonderfall: Gastbesteller
+`{{ deeplink }}` contains the complete URL to **My purchases** and the subscriptions. It consists of the **Deeplink URL** plugin setting and the subscription's personal token, so it also works for guest customers.
 
-Auch als Gastbesteller hat man die Möglichkeit ESD Produkte zu kaufen. Dafür musst du jedoch eine kleine Änderung am E-Mail Template durchführen.
+!!! note
 
-Im Text Bereich diese Variable einfügen
+      The previous order subscriber that stores links as custom fields on the order is deprecated. Use the Flow Builder events and email templates for new notifications.
+
+### Personal downloads
+
+In addition to subscriptions, downloads can be assigned directly to customers or customer groups. Eligible customers can access these downloads in their customer account.
+
+![Personal downloads](images/dlc-29.jpg)
+
+The field for redeeming a code can be enabled or disabled through the plugin configuration.
+
+## Guest customers
+
+Guest customers can purchase ESD products and access their downloads through a personal deeplink. The following custom fields remain available for older order email templates:
+
+For the plain-text content:
+
 ```text
 {{ order.customFields.downloadCenterPlain }}
 ```
 
-Im HTML Bereich diese Variable einfügen
+For the HTML content:
+
 ```html
 {{ order.customFields.downloadCenterHtml|raw }}
 ```
 
-![](images/dlc-30.jpg)
+![Guest customer email](images/dlc-30.jpg)
 
-Nun sieht der Gastbesteller in der E-Mail einen direkten Link zu seinem gewünschten Download-Produkt.
+The link takes guest customers directly to their download subscriptions.
 
-![](images/dlc-31.jpg)
-
-Durch diesen Link kann der Kunde nun die Seite zum Download aufrufen.
-
-![](images/dlc-32.jpg)
+![Guest customer downloads](images/dlc-32.jpg)
