@@ -1,0 +1,31 @@
+# Your tickets: buy, download and show at the entrance
+
+## Ordering tickets
+
+Open **Events** in the shop, choose an event and ticket category, add the required quantity to your cart and complete checkout using an offered payment method. Each admission ticket has its own number and QR code.
+
+A place is occupied only when checkout is completed. Availability can change while tickets remain in the cart.
+
+## Receiving your tickets
+
+Tickets are activated after confirmed full payment and sent by email as a PDF. An order confirmation alone is not a valid admission ticket. The shop sets its payment deadline; pay promptly and contact the organiser if payment is late.
+
+With a customer account, sign in and open **My account → Tickets** to download your assigned activated tickets. Guest purchasers receive tickets by email; there is no public guest download link. Manual invitations may also be emailed or supplied directly as PDFs.
+
+## At the entrance
+
+1. Open the PDF on your phone or print it legibly.
+2. Have the correct QR code for this event ready.
+3. Show one individual ticket for each person.
+
+A code can only be redeemed once. Copies and repeat downloads do not create extra admissions. Keep your PDF safe and share a code only with the person who should use it. The ticket number helps customer support; regular scanning requires the QR code.
+
+## If something goes wrong
+
+- **No email:** Check spam and contact the shop with your order or ticket number. Staff can investigate or resend.
+- **Payment pending:** Check payment completion. Activation follows confirmation in the shop system.
+- **Expired or revoked:** The ticket is not valid for admission. Contact the organiser.
+- **Already redeemed:** The ticket has already been used. Printing again does not reset it.
+- **Wrong event:** Check event name and date on the PDF.
+
+Changes, refunds and rebookings are subject to the shop's or organiser's terms. Contact their customer service for assistance.
