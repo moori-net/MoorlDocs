@@ -65,8 +65,7 @@ Content-Type: application/json
   "page": 1,
   "limit": 25,
   "filter": [
-    { "type": "equals", "field": "active", "value": true },
-    { "type": "equals", "field": "status", "value": "published" }
+    { "type": "equals", "field": "active", "value": true }
   ],
   "sort": [{ "field": "startAt", "order": "ASC" }],
   "includes": {
@@ -119,7 +118,7 @@ HTTP 200 bedeutet eine fachlich verarbeitete Anfrage. Nur `accepted` bestätigt 
 | `accepted` | Gültiges Ticket atomar eingelöst. | Einlass akzeptiert. |
 | `already_redeemed` | Ticket durch eine andere eigenständige Anfrage bereits eingelöst. | Kein erneuter Einlass; Klärung anbieten. |
 | `wrong_event` | Ticket gehört zu einer anderen Veranstaltung. | Auswahl prüfen; `ticketNumber` bleibt `null`. |
-| `event_closed` | Veranstaltung inaktiv, nicht `published` oder vorhandene Endzeit überschritten. | Veranstaltungsleitung kontaktieren. |
+| `event_closed` | Veranstaltung inaktiv oder vorhandene Endzeit überschritten. | Veranstaltungsleitung kontaktieren. |
 | `not_valid` | Ticket ist beispielsweise offen, abgelaufen oder widerrufen. | Keine Freigabe; Verwaltung kontaktieren. |
 | `unknown` | Token nicht gefunden. | Code prüfen; `ticketNumber` ist `null`. |
 

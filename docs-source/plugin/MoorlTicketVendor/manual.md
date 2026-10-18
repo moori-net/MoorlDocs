@@ -58,7 +58,7 @@ Bei erneuter Installation dieser Datenpakete werden vorhandene Nummernkreis-Konf
 2. Unter **Einstellungen → System → Benutzer & Berechtigungen** einen separaten Benutzer anlegen.
 3. Die Rolle **Ticket Vendor – Scanner** zuweisen und Administratorzugriff ausschalten.
 4. Weitere Rollen entfernen, wenn ausschließlich Einlassberechtigungen gewünscht sind.
-5. Mit diesem Benutzer anmelden und **Kataloge → Ticketscanner** testen.
+5. Mit diesem Benutzer anmelden und **Dashboard → Ticketscanner** testen.
 
 Die Rolle gewährt `moorl_tv_ticket_sale:read` und `moorl_tv_ticket:scan`. Allgemeines Ticketändern, Versand, Widerruf, PDF-Ausgabe, Kunden- und Bestellzugriffe sind nicht enthalten. Standardrechte, die Shopware jeder Admin-Anmeldung automatisch gibt, bleiben bestehen. Veranstaltungsbezogene Zugriffsbeschränkungen gibt es nicht.
 
@@ -68,7 +68,7 @@ Das Datenpaket erstellt weder Benutzer noch Passwörter noch API-Zugangsschlüss
 
 ## Vor dem ersten Verkauf
 
-- Veranstaltung und Typ aktivieren; Veranstaltungsstatus `published` und gültige Zeitfenster kontrollieren.
+- Veranstaltung und Typ aktivieren und gültige Zeitfenster kontrollieren.
 - Preise, Steuer, Währung, Kontingent und Kaufgrenzen prüfen.
 - Datum/Uhrzeit bei Importen in UTC pflegen und Zeitzonenanzeige im verwendeten Theme prüfen.
 - Konto- und Gastbestellung mit Ihrem Zahlungsanbieter testen.
@@ -94,14 +94,14 @@ Eine Deinstallation mit Beibehaltung der Benutzerdaten erhält die Daten. Bei ei
 
 | Symptom | Kontrollieren |
 | --- | --- |
-| Keine Veranstaltung sichtbar | Aktiv, `published`, Anzeigezeitfenster, Eventende; ohne Ende den Beginn. |
+| Keine Veranstaltung sichtbar | Aktiv, Anzeigezeitfenster, Eventende; ohne Ende den Beginn. |
 | Kauf abgelehnt | Typzuordnung, aktive Verkaufszeiträume, Kontingent und aggregierte Kaufgrenzen. |
 | Zahlung bestätigt, Ticket offen | Native primäre/neuste Transaktion, `paid`, Statusereignisse und Serverprotokoll. |
 | Zahlungsfristen werden nicht verarbeitet | Taskregistrierung, laufender Task-Runner und Messenger-Verarbeitung. |
 | Mail fehlt | Empfänger, Vorlage, SMTP, Versandstatus/-versuche, Warteschlange und Fehlertransport. |
 | Scanner zeigt 403 | Neues Scan-Recht, vollständige Rollenzuweisung und erneute Anmeldung. |
 | Kamera startet nicht | HTTPS, Kameraberechtigung, `BarcodeDetector`; manuelle Eingabe verwenden. |
-| „Veranstaltung geschlossen“ | Veranstaltung aktiv und `published`, Endzeit in UTC und Serverzeit. |
+| „Veranstaltung geschlossen“ | Veranstaltung aktiv, Endzeit in UTC und Serverzeit. |
 | Kunde sieht Ticket nicht | Direkte Kundenzuweisung beziehungsweise Bestellkunde und Verkaufskanal. Eine reine E-Mail-Zuordnung erzeugt keinen Kontozugriff. |
 
 Für technische Details siehe [Laufzeitdokumentation](runtime.md), [Schema](schema.md) und [Scanner-API](mobile-app.md). Die [Händleranleitung](index.md) beschreibt die tägliche Verwaltung.

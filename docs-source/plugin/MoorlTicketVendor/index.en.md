@@ -30,7 +30,7 @@ This guide describes the shipped plugin. The Administration browser scanner is i
 Ticket Vendor requires Shopware 6.7 with Storefront and MoorlFoundation 1.7. Foundation supplies forms, grids, CMS helpers and data packages. Install and activate Foundation first. Scheduled tasks and message consumers must run for payment deadlines and automatic delivery.
 
 1. Create an event under **Catalogues → Events**.
-2. Enter its start, end, location and content; activate it and set its status to `published`.
+2. Enter its start, end, location and content; activate it.
 3. Assign an active ticket type with price, tax and quota.
 4. Create a category with the CMS event listing and select it under **Page with events (list)** in the plugin configuration. Open the event through that category and place a test order.
 5. Test the actual payment process. Tickets become valid and are queued for delivery when Shopware reports the relevant transaction as `paid`.
@@ -44,7 +44,7 @@ The event list provides access to all created events. Event details combine gene
 | Section | Purpose |
 | --- | --- |
 | Name and description | Public title and detailed information. Maintain translated content for your shop languages. |
-| Active and status | Public sales require an active event with status `published`. |
+| Active | This switch controls event availability. Public sales also require valid time windows. |
 | Start and end | Event times. A configured end time also closes admission validation. |
 | Timezone | IANA identifier such as `Europe/Berlin`. Technical timestamps are stored in UTC; use UTC when importing. |
 | Show from/until | Separate public visibility and sales window, in addition to event times. |
@@ -54,7 +54,7 @@ The event list provides access to all created events. Event details combine gene
 
 Public visibility requires a matching sales window. When an end time is configured, public sales end at that time; otherwise they end at the event start. Set “Show until” for an earlier sales cutoff.
 
-Events do not have a technical name. Their ID identifies them; the translated name is for display. Existing ticket and audit references restrict deletion. Use visibility and status to stop selling an event.
+Events do not have a technical name. Their ID identifies them; the translated name is for display. Existing ticket and audit references restrict deletion. Deactivate the event or restrict its selling window to stop sales.
 
 ## Ticket types, prices and quotas
 
@@ -116,7 +116,7 @@ Create a customer ticket directly within an event. The event is preselected and 
 For an internal guest list:
 
 1. Create a Guest list ticket type with price zero and its own quota.
-2. Leave the type **inactive** to exclude it from public sales. The event itself must remain active and `published` for admission.
+2. Leave the type **inactive** to exclude it from public sales. The event itself must remain active for admission.
 3. Create one ticket per guest.
 4. Optionally assign a customer or recipient email address.
 5. Print/download or send the PDF and scan it normally at the entrance.
@@ -154,7 +154,7 @@ The **Send tickets** action is available for events with an order context. It ne
 ## Admission with the browser scanner
 
 1. Sign in as a user with the **Ticket Vendor – Scanner** role.
-2. Open **Catalogues → Ticket scanner**.
+2. Open **Dashboard → Ticket scanner**.
 3. Select the correct event.
 4. Start **Scan QR with camera** and allow camera access, or enter the complete ticket token manually/use a compatible scanner that enters it as text.
 5. Check the result. Only **Check-in accepted** confirms a new redemption.
@@ -170,14 +170,14 @@ Camera scanning needs a secure browser context, normally HTTPS, and `BarcodeDete
 | Check-in accepted | Admit the attendee; the ticket was redeemed. |
 | Already redeemed | Do not grant another admission based on that code; consult the event manager. |
 | Wrong event | Check the selected event. |
-| Event closed | Ask an administrator to check event activation, status and end time. |
+| Event closed | Ask an administrator to check event activation and end time. |
 | Not valid | Ask an administrator to check payment, expiry or revocation. |
 | Unknown ticket | Check the complete code and contact administration if necessary. |
 | Network error | No reliable outcome yet. Retry the same scan request. |
 
 The API prevents double redemption during concurrent scans. Retrying the same request returns its original outcome; a new independent scan of a redeemed ticket reports “already redeemed”. The audit records outcome, time, request ID and optionally device and authenticated user/integration. There is no dedicated check-in reset operation.
 
-Admission requires an active, published event whose configured end time has not passed. There is no separate configurable admission opening time: a future start time alone does not prevent scanning.
+Admission requires an active event whose configured end time has not passed. There is no separate configurable admission opening time: a future start time alone does not prevent scanning.
 
 ## Users and scanner role
 
@@ -201,7 +201,7 @@ No order is needed. A configured Foundation demo customer is associated optional
 
 ## Frequently asked questions
 
-**Why is an event missing from the shop?** Check Active, `published`, visibility window and event end. Without an end time, public sales stop at the start.
+**Why is an event missing from the shop?** Check Active, visibility window and event end. Without an end time, public sales stop at the start.
 
 **Why is a ticket type missing?** It must belong to the event, be active and fall within its sales window. An internal guest-list type deliberately remains inactive.
 

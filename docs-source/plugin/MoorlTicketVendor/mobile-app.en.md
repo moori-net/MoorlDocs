@@ -65,8 +65,7 @@ Content-Type: application/json
   "page": 1,
   "limit": 25,
   "filter": [
-    { "type": "equals", "field": "active", "value": true },
-    { "type": "equals", "field": "status", "value": "published" }
+    { "type": "equals", "field": "active", "value": true }
   ],
   "sort": [{ "field": "startAt", "order": "ASC" }],
   "includes": {
@@ -119,7 +118,7 @@ HTTP 200 means the request was processed. Only `accepted` confirms redemption fo
 | `accepted` | Valid ticket atomically redeemed. | Admission accepted. |
 | `already_redeemed` | A different independent request already redeemed the ticket. | No additional admission; consult staff. |
 | `wrong_event` | Ticket belongs to another event. | Check event selection; `ticketNumber` is `null`. |
-| `event_closed` | Event inactive, not `published`, or configured end time passed. | Contact event manager. |
+| `event_closed` | Event inactive or configured end time passed. | Contact event manager. |
 | `not_valid` | Ticket pending, expired or revoked, for example. | No approval; contact administration. |
 | `unknown` | Token not found. | Check code; `ticketNumber` is `null`. |
 

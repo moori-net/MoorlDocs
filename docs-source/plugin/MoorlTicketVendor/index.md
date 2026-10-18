@@ -32,7 +32,7 @@ Ticket Vendor setzt Shopware 6.7 mit Storefront und MoorlFoundation 1.7 voraus. 
 Ein erster vollständiger Durchlauf sieht so aus:
 
 1. Unter **Kataloge → Veranstaltungen** eine Veranstaltung erstellen.
-2. Beginn, Ende, Ort und Inhalte pflegen; Veranstaltung aktivieren und den Status `published` setzen.
+2. Beginn, Ende, Ort und Inhalte pflegen; Veranstaltung aktivieren.
 3. Einen aktiven Tickettyp mit Preis, Steuer und Kontingent zuordnen.
 4. Eine Kategorie mit dem CMS-Veranstaltungslisting anlegen und in der Plugin-Konfiguration unter **Seite mit Veranstaltungen (Liste)** auswählen. Die Veranstaltung über diese Kategorie öffnen und eine Testbestellung aufgeben.
 5. Den tatsächlichen Zahlungsablauf prüfen. Sobald Shopware die maßgebliche Transaktion als `paid` meldet, werden die Tickets gültig und zum Versand vorgemerkt.
@@ -46,7 +46,7 @@ Die Veranstaltungsliste zeigt die angelegten Veranstaltungen. Die Detailansicht 
 | Bereich | Verwendung |
 | --- | --- |
 | Name und Beschreibung | Öffentliche Bezeichnung und ausführliche Veranstaltungsinformationen; übersetzbare Inhalte in den verwendeten Shopsprachen pflegen. |
-| Aktiv und Status | Öffentlicher Verkauf setzt eine aktive Veranstaltung mit Status `published` voraus. |
+| Aktiv | Dieser Schalter steuert die Freigabe der Veranstaltung. Für den Verkauf müssen zusätzlich die Zeitfenster passen. |
 | Beginn und Ende | Zeitpunkt der Veranstaltung. Ein Enddatum beendet auch die Gültigkeitsprüfung am Einlass. |
 | Zeitzone | IANA-Bezeichnung, etwa `Europe/Berlin`. Zeitangaben werden technisch in UTC gespeichert; bei Importen UTC verwenden. |
 | Anzeigen ab/bis | Separates Zeitfenster für öffentliche Sichtbarkeit und Verkauf. Es ersetzt die Veranstaltungszeiten nicht. |
@@ -56,7 +56,7 @@ Die Veranstaltungsliste zeigt die angelegten Veranstaltungen. Die Detailansicht 
 
 Eine öffentliche Veranstaltung benötigt ein passendes Anzeigezeitfenster. Ist ein Endzeitpunkt vorhanden, endet der öffentliche Verkauf mit diesem; ohne Endzeitpunkt bereits mit dem Beginn. Für einen früheren Vorverkaufsschluss setzen Sie zusätzlich „Anzeigen bis“.
 
-Die Veranstaltung besitzt keinen technischen Namen. Ihre Identität ergibt sich aus der ID; der übersetzte Name dient der Darstellung. Bereits verwendete Datensätze lassen sich wegen ihrer Ticket- und Protokollbezüge nicht beliebig löschen. Verwenden Sie zum Beenden des Verkaufs Sichtbarkeit und Status.
+Die Veranstaltung besitzt keinen technischen Namen. Ihre Identität ergibt sich aus der ID; der übersetzte Name dient der Darstellung. Bereits verwendete Datensätze lassen sich wegen ihrer Ticket- und Protokollbezüge nicht beliebig löschen. Deaktivieren Sie die Veranstaltung oder begrenzen Sie den Verkaufszeitraum, um den Verkauf zu beenden.
 
 ## Tickettypen, Preise und Kontingente
 
@@ -118,7 +118,7 @@ Sie können innerhalb einer Veranstaltung direkt ein neues Kundenticket anlegen.
 Für eine interne Gästeliste:
 
 1. Einen Tickettyp „Gästeliste“ mit Preis 0 und eigenem Kontingent anlegen.
-2. Den Typ **inaktiv** lassen, damit er nicht öffentlich verkauft wird. Die Veranstaltung selbst muss für den Einlass aktiv und `published` bleiben.
+2. Den Typ **inaktiv** lassen, damit er nicht öffentlich verkauft wird. Die Veranstaltung selbst muss für den Einlass aktiv bleiben.
 3. Für jeden Gast ein Ticket dieses Typs erstellen.
 4. Optional einen Kunden oder eine Empfänger-E-Mail zuordnen.
 5. Das PDF ausgeben oder gezielt versenden und beim Einlass regulär scannen.
@@ -156,7 +156,7 @@ Die Aktion **Tickets versenden** steht für Flow-Ereignisse mit Bestellkontext z
 ## Einlass mit dem Browser-Scanner
 
 1. Einen Benutzer mit der Rolle **Ticket Vendor – Scanner** anmelden lassen.
-2. **Kataloge → Ticketscanner** öffnen.
+2. **Dashboard → Ticketscanner** öffnen.
 3. Die richtige Veranstaltung auswählen.
 4. **QR mit Kamera scannen** starten und gegebenenfalls die Kameraberechtigung erteilen. Alternativ den Ticket-Token manuell eingeben oder mit einem geeigneten Scanner als Text erfassen.
 5. Das Ergebnis prüfen. Nur **Check-in akzeptiert** bestätigt eine neue Einlösung.
@@ -172,14 +172,14 @@ Die Kameraerkennung setzt einen sicheren Browserkontext, üblicherweise HTTPS, u
 | Check-in akzeptiert | Einlass gewähren. Das Ticket wurde eingelöst. |
 | Ticket bereits eingelöst | Keinen weiteren Einlass allein anhand dieses Codes gewähren; Klärung durch Veranstaltungsleitung. |
 | Andere Veranstaltung | Veranstaltungsauswahl prüfen. |
-| Veranstaltung geschlossen | Aktivierung, Status und Endzeit durch die Verwaltung prüfen lassen. |
+| Veranstaltung geschlossen | Aktivierung und Endzeit durch die Verwaltung prüfen lassen. |
 | Ticket nicht gültig | Zahlung, Ablauf oder Widerruf durch die Verwaltung prüfen lassen. |
 | Unbekanntes Ticket | Vollständigen Code prüfen; bei Bedarf Verwaltung einschalten. |
 | Netzwerkfehler | Es liegt noch kein verlässliches Ergebnis vor. Denselben Scan erneut versuchen. |
 
 Die API verhindert eine doppelte Einlösung bei parallelen Scans. Eine technische Wiederholung derselben Anfrage liefert das ursprüngliche Ergebnis, ein neuer Scan eines eingelösten Tickets meldet dagegen „bereits eingelöst“. Das Check-in-Protokoll dokumentiert Ergebnis, Zeitpunkt, Anfrage-ID und gegebenenfalls Gerät sowie Benutzer/Integration. Es bietet keine Funktion zum Zurücksetzen eines Check-ins.
 
-Der Einlass verlangt eine aktive, veröffentlichte Veranstaltung, deren vorhandenes Enddatum nicht überschritten ist. Es gibt derzeit keine separate konfigurierbare Einlassöffnung: Ein künftiger Veranstaltungsbeginn verhindert einen Scan allein nicht.
+Der Einlass verlangt eine aktive Veranstaltung, deren vorhandenes Enddatum nicht überschritten ist. Es gibt derzeit keine separate konfigurierbare Einlassöffnung: Ein künftiger Veranstaltungsbeginn verhindert einen Scan allein nicht.
 
 ## Benutzer und Scanner-Rolle
 
@@ -203,7 +203,7 @@ Die Daten brauchen keine Bestellung. Ein konfigurierter Foundation-Demokunde wir
 
 ## Häufige Fragen
 
-**Warum ist die Veranstaltung im Shop nicht sichtbar?** Prüfen Sie Aktiv-Schalter, `published`, Anzeigezeitraum und Veranstaltungsende. Ohne Ende gilt der Beginn als öffentliche Verkaufsgrenze.
+**Warum ist die Veranstaltung im Shop nicht sichtbar?** Prüfen Sie Aktiv-Schalter, Anzeigezeitraum und Veranstaltungsende. Ohne Ende gilt der Beginn als öffentliche Verkaufsgrenze.
 
 **Warum fehlt ein Tickettyp?** Er muss zur Veranstaltung gehören, aktiv sein und im eigenen Verkaufszeitraum liegen. Ein interner Gästelistentyp bleibt bewusst inaktiv.
 

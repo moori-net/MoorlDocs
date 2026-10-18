@@ -4,7 +4,7 @@ Die vollständige [Händleranleitung](index.md), [Installation](manual.md), [Kun
 
 ## Einstieg
 
-Veranstaltungen werden unter Kataloge verwaltet, Tickettypen unter Einstellungen. Tickettypen gehören zu genau einer Veranstaltung. Zum öffentlichen Verkauf müssen Veranstaltung und Typ aktiv sein, die Veranstaltung den Status `published` haben und die Verkaufszeiträume passen. Ohne Endzeitpunkt endet der öffentliche Verkauf zum Veranstaltungsbeginn. Preise, Steuern und Kontingente werden serverseitig gelesen.
+Veranstaltungen werden unter Kataloge verwaltet, Tickettypen unter Einstellungen. Tickettypen gehören zu genau einer Veranstaltung. Zum öffentlichen Verkauf müssen Veranstaltung und Typ aktiv sein und die Verkaufszeiträume passen. Ohne Endzeitpunkt endet der öffentliche Verkauf zum Veranstaltungsbeginn. Preise, Steuern und Kontingente werden serverseitig gelesen.
 
 Die Veranstaltungsübersicht ist eine normale Shopware-Kategorie mit dem Foundation-CMS-Baustein `moorl-tv-ticket-sale-listing`; in der Plugin-Konfiguration wird sie unter `category` ausgewählt. Die eigene Listing-Route `/tickets` entfällt. Der Detailcontroller bedient ausschließlich `/tickets/{saleId}`. Native SEO-URLs verwenden standardmäßig `tickets/{{ sale.translated.name }}/{{ sale.id }}`. Angemeldete Kunden finden berechtigte Tickets unter `/account/tickets` und können gültige Tickets als PDF herunterladen.
 

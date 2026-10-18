@@ -4,6 +4,8 @@ Stand: 16.10.2026. Das Plugin enthält inzwischen Checkout, Zahlungsprüfung, Ad
 
 ## Tabellen und Beziehungen
 
+Veranstaltungen haben keinen eigenen Status. Freigabe und Sichtbarkeit ergeben sich aus `active` und den vorhandenen Zeitfenstern. Bei bestehenden Installationen die obsolete Spalte `moorl_tv_ticket_sale.status` mit dem externen Schemawerkzeug entfernen und vorhandene Veranstaltungs-Importprofile ohne dieses Feld abgleichen. Ticket-, Versand- und Bestellstatus sind davon unabhängig.
+
 | Tabelle | Zweck und Beziehungen |
 |---|---|
 | `moorl_tv_ticket_sale` | Event mit Foundation-Inhalt, Banner, Adresse/Koordinaten, CMS-Bezug, Verkaufszeitraum und separaten Eventzeiten |

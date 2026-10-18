@@ -58,7 +58,7 @@ Repeated data installation preserves existing number range configuration, mail t
 2. Create a separate user under **Settings → System → Users & permissions**.
 3. Assign **Ticket Vendor – Scanner** and disable administrator access.
 4. Remove other roles if the account should only perform entrance duties.
-5. Sign in with that account and test **Catalogues → Ticket scanner**.
+5. Sign in with that account and test **Dashboard → Ticket scanner**.
 
 The role grants `moorl_tv_ticket_sale:read` and `moorl_tv_ticket:scan`. It does not include general ticket modification, sending, revocation, PDF, customer or order access. Shopware's default authenticated Administration privileges still apply. It is not restricted to selected events.
 
@@ -68,7 +68,7 @@ No users, passwords or integration keys are created by the data package. Reimpor
 
 ## Before opening sales
 
-- Check active event/type, event status `published` and all sales windows.
+- Check active event/type and all sales windows.
 - Review prices, taxes, currencies, quota and purchase limits.
 - Import timestamps in UTC and verify time display with your theme.
 - Test registered and guest checkout with the intended payment provider.
@@ -94,14 +94,14 @@ Uninstallation with retained user data preserves records. Without retained data,
 
 | Symptom | Check |
 | --- | --- |
-| No public event | Active, `published`, display window, event end; without end, event start. |
+| No public event | Active, display window, event end; without end, event start. |
 | Purchase rejected | Type/event assignment, sales windows, quota, aggregated purchase limits. |
 | Paid order, pending ticket | Relevant primary/latest transaction, native `paid` state, events and server logs. |
 | Deadlines not processed | Task registration, running scheduler and Messenger consumers. |
 | Email missing | Recipient, template, SMTP, delivery attempts/state, queues and failure transport. |
 | Scanner returns 403 | New scan privilege, complete role assignment, fresh login. |
 | Camera unavailable | HTTPS, permission, `BarcodeDetector`; use manual input. |
-| Event closed | Active and `published`, UTC end time and server clock. |
+| Event closed | Active, UTC end time and server clock. |
 | Ticket absent from account | Direct customer assignment or order customer and sales channel. Email alone grants no account ownership. |
 
 See the [merchant guide](index.en.md), [scanner API](mobile-app.en.md), [runtime notes](runtime.md) and [schema](schema.md) for details.
