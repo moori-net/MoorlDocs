@@ -13,6 +13,8 @@ Strukturierte Eventdaten werden automatisch auf der Veranstaltungsseite ausgegeb
 
 ## Installation
 
+Mit **Veranstaltungen mit Archiv (statisch)** (`moorl-tv-ticket-sale-static-listing`) fügen Sie eine feste Übersicht aller aktiven Events hinzu. Laufende und kommende Veranstaltungen stehen mit dem nächsten Termin zuerst oben; vergangene folgen absteigend und ausgegraut. Verkaufszeiträume begrenzen diese Übersicht nicht. Über **Alternative Veranstaltungs-URL** am Event können private Events beispielsweise zur Community verlinken. Ohne alternative URL führt der Link bei verfügbaren Events zur Veranstaltungsseite. Vergangene Events erhalten keinen Kaufbutton. Die optionale Spalte `moorl_tv_ticket_sale.alternative_url` (`VARCHAR(2048)`, nullable) mit dem Schemawerkzeug ergänzen und anschließend Administration und Theme neu bauen.
+
 Weisen Sie einer Shopware-Kategorie eine Erlebniswelt mit `moorl-tv-ticket-sale-listing` zu und wählen Sie diese Kategorie in der Plugin-Konfiguration unter **Seite mit Veranstaltungen (Liste)** (`category`). Dort stellen Sie unter **Standard-CMS-Seite für Veranstaltungsdetails** (`cmsPageId`) das Standardlayout für Events ein. Die am Event ausgewählte CMS-Seite hat Vorrang.
 
 1. Foundation installieren und aktivieren.

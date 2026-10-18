@@ -87,6 +87,8 @@ Die in der Plugin-Konfiguration unter `category` gewählte Shopware-Kategorie ve
 
 Die mitgelieferte SEO-Vorlage erzeugt URLs nach dem Muster `tickets/<Veranstaltungsname>/<ID>`. Nach Änderungen müssen die SEO-Indizes aktuell sein. Ein vorhandenes, angepasstes SEO-Template wird bei erneutem Datenimport erhalten.
 
+Mit **Veranstaltungen mit Archiv (statisch)** (`moorl-tv-ticket-sale-static-listing`) fügen Sie eine feste Übersicht aller aktiven Events hinzu. Laufende und kommende Veranstaltungen stehen mit dem nächsten Termin zuerst oben; vergangene folgen absteigend und ausgegraut. Verkaufszeiträume begrenzen diese Übersicht nicht. Über **Alternative Veranstaltungs-URL** am Event können private Events beispielsweise zur Community verlinken. Ohne alternative URL führt der Link bei verfügbaren Events zur Veranstaltungsseite. Vergangene Events erhalten keinen Kaufbutton. Die optionale Spalte `moorl_tv_ticket_sale.alternative_url` (`VARCHAR(2048)`, nullable) mit dem Schemawerkzeug ergänzen und anschließend Administration und Theme neu bauen.
+
 ## Bestellung, Bezahlung und automatische Freigabe
 
 Für jede gekaufte Einheit entsteht ein eigenes Ticket. Eine Bestellposition mit Menge drei erzeugt also drei Ticketnummern und drei QR-Codes. Mehrere Kategorien einer Veranstaltung und Tickets verschiedener Veranstaltungen können in einer Bestellung vorkommen.

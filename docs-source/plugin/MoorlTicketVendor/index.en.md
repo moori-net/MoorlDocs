@@ -85,6 +85,8 @@ The Foundation **Events** CMS element (`moorl-tv-ticket-sale-listing`) embeds an
 
 The supplied native SEO template uses `tickets/<event-name>/<ID>`. Keep SEO indexes current after changes. Existing customised SEO templates are preserved when importing the data package again.
 
+Use **Events with archive (static)** (`moorl-tv-ticket-sale-static-listing`) for a fixed overview of all active events. Ongoing and upcoming events appear first, with the nearest date at the top; past events follow in descending order with a grey appearance. Ticket selling windows do not restrict this overview. Set **Alternative event URL** on an event to link private events to a community, for example. Without an alternative URL, available events link to their event page. Past events have no purchase button. Add the optional nullable `moorl_tv_ticket_sale.alternative_url` column (`VARCHAR(2048)`) using the schema tool, then rebuild Administration and the theme.
+
 ## Orders, payments and activation
 
 One individual ticket is created for each purchased unit. A line item with quantity three therefore produces three ticket numbers and QR codes. An order may contain different categories and events.

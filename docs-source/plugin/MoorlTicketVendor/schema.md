@@ -4,6 +4,8 @@ Stand: 16.10.2026. Das Plugin enthält inzwischen Checkout, Zahlungsprüfung, Ad
 
 ## Tabellen und Beziehungen
 
+Das statische CMS-Listing verwendet `moorl_tv_ticket_sale.alternative_url` als optionale alternative Event-Adresse (`VARCHAR(2048)`, nullable). Die Spalte über das externe Schemawerkzeug ergänzen; es wird keine PHP-Migration angelegt. Das Listing akzeptiert HTTP-/HTTPS-Adressen und interne Pfade ab `/`.
+
 Für Ticket-Deeplinks die nullable Spalte `moorl_tv_ticket.deeplink` (`VARCHAR(40)`) mit eindeutigem Index über das externe Schemawerkzeug ergänzen. Neue Tickets erhalten einen zufälligen Code; bei bestehenden Tickets wird er beim Anzeigen im Kundenkonto oder beim Versand einmalig ergänzt. Der Code ist unabhängig vom QR-Token und bleibt aus allgemeinen API-/JSON-Ausgaben verborgen. Keine PHP-Migration.
 
 Neu für strukturierte Eventdaten: nullable JSON-Spalte `moorl_tv_ticket_sale_translation.schema_org` über das externe Schemawerkzeug erzeugen. Die DAL-Eigenschaft `schemaOrg` ist übersetzbar und API-lesbar. Ergänzungen werden mit automatisch erzeugten Eventdaten zusammengeführt und als JSON-LD auf der Detailseite ausgegeben. Details: [schema-org.md](schema-org.md). Es wird keine zusätzliche PHP-Migration angelegt.
@@ -55,7 +57,7 @@ Alle Entities haben UUID-ID und Shopware-Zeitstempel; Ticket zusätzlich `custom
 | `unitIndex` / `unit_index` | Integer ≥ 0, Default 0; einzelne Einheit der Bestellposition |
 | `ticketNumber` / `ticket_number` | Native `NumberRangeField`, automatisch aus Nummernkreis `moorl_tv_ticket`, eindeutig und nach Erstellung unveränderlich, maximal 64 Zeichen |
 | `token` | Erforderlicher eindeutiger Klartext, maximal 64 Zeichen; intern über `getToken()` |
-| `customerId` / `customer_id` | Optionaler Shopware-Kunde, Foundation `EntityCustomerTrait` |
+| `customerId` / `customer_id` | Optionaler Shopware-Kunde, Foundation `EntityCustomerTrait`; neue Bestelltickets übernehmen `order_customer.customer_id` direkt |
 | `recipientEmail` / `recipient_email` | Optionales natives `EmailField`, auch ohne Kundenkonto |
 | `attendeeName` / `attendee_name` | Optionales `StringField`, maximal 511 Zeichen, Vor- und Nachname auf PDF und Scan-Ergebnis |
 | `attendeePhone` / `attendee_phone` | Optionale Handynummer als `StringField`, nullable `VARCHAR(64)`; Scan-Ergebnis und Anruflink im Browser-Scanner |

@@ -13,6 +13,8 @@ Event detail pages automatically publish structured data. Additional schema.org 
 
 ## Installation
 
+Use **Events with archive (static)** (`moorl-tv-ticket-sale-static-listing`) for a fixed overview of all active events. Ongoing and upcoming events appear first, with the nearest date at the top; past events follow in descending order with a grey appearance. Ticket selling windows do not restrict this overview. Set **Alternative event URL** on an event to link private events to a community, for example. Without an alternative URL, available events link to their event page. Past events have no purchase button. Add the optional nullable `moorl_tv_ticket_sale.alternative_url` column (`VARCHAR(2048)`) using the schema tool, then rebuild Administration and the theme.
+
 Assign a shopping experience containing `moorl-tv-ticket-sale-listing` to a Shopware category and select that category under **Page with events (list)** (`category`) in the plugin configuration. Select the default event layout under **Default event detail CMS page** (`cmsPageId`). A CMS layout assigned directly to an event takes precedence.
 
 1. Install and activate Foundation.
