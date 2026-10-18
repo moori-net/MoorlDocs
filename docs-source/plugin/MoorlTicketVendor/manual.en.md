@@ -2,6 +2,8 @@
 
 ## Requirements
 
+Event detail pages automatically publish structured data. Additional schema.org properties can be entered per language under **Event → SEO → Structured event data**. Generate the nullable JSON column `moorl_tv_ticket_sale_translation.schema_org` using the external schema tool before deployment. [Mapping and examples](schema-org.en.md).
+
 - Shopware 6.7 with Storefront. Exact package constraints are in `composer.json` (`shopware/core: ~6.7.0`).
 - MoorlFoundation 1.7 (`moorl/foundation: ~1.7.0`), installed and activated first.
 - PHP/database versions supported by your Shopware installation. Development verification uses PHP 8.2 and Shopware 6.7.14.1.

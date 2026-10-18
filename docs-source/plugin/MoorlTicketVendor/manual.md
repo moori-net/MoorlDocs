@@ -2,6 +2,8 @@
 
 ## Voraussetzungen
 
+Strukturierte Eventdaten werden automatisch auf der Veranstaltungsseite ausgegeben. Weitere schema.org-Eigenschaften können unter **Event → SEO → Strukturierte Eventdaten** je Sprache ergänzt werden. Vor dem Einsatz die nullable JSON-Spalte `moorl_tv_ticket_sale_translation.schema_org` mit dem externen Schemawerkzeug erzeugen. [Feldzuordnung und Beispiele](schema-org.md).
+
 - Shopware 6.7 mit Storefront; die tatsächlichen Paketgrenzen stehen in `composer.json` (`shopware/core: ~6.7.0`).
 - MoorlFoundation 1.7 (`moorl/foundation: ~1.7.0`), vor Ticket Vendor installiert und aktiviert.
 - PHP und Datenbank entsprechend Ihrer Shopware-Version. Entwicklungsprüfungen erfolgen mit PHP 8.2 und Shopware 6.7.14.1.

@@ -4,6 +4,8 @@ Stand: 16.10.2026. Das Plugin enthält inzwischen Checkout, Zahlungsprüfung, Ad
 
 ## Tabellen und Beziehungen
 
+Neu für strukturierte Eventdaten: nullable JSON-Spalte `moorl_tv_ticket_sale_translation.schema_org` über das externe Schemawerkzeug erzeugen. Die DAL-Eigenschaft `schemaOrg` ist übersetzbar und API-lesbar. Ergänzungen werden mit automatisch erzeugten Eventdaten zusammengeführt und als JSON-LD auf der Detailseite ausgegeben. Details: [schema-org.md](schema-org.md). Es wird keine zusätzliche PHP-Migration angelegt.
+
 Veranstaltungen haben keinen eigenen Status. Freigabe und Sichtbarkeit ergeben sich aus `active` und den vorhandenen Zeitfenstern. Bei bestehenden Installationen die obsolete Spalte `moorl_tv_ticket_sale.status` mit dem externen Schemawerkzeug entfernen und vorhandene Veranstaltungs-Importprofile ohne dieses Feld abgleichen. Ticket-, Versand- und Bestellstatus sind davon unabhängig.
 
 | Tabelle | Zweck und Beziehungen |
