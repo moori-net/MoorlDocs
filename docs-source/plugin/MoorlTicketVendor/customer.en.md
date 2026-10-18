@@ -14,9 +14,13 @@ With a customer account, sign in and open **My account → Tickets** to download
 
 ## Personalising tickets
 
+Each ticket card shows the event date, venue, ticket number and status. PDF downloads use the ticket number as the filename (for example, `T-10000.pdf`). Open **Edit ticket details** to update the attendee name and mobile number.
+
 Under **My account → Tickets**, enter and save the attendee's **first and last name** for each ticket. The purchaser's name is used initially. Pending and valid tickets can be edited; redeemed, expired and revoked tickets are locked.
 
 Download the updated PDF after saving a change. The name appears on the ticket and in the entrance scanner. Changing the name does not send another email or change the purchaser or delivery recipient. Guest purchasers should contact the organiser for changes.
+
+You can optionally add or change a **mobile number** for each ticket under the same editing rules as the attendee name. The number appears in scan results and can be dialled using **Call** in the browser scanner.
 
 ## At the entrance
 

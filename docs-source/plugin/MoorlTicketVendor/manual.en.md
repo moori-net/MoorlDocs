@@ -113,3 +113,9 @@ Under **Extensions → My extensions → Ticket Vendor → Configuration → Tic
 Each ticket has a **First and last name** field (`attendeeName`). Checkout stores the order customer's name initially. Account holders can change it under **My account → Tickets**; merchants can edit it in the ticket form. Only `pending` and `valid` tickets can be edited. The name appears in PDFs and scan results; downloading the PDF again includes the update. No additional email is sent. Ticket status is read-only in the form; existing status actions remain available.
 
 Before deploying, add the nullable `moorl_tv_ticket.attendee_name` column (`VARCHAR(511)`) using the external schema tool. Existing tickets without an explicit name fall back to the order customer or assigned customer. Then build administration and storefront assets, compile the theme, clear caches and restart workers.
+
+## Mobile number per ticket
+
+You can optionally add or change a **mobile number** for each ticket under the same editing rules as the attendee name. The number appears in scan results and can be dialled using **Call** in the browser scanner.
+
+`attendeePhone` / `attendee_phone`: nullable `VARCHAR(64)`; add using the external schema tool before deployment.

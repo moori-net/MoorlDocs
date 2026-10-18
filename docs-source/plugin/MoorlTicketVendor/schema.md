@@ -51,6 +51,8 @@ Alle Entities haben UUID-ID und Shopware-Zeitstempel; Ticket zusätzlich `custom
 | `customerId` / `customer_id` | Optionaler Shopware-Kunde, Foundation `EntityCustomerTrait` |
 | `recipientEmail` / `recipient_email` | Optionales natives `EmailField`, auch ohne Kundenkonto |
 | `attendeeName` / `attendee_name` | Optionales `StringField`, maximal 511 Zeichen, Vor- und Nachname auf PDF und Scan-Ergebnis |
+| `attendeePhone` / `attendee_phone` | Optionale Handynummer als `StringField`, nullable `VARCHAR(64)`; Scan-Ergebnis und Anruflink im Browser-Scanner |
+| `attendeePhone` / `attendee_phone` | Optionale Handynummer als `StringField`, nullable `VARCHAR(64)`; Scan-Ergebnis und Anruflink im Browser-Scanner |
 | `status` | `pending`, `valid` (Default), `expired`, `redeemed`, `revoked` |
 | `expiresAt` / `expires_at` | Optionale Zahlungsfrist für offene Tickets |
 | `issuedAt` / `issued_at` | Erforderlicher Zeitpunkt der Ticketerzeugung, auch vor Zahlung |
@@ -65,6 +67,10 @@ Alle Entities haben UUID-ID und Shopware-Zeitstempel; Ticket zusätzlich `custom
 Token und letzter Versandfehler sind nicht `ApiAware` und werden bei allgemeiner JSON-Serialisierung ausgeblendet. Vertrauenswürdige Dienste lesen die Getter. Allgemeine Admin-API-Ausgaben veröffentlichen den Token nicht. Neue Tokens werden mit 32 zufälligen Zeichen erzeugt; der Check-in-Endpunkt prüft Token und Event-ID gemeinsam.
 
 ## Zustände und Abläufe
+
+Für die Handynummer `moorl_tv_ticket.attendee_phone` über das externe Schemawerkzeug als nullable `VARCHAR(64)` ergänzen. Name und Nummer sind in Administration und Kundenkonto bei `pending`/`valid` bearbeitbar; nach Einlösung, Ablauf oder Widerruf sperrt der DAL beide Felder. Eine leere Nummer wird im Kundenkonto gelöscht, ein nicht mitgesendetes Feld erhält die bisherige Nummer. Scan-Wiederholungen geben die zum ursprünglichen Scan gespeicherte Nummer zurück; bei unbekannten oder fremden Veranstaltungstickets bleibt sie `null`.
+
+Für die Handynummer `moorl_tv_ticket.attendee_phone` über das externe Schemawerkzeug als nullable `VARCHAR(64)` ergänzen. Name und Nummer sind in Administration und Kundenkonto bei `pending`/`valid` bearbeitbar; nach Einlösung, Ablauf oder Widerruf sperrt der DAL beide Felder. Eine leere Nummer wird im Kundenkonto gelöscht, ein nicht mitgesendetes Feld erhält die bisherige Nummer. Scan-Wiederholungen geben die zum ursprünglichen Scan gespeicherte Nummer zurück; bei unbekannten oder fremden Veranstaltungstickets bleibt sie `null`.
 
 Für die Personalisierung mit dem externen Schemawerkzeug die nullable Spalte `moorl_tv_ticket.attendee_name` als `VARCHAR(511)` ergänzen. Es gibt keine zusätzliche PHP-Migration. Neue Bestelltickets speichern den Namen aus dem Bestellkunden-Snapshot. Bei bestehenden oder manuellen Tickets ohne Namen verwendet die Ausgabe den geladenen Bestellkunden, sonst den zugewiesenen Kunden. Die Änderung des Namens setzt weder Kundenzuordnung noch Empfänger-E-Mail um. Der DAL sperrt Namensänderungen bei bereits eingelösten, abgelaufenen und widerrufenen Tickets unter denselben Sperren wie die Kontingentprüfung.
 

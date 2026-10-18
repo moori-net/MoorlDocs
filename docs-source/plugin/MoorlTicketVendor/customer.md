@@ -14,9 +14,13 @@ Mit einem Kundenkonto finden Sie Ihre zugeordneten Tickets nach Anmeldung unter 
 
 ## Tickets personalisieren
 
+Die Ticketübersicht zeigt Datum, Veranstaltungsort, Ticketnummer und Status auf einer Karte. Der PDF-Download verwendet die Ticketnummer als Dateinamen (zum Beispiel `T-10000.pdf`). Öffnen Sie **Ticketangaben bearbeiten**, um Name und Handynummer anzupassen.
+
 Unter **Mein Konto → Tickets** können Sie für jedes noch nicht eingelöste Ticket den **Vor- und Nachnamen** der teilnehmenden Person eintragen und speichern. Anfangs wird der Name des Käufers verwendet. Offene und gültige Tickets sind bearbeitbar; eingelöste, abgelaufene und widerrufene Tickets sind gesperrt.
 
 Laden Sie nach einer Änderung das aktuelle PDF herunter. Der gespeicherte Name steht auf dem Ticket und erscheint beim Einlass im Scanner. Die Änderung verschickt keine neue E-Mail und ändert weder den Käufer noch den E-Mail-Empfänger. Gastbesteller wenden sich für Änderungen an den Veranstalter.
+
+Optional können Sie pro Ticket eine **Handynummer** ergänzen oder ändern. Für die Bearbeitung gelten dieselben Regeln wie beim Namen. Die Nummer erscheint beim Scan und kann im Browser-Scanner über **Anrufen** gewählt werden.
 
 ## Am Einlass
 

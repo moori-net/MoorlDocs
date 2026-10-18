@@ -107,6 +107,7 @@ Processed requests return HTTP 200, for example:
   "result": "accepted",
   "ticketNumber": "T-10000",
   "attendeeName": "Ada Lovelace",
+  "attendeePhone": "+491701234567",
   "checkinId": "f948564f0fc744f1bb26a8317ab55e4a4"
 }
 ```

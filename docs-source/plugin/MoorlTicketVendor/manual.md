@@ -113,3 +113,9 @@ Unter **Erweiterungen → Meine Erweiterungen → Ticket Vendor → Konfiguratio
 Jedes Ticket hat ein Feld **Vor- und Nachname** (`attendeeName`). Beim Kauf wird der Bestellkundenname als Ausgangswert gespeichert. Kunden mit Konto ändern den Namen unter **Mein Konto → Tickets**; Händler bearbeiten ihn im Ticketformular. Änderungen sind nur bei `pending` und `valid` möglich. PDF und Scanner zeigen den Namen; ein erneuter PDF-Download enthält die Änderung. Es wird keine zusätzliche E-Mail ausgelöst. Der Ticketstatus wird im Formular schreibgeschützt angezeigt; die vorgesehenen Statusaktionen bleiben verfügbar.
 
 Vor dem Deployment das neue nullable Feld `moorl_tv_ticket.attendee_name` (`VARCHAR(511)`) über das externe Schemawerkzeug anlegen. Bestehende Tickets mit leerem Namensfeld verwenden den Bestellkundennamen beziehungsweise den zugewiesenen Kunden als Fallback. Anschließend Administration und Storefront bauen, Theme kompilieren, Cache leeren und Worker neu starten.
+
+## Handynummer pro Ticket
+
+Optional können Sie pro Ticket eine **Handynummer** ergänzen oder ändern. Für die Bearbeitung gelten dieselben Regeln wie beim Namen. Die Nummer erscheint beim Scan und kann im Browser-Scanner über **Anrufen** gewählt werden.
+
+`attendeePhone` / `attendee_phone`: nullable `VARCHAR(64)`; vor dem Einsatz mit dem externen Schemawerkzeug anlegen.
