@@ -10,15 +10,15 @@ A place is occupied only when checkout is completed. Availability can change whi
 
 Tickets are activated after confirmed full payment and sent by email as a PDF. An order confirmation alone is not a valid admission ticket. The shop sets its payment deadline; pay promptly and contact the organiser if payment is late.
 
-With a customer account, sign in and open **My account → Tickets** to download your assigned activated tickets. Guest purchasers receive tickets by email; there is no public guest download link. Manual invitations may also be emailed or supplied directly as PDFs.
+With a customer account, sign in and open **My account → Tickets** to download your assigned activated tickets. Each ticket email includes a personal link for each ticket. Guest purchasers can use it to edit and download that ticket without a customer account. The link grants access to that ticket; share it only with the person who will use it. Manual invitations may also be emailed or supplied directly as PDFs.
 
 ## Personalising tickets
 
-Each ticket card shows the event date, venue, ticket number and status. PDF downloads use the ticket number as the filename (for example, `T-10000.pdf`). Open **Edit ticket details** to update the attendee name and mobile number.
+The ticket overview follows the Shopware order history layout, with status, event date, ticket type and venue, plus expandable details. PDF downloads use the ticket number as the filename (for example, `T-10000.pdf`). Expand the ticket details to edit the attendee name and mobile number or download the PDF. **Open ticket** takes you to the individual ticket page.
 
-Under **My account → Tickets**, enter and save the attendee's **first and last name** for each ticket. The purchaser's name is used initially. Pending and valid tickets can be edited; redeemed, expired and revoked tickets are locked.
+In your account or through the personal ticket link, enter and save the attendee's **first and last name** for each ticket. The purchaser's name is used initially. Pending and valid tickets can be edited; redeemed, expired and revoked tickets are locked.
 
-Download the updated PDF after saving a change. The name appears on the ticket and in the entrance scanner. Changing the name does not send another email or change the purchaser or delivery recipient. Guest purchasers should contact the organiser for changes.
+Download the updated PDF after saving a change. The name appears on the ticket and in the entrance scanner. Changing the name does not send another email or change the purchaser or delivery recipient. Guest purchasers can make the same changes through the ticket link in their email.
 
 You can optionally add or change a **mobile number** for each ticket under the same editing rules as the attendee name. The number appears in scan results and can be dialled using **Call** in the browser scanner.
 

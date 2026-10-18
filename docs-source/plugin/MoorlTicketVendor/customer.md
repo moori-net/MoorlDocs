@@ -10,15 +10,15 @@ Ein Platz wird erst beim Bestellabschluss belegt. Die Verfügbarkeit kann sich d
 
 Nach bestätigter vollständiger Zahlung werden die Tickets freigegeben und als PDF per E-Mail verschickt. Eine Bestellbestätigung allein ist noch kein gültiges Eintrittsticket. Die Zahlungsfrist bestimmt der Shop; bezahlen Sie rechtzeitig und wenden Sie sich bei einer verspäteten Zahlung an den Veranstalter.
 
-Mit einem Kundenkonto finden Sie Ihre zugeordneten Tickets nach Anmeldung unter **Mein Konto → Tickets**. Dort können Sie freigegebene Tickets als PDF herunterladen. Gastbesteller erhalten ihre Tickets per E-Mail; ein öffentlicher Gast-Downloadlink ist nicht vorgesehen. Eine manuelle Einladung kann ebenfalls direkt per E-Mail oder als ausgehändigtes PDF erfolgen.
+Mit einem Kundenkonto finden Sie Ihre zugeordneten Tickets nach Anmeldung unter **Mein Konto → Tickets**. Dort können Sie freigegebene Tickets als PDF herunterladen. Die Ticketmail enthält für jedes Ticket einen persönlichen Link. Damit können auch Gastbesteller das betreffende Ticket ohne Kundenkonto bearbeiten und herunterladen. Der Link gilt nur für dieses Ticket; geben Sie ihn nur an die Person weiter, die es nutzen soll. Eine manuelle Einladung kann ebenfalls direkt per E-Mail oder als ausgehändigtes PDF erfolgen.
 
 ## Tickets personalisieren
 
-Die Ticketübersicht zeigt Datum, Veranstaltungsort, Ticketnummer und Status auf einer Karte. Der PDF-Download verwendet die Ticketnummer als Dateinamen (zum Beispiel `T-10000.pdf`). Öffnen Sie **Ticketangaben bearbeiten**, um Name und Handynummer anzupassen.
+Die Ticketübersicht ist wie die Shopware-Bestellübersicht aufgebaut: mit Status, Veranstaltungsdatum, Tickettyp und Veranstaltungsort sowie aufklappbaren Details. Der PDF-Download verwendet die Ticketnummer als Dateinamen (zum Beispiel `T-10000.pdf`). Öffnen Sie die Ticketdetails, um Name und Handynummer anzupassen oder das PDF herunterzuladen. Mit **Ticket öffnen** gelangen Sie zur einzelnen Ticketseite.
 
-Unter **Mein Konto → Tickets** können Sie für jedes noch nicht eingelöste Ticket den **Vor- und Nachnamen** der teilnehmenden Person eintragen und speichern. Anfangs wird der Name des Käufers verwendet. Offene und gültige Tickets sind bearbeitbar; eingelöste, abgelaufene und widerrufene Tickets sind gesperrt.
+Im Kundenkonto oder über den persönlichen Ticketlink können Sie für jedes noch nicht eingelöste Ticket den **Vor- und Nachnamen** der teilnehmenden Person eintragen und speichern. Anfangs wird der Name des Käufers verwendet. Offene und gültige Tickets sind bearbeitbar; eingelöste, abgelaufene und widerrufene Tickets sind gesperrt.
 
-Laden Sie nach einer Änderung das aktuelle PDF herunter. Der gespeicherte Name steht auf dem Ticket und erscheint beim Einlass im Scanner. Die Änderung verschickt keine neue E-Mail und ändert weder den Käufer noch den E-Mail-Empfänger. Gastbesteller wenden sich für Änderungen an den Veranstalter.
+Laden Sie nach einer Änderung das aktuelle PDF herunter. Der gespeicherte Name steht auf dem Ticket und erscheint beim Einlass im Scanner. Die Änderung verschickt keine neue E-Mail und ändert weder den Käufer noch den E-Mail-Empfänger. Gastbesteller können dieselben Änderungen über den Ticketlink aus der E-Mail vornehmen.
 
 Optional können Sie pro Ticket eine **Handynummer** ergänzen oder ändern. Für die Bearbeitung gelten dieselben Regeln wie beim Namen. Die Nummer erscheint beim Scan und kann im Browser-Scanner über **Anrufen** gewählt werden.
 

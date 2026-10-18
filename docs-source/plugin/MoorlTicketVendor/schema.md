@@ -4,6 +4,8 @@ Stand: 16.10.2026. Das Plugin enthält inzwischen Checkout, Zahlungsprüfung, Ad
 
 ## Tabellen und Beziehungen
 
+Für Ticket-Deeplinks die nullable Spalte `moorl_tv_ticket.deeplink` (`VARCHAR(40)`) mit eindeutigem Index über das externe Schemawerkzeug ergänzen. Neue Tickets erhalten einen zufälligen Code; bei bestehenden Tickets wird er beim Anzeigen im Kundenkonto oder beim Versand einmalig ergänzt. Der Code ist unabhängig vom QR-Token und bleibt aus allgemeinen API-/JSON-Ausgaben verborgen. Keine PHP-Migration.
+
 Neu für strukturierte Eventdaten: nullable JSON-Spalte `moorl_tv_ticket_sale_translation.schema_org` über das externe Schemawerkzeug erzeugen. Die DAL-Eigenschaft `schemaOrg` ist übersetzbar und API-lesbar. Ergänzungen werden mit automatisch erzeugten Eventdaten zusammengeführt und als JSON-LD auf der Detailseite ausgegeben. Details: [schema-org.md](schema-org.md). Es wird keine zusätzliche PHP-Migration angelegt.
 
 Veranstaltungen haben keinen eigenen Status. Freigabe und Sichtbarkeit ergeben sich aus `active` und den vorhandenen Zeitfenstern. Bei bestehenden Installationen die obsolete Spalte `moorl_tv_ticket_sale.status` mit dem externen Schemawerkzeug entfernen und vorhandene Veranstaltungs-Importprofile ohne dieses Feld abgleichen. Ticket-, Versand- und Bestellstatus sind davon unabhängig.
@@ -28,6 +30,9 @@ Relationen werden durch `FieldMultiEntityCollection` erzeugt. Die Storage-Namen 
 | Typ → Sale | `saleId` / `moorl_tv_ticket_sale_id` | `sale` |
 | Check-in → Ticket | `ticketId` / `moorl_tv_ticket_id` | `ticket` |
 | Check-in → Sale | `saleId` / `moorl_tv_ticket_sale_id` | `sale` |
+| Check-in → Admin-Benutzer | `userId` / `user_id` | `user` |
+
+Für die Admin-Zuordnung die nullable Spalte `moorl_tv_ticket_checkin.user_id` (`BINARY(16)`, Fremdschlüssel auf `user.id`) mit dem externen Schemawerkzeug ergänzen. Neue Scans übernehmen den Benutzer aus dem authentifizierten Admin-Kontext. Bestehende Einträge sowie Aufrufe ohne Admin-Benutzer bleiben ohne Zuordnung; Wiederholungen behalten den ursprünglichen Benutzer. `scannerIdentifier` bleibt zusätzlich erhalten, auch für Integrationen. Keine zusätzliche PHP-Migration.
 
 Die inversen Collections heißen `types`, `tickets` und `checkins`; Core-Extensions verwenden `tickets` beziehungsweise `sales`. Bestellpositionen werden über `ExtractedDefinition::addVersionDefinition()` als versioniert registriert. Die vom Helper erzeugte Referenzversion erhält weiterhin `Required` und den `order_unit`-Unique-Key, während die Positions-ID optional bleibt.
 
