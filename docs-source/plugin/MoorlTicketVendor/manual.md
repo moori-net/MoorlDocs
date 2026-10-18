@@ -105,3 +105,11 @@ Eine Deinstallation mit Beibehaltung der Benutzerdaten erhält die Daten. Bei ei
 | Kunde sieht Ticket nicht | Direkte Kundenzuweisung beziehungsweise Bestellkunde und Verkaufskanal. Eine reine E-Mail-Zuordnung erzeugt keinen Kontozugriff. |
 
 Für technische Details siehe [Laufzeitdokumentation](runtime.md), [Schema](schema.md) und [Scanner-API](mobile-app.md). Die [Händleranleitung](index.md) beschreibt die tägliche Verwaltung.
+
+## Ticket-Darstellung und Personalisierung
+
+Unter **Erweiterungen → Meine Erweiterungen → Ticket Vendor → Konfiguration → Ticket-Darstellung** wählen Sie Karten oder eine kompakte Liste. Verfügbarkeit, genaue Restmenge, Ticketbilder und Beschreibungen lassen sich getrennt anzeigen; ausverkaufte Tickettypen können ausgeblendet werden. Einstellungen gelten je Verkaufskanal und für die Ticket-Auswahl auf Veranstaltungsseiten und im Detail-CMS-Element.
+
+Jedes Ticket hat ein Feld **Vor- und Nachname** (`attendeeName`). Beim Kauf wird der Bestellkundenname als Ausgangswert gespeichert. Kunden mit Konto ändern den Namen unter **Mein Konto → Tickets**; Händler bearbeiten ihn im Ticketformular. Änderungen sind nur bei `pending` und `valid` möglich. PDF und Scanner zeigen den Namen; ein erneuter PDF-Download enthält die Änderung. Es wird keine zusätzliche E-Mail ausgelöst. Der Ticketstatus wird im Formular schreibgeschützt angezeigt; die vorgesehenen Statusaktionen bleiben verfügbar.
+
+Vor dem Deployment das neue nullable Feld `moorl_tv_ticket.attendee_name` (`VARCHAR(511)`) über das externe Schemawerkzeug anlegen. Bestehende Tickets mit leerem Namensfeld verwenden den Bestellkundennamen beziehungsweise den zugewiesenen Kunden als Fallback. Anschließend Administration und Storefront bauen, Theme kompilieren, Cache leeren und Worker neu starten.

@@ -105,3 +105,11 @@ Uninstallation with retained user data preserves records. Without retained data,
 | Ticket absent from account | Direct customer assignment or order customer and sales channel. Email alone grants no account ownership. |
 
 See the [merchant guide](index.en.md), [scanner API](mobile-app.en.md), [runtime notes](runtime.md) and [schema](schema.md) for details.
+
+## Ticket presentation and personalisation
+
+Under **Extensions → My extensions → Ticket Vendor → Configuration → Ticket presentation**, choose cards or a compact list. Availability, exact remaining quantity, ticket images and descriptions can be shown independently; sold-out ticket types can be hidden. Settings apply per sales channel to ticket selection on event pages and in the event detail CMS element.
+
+Each ticket has a **First and last name** field (`attendeeName`). Checkout stores the order customer's name initially. Account holders can change it under **My account → Tickets**; merchants can edit it in the ticket form. Only `pending` and `valid` tickets can be edited. The name appears in PDFs and scan results; downloading the PDF again includes the update. No additional email is sent. Ticket status is read-only in the form; existing status actions remain available.
+
+Before deploying, add the nullable `moorl_tv_ticket.attendee_name` column (`VARCHAR(511)`) using the external schema tool. Existing tickets without an explicit name fall back to the order customer or assigned customer. Then build administration and storefront assets, compile the theme, clear caches and restart workers.

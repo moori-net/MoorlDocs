@@ -12,6 +12,12 @@ Nach bestätigter vollständiger Zahlung werden die Tickets freigegeben und als 
 
 Mit einem Kundenkonto finden Sie Ihre zugeordneten Tickets nach Anmeldung unter **Mein Konto → Tickets**. Dort können Sie freigegebene Tickets als PDF herunterladen. Gastbesteller erhalten ihre Tickets per E-Mail; ein öffentlicher Gast-Downloadlink ist nicht vorgesehen. Eine manuelle Einladung kann ebenfalls direkt per E-Mail oder als ausgehändigtes PDF erfolgen.
 
+## Tickets personalisieren
+
+Unter **Mein Konto → Tickets** können Sie für jedes noch nicht eingelöste Ticket den **Vor- und Nachnamen** der teilnehmenden Person eintragen und speichern. Anfangs wird der Name des Käufers verwendet. Offene und gültige Tickets sind bearbeitbar; eingelöste, abgelaufene und widerrufene Tickets sind gesperrt.
+
+Laden Sie nach einer Änderung das aktuelle PDF herunter. Der gespeicherte Name steht auf dem Ticket und erscheint beim Einlass im Scanner. Die Änderung verschickt keine neue E-Mail und ändert weder den Käufer noch den E-Mail-Empfänger. Gastbesteller wenden sich für Änderungen an den Veranstalter.
+
 ## Am Einlass
 
 1. Das PDF auf dem Smartphone öffnen oder gut lesbar ausdrucken.

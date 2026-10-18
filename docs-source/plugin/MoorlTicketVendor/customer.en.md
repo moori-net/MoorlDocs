@@ -12,6 +12,12 @@ Tickets are activated after confirmed full payment and sent by email as a PDF. A
 
 With a customer account, sign in and open **My account → Tickets** to download your assigned activated tickets. Guest purchasers receive tickets by email; there is no public guest download link. Manual invitations may also be emailed or supplied directly as PDFs.
 
+## Personalising tickets
+
+Under **My account → Tickets**, enter and save the attendee's **first and last name** for each ticket. The purchaser's name is used initially. Pending and valid tickets can be edited; redeemed, expired and revoked tickets are locked.
+
+Download the updated PDF after saving a change. The name appears on the ticket and in the entrance scanner. Changing the name does not send another email or change the purchaser or delivery recipient. Guest purchasers should contact the organiser for changes.
+
 ## At the entrance
 
 1. Open the PDF on your phone or print it legibly.

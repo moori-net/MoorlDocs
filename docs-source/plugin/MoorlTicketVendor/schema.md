@@ -48,6 +48,7 @@ Alle Entities haben UUID-ID und Shopware-Zeitstempel; Ticket zusätzlich `custom
 | `token` | Erforderlicher eindeutiger Klartext, maximal 64 Zeichen; intern über `getToken()` |
 | `customerId` / `customer_id` | Optionaler Shopware-Kunde, Foundation `EntityCustomerTrait` |
 | `recipientEmail` / `recipient_email` | Optionales natives `EmailField`, auch ohne Kundenkonto |
+| `attendeeName` / `attendee_name` | Optionales `StringField`, maximal 511 Zeichen, Vor- und Nachname auf PDF und Scan-Ergebnis |
 | `status` | `pending`, `valid` (Default), `expired`, `redeemed`, `revoked` |
 | `expiresAt` / `expires_at` | Optionale Zahlungsfrist für offene Tickets |
 | `issuedAt` / `issued_at` | Erforderlicher Zeitpunkt der Ticketerzeugung, auch vor Zahlung |
@@ -62,6 +63,8 @@ Alle Entities haben UUID-ID und Shopware-Zeitstempel; Ticket zusätzlich `custom
 Token und letzter Versandfehler sind nicht `ApiAware` und werden bei allgemeiner JSON-Serialisierung ausgeblendet. Vertrauenswürdige Dienste lesen die Getter. Allgemeine Admin-API-Ausgaben veröffentlichen den Token nicht. Neue Tokens werden mit 32 zufälligen Zeichen erzeugt; der Check-in-Endpunkt prüft Token und Event-ID gemeinsam.
 
 ## Zustände und Abläufe
+
+Für die Personalisierung mit dem externen Schemawerkzeug die nullable Spalte `moorl_tv_ticket.attendee_name` als `VARCHAR(511)` ergänzen. Es gibt keine zusätzliche PHP-Migration. Neue Bestelltickets speichern den Namen aus dem Bestellkunden-Snapshot. Bei bestehenden oder manuellen Tickets ohne Namen verwendet die Ausgabe den geladenen Bestellkunden, sonst den zugewiesenen Kunden. Die Änderung des Namens setzt weder Kundenzuordnung noch Empfänger-E-Mail um. Der DAL sperrt Namensänderungen bei bereits eingelösten, abgelaufenen und widerrufenen Tickets unter denselben Sperren wie die Kontingentprüfung.
 
 - Warenkorb-Neuberechnung prüft Kontingent ohne Reservierung.
 - Bestellabschluss prüft/belegt Kontingent atomar mit `pending`-Tickets, `expiresAt` und eindeutigen Positionseinheiten. Dieser Checkout muss `pending` ausdrücklich setzen; der DAL-Default `valid` dient manuellen Tickets.

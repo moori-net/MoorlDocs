@@ -107,6 +107,7 @@ Eine erfolgreiche Verarbeitung liefert HTTP 200, zum Beispiel:
 {
   "result": "accepted",
   "ticketNumber": "T-10000",
+  "attendeeName": "Ada Lovelace",
   "checkinId": "f948564f0fc744f1bb26a8317ab55e4a4"
 }
 ```
