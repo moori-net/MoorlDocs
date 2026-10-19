@@ -137,6 +137,10 @@ nav:
         - 'plugin/MoorlFormBuilder/events.md'
         - 'plugin/MoorlFormBuilder/interactive.md'
         - 'plugin/MoorlFormBuilder/faq.md'
+      - Ticket Verkäufer:
+          - 'plugin/MoorlTicketVendor/index.md'
+          - 'plugin/MoorlTicketVendor/customer.md'
+          - 'plugin/MoorlTicketVendor/schema.md'
       - Zubehör-Finder:
         - 'plugin/MoorlAccessoryFinder/index.md'
         - 'plugin/MoorlAccessoryFinder/import-export.md'
