@@ -9,7 +9,7 @@ Strukturierte Eventdaten werden automatisch auf der Veranstaltungsseite ausgegeb
 - PHP und Datenbank entsprechend Ihrer Shopware-Version. Entwicklungsprüfungen erfolgen mit PHP 8.2 und Shopware 6.7.14.1.
 - Composer-Abhängigkeiten `dompdf/dompdf: ^3.1` und `tecnickcom/tcpdf: ^6.7.7` für PDFs und QR-Codes. Bei Installation und Updates über die Erweiterungsverwaltung führt Shopware Composer aus, um diese bereitzustellen. Der Server benötigt dafür Composer und Zugriff auf die Paketquellen. Bei Composer-Deployments löst der reguläre Deploymentprozess die Abhängigkeiten auf.
 - Funktionierende Shopware-Mailkonfiguration sowie dauerhaft laufende Nachrichtenverarbeitung und geplante Aufgaben.
-- HTTPS und eine zuverlässige Onlineverbindung für Einlassgeräte. Browser-Kamerascans benötigen zusätzlich `BarcodeDetector`-Unterstützung.
+- HTTPS und eine zuverlässige Onlineverbindung für Einlassgeräte. Browser-Kamerascans verwenden native QR-Erkennung oder den lokal eingebundenen jsQR-Fallback, auch ohne `BarcodeDetector`.
 
 ## Installation
 
@@ -108,7 +108,7 @@ Eine Deinstallation mit Beibehaltung der Benutzerdaten erhält die Daten. Bei ei
 | Zahlungsfristen werden nicht verarbeitet | Taskregistrierung, laufender Task-Runner und Messenger-Verarbeitung. |
 | Mail fehlt | Empfänger, Vorlage, SMTP, Versandstatus/-versuche, Warteschlange und Fehlertransport. |
 | Scanner zeigt 403 | Neues Scan-Recht, vollständige Rollenzuweisung und erneute Anmeldung. |
-| Kamera startet nicht | HTTPS, Kameraberechtigung, `BarcodeDetector`; manuelle Eingabe verwenden. |
+| Kamera startet nicht | HTTPS und Kameraberechtigung prüfen; bei blockiertem Kamerazugriff manuelle Eingabe verwenden. |
 | „Veranstaltung geschlossen“ | Veranstaltung aktiv, Endzeit in UTC und Serverzeit. |
 | Kunde sieht Ticket nicht | Direkte Kundenzuweisung beziehungsweise Bestellkunde und Verkaufskanal. Eine reine E-Mail-Zuordnung erzeugt keinen Kontozugriff. |
 

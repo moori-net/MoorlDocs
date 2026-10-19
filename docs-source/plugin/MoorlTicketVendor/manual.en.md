@@ -9,7 +9,7 @@ Event detail pages automatically publish structured data. Additional schema.org 
 - PHP/database versions supported by your Shopware installation. Development verification uses PHP 8.2 and Shopware 6.7.14.1.
 - Composer packages `dompdf/dompdf: ^3.1` and `tecnickcom/tcpdf: ^6.7.7` for PDF/QR generation. During installation and updates through extension management, Shopware runs Composer to provide these packages. The server needs Composer and access to the package sources. Composer deployments resolve dependencies through their normal deployment process.
 - Configured Shopware mail transport, continuously running message consumers and scheduled tasks.
-- HTTPS and reliable online connectivity for entrance devices. Browser camera recognition additionally requires `BarcodeDetector` support.
+- HTTPS and reliable online connectivity for entrance devices. Browser camera recognition uses native QR detection or the bundled jsQR fallback, including browsers without `BarcodeDetector`.
 
 ## Installation
 
@@ -108,7 +108,7 @@ Uninstallation with retained user data preserves records. Without retained data,
 | Deadlines not processed | Task registration, running scheduler and Messenger consumers. |
 | Email missing | Recipient, template, SMTP, delivery attempts/state, queues and failure transport. |
 | Scanner returns 403 | New scan privilege, complete role assignment, fresh login. |
-| Camera unavailable | HTTPS, permission, `BarcodeDetector`; use manual input. |
+| Camera unavailable | Check HTTPS and camera permission; use manual input if camera access is blocked. |
 | Event closed | Active, UTC end time and server clock. |
 | Ticket absent from account | Direct customer assignment or order customer and sales channel. Email alone grants no account ownership. |
 

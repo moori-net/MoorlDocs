@@ -165,7 +165,7 @@ The scanner fills the screen and adapts its controls to smartphones and tablets.
 
 Use **Open fullscreen** to activate the browser's fullscreen mode if supported by the device. **Back to Administration** leaves the scanner. Leaving the scanner or switching to manual input stops the camera. After a connection failure, the token and request ID are retained for **Try again**.
 
-Camera scanning needs a secure browser context, normally HTTPS, and `BarcodeDetector` support. Manual token entry remains available without camera recognition. An online connection to the shop is required.
+Camera scanning needs a secure browser context, normally HTTPS, and camera permission. The bundled jsQR fallback decodes camera frames when native QR detection is unavailable. Manual token entry remains available without camera recognition. An online connection to the shop is required.
 
 | Result | Entrance action |
 | --- | --- |

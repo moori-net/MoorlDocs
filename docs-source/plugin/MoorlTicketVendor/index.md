@@ -167,7 +167,7 @@ Der Scanner füllt den Bildschirm aus und passt seine Bedienelemente an Smartpho
 
 Über **Vollbild öffnen** lässt sich zusätzlich der Browser-Vollbildmodus aktivieren, sofern das Gerät ihn unterstützt. **Zur Administration** verlässt die Scanneransicht. Beim Verlassen oder Wechsel zur manuellen Eingabe wird die Kamera gestoppt. Bei einem Verbindungsfehler bleiben Token und Anfrage-ID für **Erneut prüfen** erhalten.
 
-Die Kameraerkennung setzt einen sicheren Browserkontext, üblicherweise HTTPS, und Unterstützung für `BarcodeDetector` voraus. Die manuelle Eingabe bleibt auch ohne Kameraerkennung nutzbar. Es ist eine Onlineverbindung zum Shop erforderlich.
+Die Kameraerkennung benötigt einen sicheren Browserkontext, üblicherweise HTTPS, und Kameraberechtigung. Ohne native QR-Erkennung übernimmt der lokal eingebundene jsQR-Fallback die Auswertung der Kamerabilder. Die manuelle Eingabe bleibt auch ohne Kameraerkennung nutzbar. Es ist eine Onlineverbindung zum Shop erforderlich.
 
 | Ergebnis | Vorgehen am Einlass |
 | --- | --- |
