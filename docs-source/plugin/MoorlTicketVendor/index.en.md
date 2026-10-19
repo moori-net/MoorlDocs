@@ -214,3 +214,13 @@ No order is needed. A configured Foundation demo customer is associated optional
 **Can guest customers receive tickets?** Yes, through the order email. Account downloads require an authorised login; there is no public guest download link.
 
 **Are assigned seats or offline admission available?** The current implementation uses quotas per type, without seat maps or offline approval. The standalone mobile app is not available yet.
+
+## Artists, stages and private guest registration
+
+Manage artist profiles in the catalogue. “Offer for booking on the website” controls the public booking selection; inquiries use the existing contact page or an optional external booking contact. Fees and internal notes remain private. The “Artists available for booking” CMS element and /artists/booking share this selection; no booking workflow is introduced.
+
+Add event stages and sets under Programme. Artists may have multiple sets, with optional stage and times. The core time picker stores start and end as simple HH:mm strings. Sets may cross midnight; Position controls the timetable order. Publish the line-up and timetable separately. Optional event capacity limits all ticket categories together. Disabling “Show in public lists” removes the event from lists/search/sitemap while its direct URL remains reachable.
+
+Under Guestlist, select a free ticket category and storefront channel, enable registration, enter introductory/rules text and copy the secret link. Registrations do not reserve admission. “Create and send ticket” issues one normal ticket after review and queues its email; retries keep that ticket. Multiple guests may share an email address. The fixed form supports voluntary roles, invited-by information and comments without payment handling. Export remains scoped to the event and current filters.
+
+Use the external schema tool before deployment. Backfill existing order-position references before removing legacy columns; moorl-tv:backfill-ticket-orders is read-only unless --apply is explicitly supplied. See [schema and backfill instructions](schema.md). Rebuild assets and restart workers after the transition.

@@ -34,7 +34,7 @@ Die native Warenkorbposition heißt `moorl_tv_ticket`; `referencedId` ist die ID
 
 Im Warenkorb und in der Warenkorb-Seitenleiste stehen unter dem Tickettyp der übersetzte Veranstaltungsname und ein Auszug des Event-Teasers, ersatzweise der Event-Beschreibung. Der Auszug enthält höchstens 200 Zeichen ohne HTML. Beide Angaben werden bei der Neuberechnung aus den aktuellen Veranstaltungsdaten übernommen.
 
-Der Warenkorb reserviert keine Plätze. Erst die gemeinsame Transaktion aus nativer Bestellspeicherung und Ticketerstellung belegt das Kontingent. Pro Bestellposition und Stückzähler entsteht genau ein Ticket. Wiederholungen verwenden bestehende Tickets. Verkaufsvoraussetzungen werden unmittelbar vor der Erstellung aus aktuellen gesperrten Daten gelesen.
+Der Warenkorb reserviert keine Plätze. Erst die gemeinsame Transaktion aus nativer Bestellspeicherung und Ticketerstellung belegt das Kontingent. Mengen gleicher Tickettypen werden über die Bestellpositionen aggregiert. Pro Bestellung, nativer Version, Tickettyp und internem Stückzähler entsteht genau ein Ticket mit direktem Bestellbezug. Wiederholungen verwenden bestehende Tickets. Verkaufsvoraussetzungen werden unmittelbar vor der Erstellung aus aktuellen gesperrten Daten gelesen.
 
 Der DAL prüft auch manuelle/API-Schreibzugriffe: Tickettyp und Veranstaltung müssen zusammenpassen, und `pending`, `valid` sowie `redeemed` zählen gegen das Kontingent. `expired` und `revoked` belegen keinen Platz. Sperren folgen Veranstaltung → Tickettyp → Ticket; der abgeleitete `quantitySold` wird in derselben Schreibtransaktion aktualisiert. Ein Typ mit ausgestellten Tickets kann nicht nachträglich zu einer anderen Veranstaltung verschoben werden.
 
@@ -72,7 +72,7 @@ Admin-PDFs erfordern `moorl_tv_ticket:read`, Senden/Widerrufen erfordern `moorl_
 
 Bei regulärer Plugin-Aktivierung/Aktualisierung installiert der bestehende Foundation-Lifecycle-Helper die Datenpakete `data`, `ticket-number`, `ticket-mail`, `seo` und `scanner-role`. Wiederholung setzt Händlerkonfiguration, Vorlagen, Nummernkreisstand und Scanner-Rollenanpassungen nicht zurück. Bei bestehenden Entwicklungsinstallationen lassen sich diese Pakete auch über die Foundation-Datenverwaltung nachladen.
 
-Das Schema bleibt bei sechs Tabellen; neue handgeschriebene Migrationen sind nicht erforderlich. Bestehende, vom Benutzer erzeugte Migrationen bleiben erhalten. Die Dokumentation in `schema.md` beschreibt die Feldnamen.
+Das Schema umfasst zwölf Tabellen; neue handgeschriebene Migrationen werden weiterhin nicht angelegt. Bestehende, vom Benutzer erzeugte Migrationen bleiben erhalten. Die Dokumentation in `schema.md` beschreibt die Feldnamen.
 
 Im Zielsystem müssen die üblichen Shopware-Worker laufen:
 
@@ -94,3 +94,15 @@ Die Administration hat Node-Tests mit installierten Shopware-/Foundation-Helfern
 Abschlussprüfung am 16.10.2026: **87 PHP-Tests mit 1085 Assertions**, ohne übersprungene Tests, Warnungen oder Deprecations; **27 Admin-Tests**, beide Produktionsbuilds, Containerprüfung, 87 PHP-Syntaxprüfungen und 14 Twig-Prüfungen erfolgreich. Eine unabhängige Codeprüfung wurde nach den Korrekturen ohne offene wichtige Befunde abgeschlossen.
 
 Ergänzungsprüfung für Dokumentation und Scanner-Rolle am 16.10.2026: **89 PHP-Tests mit 1134 Assertions** ohne übersprungene Tests, Warnungen oder Deprecations sowie **28 Admin-Tests** erfolgreich. Der gezielte Admin-Produktionsbuild, Containerprüfung, Store-YAML/JSON und Dokumentations-Frontmatter wurden geprüft. HTTP-Tests belegen Check-in mit der eingeschränkten Rolle, gesperrte allgemeine Ticketaktionen und erhaltene Rollenänderungen/-zuweisungen beim erneuten Foundation-Import.
+
+## Artists, Programm und Gästeliste (19.10.2026)
+
+Artists besitzen öffentliche Profile und optional ein Bookingangebot. bookingEnabled steuert ausschließlich die Website-Auswahl; der Kontakt führt zur konfigurierten Shop-Kontaktseite oder zum externen Bookingkontakt. Es gibt keinen Bookingprozess. Gage, Währung und interne Bookingnotiz gelangen nicht in die öffentliche Ausgabe.
+
+Stages werden am Event angelegt; Auftritte können vorab ohne Stage oder Uhrzeit gepflegt werden. Mehrere Sets desselben Artists bleiben getrennt. Line-up und Timetable werden am Event unabhängig freigegeben, wobei die Timetable die Line-up-Freigabe voraussetzt. Timetable-Beginn und -Ende sind unabhängig optionale HH:mm-Texte mit dem Core-Time-Picker. Sie werden ohne Datums-/Zeitzonenumrechnung oder zusätzliche Zeitvalidierung angezeigt. Position legt die Reihenfolge fest, auch für Sets über Mitternacht. listed=false blendet aus Listen/Suche/Sitemap aus, schützt aber nicht den direkten Eventaufruf.
+
+Für die Gästeliste einen kostenlosen internen Tickettyp und einen Storefront-Verkaufskanal wählen, Formular aktivieren, Regeln/Einleitung pflegen und den geheimen Link kopieren. Der Link lässt sich rotieren. Anmeldung bedeutet noch keine Reservierung. Nach Prüfung erzeugt „Ticket erstellen und senden“ ein normales Ticket und belegt Typ-/Eventkontingent. Wiederholungen erzeugen kein zweites Ticket; Mailfehler werden am Ticket behandelt. Mehrfachaktionen liefern getrennte Ergebnisse. Der Export ist auf aktuelle Veranstaltung und Filter begrenzt. Die separaten Rechte issue, decide und guestlist_link sind für eingeschränkte Adminrollen ausdrücklich zuzuweisen.
+
+Neue kundenlose Tickets verwenden ihren gespeicherten Kanal und ihre Sprache für Zugang, Domain und Versand. Mailbezeichnungen und PDF werden in diesem Kontext neu geladen. Die optionale Gesamtkapazität eines Events gilt über alle Tickettypen einschließlich manueller und Gästetickets.
+
+Prüfstand dieses Ausbaus: zwölf Tabellen durch MoorlDevTools in isolierter Datenbank erzeugt; vollständige PHP-/Node-Tests, Container/Twig und gezielte Admin-/Storefront-Builds werden im zugehörigen Implementierungsplan mit dem tatsächlichen letzten Ergebnis dokumentiert. Es wurden keine normalen Shopdaten migriert und keine echten Mails verschickt.

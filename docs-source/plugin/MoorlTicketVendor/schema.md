@@ -1,136 +1,94 @@
-# TicketVendor: aktuelles Datenmodell
+# Ticket Vendor: Datenmodell und Schemaübergang
 
-Stand: 16.10.2026. Das Plugin enthält inzwischen Checkout, Zahlungsprüfung, Administration, Versand und Check-in. Diese Datei beschreibt das Datenmodell; Betriebsabläufe stehen in [runtime.md](runtime.md).
+Stand: 19.10.2026. Quelle sind die installierten DAL-Definitionen und Foundation-Flags. Das externe Schemawerkzeug erzeugt/gleicht Tabellen ab. Keine zusätzlichen PHP-Migrationen, keine automatische Produktivdatenübernahme.
 
-## Tabellen und Beziehungen
+## Zwölf Tabellen
 
-Das statische CMS-Listing verwendet `moorl_tv_ticket_sale.alternative_url` als optionale alternative Event-Adresse (`VARCHAR(2048)`, nullable). Die Spalte über das externe Schemawerkzeug ergänzen; es wird keine PHP-Migration angelegt. Das Listing akzeptiert HTTP-/HTTPS-Adressen und interne Pfade ab `/`.
-
-Für Ticket-Deeplinks die nullable Spalte `moorl_tv_ticket.deeplink` (`VARCHAR(40)`) mit eindeutigem Index über das externe Schemawerkzeug ergänzen. Neue Tickets erhalten einen zufälligen Code; bei bestehenden Tickets wird er beim Anzeigen im Kundenkonto oder beim Versand einmalig ergänzt. Der Code ist unabhängig vom QR-Token und bleibt aus allgemeinen API-/JSON-Ausgaben verborgen. Keine PHP-Migration.
-
-Neu für strukturierte Eventdaten: nullable JSON-Spalte `moorl_tv_ticket_sale_translation.schema_org` über das externe Schemawerkzeug erzeugen. Die DAL-Eigenschaft `schemaOrg` ist übersetzbar und API-lesbar. Ergänzungen werden mit automatisch erzeugten Eventdaten zusammengeführt und als JSON-LD auf der Detailseite ausgegeben. Details: [schema-org.md](schema-org.md). Es wird keine zusätzliche PHP-Migration angelegt.
-
-Veranstaltungen haben keinen eigenen Status. Freigabe und Sichtbarkeit ergeben sich aus `active` und den vorhandenen Zeitfenstern. Bei bestehenden Installationen die obsolete Spalte `moorl_tv_ticket_sale.status` mit dem externen Schemawerkzeug entfernen und vorhandene Veranstaltungs-Importprofile ohne dieses Feld abgleichen. Ticket-, Versand- und Bestellstatus sind davon unabhängig.
-
-| Tabelle | Zweck und Beziehungen |
+| Tabelle | Aufgabe |
 |---|---|
-| `moorl_tv_ticket_sale` | Event mit Foundation-Inhalt, Banner, Adresse/Koordinaten, CMS-Bezug, Verkaufszeitraum und separaten Eventzeiten |
-| `moorl_tv_ticket_sale_translation` | Foundation-Texte/Meta-Daten und `location_description`; PK `moorl_tv_ticket_sale_id`, `language_id` |
-| `moorl_tv_ticket_type` | Kategorie; erforderlicher Sale-/Steuerbezug, Foundation-Preis/Medien/Basistexte/Zeitraum, Kontingent/Kaufgrenzen |
-| `moorl_tv_ticket_type_translation` | Basistexte; PK `moorl_tv_ticket_type_id`, `language_id` |
-| `moorl_tv_ticket` | Individuelles Ticket; erforderliche Veranstaltung und Typ, optionale Bestellposition und optionaler Kunde |
-| `moorl_tv_ticket_checkin` | Scan-Audit mit optionalem Ticket und Sale; unbekannte Tokens können protokolliert werden |
+| moorl_tv_ticket_sale | Event mit Foundation-Inhalten, Adresse, Zeiten, Zeitzone, Kapazität und Veröffentlichung/Gästelistenkonfiguration |
+| moorl_tv_ticket_sale_translation | Übersetzte Inhalte, Meta-/Ortsdaten, schemaOrg, guestlistIntroduction und guestlistRules |
+| moorl_tv_ticket_type | Eventkategorie mit Preis/Steuer, Kontingent und Kaufgrenzen |
+| moorl_tv_ticket_type_translation | Übersetzte Typtexte |
+| moorl_tv_ticket | Einzelnes Ticket mit optionaler direkter Bestellung, Kunde/Empfänger, Personalisierung, Status und Versandtracking |
+| moorl_tv_ticket_checkin | Unveränderter Scan-Audit einschließlich abgewiesener Versuche und Anfrage-ID |
+| moorl_tv_artist | Profil, Medien/Logo, Social Links, Kollektiv/Label, Bookingangebot und interne Angaben |
+| moorl_tv_artist_translation | Foundation-Basistexte, Name/Beschreibung/Teaser mit Fallback |
+| moorl_tv_stage | Eventbezogene Bühne/Area, Bild und Reihenfolge |
+| moorl_tv_stage_translation | Name und Beschreibung |
+| moorl_tv_performance | Artist-Auftritt am Event mit optionaler Stage und Uhrzeiten als Text |
+| moorl_tv_guestlist_entry | Persönliche Anfrage, Regel-Snapshot, Entscheidung und optionales Ticket |
 
-`TicketReservation` und `TicketIssuance` samt ihren Tabellen/Services/Associations entfallen. Kein `issuanceId`, keine Batch-ID, keine duplizierte `orderId` am Ticket. Gruppierung per DAL-Filter `orderLineItem.orderId`; bei abweichendem Core-Versionskontext auch Version berücksichtigen. Die Veranstaltung wird direkt über `saleId`/`sale` gespeichert, zusätzlich zum Typbezug. So können Tickets über `Veranstaltung.tickets` angelegt und direkt nach Veranstaltung gefiltert werden. Die spätere Ausstellungslogik muss `ticket.saleId === ticket.type.saleId` sicherstellen; zwei unabhängige Fremdschlüssel prüfen diese Übereinstimmung nicht.
+UUIDs sind BINARY(16), vollständige Zeitpunkte UTC und Event-Zeitzonen IANA-Namen. Timetable-Uhrzeiten sind einfache lokale HH:mm-Texte ohne Datum oder Umrechnung. FK-Storage-Namen folgen Foundation: saleId = moorl_tv_ticket_sale_id, typeId = moorl_tv_ticket_type_id, artistId = moorl_tv_artist_id, stageId = moorl_tv_stage_id. Native Core-Bezüge verwenden ihre Core-Spaltennamen.
 
-Relationen werden durch `FieldMultiEntityCollection` erzeugt. Die Storage-Namen enthalten den vollständigen Namen der referenzierten Tabelle; Properties und Collection-Namen folgen `ExtractedDefinition` einschließlich der vorhandenen `PROPERTY_NAME`-Konstanten.
+## Ticket und Bestellung
 
-| Relation | FK-Property / SQL-Spalte | Association |
-|---|---|---|
-| Ticket → Typ | `typeId` / `moorl_tv_ticket_type_id` | `type` |
-| Ticket → Sale | `saleId` / `moorl_tv_ticket_sale_id` | `sale` |
-| Typ → Sale | `saleId` / `moorl_tv_ticket_sale_id` | `sale` |
-| Check-in → Ticket | `ticketId` / `moorl_tv_ticket_id` | `ticket` |
-| Check-in → Sale | `saleId` / `moorl_tv_ticket_sale_id` | `sale` |
-| Check-in → Admin-Benutzer | `userId` / `user_id` | `user` |
+orderId/order_id ist nullable. orderVersionId/order_version_id ist nativ erforderlich mit Live-Default, auch ohne Bestellung. Association order ersetzt orderLineItem. Die aktuelle Definition enthält keine order_line_item_id oder order_line_item_version_id mehr.
 
-Für die Admin-Zuordnung die nullable Spalte `moorl_tv_ticket_checkin.user_id` (`BINARY(16)`, Fremdschlüssel auf `user.id`) mit dem externen Schemawerkzeug ergänzen. Neue Scans übernehmen den Benutzer aus dem authentifizierten Admin-Kontext. Bestehende Einträge sowie Aufrufe ohne Admin-Benutzer bleiben ohne Zuordnung; Wiederholungen behalten den ursprünglichen Benutzer. `scannerIdentifier` bleibt zusätzlich erhalten, auch für Integrationen. Keine zusätzliche PHP-Migration.
+unitIndex ist eine technische Einheit innerhalb Bestellung/Version/Tickettyp. Der Unique-Key umfasst order_id, order_version_id, moorl_tv_ticket_type_id und unit_index; MoorlDevTools bestimmt die physische Indexspaltenreihenfolge. Mengen gleicher Typen aus mehreren Positionen werden aggregiert. Wiederholungen berücksichtigen alle historischen Ticketzustände. Ein bestellgebundenes Ticket wird nicht hart gelöscht; Herkunft/Einheit bleiben unveränderlich.
 
-Die inversen Collections heißen `types`, `tickets` und `checkins`; Core-Extensions verwenden `tickets` beziehungsweise `sales`. Bestellpositionen werden über `ExtractedDefinition::addVersionDefinition()` als versioniert registriert. Die vom Helper erzeugte Referenzversion erhält weiterhin `Required` und den `order_unit`-Unique-Key, während die Positions-ID optional bleibt.
+saleId und typeId sind erforderlich und müssen zusammenpassen. customerId, recipientEmail, attendeeName (511), attendeePhone (64) bleiben eigenständige Angaben. Kundenlose Tickets können salesChannelId und languageId speichern; neue Gästetickets übernehmen den Anmeldekontext. Bestelltickets verwenden den Bestellkontext, alte Kundentickets ihre Fallbacks. Explizite Empfängeradresse hat Vorrang vor Kunde und Bestellkunde.
 
-Bestehende Datenbanken mit den bisherigen verkürzten FK-Spalten müssen mit dem externen Schemawerkzeug abgeglichen werden. Diese Codeänderung führt keine Schemaänderung oder Datenmigration aus.
+Ticketnummer aus NumberRange, QR-token und persönlicher deeplink bleiben getrennt. Token, Deeplink und Versandfehler erscheinen nicht in allgemeinen API-Ausgaben. Ticketzustände: pending, valid, expired, redeemed, revoked. Versandzustände: pending, sent, failed. Pending/valid/redeemed belegen Plätze; expired/revoked geben sie frei. quantitySold ist abgeleitet und schreibgeschützt. expiresAt ist die Zahlungsfrist, issuedAt der fachliche Ausstellungszeitpunkt.
 
-Veranstaltungen verwenden `id` und den übersetzbaren `name`; `technicalName`/`technical_name` entfällt bei `moorl_tv_ticket_sale`. Die alten generierten Create-Table-Migrationen müssen über das externe Werkzeug neu erzeugt werden. In vorhandenen Datenbanken die bisherige `technical_name`-Spalte entfernen, da ihre alte `NOT NULL`-Vorgabe Inserts ohne dieses Feld verhindern würde. Bei Tickettypen und den Import-/Exportprofilen selbst bleibt deren technischer Name erhalten.
+## Neue Eventfelder
 
-Für den direkten Veranstaltungsbezug muss das externe Schemawerkzeug zusätzlich `moorl_tv_ticket.moorl_tv_ticket_sale_id` mit FK auf `moorl_tv_ticket_sale.id` anlegen. Bei vorhandenen Tickets zunächst die Spalte nullable hinzufügen, die Werte aus dem zugehörigen Tickettyp übernehmen und anschließend `NOT NULL` und den FK aktivieren. Bestehende Create-Table-Migrationen erweitern bereits vorhandene Tabellen nicht.
+listed (Default true), lineupPublished/timetablePublished (Default false), capacity nullable. Timetable setzt Line-up-Freigabe voraus. listed ist nur Auffindbarkeit, kein Geheimhaltungsschutz. capacity gilt zusätzlich zu Typkontingenten für alle belegenden Tickets.
 
-## Ticketfelder
+Gästeliste: guestlistEnabled (false), guestlistOpenAt/guestlistCloseAt, guestlistTicketTypeId (Storage guestlist_moorl_tv_ticket_type_id), guestlistSalesChannelId (guestlist_sales_channel_id), guestlistAccessKey (nullable VARCHAR(40), intern), guestlistConfig (JSON). Konfiguration enthält phoneRequired und volunteerRoles (technischer Schlüssel → Beschriftung oder Sprachmap). Der gewählte Typ muss kostenlos sein und zum Event gehören; für den Verkauf darf er inaktiv sein.
 
-Alle Entities haben UUID-ID und Shopware-Zeitstempel; Ticket zusätzlich `customFields`.
+guestlistTicketTypeId erhält einen physischen FK zu moorl_tv_ticket_type.id mit ON DELETE SET NULL. Damit bleibt der optionale Bezug auch bei direkten SQL-Löschungen gültig. Der DAL-Konfigurationsschutz für verwendete Gästetickettypen bleibt zusätzlich bestehen. Die gegenseitigen Event-/Typbezüge sind bei der Installationsreihenfolge zu berücksichtigen; der Generator trennt die Fremdschlüssel nicht mehr pauschal in weitere Dateien ab.
 
-| Property / Spalte | Anforderung |
-|---|---|
-| `typeId` / `moorl_tv_ticket_type_id` | Erforderlicher Typbezug |
-| `saleId` / `moorl_tv_ticket_sale_id` | Erforderlicher direkter Veranstaltungsbezug |
-| `orderLineItemId` / `order_line_item_id` | Optional, NULL bei manuellen Tickets |
-| `orderLineItemVersionId` / `order_line_item_version_id` | Erforderlich mit Live-Default, auch bei NULL-Positions-ID |
-| `unitIndex` / `unit_index` | Integer ≥ 0, Default 0; einzelne Einheit der Bestellposition |
-| `ticketNumber` / `ticket_number` | Native `NumberRangeField`, automatisch aus Nummernkreis `moorl_tv_ticket`, eindeutig und nach Erstellung unveränderlich, maximal 64 Zeichen |
-| `token` | Erforderlicher eindeutiger Klartext, maximal 64 Zeichen; intern über `getToken()` |
-| `customerId` / `customer_id` | Optionaler Shopware-Kunde, Foundation `EntityCustomerTrait`; neue Bestelltickets übernehmen `order_customer.customer_id` direkt |
-| `recipientEmail` / `recipient_email` | Optionales natives `EmailField`, auch ohne Kundenkonto |
-| `attendeeName` / `attendee_name` | Optionales `StringField`, maximal 511 Zeichen, Vor- und Nachname auf PDF und Scan-Ergebnis |
-| `attendeePhone` / `attendee_phone` | Optionale Handynummer als `StringField`, nullable `VARCHAR(64)`; Scan-Ergebnis und Anruflink im Browser-Scanner |
-| `attendeePhone` / `attendee_phone` | Optionale Handynummer als `StringField`, nullable `VARCHAR(64)`; Scan-Ergebnis und Anruflink im Browser-Scanner |
-| `status` | `pending`, `valid` (Default), `expired`, `redeemed`, `revoked` |
-| `expiresAt` / `expires_at` | Optionale Zahlungsfrist für offene Tickets |
-| `issuedAt` / `issued_at` | Erforderlicher Zeitpunkt der Ticketerzeugung, auch vor Zahlung |
-| `redeemedAt`, `revokedAt` | Optionale Einlöse-/Widerrufszeitpunkte |
-| `deliveryStatus` / `delivery_status` | `pending` (Default), `sent`, `failed` |
-| `deliveredAt` / `delivered_at` | Optionaler Versandzeitpunkt |
-| `deliveryAttempts` / `delivery_attempts` | Integer ≥ 0, Default 0 |
-| `lastDeliveryError` / `last_delivery_error` | Optionaler interner Fehlertext; keine Tokens/Geheimnisse speichern |
+## Artist, Stage und Auftritt
 
-`getDeliveryRecipientEmail()` löst die Adresse aus **expliziter E-Mail → Kunde → Bestellkunde** auf. Für Fallbacks müssen `customer` und `orderLineItem.order.orderCustomer` geladen sein. Der Bestellkunde liefert den in der Bestellung gespeicherten E-Mail-Snapshot. Ohne Empfänger bleibt das Ergebnis NULL; das Ticket darf gespeichert werden, ist aber noch nicht versandfähig. Ein leerer E-Mail-Override wird nicht als Versandadresse verwendet.
+Artist hat bookingEnabled (false), bookingContact (E-Mail/HTTP(S)), priority (höher zuerst), media/Logo, Social-Link-Liste, genre und Kollektiv/Label. genre ist ein optionales, nicht übersetztes StringField (moorl_tv_artist.genre, nullable VARCHAR(255)), wird in Administration und öffentlichen Artistkarten angezeigt und ist im Import-/Exportprofil enthalten. Die Spalte wird über das externe Schemawerkzeug ergänzt. feeAmount ist optional und nichtnegativ in kleinster Geldeinheit ohne Währungsrelation; bookingNote ist intern. Artist.currencyId/currency und die Spalte currency_id entfallen. Keine zusätzliche Artist-/Stage-/Auftrittsaktivierung.
 
-Token und letzter Versandfehler sind nicht `ApiAware` und werden bei allgemeiner JSON-Serialisierung ausgeblendet. Vertrauenswürdige Dienste lesen die Getter. Allgemeine Admin-API-Ausgaben veröffentlichen den Token nicht. Neue Tokens werden mit 32 zufälligen Zeichen erzeugt; der Check-in-Endpunkt prüft Token und Event-ID gemeinsam.
+Stage und Performance haben saleId, position (aufsteigend), CustomFields und Zeitstempel. Performance hat erforderlichen Artist, optionale Stage und unabhängig optionale startAt/endAt als StringField: start_at/end_at sind nullable VARCHAR(5) für HH:mm. Der Core-Picker mt-datepicker mit dateType=time liefert die Uhrzeit als Text. Es gibt keine zusätzliche Datums-, Reihenfolge-, Sommerzeit- oder Überschneidungsprüfung; beispielsweise 23:30–01:00 ist erlaubt. Die Timetable folgt position, bei gleicher Position dem Beginn (fehlender Beginn zuletzt). Stage muss demselben Event angehören; belegte Stages werden nicht auf andere Events verschoben. Mehrere Sets desselben Artists sind erlaubt. Die öffentliche Ausgabe ist eine explizite Projektion ohne interne Angaben.
 
-## Zustände und Abläufe
+Bestehende DATETIME-Spalten start_at/end_at ausschließlich an moorl_tv_performance über das externe Schemawerkzeug auf VARCHAR(5) umstellen. Vorhandene Werte vorher aus UTC in die jeweilige Event-Zeitzone umrechnen und als HH:mm übernehmen; nicht durch direktes Kürzen des DATETIME-Texts. Event-, Ticket- und Gästelistenfristen bleiben vollständige Zeitpunkte. Keine PHP-Migration oder automatische Produktivschemaänderung.
 
-Für die Handynummer `moorl_tv_ticket.attendee_phone` über das externe Schemawerkzeug als nullable `VARCHAR(64)` ergänzen. Name und Nummer sind in Administration und Kundenkonto bei `pending`/`valid` bearbeitbar; nach Einlösung, Ablauf oder Widerruf sperrt der DAL beide Felder. Eine leere Nummer wird im Kundenkonto gelöscht, ein nicht mitgesendetes Feld erhält die bisherige Nummer. Scan-Wiederholungen geben die zum ursprünglichen Scan gespeicherte Nummer zurück; bei unbekannten oder fremden Veranstaltungstickets bleibt sie `null`.
+## Gästelistenintegrität und Rechte
 
-Für die Handynummer `moorl_tv_ticket.attendee_phone` über das externe Schemawerkzeug als nullable `VARCHAR(64)` ergänzen. Name und Nummer sind in Administration und Kundenkonto bei `pending`/`valid` bearbeitbar; nach Einlösung, Ablauf oder Widerruf sperrt der DAL beide Felder. Eine leere Nummer wird im Kundenkonto gelöscht, ein nicht mitgesendetes Feld erhält die bisherige Nummer. Scan-Wiederholungen geben die zum ursprünglichen Scan gespeicherte Nummer zurück; bei unbekannten oder fremden Veranstaltungstickets bleibt sie `null`.
+Unique-Keys auf submission_id und nullable moorl_tv_ticket_id. Keine Eindeutigkeit auf E-Mail. Gleiche Anfrage-ID erzeugt keinen zweiten Eintrag; mehrere Gäste dürfen dieselbe Adresse verwenden. Entscheidung ist NULL, rejected oder cancelled; Ausstellungsstatus folgt ticketId. Versand- und Ticketstatus werden nicht dupliziert.
 
-Für die Personalisierung mit dem externen Schemawerkzeug die nullable Spalte `moorl_tv_ticket.attendee_name` als `VARCHAR(511)` ergänzen. Es gibt keine zusätzliche PHP-Migration. Neue Bestelltickets speichern den Namen aus dem Bestellkunden-Snapshot. Bei bestehenden oder manuellen Tickets ohne Namen verwendet die Ausgabe den geladenen Bestellkunden, sonst den zugewiesenen Kunden. Die Änderung des Namens setzt weder Kundenzuordnung noch Empfänger-E-Mail um. Der DAL sperrt Namensänderungen bei bereits eingelösten, abgelaufenen und widerrufenen Tickets unter denselben Sperren wie die Kontingentprüfung.
+Anmeldung speichert Name, E-Mail, optional Telefon/Einladenden/Ehrenämter/Bemerkung, separate interne Notiz, Ursprungsprache/-kanal und bestätigten Regeltext. Eingabegrenzen und Auswahlwerte werden serverseitig validiert. Ursprung und Regeltext sind unveränderlich; nach Ausstellung ist auch die Teilnehmeranmeldung eingefroren.
 
-- Warenkorb-Neuberechnung prüft Kontingent ohne Reservierung.
-- Bestellabschluss prüft/belegt Kontingent atomar mit `pending`-Tickets, `expiresAt` und eindeutigen Positionseinheiten. Dieser Checkout muss `pending` ausdrücklich setzen; der DAL-Default `valid` dient manuellen Tickets.
-- Zahlung aktiviert Tickets. Nicht bezahlte Tickets nach erneuter Zahlungsprüfung und Stornierung der Bestellung auf `expired` setzen; damit Kontingent freigeben und Historie erhalten. Bei später Zahlung muss die Laufzeitlogik eine ausdrückliche Entscheidung treffen.
-- Bestellungen gruppieren Tickets für Sammelmails; manuelle Tickets werden einzeln verschickt. Der Versand trennt unterschiedliche tatsächliche Empfänger.
-- Versandstatus liegt am Ticket. Die implementierten Dienste, Wiederholungen, Sperren und Zahlungs-/Ablaufentscheidungen sind in `runtime.md` beschrieben.
+Dedizierte Adminrechte issue/decide/guestlist_link schützen die begrenzten Aktionen. Scannerrechte bleiben unverändert. Ticketverknüpfung und Entscheidung sind keine frei beschreibbaren CRUD-Felder. Interne Artist-/Eventdaten bleiben generisch gefiltert; der Admin-JSONAPI-Adapter stellt nur vom Core autorisierte Attribute und Beziehungen wieder her. Geheimschlüssel wird ausschließlich durch die dedizierte Aktion herausgegeben.
 
-## Schemaerstellung und Integrität
+Der Bearbeiter einer Entscheidung wird über userId/user mit UserDefinition referenziert (nullable user_id, ON DELETE SET NULL). Nur die dedizierten Entscheidungsaktionen schreiben diese Zuordnung. Beim Löschen eines Benutzers bleiben Anmeldung, Entscheidung und processedAt erhalten. Der bisherige Name processedById/processed_by_id entfällt; vorhandene Bearbeiter-IDs bei einer Umstellung vor dem Entfernen der alten Spalte nach user_id übernehmen. Das externe Schemawerkzeug erzeugt die Änderungen.
 
-**Keine PHP-Migrationen:** Die vom Benutzer gelöschten Dateien bleiben gelöscht. Das Produktivschema wird mit seinem externen Tool erzeugt/abgeglichen. Die Definitionen sind die aktuelle Quelle. Bestehende Produktivdaten wurden nicht umgebaut. Bei vorhandenen Daten müssen Empfänger/Versandinformationen aus alten Ausstellungen vor dem Entfernen der Tabellen übernommen werden; das externe Tool erledigt diese fachliche Datenübernahme nicht automatisch.
+Restriktive inverse Relationen schützen Events, Typen, Artists, Stages, Tickets und relevante Core-Referenzen. Übersetzungen folgen ihren Eltern. Tickets/Check-ins/ausgestellte Anmeldungen werden nicht implizit kaskadierend gelöscht.
 
-Foundation `UniqueKey` wird vom vorhandenen MoorlDevTools `SchemaBuilderExtension` ausgewertet:
+Die TaxExtension schützt Steuern, die von Tickettypen verwendet werden, bereits im DAL. Der generierte FK moorl_tv_ticket_type.tax_id verwendet RESTRICT statt CASCADE; auch unverkaufte Typen werden beim Löschen einer Steuer nicht entfernt. Die inverse Steuerrelation wird nicht als zusätzliche öffentliche API-Association angeboten.
 
-| Index | Spalten |
-|---|---|
-| `uniq_moorl_tv_ticket_number` | `ticket_number` |
-| `uniq_moorl_tv_ticket_token` | `token` |
-| `uniq_moorl_tv_ticket_order_unit` | `order_line_item_id`, `order_line_item_version_id`, `unit_index` |
-| `uniq_moorl_tv_ticket_checkin_request` | `scan_request_id` |
+## Bestehende Bestellpositionsdaten übernehmen
 
-Der Order-Unit-Index erlaubt mehrere manuelle Tickets ohne Positions-ID. Ticketnummer und Token bleiben auch dann eindeutig. Native Referenzversionen sind NOT NULL mit Live-Default; NULL setzt der Core-Serializer auf Live zurück. Zusammengesetzte FKs sichern bestehende Positionen/CMS-Versionen ab.
+Diesen Ablauf zuerst mit einer Kopie der Datenbank prüfen. Während der eigentlichen Umstellung Checkout, Ticketänderungen und Worker anhalten, damit alter und neuer Aussteller nicht gleichzeitig arbeiten.
 
-Sale → Typ, Typ → Ticket und Ticket → Check-in verwenden `RestrictDelete`; ebenfalls Ticket → Bestellposition/Kunde und Sale → CMS. Check-ins bleiben Audit-Daten. Keine implizite Löschung von Tickets beim Löschen einer Bestellung oder eines Kunden.
+1. Mit dem externen Schemawerkzeug nur neue Tabellen/Spalten ergänzen, bestehende Positionsspalten und deren Daten behalten. Am Ticket neue nullable order_id sowie native order_version_id ergänzen. Den neuen Gruppierungsindex erst nach Übernahme aktivieren oder sicherstellen, dass die neuen Bestell-IDs zunächst NULL sind.
+2. Vorschau aus dem Shopware-Projekt ausführen:
 
-Für Core-Bezüge liegt das DAL-Flag auf inversen One-to-many-Associations in `CustomerExtension`, `OrderLineItemExtension` und `CmsPageExtension`. So bleibt das Löschen eines ungescannten Tickets oder eines ungenutzten CMS-verknüpften Sales möglich, während referenzierte Core-Datensätze geschützt sind. Die Extensions ergänzen keine SQL-Spalten. Der SchemaBuilder leitet daraus die restriktiven FKs ab; seine temporären Änderungen an kompilierten Feldern laufen im separaten Schemahelfer-Prozess.
+       bin/console moorl-tv:backfill-ticket-orders
 
-Das Tool erzeugt FK-Indizes, aber keine fachlichen Suchindizes aus DAL-Flags. Bei späteren Laufzeitabfragen bei Bedarf ergänzen: Ticket `(moorl_tv_ticket_type_id, status, expires_at)`, Check-in `(moorl_tv_ticket_id, scanned_at)` und Typ `(moorl_tv_ticket_sale_id, position)`. Native `Choice(..., strict: true)`, `EmailField` und Integer-Grenzen validieren DAL-Schreibzugriffe. Das Tool erzeugt daraus keine SQL-CHECKs; direkte SQL-Zugriffe umgehen diese Validierung. Statusfelder bleiben VARCHAR, keine SQL-ENUMs.
+3. Der Befehl prüft erforderliche Spalten, erkennt fehlende Bestellpositionsreferenzen und widersprüchliche bereits vorhandene direkte Zuordnungen. Ohne --apply werden keine Daten oder Schemata geändert.
+4. Den bisherigen Unique-Key über Positions-ID/Versions-ID/unit_index mit dem externen Werkzeug entfernen, seinen FK zunächst behalten. Sonst können verschobene Stückzähler mit noch vorhandenen alten Werten kollidieren.
+5. Explizit anwenden:
 
-Der aktuelle Builder erzeugt DATETIME ohne Millisekunden-Präzision; DATETIME(3) aus den früheren manuellen Migrationen wird nicht automatisch übernommen. Falls Millisekunden benötigt werden, muss das externe Schematool diese Präzision vorgeben.
+       bin/console moorl-tv:backfill-ticket-orders --apply
 
-`quantitySold` bleibt ein abgeleiteter, für Benutzer schreibgeschützter Zähler. `pending`, `valid`, `redeemed` belegen Plätze; `expired`/`revoked` geben sie frei. Der DAL prüft und aktualisiert das Kontingent unter Sperren in derselben Transaktion wie die Ticketänderung.
+6. Der Befehl überträgt in einer Transaktion Bestell-ID/Version und vergibt pro Bestellungsversion/Tickettyp neue stabile Einheiten. Sortierung ist alte Positions-ID, alter Stückzähler und Ticket-ID. Ticket-ID, Nummer, Token, Empfänger und Status werden nicht ersetzt. Manuelle Tickets ohne alte Positionszuordnung bleiben unverändert.
+7. Vollständigkeit, historische Zustände, direkte Bestellbezüge und neue Eindeutigkeit prüfen. Anschließend neue FKs/Unique-Indizes aktivieren und erst dann alte Positions-FKs/-Spalten entfernen. Quelle ist nun die OrderExtension statt OrderLineItemExtension.
+8. Cache/Assets aktualisieren und Worker neu starten. Vorhandene Ticket-URLs und QR-Codes bleiben erhalten.
 
-## Verifikation
+Der Befehl führt keinerlei DDL aus und wird nie automatisch durch Aktivierung/Update aufgerufen. Ein generierter Schemaabgleich allein ersetzt diese Datenübernahme nicht. In dieser Sitzung wurde nur gegen eine isolierte Testdatenbank gearbeitet, keine bestehende Shopdatenbank umgebaut.
 
-Lokale Unit-Tests, Integrationstests werden ohne explizite Testdatenbank übersprungen:
+## Schema-Prüfungen
 
-```powershell
-php vendor/bin/phpunit -c custom/plugins/MoorlTicketVendor/phpunit.xml.dist
-```
+tests/create-schema.php akzeptiert ausschließlich eine explizite moorl_tv_*_test-Datenbank und verweigert das Ersetzen nichtleerer Plugin-Tabellen. Es verwendet den tatsächlichen MoorlDevTools-Builder. Wegen Event/Typ-FK-Zyklen werden zuerst alle Tabellen, danach die Fremdschlüssel erzeugt. Unique-Flags kommen aus den Definitionen. Nicht eindeutige zusätzliche Suchindizes sind bei Bedarf über das externe Tool anzulegen, insbesondere (Event, E-Mail) und (Event, Entscheidung, erstellt).
 
-Isolierte Docker-Testdatenbank vorbereiten und komplette Plugin-Suite ausführen:
+MoorlDevTools erzeugt CREATE-/ALTER-Anweisungen und Fremdschlüssel wieder zusammen pro Entity in einer Migrationsdatei. Die globale Verschiebung aller ADD-FOREIGN-KEY-Operationen und die dadurch entstandenen zusätzlichen Dateien wurden zurückgenommen. Der Builder lässt Referenzen nicht wegen einer zusätzlichen One-to-many-Beziehung zu derselben Entity aus und wertet inverse Löschregeln anhand der konkreten FK-Spalte aus. Bisherige noch nicht ausgelieferte generierte Migrationen mit fehlendem Gästelisten-FK beziehungsweise CASCADE an tax_id neu erzeugen; bei installierten Schemata den regulären Abgleich über das externe Werkzeug verwenden. Das Plugin ergänzt keine handgeschriebenen PHP-Migrationen und führt diese Umstellung nicht automatisch durch.
 
-```powershell
-docker exec -e MOORL_TV_TEST_DATABASE_NAME=moorl_tv_simplified_20261015_test -w /var/www/html shopware_6.7.14.1 php custom/plugins/MoorlTicketVendor/tests/create-schema.php
-docker exec -e MOORL_TV_TEST_DATABASE_NAME=moorl_tv_simplified_20261015_test -w /var/www/html shopware_6.7.14.1 php vendor/bin/phpunit -c custom/plugins/MoorlTicketVendor/phpunit.xml.dist
-```
+    docker exec -e MOORL_TV_TEST_DATABASE_NAME=moorl_tv_extension_20261019_test -w /var/www/html shopware_6.7.14.1 php custom/plugins/MoorlTicketVendor/tests/create-schema.php
+    docker exec -e MOORL_TV_TEST_DATABASE_NAME=moorl_tv_extension_20261019_test -w /var/www/html shopware_6.7.14.1 php vendor/bin/phpunit -c custom/plugins/MoorlTicketVendor/phpunit.xml.dist
 
-Der explizite Schemahelfer verwendet den realen MoorlDevTools-Builder. Er prüft Datenbanknamen und lehnt das Ersetzen nichtleerer Tickettabellen ab. Nur die isolierte Testdatenbank darf verändert werden; kein Zugriff auf das Schema der normalen Shopdatenbank. Shopware TestBootstrapper installiert bei Bedarf den Core und die beiden Plugins. Die alten Migrationstests wurden entfernt, weil deren Migrationsklassen vom Benutzer gelöscht wurden. Ihre Persistenz-/Versionsprüfungen verbleiben in den aktuellen DAL-Tests.
-
-Für eine erneute saubere Schemaerzeugung einen unbenutzten Testdatenbanknamen wählen. Das Ablehnen bereits befüllter Testtabellen ist beabsichtigt. Der spätere CMS-Draft-Test kann wegen Core-DDL/Versionsverhalten Testdaten hinterlassen.
-
-Prüflauf vom 16.10.2026 nach dem unabhängigen Review: Schema auf der frischen Shopware-Datenbank `moorl_tv_foundation_20261016_070348_test` über MoorlDevTools erzeugt; komplette Plugin-Suite **24 Tests, 589 Assertions**, ohne übersprungene Tests. Geprüft sind Foundation-FK-Namen, Entity-/Collection-Hydrierung, Versionsflags, Unique-Indizes und beide Löschschutzrichtungen. Alle **28 PHP-Dateien** bestehen den Syntaxcheck und verwenden Klassenimporte am Dateianfang. Eine zusätzliche Bestell-Draftversion als Testfall bleibt eine optionale Erweiterung; Bestellbezüge werden bisher mit Live-Version und CMS-Bezüge auch mit einer Draftversion geprüft.
+Der Testname ist eine Entwicklungsreferenz; niemals eine reguläre Shopdatenbank als Testdatenbank verwenden. Native Mailtransporte werden in Versandtests ersetzt. Weitere Laufzeitdetails stehen in runtime.md.

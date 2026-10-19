@@ -86,6 +86,10 @@ The demo import adds the active **Veranstaltungen** category below the shop navi
 
 The optional **standard** Foundation demo has three events, seven ticket types, twelve tickets and three check-in records, including an internal guest list with three valid tickets. Use a test environment; tokens are known examples.
 
+It also includes four artists with social links, collective/label details and different booking examples: the shop contact form, an external email address, an external URL and an artist not publicly offered for booking. Internal buyout fees and notes are included. Three stages or rooms and six performances demonstrate parallel sets, multiple appearances by one artist and an announcement without a fixed stage or time.
+
+Four pending registrations for **Live im Stadtpark** demonstrate invitations, volunteer roles, remarks and two guests sharing one email address. On initial import, the concert's form is configured with its free internal ticket type and the storefront sales channel selected by Foundation. Registrations include a sales channel and language for subsequent ticket approval in Administration. Generate the secret form link with the regular admin link action; no fixed secret is stored in the demo package. Reimport preserves the generated link, existing decisions and ticket assignments, and a subsequent deactivation of the configured form.
+
 Import itself does not send email. Running workers may subsequently pick up undelivered valid demo tickets. Use a test mail transport and avoid real recipients. Occupancy counters are derived from quota-occupying ticket states.
 
 ## Updates and removal
@@ -123,3 +127,13 @@ Before deploying, add the nullable `moorl_tv_ticket.attendee_name` column (`VARC
 You can optionally add or change a **mobile number** for each ticket under the same editing rules as the attendee name. The number appears in scan results and can be dialled using **Call** in the browser scanner.
 
 `attendeePhone` / `attendee_phone`: nullable `VARCHAR(64)`; add using the external schema tool before deployment.
+
+## Artists, stages and private guest registration
+
+Manage artist profiles in the catalogue. “Offer for booking on the website” controls the public booking selection; inquiries use the existing contact page or an optional external booking contact. Fees and internal notes remain private. The “Artists available for booking” CMS element and /artists/booking share this selection; no booking workflow is introduced.
+
+Add event stages and sets under Programme. Artists may have multiple sets, with optional stage and times. Publish the line-up and timetable separately. Optional event capacity limits all ticket categories together. Disabling “Show in public lists” removes the event from lists/search/sitemap while its direct URL remains reachable.
+
+Under Guestlist, select a free ticket category and storefront channel, enable registration, enter introductory/rules text and copy the secret link. Registrations do not reserve admission. “Create and send ticket” issues one normal ticket after review and queues its email; retries keep that ticket. Multiple guests may share an email address. The fixed form supports voluntary roles, invited-by information and comments without payment handling. Export remains scoped to the event and current filters.
+
+Use the external schema tool before deployment. Backfill existing order-position references before removing legacy columns; moorl-tv:backfill-ticket-orders is read-only unless --apply is explicitly supplied. See [schema and backfill instructions](schema.md). Rebuild assets and restart workers after the transition.

@@ -86,6 +86,10 @@ Der Demoimport legt die aktive Kategorie **Veranstaltungen** unter der Shop-Navi
 
 Das optionale Foundation-Demopaket **standard** umfasst drei Veranstaltungen, sieben Tickettypen, zwölf Tickets und drei Check-in-Einträge. Es enthält auch eine interne Gästeliste mit drei gültigen Tickets. Verwenden Sie es in einer Testumgebung; die Tokens sind bekannte Beispieldaten.
 
+Ergänzend enthält es vier Artists mit Social Links, Kollektiv-/Labelangaben und unterschiedlichen Booking-Beispielen: Kontaktformular, externe E-Mail, externe URL und ein nicht öffentlich für Booking angebotener Artist. Interne Buyout-Gagen und Hinweise sind ebenfalls hinterlegt. Drei Bühnen beziehungsweise Räume und sechs Auftritte zeigen parallele Sets, mehrere Auftritte desselben Artists sowie eine Ankündigung ohne feste Bühne oder Uhrzeit.
+
+Vier offene Gästelistenanmeldungen für **Live im Stadtpark** zeigen Einladende, freiwillige Aufgaben, Bemerkungen und eine gemeinsame E-Mail-Adresse für zwei Gäste. Das Konzert erhält beim ersten Import den kostenlosen internen Tickettyp und den von Foundation gewählten Storefront-Verkaufskanal als Formularkonfiguration. Die Anmeldungen enthalten Verkaufskanal und Sprache für die spätere Ticketfreigabe im Admin. Den geheimen Formularlink dort über die reguläre Link-Aktion erzeugen; er ist nicht fest in den Demodaten hinterlegt. Erneuter Import erhält den erzeugten Link, bestehende Entscheidungen und Ticketzuordnungen sowie eine zwischenzeitliche Deaktivierung des konfigurierten Formulars.
+
 Der Import selbst löst keinen Versand aus. Aktive Worker können danach noch nicht versendete gültige Demotickets aufgreifen. Verwenden Sie für Demos einen Test-Mailtransport und keine echten Empfänger. Der Verkaufszähler wird anhand der belegenden Ticketstatus gesetzt.
 
 ## Aktualisierung und Deinstallation
@@ -123,3 +127,13 @@ Vor dem Deployment das neue nullable Feld `moorl_tv_ticket.attendee_name` (`VARC
 Optional können Sie pro Ticket eine **Handynummer** ergänzen oder ändern. Für die Bearbeitung gelten dieselben Regeln wie beim Namen. Die Nummer erscheint beim Scan und kann im Browser-Scanner über **Anrufen** gewählt werden.
 
 `attendeePhone` / `attendee_phone`: nullable `VARCHAR(64)`; vor dem Einsatz mit dem externen Schemawerkzeug anlegen.
+
+## Artists, Stages und geheime Gästeliste
+
+Artists werden unter den Kataloginhalten gepflegt. „Auf der Website für Booking anbieten“ zeigt das Profil in der Booking-Auswahl; Anfragen führen zur vorhandenen Kontaktseite oder zum optionalen externen Bookingkontakt. Gage und Bookingnotiz bleiben intern. Das CMS-Element „Artists für Booking“ und die Seite /artists/booking verwenden dieselbe Auswahl.
+
+Im Event unter „Programm“ Stages und Auftritte anlegen. Ein Artist kann mehrere Sets haben; Stage und Uhrzeiten sind optional. Line-up und Timetable werden separat am Event veröffentlicht. Eine optionale maximale Teilnehmerzahl begrenzt alle Tickettypen gemeinsam. „In öffentlichen Listen anzeigen“ kann ausgeschaltet werden; der direkte Eventlink bleibt erreichbar.
+
+Unter „Gästeliste“ Formular aktivieren, einen kostenlosen Tickettyp und den Verkaufskanal wählen, Einleitung und Regeln pflegen und den geheimen Link kopieren. Anmeldungen reservieren keinen Platz. Nach Prüfung erstellt „Ticket erstellen und senden“ das Ticket und stößt die E-Mail an. Fehler und erneuter Versand verwenden dasselbe Ticket. Mehrere Gäste können dieselbe E-Mail nutzen. Das Formular enthält Ehrenamt, eingeladen von und Bemerkungen, ohne Zahlungsabwicklung. Der gefilterte Export bleibt auf die Veranstaltung begrenzt.
+
+Vor dem Update das externe Schemawerkzeug für die neuen Tabellen und Felder einsetzen. Bestehende Bestellpositionsbezüge müssen vor dem Entfernen der alten Spalten übernommen werden; der Befehl moorl-tv:backfill-ticket-orders zeigt zunächst nur eine Vorschau. Ablauf und explizite Anwendung stehen in [Schema und Datenübernahme](schema.md). Anschließend Administration/Storefront bauen und Worker neu starten.

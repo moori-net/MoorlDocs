@@ -216,3 +216,13 @@ Die Daten brauchen keine Bestellung. Ein konfigurierter Foundation-Demokunde wir
 **Können Gastbesteller Tickets erhalten?** Ja, der Versand kann die Bestell-E-Mail verwenden. Der Kontodownload erfordert dagegen einen berechtigten Login; es gibt keinen öffentlichen Gast-Downloadlink.
 
 **Gibt es Sitzplätze oder Offline-Einlass?** Der aktuelle Umfang arbeitet mit Kontingenten je Tickettyp, ohne Sitzplan und ohne Offline-Freigabe. Die separate mobile App ist noch nicht vorhanden.
+
+## Artists, Stages und geheime Gästeliste
+
+Artists werden unter den Kataloginhalten gepflegt. „Auf der Website für Booking anbieten“ zeigt das Profil in der Booking-Auswahl; Anfragen führen zur vorhandenen Kontaktseite oder zum optionalen externen Bookingkontakt. Gage und Bookingnotiz bleiben intern. Das CMS-Element „Artists für Booking“ und die Seite /artists/booking verwenden dieselbe Auswahl.
+
+Im Event unter „Programm“ Stages und Auftritte anlegen. Ein Artist kann mehrere Sets haben; Stage und Uhrzeiten sind optional. Der Core-Time-Picker speichert Beginn und Ende als einfache HH:mm-Texte. Sets über Mitternacht sind möglich; „Position“ legt die Reihenfolge der Timetable fest. Line-up und Timetable werden separat am Event veröffentlicht. Eine optionale maximale Teilnehmerzahl begrenzt alle Tickettypen gemeinsam. „In öffentlichen Listen anzeigen“ kann ausgeschaltet werden; der direkte Eventlink bleibt erreichbar.
+
+Unter „Gästeliste“ Formular aktivieren, einen kostenlosen Tickettyp und den Verkaufskanal wählen, Einleitung und Regeln pflegen und den geheimen Link kopieren. Anmeldungen reservieren keinen Platz. Nach Prüfung erstellt „Ticket erstellen und senden“ das Ticket und stößt die E-Mail an. Fehler und erneuter Versand verwenden dasselbe Ticket. Mehrere Gäste können dieselbe E-Mail nutzen. Das Formular enthält Ehrenamt, eingeladen von und Bemerkungen, ohne Zahlungsabwicklung. Der gefilterte Export bleibt auf die Veranstaltung begrenzt.
+
+Vor dem Update das externe Schemawerkzeug für die neuen Tabellen und Felder einsetzen. Bestehende Bestellpositionsbezüge müssen vor dem Entfernen der alten Spalten übernommen werden; der Befehl moorl-tv:backfill-ticket-orders zeigt zunächst nur eine Vorschau. Ablauf und explizite Anwendung stehen in [Schema und Datenübernahme](schema.md). Anschließend Administration/Storefront bauen und Worker neu starten.
