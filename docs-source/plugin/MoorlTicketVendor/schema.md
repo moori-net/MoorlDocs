@@ -1,14 +1,14 @@
 # Ticket Vendor: Datenmodell und Schemaübergang
 
-Stand: 19.10.2026. Quelle sind die installierten DAL-Definitionen und Foundation-Flags. Das externe Schemawerkzeug erzeugt/gleicht Tabellen ab. Keine zusätzlichen PHP-Migrationen, keine automatische Produktivdatenübernahme.
+Stand: 20.10.2026. Quelle sind die installierten DAL-Definitionen und Foundation-Flags. Das externe Schemawerkzeug erzeugt/gleicht Tabellen ab. Keine zusätzlichen PHP-Migrationen, keine automatische Produktivdatenübernahme.
 
 ## Zwölf Tabellen
 
 | Tabelle | Aufgabe |
 |---|---|
-| moorl_tv_ticket_sale | Event mit Foundation-Inhalten, Adresse, Zeiten, Zeitzone, Kapazität und Veröffentlichung/Gästelistenkonfiguration |
+| moorl_tv_ticket_sale | Event mit Foundation-Inhalten, Adresse, Zeiten, Zeitzone, Kapazität und Veröffentlichung |
 | moorl_tv_ticket_sale_translation | Übersetzte Inhalte, Meta-/Ortsdaten, schemaOrg, guestlistIntroduction und guestlistRules |
-| moorl_tv_ticket_type | Eventkategorie mit Preis/Steuer, Kontingent und Kaufgrenzen |
+| moorl_tv_ticket_type | Eventkategorie mit Preis/Steuer, Kontingent, Kaufgrenzen und Gästelistenkonfiguration |
 | moorl_tv_ticket_type_translation | Übersetzte Typtexte |
 | moorl_tv_ticket | Einzelnes Ticket mit optionaler direkter Bestellung, Kunde/Empfänger, Personalisierung, Status und Versandtracking |
 | moorl_tv_ticket_checkin | Unveränderter Scan-Audit einschließlich abgewiesener Versuche und Anfrage-ID |
@@ -17,9 +17,11 @@ Stand: 19.10.2026. Quelle sind die installierten DAL-Definitionen und Foundation
 | moorl_tv_stage | Eventbezogene Bühne/Area, Bild und Reihenfolge |
 | moorl_tv_stage_translation | Name und Beschreibung |
 | moorl_tv_performance | Artist-Auftritt am Event mit optionaler Stage und Uhrzeiten als Text |
-| moorl_tv_guestlist_entry | Persönliche Anfrage, Regel-Snapshot, Entscheidung und optionales Ticket |
+| moorl_tv_guestlist_entry | Persönliche Anfrage an einen Tickettyp, Regel-Snapshot, Entscheidung und optionales Ticket |
 
 UUIDs sind BINARY(16), vollständige Zeitpunkte UTC und Event-Zeitzonen IANA-Namen. Timetable-Uhrzeiten sind einfache lokale HH:mm-Texte ohne Datum oder Umrechnung. FK-Storage-Namen folgen Foundation: saleId = moorl_tv_ticket_sale_id, typeId = moorl_tv_ticket_type_id, artistId = moorl_tv_artist_id, stageId = moorl_tv_stage_id. Native Core-Bezüge verwenden ihre Core-Spaltennamen.
+
+Tickettypen verwenden ihre UUID und den übersetzten Namen; `technicalName`/`technical_name` entfällt aus Modell, Administration, Demo und Import-/Exportmapping. Die bisherige erforderliche Spalte `moorl_tv_ticket_type.technical_name` vor Verwendung der geänderten Definition mit dem externen Schemawerkzeug entfernen und generierte Migrationen entsprechend abgleichen. Vorhandene Import-/Exportprofile ebenfalls aktualisieren. Keine zusätzliche PHP-Migration oder automatische Änderung bestehender Datenbanken.
 
 ## Ticket und Bestellung
 
@@ -35,9 +37,9 @@ Ticketnummer aus NumberRange, QR-token und persönlicher deeplink bleiben getren
 
 listed (Default true), lineupPublished/timetablePublished (Default false), capacity nullable. Timetable setzt Line-up-Freigabe voraus. listed ist nur Auffindbarkeit, kein Geheimhaltungsschutz. capacity gilt zusätzlich zu Typkontingenten für alle belegenden Tickets.
 
-Gästeliste: guestlistEnabled (false), guestlistOpenAt/guestlistCloseAt, guestlistTicketTypeId (Storage guestlist_moorl_tv_ticket_type_id), guestlistSalesChannelId (guestlist_sales_channel_id), guestlistAccessKey (nullable VARCHAR(40), intern), guestlistConfig (JSON). Konfiguration enthält phoneRequired und volunteerRoles (technischer Schlüssel → Beschriftung oder Sprachmap). Der gewählte Typ muss kostenlos sein und zum Event gehören; für den Verkauf darf er inaktiv sein.
+Einleitung (`guestlistIntroduction`) und Regeln (`guestlistRules`) bleiben übersetzbare Eventtexte. Am Tickettyp liegen `guestlistEnabled` (Default false), `guestlistAccessKey` (nullable VARCHAR(40), intern) und `guestlistConfig` (JSON, ausschließlich `volunteerRoles`: technischer Schlüssel → Beschriftung oder Sprachmap). `guestlistTicketTypeId`, Registrierungszeitfenster, konfigurierter Registrierungs-Verkaufskanal und `phoneRequired` entfallen. Telefonnummern bleiben optional. Ein freigegebener Gästelistentyp muss kostenlos sein, darf für den öffentlichen Verkauf aber `active=false` haben.
 
-guestlistTicketTypeId erhält einen physischen FK zu moorl_tv_ticket_type.id mit ON DELETE SET NULL. Damit bleibt der optionale Bezug auch bei direkten SQL-Löschungen gültig. Der DAL-Konfigurationsschutz für verwendete Gästetickettypen bleibt zusätzlich bestehen. Die gegenseitigen Event-/Typbezüge sind bei der Installationsreihenfolge zu berücksichtigen; der Generator trennt die Fremdschlüssel nicht mehr pauschal in weitere Dateien ab.
+Die Anmeldung besitzt required, unveränderlichen `typeId` (`moorl_tv_ticket_type_id`, FK RESTRICT); ihr Event ergibt sich über `type.sale`. Der bisherige direkte Event-FK der Anmeldung entfällt. Typen mit Anmeldungen lassen sich weder löschen noch auf andere Events verschieben. Auch kundenlose verknüpfte Tickets behalten ihren Typ/Event. Die zyklische Event-/Typreferenz entfällt vollständig.
 
 ## Artist, Stage und Auftritt
 
@@ -49,11 +51,35 @@ Bestehende DATETIME-Spalten start_at/end_at ausschließlich an moorl_tv_performa
 
 ## Gästelistenintegrität und Rechte
 
-Unique-Keys auf submission_id und nullable moorl_tv_ticket_id. Keine Eindeutigkeit auf E-Mail. Gleiche Anfrage-ID erzeugt keinen zweiten Eintrag; mehrere Gäste dürfen dieselbe Adresse verwenden. Entscheidung ist NULL, rejected oder cancelled; Ausstellungsstatus folgt ticketId. Versand- und Ticketstatus werden nicht dupliziert.
+Unique-Keys auf submission_id und nullable moorl_tv_ticket_id. Keine Eindeutigkeit auf E-Mail. Gleiche Anfrage-ID erzeugt keinen zweiten Eintrag; eine Wiederholung an einem anderen Typ ist ein Konflikt. Mehrere Gäste dürfen dieselbe Adresse verwenden. Entscheidung ist NULL, rejected oder cancelled; Ausstellungsstatus folgt ticketId. Versand- und Ticketstatus werden nicht dupliziert.
+
+CSV-Importe benötigen weder `id` noch `submissionId`: Shopware erzeugt die Datensatz-ID; fehlende, NULL- oder leere Anfrage-IDs werden pro neuer Anmeldung vor der DAL-Pflichtfeldprüfung als zufällige UUID mit 32 Hexzeichen erzeugt. Mitgelieferte Anfrage-IDs und bestehende Werte bei Updates bleiben erhalten. Kein zufälliger Datenbank-Default und keine Schemaänderung. Ohne mitgelieferte Datensatz-ID legt ein erneuter Import neue Anmeldungen an; gleiche E-Mail-Adressen werden nicht zusammengeführt.
+
+CSV-Importe benötigen weder `id` noch `submissionId`: Shopware erzeugt die Datensatz-ID; fehlende, NULL- oder leere Anfrage-IDs werden pro neuer Anmeldung vor der DAL-Pflichtfeldprüfung als zufällige UUID mit 32 Hexzeichen erzeugt. Mitgelieferte Anfrage-IDs und bestehende Werte bei Updates bleiben erhalten. Kein zufälliger Datenbank-Default und keine Schemaänderung. Ohne mitgelieferte Datensatz-ID legt ein erneuter Import neue Anmeldungen an; gleiche E-Mail-Adressen werden nicht zusammengeführt.
+
+Für größere Gästelisten über das externe Schemawerkzeug zusätzlich die Suchindizes `(moorl_tv_ticket_type_id, decision, created_at)` für gefilterte Listen und `(moorl_tv_ticket_type_id, email)` für die E-Mail-Suche vorsehen. Der generierte Typ-FK-Index allein begrenzt bereits auf den Typ; EXPLAIN auf dem isolierten Endschema zeigt für Listen jedoch zusätzliches Sortieren und für die Duplikatübersicht eine temporäre Gruppierung nach Name/E-Mail. Die zusätzlichen Indizes mit repräsentativen Daten und den tatsächlich verwendeten Filtern prüfen; sie beseitigen nicht automatisch jede Gruppierung oder Sortierung.
 
 Anmeldung speichert Name, E-Mail, optional Telefon/Einladenden/Ehrenämter/Bemerkung, separate interne Notiz, Ursprungsprache/-kanal und bestätigten Regeltext. Eingabegrenzen und Auswahlwerte werden serverseitig validiert. Ursprung und Regeltext sind unveränderlich; nach Ausstellung ist auch die Teilnehmeranmeldung eingefroren.
 
-Dedizierte Adminrechte issue/decide/guestlist_link schützen die begrenzten Aktionen. Scannerrechte bleiben unverändert. Ticketverknüpfung und Entscheidung sind keine frei beschreibbaren CRUD-Felder. Interne Artist-/Eventdaten bleiben generisch gefiltert; der Admin-JSONAPI-Adapter stellt nur vom Core autorisierte Attribute und Beziehungen wieder her. Geheimschlüssel wird ausschließlich durch die dedizierte Aktion herausgegeben.
+Dedizierte Adminrechte `moorl_tv_guestlist_entry:issue`, `moorl_tv_guestlist_entry:decide` und `moorl_tv_ticket_type:guestlist_link` schützen die begrenzten Aktionen. Scannerrechte bleiben unverändert. Ticketverknüpfung und Entscheidung sind keine frei beschreibbaren CRUD-Felder. Interne Artist-/Event-/Typdaten bleiben generisch gefiltert; der Admin-JSONAPI-Adapter stellt nur vom Core autorisierte Attribute und Beziehungen wieder her. Geheimschlüssel wird ausschließlich durch die dedizierte Aktion herausgegeben.
+
+Registrierungen reservieren keine Plätze. Formulare schließen bei erschöpftem Typkontingent oder voller Eventkapazität und öffnen bei wieder freien Plätzen automatisch, solange der Schalter gesetzt und das Event aktiv/nicht beendet ist. Bestehende Anfragen dürfen bei abgeschalteter Registrierung weiterhin nach den normalen Regeln bearbeitet werden. Typ- und Eventkontingent zählen `pending`, `valid`, `redeemed`; der Schalter wird durch Vollbelegung nicht umgeschrieben. Wiederholungen bereits erfolgreicher Anmeldungen werden auch bei Vollbelegung bestätigt.
+
+Kanal und Sprache des tatsächlichen Storefrontaufrufs bleiben unveränderlich an der Anmeldung gespeichert. Beim Erstellen eines Gästelisten-Tickets haben die globalen SystemConfig-Werte `MoorlTicketVendor.config.guestlistTicketSalesChannelId` und `MoorlTicketVendor.config.guestlistTicketLanguageId` Vorrang, auch bei CSV-Anmeldungen ohne Ursprung. Beide Werte werden als Paar geprüft (aktive Storefront mit Domain, zugeordnete Sprache; eine eigene Sprachdomain ist nicht erforderlich) und am Ticket festgeschrieben. Sind beide leer, wird der vorhandene Anmeldungsursprung verwendet. Unvollständige Konfigurationen und fehlende Ursprünge werden nicht geraten. Ein Konfigurationswechsel verändert bestehende Tickets nicht. Kein zusätzliches Plugin-Datenbankfeld und keine PHP-Migration. Die Adminaktion erzeugt Domainlinks unter `/guestlist/type/{typeId}/{accessKey}`. Mehrere Storefront-Domains werden nur für den zu kopierenden Link ausgewählt; diese Auswahl wird nicht am Typ gespeichert.
+
+## Bestehende Event-Gästelisten übernehmen
+
+Zuerst an einer Datenbankkopie prüfen. Mit dem externen Schemawerkzeug additiv die drei Typfelder und eine zunächst nullable `moorl_tv_guestlist_entry.moorl_tv_ticket_type_id` ergänzen. Die bisherigen Eventfelder und der alte Event-FK der Anmeldung müssen für die Übernahme erhalten bleiben. Registrierungen, Checkout, Ticketänderungen und Worker während der tatsächlichen Übernahme anhalten.
+
+    bin/console moorl-tv:backfill-guestlist-types
+
+Die Vorschau schreibt nichts. Ausgestellte Einträge erhalten ihren tatsächlichen Tickettyp, übrige Einträge den bisherigen `event.guestlistTicketTypeId`. Eventkonfiguration, Geheimschlüssel und Ehrenämter werden übernommen; `phoneRequired` entfällt. Fehlende oder widersprüchliche Zuordnungen, fehlende Ursprünge und abweichende bereits gepflegte Typkonfigurationen werden als Konflikte ausschließlich mit Datensatz-IDs gemeldet. Es werden keine Ersatztypen oder Verkaufskanäle geraten.
+
+    bin/console moorl-tv:backfill-guestlist-types --apply
+
+Nur dieses Flag schreibt Daten; bei Konflikten wird nichts übernommen. Wiederholung ist stabil und erhält Entscheidungen, Ticket-IDs, Regeltexte und Versandursprünge. Der Befehl führt kein DDL aus und wird nie automatisch vom Plugin-Lifecycle gestartet. Nach vollständiger Prüfung `entry.typeId` required machen und FK RESTRICT aktivieren; erst danach alten Anmeldungs-Event-FK und obsolete Eventkonfiguration über das externe Werkzeug entfernen. `guestlistIntroduction` und `guestlistRules` bleiben bestehen. Eigene Exportprofile auf `typeId` umstellen.
+
+In bestehenden ACL-Rollen das bisherige `moorl_tv_ticket_sale:guestlist_link` gezielt durch `moorl_tv_ticket_type:guestlist_link` ersetzen und `moorl_tv_ticket_type:read` ergänzen; andere Rechte/Zuweisungen erhalten. Aktuelle Administration bauen, Cache und Worker aktualisieren. Alte gültige Eventlinks leiten auf den passenden Typ weiter; bereits geöffnete alte Formulare müssen neu geladen werden. Eine Rotation entwertet beide Linkformen. Vor Entfernen alter Felder ist ein Rückweg über die gesicherten Werte möglich; danach ist für ein Rollback ein geprüftes Backup erforderlich.
 
 Der Bearbeiter einer Entscheidung wird über userId/user mit UserDefinition referenziert (nullable user_id, ON DELETE SET NULL). Nur die dedizierten Entscheidungsaktionen schreiben diese Zuordnung. Beim Löschen eines Benutzers bleiben Anmeldung, Entscheidung und processedAt erhalten. Der bisherige Name processedById/processed_by_id entfällt; vorhandene Bearbeiter-IDs bei einer Umstellung vor dem Entfernen der alten Spalte nach user_id übernehmen. Das externe Schemawerkzeug erzeugt die Änderungen.
 
@@ -84,9 +110,9 @@ Der Befehl führt keinerlei DDL aus und wird nie automatisch durch Aktivierung/U
 
 ## Schema-Prüfungen
 
-tests/create-schema.php akzeptiert ausschließlich eine explizite moorl_tv_*_test-Datenbank und verweigert das Ersetzen nichtleerer Plugin-Tabellen. Es verwendet den tatsächlichen MoorlDevTools-Builder. Wegen Event/Typ-FK-Zyklen werden zuerst alle Tabellen, danach die Fremdschlüssel erzeugt. Unique-Flags kommen aus den Definitionen. Nicht eindeutige zusätzliche Suchindizes sind bei Bedarf über das externe Tool anzulegen, insbesondere (Event, E-Mail) und (Event, Entscheidung, erstellt).
+tests/create-schema.php akzeptiert ausschließlich eine explizite moorl_tv_*_test-Datenbank und verweigert das Ersetzen nichtleerer Plugin-Tabellen. Es verwendet den tatsächlichen MoorlDevTools-Builder. Tabellen werden vor ihren Fremdschlüsseln erzeugt. Unique-Flags kommen aus den Definitionen. Nicht eindeutige zusätzliche Suchindizes sind über das externe Tool anzulegen, insbesondere `(moorl_tv_ticket_type_id, email)` und `(moorl_tv_ticket_type_id, decision, created_at)` für Anmeldungen. Die aktuelle Gästelistenstruktur benötigt keinen Event-/Typ-FK-Zyklus mehr.
 
-MoorlDevTools erzeugt CREATE-/ALTER-Anweisungen und Fremdschlüssel wieder zusammen pro Entity in einer Migrationsdatei. Die globale Verschiebung aller ADD-FOREIGN-KEY-Operationen und die dadurch entstandenen zusätzlichen Dateien wurden zurückgenommen. Der Builder lässt Referenzen nicht wegen einer zusätzlichen One-to-many-Beziehung zu derselben Entity aus und wertet inverse Löschregeln anhand der konkreten FK-Spalte aus. Bisherige noch nicht ausgelieferte generierte Migrationen mit fehlendem Gästelisten-FK beziehungsweise CASCADE an tax_id neu erzeugen; bei installierten Schemata den regulären Abgleich über das externe Werkzeug verwenden. Das Plugin ergänzt keine handgeschriebenen PHP-Migrationen und führt diese Umstellung nicht automatisch durch.
+MoorlDevTools erzeugt CREATE-/ALTER-Anweisungen und Fremdschlüssel gemeinsam pro Entity. Den vorhandenen generierten Migrationssatz vor Auslieferung mit dem externen Werkzeug auf das neue Typmodell und den Wegfall von `technical_name` abgleichen. Bei bestehenden Datenbanken zuerst die additive Datenübernahme ausführen; ein direkter destruktiver Komplettabgleich würde die bisherige Zuordnung entfernen. Das Plugin ergänzt keine handgeschriebenen PHP-Migrationen und führt diese Umstellung nicht automatisch durch. Ein grünes direkt aus DAL-Definitionen erzeugtes Testschema allein belegt nicht die Aktualität der vorhandenen generierten Migrationen.
 
     docker exec -e MOORL_TV_TEST_DATABASE_NAME=moorl_tv_extension_20261019_test -w /var/www/html shopware_6.7.14.1 php custom/plugins/MoorlTicketVendor/tests/create-schema.php
     docker exec -e MOORL_TV_TEST_DATABASE_NAME=moorl_tv_extension_20261019_test -w /var/www/html shopware_6.7.14.1 php vendor/bin/phpunit -c custom/plugins/MoorlTicketVendor/phpunit.xml.dist
