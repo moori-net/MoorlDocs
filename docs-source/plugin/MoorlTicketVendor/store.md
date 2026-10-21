@@ -10,6 +10,10 @@ Bieten Sie Standard-, VIP-, ermäßigte oder andere Ticketkategorien an. Jeder T
 
 Die abschließende Kontingentprüfung erfolgt zusammen mit der Bestellspeicherung. Auch gleichzeitig eintreffende Bestellungen werden berücksichtigt. Für jede gekaufte Einheit entsteht ein individuelles Ticket mit eigener Nummer aus Shopwares Nummernkreis und eigenem QR-Code.
 
+## Gruppentickets und Verzehrpakete
+
+Gruppeneinlass sowie Getränke-/Essenspakete bieten konfigurierbare Einlösungen in einem festen Bereich auf einem QR-Code. Jeder bewusste Scan verbraucht eine Einheit und zeigt den Fortschritt. Gruppentickets belegen gewichtete Personenplätze; Verzehrpakete keine Einlassplätze des Events.
+
 ## Freigabe nach Zahlung und nachvollziehbare Status
 
 Tickets aus Bestellungen warten zunächst auf die bestätigte Zahlung. Nach dem nativen Status `paid` erfolgt die Freigabe und der automatische Versand. Zahlungsfristen, Ablauf, Stornierung, vollständige Erstattung und Chargeback fließen in die Ticketgültigkeit ein. Offene Tickets können nach Ablauf der konfigurierten Zahlungsfrist verfallen und ihr Kontingent wieder freigeben.
@@ -34,11 +38,17 @@ Der integrierte Admin-Scanner unterstützt QR-Erkennung per Gerätekamera in gee
 
 Die mitgelieferte Rolle **Ticket Vendor – Scanner** erlaubt Veranstaltungsabfrage und Check-in, ohne allgemeine Ticketänderungs-, Kunden- oder Bestellrechte zu vergeben. Für individuelle Anbindungen steht eine authentifizierte Admin-API bereit. Eine eigenständige mobile Scanner-App ist derzeit nicht Bestandteil der Erweiterung.
 
+## Artists, Booking und Veranstaltungsprogramm
+
+Pflegen Sie Artist-Profile mit Bildern, Genres, Kollektiven, Labels und Social Links. Das Booking-Roster in den Erlebniswelten zeigt ausgewählte Artists und führt Anfragen zur konfigurierten Kontaktkategorie, einer E-Mail-Adresse oder einer externen Booking-URL. Gagen und Bookingnotizen bleiben intern.
+
+Ordnen Sie Artists den Stages und Sets zu, mit optionalen Start-/Endzeiten auch über Mitternacht. Line-up und Timetables je Stage lassen sich unabhängig veröffentlichen.
+
 ## Verwaltung, Erlebniswelten und SEO
 
 Veranstaltungen bündeln Tickettypen, generierte Kundentickets und Check-in-Protokolle. Zusätzliche Ticketansichten in Bestell- und Kundendetails erleichtern Rückfragen und Support. Foundation-Formulare und Listen sorgen für eine einheitliche Verwaltung.
 
-Öffentliche Veranstaltungsseiten, ein CMS-Listing für Erlebniswelten, übersetzbare Inhalte und native SEO-URLs unterstützen die Präsentation im Shop. Datenpakete liefern die Basiseinrichtung, Import-/Exportprofile für Veranstaltungen und Tickettypen sowie ein optionales Demopaket einschließlich Gästeliste.
+Öffentliche Veranstaltungsseiten, CMS-Listen mit optionalem Archiv, übersetzbare Inhalte und native SEO-URLs unterstützen die Präsentation im Shop. Ticketkarten oder kompakte Listen, Verfügbarkeit, Bilder und Beschreibungen lassen sich je Verkaufskanal konfigurieren. Foundation liefert Import-/Exportprofile und Datenpakete. Die optionale Demo enthält eine Startseite mit Social Links, Seiten für Events, Booking und Kontakt, Event- und Artist-Bilder sowie Ticketbeispiele und eine Gästeliste.
 
 ## Funktionsübersicht
 
@@ -53,6 +63,11 @@ Veranstaltungen bündeln Tickettypen, generierte Kundentickets und Check-in-Prot
 - Browser-Scanner, Check-in-Protokoll und eingeschränkte Scanner-Rolle.
 - Authentifizierter Check-in-Endpunkt für eigene Anbindungen.
 - Veranstaltungsseiten, CMS-Listing, Übersetzungen und SEO-URLs.
+- Private Gästelistenanmeldung mit Bestätigungslinks und Unterstützungsoptionen.
+- Artist-Booking-Roster, Stages, Line-up und Timetables.
+- Gruppen- und Verzehrpakete mit Mehrfacheinlösung.
+- Persönliche Ticketlinks für Bearbeitung und Download ohne Kundenlogin.
+- Eventarchiv und konfigurierbare Ticketdarstellung.
 - Ticketansichten an Veranstaltung, Bestellung und Kunde.
 - Flow-Builder-Aktion sowie Foundation-Daten- und Demopakete.
 
@@ -60,14 +75,16 @@ Veranstaltungen bündeln Tickettypen, generierte Kundentickets und Check-in-Prot
 
 Die Erweiterung setzt **MoorlFoundation 1.7** und **Shopware 6.7 mit Storefront** voraus. Automatischer Versand und Fristverarbeitung benötigen die regulären Shopware-Worker und einen eingerichteten Mailtransport. Der Scanner arbeitet online; Kameraerkennung hängt von HTTPS und Browserunterstützung ab. Sitzplatzpläne, Offline-Einlass und eine eigenständige mobile App gehören nicht zum aktuellen Umfang.
 
-Gruppeneinlass sowie Getränke-/Essenspakete bieten konfigurierbare Einlösungen in einem festen Bereich auf einem QR-Code. Jeder bewusste Scan verbraucht eine Einheit und zeigt den Fortschritt. Gruppentickets belegen gewichtete Personenplätze; Verzehrpakete keine Einlassplätze des Events.
-
 ## Einblicke in die Erweiterung
 
-Die folgenden Aufnahmen vom 21.10.2026 zeigen den vorhandenen Demoshop mit SIDEQUEST-Theme und die Shopware-Administration. Alle PNGs haben **1920 × 1080 Pixel (FullHD)** bei 100 % Browserzoom. Die Oberfläche dieser Demo ist Englisch, die Veranstaltungsdaten sind teilweise Deutsch. Theme, Inhalte und verfügbare Optionen hängen von Ihrer Installation ab.
+Die Aufnahmen vom 22.10.2026 zeigen Shopware **6.7.15.1**, die installierten Demodaten und das aktuell verwendete helle Shopware-Storefront-Layout. Alle Screenshots verwenden eine englische Oberfläche und **1920 × 1080 Pixel (FullHD)** bei 100 % Browserzoom. Gestaltung und verfügbare Optionen hängen von Theme und Konfiguration ab.
 
-![Veranstaltung mit Line-up](images/storefront-event.png)
+![Eventseite mit Datum, Veranstaltungsort und Ticketwahl](images/storefront-event.png)
 
-![Gruppenticket: Preis, Einlösungen und Kontingent](images/admin-type.png)
+![Öffentliches Artist-Booking-Roster](images/storefront-booking.png)
 
-![Scanner mit Veranstaltung und manueller Eingabe](images/admin-scanner.png)
+![Line-up und Timetables je Stage](images/storefront-program.png)
+
+![Gruppenticket mit Preis, Einlösungen und Kontingent](images/admin-type.png)
+
+![Browser-Scanner mit Veranstaltungsauswahl und manueller Eingabe](images/admin-scanner.png)

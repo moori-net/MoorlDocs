@@ -1,5 +1,5 @@
 ---
-description: "Sell events and admission tickets directly in Shopware with ticket quotas, PDF/QR tickets, payment activation, guest-list tickets and convenient online check-in."
+description: "Manage events and sell tickets in Shopware with quotas, PDF/QR tickets, payment activation, artist booking, line-ups, guest lists and online check-in."
 tags:
   - Tickets
   - Events
@@ -10,7 +10,7 @@ tags:
 
 # Ticket Vendor
 
-Sell events and admission tickets directly in Shopware with ticket quotas, PDF/QR tickets, payment activation, guest-list tickets and convenient online check-in.
+Manage events and sell tickets in Shopware with quotas, PDF/QR tickets, payment activation, artist booking, line-ups, guest lists and online check-in.
 
 Ticket Vendor manages events, sells admission through Shopware's cart and validates tickets at the entrance. Events, ticket types and individual customer tickets are separate entities; you do not need to create Shopware products for them.
 
@@ -29,7 +29,7 @@ This guide describes the shipped plugin. The Administration browser scanner is i
 
 Ticket Vendor requires Shopware 6.7 with Storefront and MoorlFoundation 1.7. Foundation supplies forms, grids, CMS helpers and data packages. Install and activate Foundation first. Scheduled tasks and message consumers must run for payment deadlines and automatic delivery.
 
-1. Create an event under **Catalogues → Events**.
+1. Create an event under **Catalogues → Ticket Vendor - Events**.
 2. Enter its start, end, location and content; activate it.
 3. Assign an active ticket type with price, tax and quota.
 4. Create a category with the CMS event listing and select it under **Page with events (list)** in the plugin configuration. Open the event through that category and place a test order.
@@ -37,9 +37,17 @@ Ticket Vendor requires Shopware 6.7 with Storefront and MoorlFoundation 1.7. Fou
 6. Open the PDF in the customer account or Administration.
 7. Choose the event and redemption area in the scanner. A single ticket is exhausted after one scan; packages stay valid until their final redemption.
 
+The Administration screenshots show Shopware **6.7.15.1** with the installed demo data on **22 October 2026**, in English at **1920 × 1080 pixels (FullHD)** and 100% browser zoom. Private registration links are concealed.
+
+The Storefront screenshots show the same demo on **22 October 2026**, using its current light Shopware layout and English content. They are also **1920 × 1080 pixels** at 100% browser zoom; longer pages are shown in separate viewport captures.
+
 ## Managing events
 
 The event list provides access to all created events. Event details combine general information, public content, location, assigned ticket types, customer tickets and check-in records.
+
+Event overview with dates and venues.
+
+![Event overview with dates and venues.](images/admin-events.png)
 
 | Section | Purpose |
 | --- | --- |
@@ -55,6 +63,14 @@ The event list provides access to all created events. Event details combine gene
 Public visibility requires a matching sales window. When an end time is configured, public sales end at that time; otherwise they end at the event start. Set “Show until” for an earlier sales cutoff.
 
 Events do not have a technical name. Their ID identifies them; the translated name is for display. Existing ticket and audit references restrict deletion. Deactivate the event or restrict its selling window to stop sales.
+
+Event details: title, teaser and description.
+
+![Event details: title, teaser and description.](images/admin-event.png)
+
+Public event page with image, date, venue and ticket selection link.
+
+![Public event page with image, date, venue and ticket selection link.](images/storefront-event.png)
 
 ## Ticket types, prices and quotas
 
@@ -79,11 +95,19 @@ Ticket types are available under **Settings** and within their event. Each type 
 
 Manual tickets are subject to the same quota checks. Total quota cannot be reduced below current occupancy.
 
+Five-person group ticket: price, redemptions and quota.
+
+![Five-person group ticket: price, redemptions and quota.](images/admin-type.png)
+
 ## Packages and fixed ticket values
 
 A five-person admission ticket occupies five type quota units and five event places and includes five redemptions on one QR code. A five-drink package occupies one type quota unit and no event places. A quota of 100 therefore permits 20 group tickets or 100 drink packages. With four event places free, the group ticket is unavailable while a drink package can remain available. Price and purchase quantity count complete tickets/packages.
 
 Each ticket stores its area, limit and person places from its type. Later type changes apply to new tickets. An unbound manual ticket can change type before first use, with fresh snapshots and quota checks; after first use its type/event are fixed. Revocation and reactivation preserve consumption. Fully consumed tickets cannot be made redeemable again. Account/PDF show the stored entitlement; the account shows current consumption.
+
+Ticket selection with individual admission, group tickets and service packages.
+
+![Ticket selection with individual admission, group tickets and service packages.](images/storefront-tickets.png)
 
 ## Storefront, CMS and SEO
 
@@ -95,6 +119,14 @@ The supplied native SEO template uses `tickets/<event-name>/<ID>`. Keep SEO inde
 
 Use **Events with archive (static)** (`moorl-tv-ticket-sale-static-listing`) for a fixed overview of all active events. Ongoing and upcoming events appear first, with the nearest date at the top; past events follow in descending order with a grey appearance. Ticket selling windows do not restrict this overview. Set **Alternative event URL** on an event to link private events to a community, for example. Without an alternative URL, available events link to their event page. Past events have no purchase button. Add the optional nullable `moorl_tv_ticket_sale.alternative_url` column (`VARCHAR(2048)`) using the schema tool, then rebuild Administration and the theme.
 
+The static CMS listing shows upcoming events with images and ticket links.
+
+![The static CMS listing shows upcoming events with images and ticket links.](images/storefront-events.png)
+
+Past events appear below the upcoming programme, greyed out and without a purchase button.
+
+![Past events appear below the upcoming programme, greyed out and without a purchase button.](images/storefront-archive.png)
+
 ## Orders, payments and activation
 
 One individual ticket is created for each purchased unit. A line item with quantity three therefore produces three ticket numbers and QR codes. An order may contain different categories and events.
@@ -104,6 +136,10 @@ Order tickets start as **Payment pending**. The default payment deadline is 30 m
 The expiry task checks the actual payment state again. Overdue unpaid orders are cancelled through native transitions and their tickets expire, releasing quota. This can affect the entire order, including other items. Account for mixed carts and payment methods that need longer to settle.
 
 Order cancellation, full refund and chargeback revoke tickets that still occupy quota. A late payment does not automatically reactivate an already cancelled order. Reconcile such cases manually in Shopware and with the payment provider. The plugin does not initiate its own provider refund.
+
+A Standard ticket in the Shopware cart with its event, quantity and price.
+
+![A Standard ticket in the Shopware cart with its event, quantity and price.](images/storefront-cart.png)
 
 ## Individual tickets and statuses
 
@@ -190,6 +226,10 @@ Each deliberate scan uses one redemption and shows consumed, total and remaining
 
 Admission requires an active event whose configured end time has not passed. There is no separate configurable admission opening time: a future start time alone does not prevent scanning.
 
+Scanner with the event selected and manual token input.
+
+![Scanner with the event selected and manual token input.](images/admin-scanner.png)
+
 ## Users and scanner role
 
 The **scanner-role** Foundation package creates **Ticket Vendor – Scanner**. Assign it under **Settings → System → Users & permissions** to a separate user with administrator access switched off.
@@ -221,6 +261,14 @@ The optional **standard** demo contains three events, ten ticket types, twelve t
 
 No order is needed. A configured Foundation demo customer is associated optionally. Numbers, tokens and delivery/check-in states are fixed examples, unsuitable for real admission. Import itself does not send emails. Running workers may subsequently process undelivered valid demo tickets; use a test environment with a test mail transport.
 
+The demo entry page combines event copy with the shared page header.
+
+![The demo entry page combines event copy with the shared page header.](images/storefront-home.png)
+
+Social links connect the demo homepage to external profiles; replace the example accounts before use.
+
+![Social links connect the demo homepage to external profiles; replace the example accounts before use.](images/storefront-social-links.png)
+
 ## Frequently asked questions
 
 **Why is an event missing from the shop?** Check Active, visibility window and event end. Without an end time, public sales stop at the start.
@@ -237,54 +285,62 @@ No order is needed. A configured Foundation demo customer is associated optional
 
 ## Artists, stages and private guest registration
 
-Manage artist profiles in the catalogue. “Offer for booking on the website” controls the public booking selection; inquiries use the existing contact page or an optional external booking contact. Fees and internal notes remain private. The “Artists available for booking” CMS element and /artists/booking share this selection; no booking workflow is introduced.
+Manage artist profiles under **Settings → Extensions → Ticket Vendor - Artists**. “Offer for booking on the website” controls the public booking selection; inquiries use the existing contact page or an optional external booking contact. Fees and internal notes remain private. The “Artists available for booking” CMS element and /artists/booking share this selection; no booking workflow is introduced.
+
+Artist roster with genre, booking availability, collective and label.
+
+![Artist roster with genre, booking availability, collective and label.](images/admin-artists.png)
+
+Booking tab: internal fee and note, public availability and external contact.
+
+![Booking tab: internal fee and note, public availability and external contact.](images/admin-artist-booking.png)
+
+Public booking roster with artist images, genres and individual enquiry links.
+
+![Public booking roster with artist images, genres and individual enquiry links.](images/storefront-booking.png)
+
+Artists without an external booking contact lead to the configured contact category.
+
+![Artists without an external booking contact lead to the configured contact category.](images/storefront-contact.png)
 
 Add event stages and sets under Programme. Artists may have multiple sets, with optional stage and times. The native date/time picker supports full timestamps and sets across midnight. Publish the line-up and timetable independently. The event-wide line-up lists each artist once, with their collective or fallback label highlighted in the primary colour. Each stage has its own timetable with fixed columns for time, artist and genre; unassigned sets appear under “Without stage”. Collectives and labels appear only in the line-up. Start and end each include a date and time and remain independently optional. Editing and display use the event timezone; storage uses UTC. The public timetable shows times only; dates are used internally for sorting. The timetable sorts by start, then ID, with missing starts last. There is no separate performance date. Optional event capacity limits all ticket categories together. Disabling “Show in public lists” removes the event from lists/search/sitemap while its direct URL remains reachable.
 
+Programme tab: event stages and assigned sets.
+
+![Programme tab: event stages and assigned sets.](images/admin-program.png)
+
+Edit a stage through its row menu.
+
+![Edit a stage through its row menu.](images/admin-stage.png)
+
+Set editor with artist, stage and full start/end timestamps in the event timezone.
+
+![Set editor with artist, stage and full start/end timestamps in the event timezone.](images/admin-performance.png)
+
+Published line-up and timetable grouped by stage, including a set without a fixed time.
+
+![Published line-up and timetable grouped by stage, including a set without a fixed time.](images/storefront-program.png)
+
 Enable guestlist registration on the free ticket category, configure voluntary roles and copy its secret link. Introduction and event rules remain on the event. With multiple storefront domains, choose the link address to copy; the actual form request remains stored as the registration origin. Tickets and registrations require a sales channel; select it for manual entries or map it during CSV import. An omitted language defaults to the Shopware system language. New guestlist tickets copy both values from the registration. Existing tickets keep their saved delivery context. Mobile phone is optional and separate registration time windows are no longer used. Registrations do not reserve admission. The form closes automatically when the category quota or event capacity is exhausted and reopens when places become available. After review, Create and send ticket issues one normal ticket and queues its email; retries keep that ticket. Multiple guests may share an email address. In the guestlist entry editor, use the multi-select to assign any available voluntary roles. The selection can be added to, changed or cleared even after a ticket has been issued. Create and send each ticket individually from the registration row context menu. Use Send confirmation link in the row context menu to request or resend confirmation for manual and imported registrations. This requires the additional permission to send confirmation links. The action is unavailable for registrations that are already confirmed. After a new storefront registration, the “Ticket Vendor - Neue Gästelisten-Anmeldung” flow notifies administrators with the name, email, mobile number and a direct Administration link to the ticket type. Adjust recipients and the template in Flow Builder; CSV/admin entries and repeated requests do not trigger this notification.
+
+Guestlist registrations and form settings on the free ticket type.
+
+![Guestlist registrations and form settings on the free ticket type.](images/admin-guestlist.png)
+
+Registration editor: guest, inviter, ticket type, language and sales channel.
+
+![Registration editor: guest, inviter, ticket type, language and sales channel.](images/admin-guestlist-entry.png)
+
+The private registration page explains the event and the guestlist process.
+
+![The private registration page explains the event and the guestlist process.](images/storefront-guestlist.png)
+
+The full registration form includes voluntary support, comments and acceptance of the event rules.
+
+![The full registration form includes voluntary support, comments and acceptance of the event rules.](images/storefront-guestlist-form.png)
 
 New storefront registrations also receive a guest acknowledgment with an individual Confirm registration link. Each registration must be confirmed separately, even when guests share an email address. Opening the signed link directly records Registration confirmed at; no further action is required. This does not approve a ticket; manual ticket issuance remains available. The separate guest flow and DE/EN template are included in guestlist-mail. Existing, CSV and demo entries receive no automatic confirmation email. Before deployment, add the two guestlist fields for existing databases as described in schema.md; new installations use the supplied SQL migrations.
 
 Guestlist entries and tickets can be deleted individually through the normal Administration row action. Deleting a guestlist entry preserves its issued ticket. Deleting a ticket retains the registration and check-in history and clears their ticket links. Occupied quota is released; orders and customers remain. The Decision field and rejection/cancellation actions have been removed. Before using deletion, update the schema externally as described in schema.md, including both nullable ticket foreign keys with ON DELETE SET NULL.
 
 New installations use the supplied SQL migrations. Existing schemas require a separate update before deployment. Backfill existing order-position references before removing legacy columns; moorl-tv:backfill-ticket-orders is read-only unless --apply is explicitly supplied. See [schema and backfill instructions](schema.md). Rebuild assets and restart workers after the transition.
-
-## Screenshots from Storefront and Administration
-
-These captures from 21 October 2026 show the existing demo shop with the SIDEQUEST theme and Shopware Administration. All PNGs are **1920 × 1080 pixels (FullHD)** at 100% browser zoom. This demo uses an English interface with some German event content. Theme, content and available options depend on your installation.
-
-### Event listing
-
-![Event listing](images/storefront-events.png)
-
-### Event with line-up
-
-![Event with line-up](images/storefront-event.png)
-
-### Ticket selection with group and service packages
-
-![Ticket selection with group and service packages](images/storefront-tickets.png)
-
-### Private guest-list registration form
-
-![Private guest-list registration form](images/storefront-guestlist.png)
-
-### Events in Administration
-
-![Events in Administration](images/admin-events.png)
-
-### Editing event details
-
-![Editing event details](images/admin-event.png)
-
-### Group ticket: price, redemptions and quota
-
-![Group ticket: price, redemptions and quota](images/admin-type.png)
-
-### Managing stages and sets
-
-![Managing stages and sets](images/admin-program.png)
-
-### Scanner with event selection and manual input
-
-![Scanner with event selection and manual input](images/admin-scanner.png)

@@ -45,6 +45,12 @@ Transport names must match the installation's Messenger configuration. `moorl_tv
 
 The relevant native payment transaction must reach `paid`. Test real provider status transitions; authorisation or partial payment is insufficient.
 
+Open **Extensions → My extensions → Ticket Vendor → Configuration** and select the sales channel. Assign the event-list category, an optional default event CMS page and the contact category for booking requests. The demo has already assigned **Events** and **Contact** for its storefront channel.
+
+Base configuration in Shopware 6.7.15.1, English Administration, 1920 × 1080 pixels.
+
+![Base configuration in Shopware 6.7.15.1, English Administration, 1920 × 1080 pixels.](images/admin-config.png)
+
 ## Mail, number range and SEO
 
 | Setup | Check |
@@ -82,7 +88,11 @@ No users, passwords or integration keys are created by the data package. Reimpor
 
 ## Demo data
 
-The demo import adds the active **Veranstaltungen** category below the shop navigation and assigns the **Ticket Vendor – Events** CMS layout with its event listing. Visitors enter through the regular category navigation; there is no additional ticket link among the header actions. Removing the demo package removes its category if it has no subcategories. The CMS layout and merchant-created categories are retained.
+The **standard** demo adds an entry category at `/MoorlTicketVendor` with a homepage and the child pages **Events**, **Booking** and **Contact**. It retains the existing shop homepage. The selected storefront sales channel receives the event and booking-contact categories if those settings are empty. See the [merchant guide](index.en.md#data-and-demo-packages) for paths, content and removal rules.
+
+Demo homepage in the current Shopware layout; English, 1920 × 1080 pixels.
+
+![Demo homepage in the current Shopware layout; English, 1920 × 1080 pixels.](images/storefront-home.png)
 
 The optional **standard** Foundation demo has three events, ten ticket types, twelve tickets and three check-in records, including an internal guest list with three valid tickets. Use a test environment; tokens are known examples.
 
@@ -118,6 +128,10 @@ See the [merchant guide](index.en.md), [scanner API](mobile-app.en.md), [runtime
 
 Under **Extensions → My extensions → Ticket Vendor → Configuration → Ticket presentation**, choose cards or a compact list. Availability, exact remaining quantity, ticket images and descriptions can be shown independently; sold-out ticket types can be hidden. Settings apply per sales channel to ticket selection on event pages and in the event detail CMS element.
 
+Global defaults for ticket layout, availability, images and descriptions.
+
+![Global defaults for ticket layout, availability, images and descriptions.](images/admin-ticket-presentation.png)
+
 Each ticket has a **First and last name** field (`attendeeName`). Checkout stores the order customer's name initially. Account holders can change it under **My account → Tickets**; merchants can edit it in the ticket form. Only `pending` and `valid` tickets can be edited. The name appears in PDFs and scan results; downloading the PDF again includes the update. No additional email is sent. Ticket status is read-only in the form; existing status actions remain available.
 
 Before deploying, add the nullable `moorl_tv_ticket.attendee_name` column (`VARCHAR(511)`) when updating an existing schema. Existing tickets without an explicit name fall back to the order customer or assigned customer. Then build administration and storefront assets, compile the theme, clear caches and restart workers.
@@ -130,7 +144,7 @@ You can optionally add or change a **mobile number** for each ticket under the s
 
 ## Artists, stages and private guest registration
 
-Manage artist profiles in the catalogue. “Offer for booking on the website” controls the public booking selection; inquiries use the existing contact page or an optional external booking contact. Fees and internal notes remain private. The “Artists available for booking” CMS element and /artists/booking share this selection; no booking workflow is introduced.
+Manage artist profiles under **Settings → Extensions → Ticket Vendor - Artists**. “Offer for booking on the website” controls the public booking selection; inquiries use the existing contact page or an optional external booking contact. Fees and internal notes remain private. The “Artists available for booking” CMS element and /artists/booking share this selection; no booking workflow is introduced.
 
 Add event stages and sets under Programme. Artists may have multiple sets, with optional stage and times. Publish the line-up and timetable independently. The event-wide line-up lists each artist once, with their collective or fallback label highlighted in the primary colour. Each stage has its own timetable with fixed columns for time, artist and genre; unassigned sets appear under “Without stage”. Collectives and labels appear only in the line-up. Start and end each include a date and time and remain independently optional. Editing and display use the event timezone; storage uses UTC. The public timetable shows times only; dates are used internally for sorting. The timetable sorts by start, then ID, with missing starts last. There is no separate performance date. Optional event capacity limits all ticket categories together. Disabling “Show in public lists” removes the event from lists/search/sitemap while its direct URL remains reachable.
 
@@ -146,9 +160,17 @@ New installations use the supplied SQL migrations. Existing schemas require a se
 
 The public form marks full name, email and acceptance of the event rules as required and displays the standard Shopware required-fields note. Optional fields remain optional. Helpful placeholders explain the expected information, including catering requirements or allergies in Comments. The form uses the captchas enabled in Shopware for its sales channel. An incorrect image captcha redisplays the entered values for correction.
 
+Guestlist form with required fields, optional support and event rules.
+
+![Guestlist form with required fields, optional support and event rules.](images/storefront-guestlist-form.png)
+
 ### Managing voluntary support
 
-Create options centrally under **Catalogues → Voluntary support** and translate them using the language switcher. In the ticket type's guest list tab, select the options offered by its public registration form. A type without assigned options has an empty form selection. Before and after ticket issuance, a guest list entry can independently be assigned any option from the catalogue. The optional standard demo package includes six sample options.
+Create options centrally under **Settings → Extensions → Ticket Vendor - Voluntary support** and translate them using the language switcher. In the ticket type's guest list tab, select the options offered by its public registration form. A type without assigned options has an empty form selection. Before and after ticket issuance, a guest list entry can independently be assigned any option from the catalogue. The optional standard demo package includes six sample options.
+
+Central voluntary support options; assign them to ticket types and registrations.
+
+![Central voluntary support options; assign them to ticket types and registrations.](images/admin-voluntary-support.png)
 
 ## Multiple redemption schema
 

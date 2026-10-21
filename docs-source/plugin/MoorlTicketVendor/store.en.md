@@ -10,6 +10,10 @@ Offer Standard, VIP, reduced-price and other ticket categories. Each type has it
 
 Final quota checks happen in the same transaction as order persistence, accounting for competing purchases. Each purchased unit receives an individual ticket, its own native Shopware number-range number and a separate QR code.
 
+## Group tickets and service packages
+
+Group admission and drinks/food packages offer configurable redemptions in a fixed area on one QR code. Each deliberate scan uses one unit and shows progress. Group tickets occupy weighted person places; service packages use no event admission capacity.
+
 ## Payment activation and traceable states
 
 Order tickets initially wait for confirmed payment. The native `paid` state activates them and queues automatic delivery. Payment deadlines, expiry, cancellation, full refunds and chargebacks affect validity. Pending tickets can expire after the configured deadline and release quota.
@@ -34,11 +38,17 @@ The integrated Administration scanner supports camera QR recognition in compatib
 
 The supplied **Ticket Vendor – Scanner** role permits event lookup and check-in without general ticket modification, customer or order rights. An authenticated Admin API supports custom integrations. A standalone mobile scanner app is not currently included.
 
+## Artists, booking and event programmes
+
+Manage artist profiles with images, genres, collectives, labels and social links. The booking roster in Shopping Experiences displays selected artists and directs enquiries to the configured contact category, an email address or an external booking URL. Fees and booking notes remain internal.
+
+Assign artists to stages and sets with optional start/end times, including performances across midnight. Publish the event line-up and stage timetables independently.
+
 ## Administration, Shopping Experiences and SEO
 
 Event details bring together ticket categories, individual customer tickets and check-in records. Ticket tabs on order/customer details assist support. Foundation forms and lists provide consistent management.
 
-Public event pages, a CMS listing for Shopping Experiences, translated content and native SEO URLs support event presentation. Data packages supply base setup, event/type import-export profiles and an optional demo package including a guest list.
+Public event pages, CMS listings with an optional archive, translated content and native SEO URLs support event presentation. Configure ticket cards or a compact list, availability, images and descriptions per sales channel. Foundation supplies import/export profiles and data packages. The optional demo site includes a homepage with social links, Events, Booking and Contact pages, event and artist images, ticket examples and a guest list.
 
 ## Features
 
@@ -53,6 +63,11 @@ Public event pages, a CMS listing for Shopping Experiences, translated content a
 - Browser scanner, check-in audit and restricted scanner role.
 - Authenticated check-in endpoint for custom integrations.
 - Event pages, CMS listing, translations and SEO URLs.
+- Private guest registration with confirmation links and voluntary support.
+- Artist booking roster, stages, line-up and timetables.
+- Group and service packages with multiple redemptions.
+- Personal ticket links for editing and downloads without a customer login.
+- Event archive and configurable ticket presentation.
 - Ticket views on events, orders and customers.
 - Flow Builder action and Foundation data/demo packages.
 
@@ -60,14 +75,16 @@ Public event pages, a CMS listing for Shopping Experiences, translated content a
 
 Requires **MoorlFoundation 1.7** and **Shopware 6.7 with Storefront**. Automatic delivery/deadline processing require running Shopware workers and configured mail transport. Scanning is online; camera recognition depends on HTTPS/browser support. Seat maps, offline admission and a standalone mobile app are outside the current scope.
 
-Group admission and drinks/food packages offer configurable redemptions in a fixed area on one QR code. Each deliberate scan uses one unit and shows progress. Group tickets occupy weighted person places; service packages use no event admission capacity.
-
 ## Screenshots
 
-These captures from 21 October 2026 show the existing demo shop with the SIDEQUEST theme and Shopware Administration. All PNGs are **1920 × 1080 pixels (FullHD)** at 100% browser zoom. This demo uses an English interface with some German event content. Theme, content and available options depend on your installation.
+The captures from 22 October 2026 show Shopware **6.7.15.1**, the installed demo data and the current light Shopware Storefront layout. All screenshots use an English interface and **1920 × 1080 pixels (FullHD)** at 100% browser zoom. Appearance and available options depend on your theme and configuration.
 
-![Event with line-up](images/storefront-event.png)
+![Event page with date, venue and ticket selection](images/storefront-event.png)
 
-![Group ticket: price, redemptions and quota](images/admin-type.png)
+![Public artist booking roster](images/storefront-booking.png)
 
-![Scanner with event selection and manual input](images/admin-scanner.png)
+![Line-up and stage timetables](images/storefront-program.png)
+
+![Group ticket with price, redemptions and quota](images/admin-type.png)
+
+![Browser scanner with event selection and manual input](images/admin-scanner.png)

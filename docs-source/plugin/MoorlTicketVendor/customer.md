@@ -6,6 +6,10 @@
 
 Ein Platz wird erst beim Bestellabschluss belegt. Die Verfügbarkeit kann sich daher ändern, solange Tickets nur im Warenkorb liegen.
 
+Beispiel: ein Standardticket im Warenkorb vor dem Bestellabschluss.
+
+![Beispiel: ein Standardticket im Warenkorb vor dem Bestellabschluss.](images/storefront-cart.png)
+
 ## Tickets erhalten
 
 Nach bestätigter vollständiger Zahlung werden die Tickets freigegeben und als PDF per E-Mail verschickt. Eine Bestellbestätigung allein ist noch kein gültiges Eintrittsticket. Die Zahlungsfrist bestimmt der Shop; bezahlen Sie rechtzeitig und wenden Sie sich bei einer verspäteten Zahlung an den Veranstalter.
@@ -42,6 +46,6 @@ Für Umbuchungen, Erstattungen und Änderungen gelten die Bedingungen des jeweil
 
 ## Ticketwahl im Shop
 
-Das Beispiel zeigt Einzeltickets und Pakete im Demoshop. Verfügbare Kategorien und Gestaltung hängen von der Veranstaltung ab.
+Das FullHD-Beispiel (1920 × 1080 Pixel) zeigt Einzeltickets und Pakete im englischen Demoshop. Verfügbare Kategorien und Gestaltung hängen von der Veranstaltung ab.
 
 ![Ticketwahl im Demoshop](images/storefront-tickets.png)

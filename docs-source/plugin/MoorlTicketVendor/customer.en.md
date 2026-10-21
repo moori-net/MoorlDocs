@@ -6,6 +6,10 @@ Open **Events** in the shop, choose an event and ticket category, add the requir
 
 A place is occupied only when checkout is completed. Availability can change while tickets remain in the cart.
 
+Example: a Standard ticket in the cart before checkout.
+
+![Example: a Standard ticket in the cart before checkout.](images/storefront-cart.png)
+
 ## Receiving your tickets
 
 Tickets are activated after confirmed full payment and sent by email as a PDF. An order confirmation alone is not a valid admission ticket. The shop sets its payment deadline; pay promptly and contact the organiser if payment is late.
@@ -43,6 +47,6 @@ Changes, refunds and rebookings are subject to the shop's or organiser's terms. 
 
 ## Choosing tickets in the shop
 
-The example shows individual tickets and packages in the demo shop. The available categories and design depend on the event.
+The FullHD example (1920 × 1080 pixels) shows individual tickets and packages in the English demo shop. The available categories and design depend on the event.
 
 ![Ticket selection in the demo shop](images/storefront-tickets.png)

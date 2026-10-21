@@ -45,6 +45,12 @@ Unter den Erweiterungseinstellungen steht **Zahlungsfrist in Minuten**, standard
 
 Shopware muss die abgeschlossene Zahlung als `paid` melden. Prüfen Sie die Statusübergänge Ihres tatsächlichen Zahlungsanbieters; eine reine Autorisierung oder Teilzahlung aktiviert keine Tickets.
 
+Unter **Erweiterungen → Meine Erweiterungen → Ticket Vendor → Konfiguration** den Verkaufskanal auswählen. Die Kategorie für die Eventliste, eine optionale Standard-CMS-Seite für Eventdetails und die Kontaktkategorie für Booking-Anfragen zuordnen. Die Demo hat **Events** und **Contact** für ihren Storefront-Kanal bereits gesetzt.
+
+Basiskonfiguration in Shopware 6.7.15.1, englische Administration, 1920 × 1080 Pixel.
+
+![Basiskonfiguration in Shopware 6.7.15.1, englische Administration, 1920 × 1080 Pixel.](images/admin-config.png)
+
 ## Mail, Nummernkreis und SEO
 
 | Einrichtung | Prüfung |
@@ -82,7 +88,11 @@ Das Datenpaket erstellt weder Benutzer noch Passwörter noch API-Zugangsschlüss
 
 ## Demodaten
 
-Der Demoimport legt die aktive Kategorie **Veranstaltungen** unter der Shop-Navigation an und weist ihr die CMS-Vorlage **Ticket Vendor – Events** mit dem Veranstaltungslisting zu. Der Einstieg erfolgt über die normale Kategorienavigation; ein zusätzlicher Tickets-Link in den Header-Aktionen entfällt. Beim Entfernen des Demopakets wird die Demo-Kategorie entfernt, sofern sie keine Unterkategorien enthält. Die CMS-Vorlage und selbst angelegte Kategorien bleiben erhalten.
+Die **standard**-Demo ergänzt eine Einstiegskategorie unter `/MoorlTicketVendor` mit Startseite und den Unterseiten **Events**, **Booking** und **Contact**. Die vorhandene Shop-Startseite bleibt erhalten. Für den gewählten Storefront-Verkaufskanal werden Event- und Booking-Kontaktkategorie gesetzt, sofern die Einstellungen leer sind. Pfade, Inhalte und Regeln zur Entfernung stehen in der [Händlerdokumentation](index.md#daten--und-demopakete).
+
+Demo-Startseite im aktuellen Shopware-Layout; Englisch, 1920 × 1080 Pixel.
+
+![Demo-Startseite im aktuellen Shopware-Layout; Englisch, 1920 × 1080 Pixel.](images/storefront-home.png)
 
 Das optionale Foundation-Demopaket **standard** umfasst drei Veranstaltungen, zehn Tickettypen, zwölf Tickets und drei Check-in-Einträge. Es enthält auch eine interne Gästeliste mit drei gültigen Tickets. Verwenden Sie es in einer Testumgebung; die Tokens sind bekannte Beispieldaten.
 
@@ -118,6 +128,10 @@ Für technische Details siehe [Laufzeitdokumentation](runtime.md), [Schema](sche
 
 Unter **Erweiterungen → Meine Erweiterungen → Ticket Vendor → Konfiguration → Ticket-Darstellung** wählen Sie Karten oder eine kompakte Liste. Verfügbarkeit, genaue Restmenge, Ticketbilder und Beschreibungen lassen sich getrennt anzeigen; ausverkaufte Tickettypen können ausgeblendet werden. Einstellungen gelten je Verkaufskanal und für die Ticket-Auswahl auf Veranstaltungsseiten und im Detail-CMS-Element.
 
+Globale Vorgaben für Ticketlayout, Verfügbarkeit, Bilder und Beschreibungen.
+
+![Globale Vorgaben für Ticketlayout, Verfügbarkeit, Bilder und Beschreibungen.](images/admin-ticket-presentation.png)
+
 Jedes Ticket hat ein Feld **Vor- und Nachname** (`attendeeName`). Beim Kauf wird der Bestellkundenname als Ausgangswert gespeichert. Kunden mit Konto ändern den Namen unter **Mein Konto → Tickets**; Händler bearbeiten ihn im Ticketformular. Änderungen sind nur bei `pending` und `valid` möglich. PDF und Scanner zeigen den Namen; ein erneuter PDF-Download enthält die Änderung. Es wird keine zusätzliche E-Mail ausgelöst. Der Ticketstatus wird im Formular schreibgeschützt angezeigt; die vorgesehenen Statusaktionen bleiben verfügbar.
 
 Vor dem Deployment das neue nullable Feld `moorl_tv_ticket.attendee_name` (`VARCHAR(511)`) bei bestehenden Tabellen gezielt per SQL anlegen. Bestehende Tickets mit leerem Namensfeld verwenden den Bestellkundennamen beziehungsweise den zugewiesenen Kunden als Fallback. Anschließend Administration und Storefront bauen, Theme kompilieren, Cache leeren und Worker neu starten.
@@ -130,7 +144,7 @@ Optional können Sie pro Ticket eine **Handynummer** ergänzen oder ändern. Fü
 
 ## Artists, Stages und geheime Gästeliste
 
-Artists werden unter den Kataloginhalten gepflegt. „Auf der Website für Booking anbieten“ zeigt das Profil in der Booking-Auswahl; Anfragen führen zur vorhandenen Kontaktseite oder zum optionalen externen Bookingkontakt. Gage und Bookingnotiz bleiben intern. Das CMS-Element „Artists für Booking“ und die Seite /artists/booking verwenden dieselbe Auswahl.
+Artists werden unter **Einstellungen → Erweiterungen → Ticketverkäufer - Artists** gepflegt. „Auf der Website für Booking anbieten“ zeigt das Profil in der Booking-Auswahl; Anfragen führen zur vorhandenen Kontaktseite oder zum optionalen externen Bookingkontakt. Gage und Bookingnotiz bleiben intern. Das CMS-Element „Artists für Booking“ und die Seite /artists/booking verwenden dieselbe Auswahl.
 
 Im Event unter „Programm“ Stages und Auftritte anlegen. Ein Artist kann mehrere Sets haben; Stage und Uhrzeiten sind optional. Line-up und Timetable werden am Event unabhängig freigegeben. Das gemeinsame Line-up führt jeden Artist einmal auf und hebt sein Kollektiv, ersatzweise das Label, in der Primärfarbe hervor. Jede Stage erhält eine eigene Timetable mit festen Spalten für Zeit, Artist und Genre; Auftritte ohne Stage stehen separat unter „Ohne Stage“. Kollektiv und Label stehen ausschließlich im Line-up. Beginn und Ende enthalten jeweils Datum und Uhrzeit und bleiben unabhängig optional. Die Eingabe und Ausgabe erfolgen in der Event-Zeitzone; gespeichert wird UTC. Die öffentliche Timetable zeigt nur Uhrzeiten; das Datum dient intern der Sortierung. Die Timetable sortiert nach Beginn; Auftritte ohne Beginn stehen zuletzt. Ein separates Auftrittsdatum entfällt. Eine optionale maximale Teilnehmerzahl begrenzt alle Tickettypen gemeinsam. „In öffentlichen Listen anzeigen“ kann ausgeschaltet werden; der direkte Eventlink bleibt erreichbar.
 
@@ -146,9 +160,17 @@ Neue Installationen verwenden die mitgelieferten SQL-Migrationen. Bestehende Tab
 
 Das öffentliche Formular markiert Name, E-Mail und die Zustimmung zu den Veranstaltungsregeln als Pflichtangaben und zeigt den Standard-Pflichtfeldhinweis von Shopware. Optionale Felder bleiben freiwillig. Platzhalter erläutern die Angaben, beispielsweise Verpflegungswünsche oder Allergien bei Bemerkungen. Das Formular verwendet die in Shopware für seinen Verkaufskanal aktivierten Captchas. Bei einem falschen Bild-Captcha bleiben die Eingaben zur Korrektur erhalten.
 
+Gästelistenformular mit Pflichtfeldern, freiwilliger Unterstützung und Eventregeln.
+
+![Gästelistenformular mit Pflichtfeldern, freiwilliger Unterstützung und Eventregeln.](images/storefront-guestlist-form.png)
+
 ### Ehrenamtliche Unterstützung verwalten
 
-Die Optionen werden zentral unter **Kataloge → Ehrenamtliche Unterstützung** angelegt und über die Sprachauswahl übersetzt. Im Gästelisten-Tab des Tickettyps legen Sie per Mehrfachauswahl fest, welche Optionen dessen öffentliches Formular anbietet. Ohne zugeordnete Optionen bleibt die Formularauswahl leer. Am Gästelisten-Eintrag können Sie vor und nach der Ticketausstellung unabhängig davon sämtliche Katalogoptionen zuweisen. Das optionale Standard-Demopaket liefert sechs Beispieloptionen.
+Die Optionen werden zentral unter **Einstellungen → Erweiterungen → Ticketverkäufer - Ehrenamtliche Unterstützung** angelegt und über die Sprachauswahl übersetzt. Im Gästelisten-Tab des Tickettyps legen Sie per Mehrfachauswahl fest, welche Optionen dessen öffentliches Formular anbietet. Ohne zugeordnete Optionen bleibt die Formularauswahl leer. Am Gästelisten-Eintrag können Sie vor und nach der Ticketausstellung unabhängig davon sämtliche Katalogoptionen zuweisen. Das optionale Standard-Demopaket liefert sechs Beispieloptionen.
+
+Zentrale Unterstützungsoptionen zur Zuordnung an Tickettypen und Anmeldungen.
+
+![Zentrale Unterstützungsoptionen zur Zuordnung an Tickettypen und Anmeldungen.](images/admin-voluntary-support.png)
 
 ## Schema für Mehrfacheinlösung
 

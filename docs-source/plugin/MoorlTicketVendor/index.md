@@ -1,5 +1,5 @@
 ---
-description: "Veranstaltungen und Eintrittskarten direkt in Shopware verkaufen: mit Kontingenten, PDF-/QR-Tickets, Zahlungsfreigabe, Gästelistentickets und Online-Check-in."
+description: "Veranstaltungen und Tickets direkt in Shopware verwalten: mit Kontingenten, PDF-/QR-Tickets, Zahlungsfreigabe, Artist-Booking, Line-up, Gästelisten und Online-Check-in."
 tags:
   - Tickets
   - Veranstaltungen
@@ -10,7 +10,7 @@ tags:
 
 # Ticket Vendor – Veranstaltungen und Eintrittskarten
 
-Veranstaltungen und Eintrittskarten direkt in Shopware verkaufen: mit Kontingenten, PDF-/QR-Tickets, Zahlungsfreigabe, Gästelistentickets und Online-Check-in.
+Veranstaltungen und Tickets direkt in Shopware verwalten: mit Kontingenten, PDF-/QR-Tickets, Zahlungsfreigabe, Artist-Booking, Line-up, Gästelisten und Online-Check-in.
 
 Mit Ticket Vendor verwalten Sie Veranstaltungen, verkaufen Eintrittskarten über den Shopware-Warenkorb und prüfen diese beim Einlass. Veranstaltung, Tickettyp und individuelles Kundenticket sind eigene Datensätze. Sie müssen dafür keine Shopware-Produkte anlegen.
 
@@ -31,7 +31,7 @@ Ticket Vendor setzt Shopware 6.7 mit Storefront und MoorlFoundation 1.7 voraus. 
 
 Ein erster vollständiger Durchlauf sieht so aus:
 
-1. Unter **Kataloge → Veranstaltungen** eine Veranstaltung erstellen.
+1. Unter **Kataloge → Ticketverkäufer - Veranstaltungen** eine Veranstaltung erstellen.
 2. Beginn, Ende, Ort und Inhalte pflegen; Veranstaltung aktivieren.
 3. Einen aktiven Tickettyp mit Preis, Steuer und Kontingent zuordnen.
 4. Eine Kategorie mit dem CMS-Veranstaltungslisting anlegen und in der Plugin-Konfiguration unter **Seite mit Veranstaltungen (Liste)** auswählen. Die Veranstaltung über diese Kategorie öffnen und eine Testbestellung aufgeben.
@@ -39,9 +39,17 @@ Ein erster vollständiger Durchlauf sieht so aus:
 6. Das PDF im Kundenkonto beziehungsweise in der Administration öffnen.
 7. Im Scanner Event und Einlösebereich wählen. Einzeltickets sind nach einem Scan verbraucht; Pakete bleiben bis zur letzten Einlösung gültig.
 
+Die Admin-Aufnahmen zeigen Shopware **6.7.15.1** mit den installierten Demodaten vom **22.10.2026**, englischer Oberfläche und **1920 × 1080 Pixeln (FullHD)** bei 100 % Browserzoom. Private Registrierungslinks sind ausgeblendet.
+
+Die Storefront-Aufnahmen zeigen dieselbe Demo am **22.10.2026** im aktuell verwendeten hellen Shopware-Layout mit englischen Inhalten. Auch diese Bilder haben **1920 × 1080 Pixel** bei 100 % Browserzoom; längere Seiten sind in mehreren Ansichten abgebildet.
+
 ## Veranstaltungen verwalten
 
 Die Veranstaltungsliste zeigt die angelegten Veranstaltungen. Die Detailansicht bündelt Stammdaten, öffentliche Inhalte, Ort sowie zugeordnete Tickettypen, Kundentickets und Check-in-Protokolle.
+
+Veranstaltungsübersicht mit Terminen und Veranstaltungsorten.
+
+![Veranstaltungsübersicht mit Terminen und Veranstaltungsorten.](images/admin-events.png)
 
 | Bereich | Verwendung |
 | --- | --- |
@@ -57,6 +65,14 @@ Die Veranstaltungsliste zeigt die angelegten Veranstaltungen. Die Detailansicht 
 Eine öffentliche Veranstaltung benötigt ein passendes Anzeigezeitfenster. Ist ein Endzeitpunkt vorhanden, endet der öffentliche Verkauf mit diesem; ohne Endzeitpunkt bereits mit dem Beginn. Für einen früheren Vorverkaufsschluss setzen Sie zusätzlich „Anzeigen bis“.
 
 Die Veranstaltung besitzt keinen technischen Namen. Ihre Identität ergibt sich aus der ID; der übersetzte Name dient der Darstellung. Bereits verwendete Datensätze lassen sich wegen ihrer Ticket- und Protokollbezüge nicht beliebig löschen. Deaktivieren Sie die Veranstaltung oder begrenzen Sie den Verkaufszeitraum, um den Verkauf zu beenden.
+
+Veranstaltungsdetails: Titel, Teaser und Beschreibung.
+
+![Veranstaltungsdetails: Titel, Teaser und Beschreibung.](images/admin-event.png)
+
+Öffentliche Eventseite mit Bild, Datum, Veranstaltungsort und Link zur Ticketwahl.
+
+![Öffentliche Eventseite mit Bild, Datum, Veranstaltungsort und Link zur Ticketwahl.](images/storefront-event.png)
 
 ## Tickettypen, Preise und Kontingente
 
@@ -81,11 +97,19 @@ Tickettypen stehen unter **Einstellungen** zur Verfügung und können außerdem 
 
 Auch manuell erstellte Tickets unterliegen der Kontingentprüfung. Das Gesamtkontingent darf nicht unter die bestehende Belegung gesenkt werden.
 
+Fünfer-Gruppenticket: Preis, Einlösungen und Kontingent.
+
+![Fünfer-Gruppenticket: Preis, Einlösungen und Kontingent.](images/admin-type.png)
+
 ## Pakete und feste Ticketwerte
 
 Ein Fünfer-Gruppenticket belegt fünf Typkontingent-Einheiten und fünf Eventplätze und enthält fünf Einlösungen auf einem QR-Code. Ein Fünfer-Getränkepaket belegt eine Typkontingent-Einheit und keinen Eventplatz. Ein Kontingent von 100 erlaubt daher 20 Gruppentickets oder 100 Getränkepakete. Bei vier freien Eventplätzen ist das Gruppenticket nicht mehr kaufbar; das Getränkepaket kann weiterhin verfügbar sein. Preis und Kaufmenge zählen vollständige Tickets/Pakete.
 
 Jedes ausgestellte Ticket speichert Bereich, Limit und Personenplätze aus seinem Typ. Spätere Typänderungen gelten für neue Tickets. Ein ungebundenes manuelles Ticket kann vor der ersten Einlösung mit neuen Ausstellungswerten und Kontingentprüfung einem anderen Typ zugeordnet werden; nach der ersten Nutzung sind Typ und Event fest. Widerruf und Reaktivierung erhalten den Verbrauch. Vollständig verbrauchte Tickets werden dadurch nicht erneut einlösbar. Konto/PDF zeigen den gespeicherten Leistungsumfang; das Konto den aktuellen Verbrauch.
+
+Ticketwahl mit Einzeleintritt, Gruppentickets und Verzehrpaketen.
+
+![Ticketwahl mit Einzeleintritt, Gruppentickets und Verzehrpaketen.](images/storefront-tickets.png)
 
 ## Öffentliche Darstellung und Erlebniswelten
 
@@ -97,6 +121,14 @@ Die mitgelieferte SEO-Vorlage erzeugt URLs nach dem Muster `tickets/<Veranstaltu
 
 Mit **Veranstaltungen mit Archiv (statisch)** (`moorl-tv-ticket-sale-static-listing`) fügen Sie eine feste Übersicht aller aktiven Events hinzu. Laufende und kommende Veranstaltungen stehen mit dem nächsten Termin zuerst oben; vergangene folgen absteigend und ausgegraut. Verkaufszeiträume begrenzen diese Übersicht nicht. Über **Alternative Veranstaltungs-URL** am Event können private Events beispielsweise zur Community verlinken. Ohne alternative URL führt der Link bei verfügbaren Events zur Veranstaltungsseite. Vergangene Events erhalten keinen Kaufbutton. Die optionale Spalte `moorl_tv_ticket_sale.alternative_url` (`VARCHAR(2048)`, nullable) bei bestehenden Tabellen gezielt per SQL ergänzen und anschließend Administration und Theme neu bauen.
 
+Die statische CMS-Liste zeigt kommende Veranstaltungen mit Bildern und Ticketlinks.
+
+![Die statische CMS-Liste zeigt kommende Veranstaltungen mit Bildern und Ticketlinks.](images/storefront-events.png)
+
+Vergangene Events stehen unter dem kommenden Programm, ausgegraut und ohne Kaufbutton.
+
+![Vergangene Events stehen unter dem kommenden Programm, ausgegraut und ohne Kaufbutton.](images/storefront-archive.png)
+
 ## Bestellung, Bezahlung und automatische Freigabe
 
 Für jede gekaufte Einheit entsteht ein eigenes Ticket. Eine Bestellposition mit Menge drei erzeugt also drei Ticketnummern und drei QR-Codes. Mehrere Kategorien einer Veranstaltung und Tickets verschiedener Veranstaltungen können in einer Bestellung vorkommen.
@@ -106,6 +138,10 @@ Bestelltickets starten mit **Zahlung ausstehend**. Standardmäßig beträgt die 
 Der Ablaufjob prüft die tatsächliche Zahlung erneut. Offene, überfällige Bestellungen werden über die nativen Statusübergänge storniert; die zugehörigen Tickets laufen ab und geben ihr Kontingent frei. Das kann die gesamte Bestellung einschließlich weiterer Positionen betreffen. Berücksichtigen Sie dies bei Mischwarenkörben und Zahlungsmethoden mit längerer Zahlungsdauer.
 
 Bestellstornierung, vollständige Erstattung und Chargeback widerrufen noch belegende Tickets. Bereits stornierte Bestellungen werden durch eine spätere Zahlung nicht automatisch wieder freigegeben. Prüfen Sie solche Fälle im Zahlungsanbieter und in Shopware manuell. Das Plugin veranlasst keine eigene Rückerstattung beim Zahlungsanbieter.
+
+Ein Standardticket im Shopware-Warenkorb mit Veranstaltung, Menge und Preis.
+
+![Ein Standardticket im Shopware-Warenkorb mit Veranstaltung, Menge und Preis.](images/storefront-cart.png)
 
 ## Kundentickets und Status
 
@@ -192,6 +228,10 @@ Jeder bewusste Scan verbraucht eine Einlösung und zeigt Verbrauch, Limit und Re
 
 Der Einlass verlangt eine aktive Veranstaltung, deren vorhandenes Enddatum nicht überschritten ist. Es gibt derzeit keine separate konfigurierbare Einlassöffnung: Ein künftiger Veranstaltungsbeginn verhindert einen Scan allein nicht.
 
+Scanner mit ausgewählter Veranstaltung und manueller Token-Eingabe.
+
+![Scanner mit ausgewählter Veranstaltung und manueller Token-Eingabe.](images/admin-scanner.png)
+
 ## Benutzer und Scanner-Rolle
 
 Das Foundation-Datenpaket **scanner-role** legt **Ticket Vendor – Scanner** an. Weisen Sie es unter **Einstellungen → System → Benutzer & Berechtigungen** einem separaten Benutzer zu und lassen Sie dessen Administrator-Schalter ausgeschaltet.
@@ -223,6 +263,14 @@ Das optionale Demopaket **standard** enthält drei Veranstaltungen, zehn Tickett
 
 Die Daten brauchen keine Bestellung. Ein konfigurierter Foundation-Demokunde wird optional verknüpft. Nummern, Tokens und Versand-/Check-in-Status sind feste Beispieldaten; sie eignen sich nicht für produktiven Einlass. Der Import versendet selbst keine Mails. Laufende Worker können später noch nicht versendete gültige Demotickets aufgreifen; verwenden Sie deshalb eine Testumgebung mit Test-Mailtransport.
 
+Die Demo-Einstiegsseite verbindet Eventtexte mit dem gemeinsamen Seitenheader.
+
+![Die Demo-Einstiegsseite verbindet Eventtexte mit dem gemeinsamen Seitenheader.](images/storefront-home.png)
+
+Social Links verbinden die Demo-Startseite mit externen Profilen; Beispielkonten vor der Nutzung ersetzen.
+
+![Social Links verbinden die Demo-Startseite mit externen Profilen; Beispielkonten vor der Nutzung ersetzen.](images/storefront-social-links.png)
+
 ## Häufige Fragen
 
 **Warum ist die Veranstaltung im Shop nicht sichtbar?** Prüfen Sie Aktiv-Schalter, Anzeigezeitraum und Veranstaltungsende. Ohne Ende gilt der Beginn als öffentliche Verkaufsgrenze.
@@ -239,54 +287,62 @@ Die Daten brauchen keine Bestellung. Ein konfigurierter Foundation-Demokunde wir
 
 ## Artists, Stages und geheime Gästeliste
 
-Artists werden unter den Kataloginhalten gepflegt. „Auf der Website für Booking anbieten“ zeigt das Profil in der Booking-Auswahl; Anfragen führen zur vorhandenen Kontaktseite oder zum optionalen externen Bookingkontakt. Gage und Bookingnotiz bleiben intern. Das CMS-Element „Artists für Booking“ und die Seite /artists/booking verwenden dieselbe Auswahl.
+Artists werden unter **Einstellungen → Erweiterungen → Ticketverkäufer - Artists** gepflegt. „Auf der Website für Booking anbieten“ zeigt das Profil in der Booking-Auswahl; Anfragen führen zur vorhandenen Kontaktseite oder zum optionalen externen Bookingkontakt. Gage und Bookingnotiz bleiben intern. Das CMS-Element „Artists für Booking“ und die Seite /artists/booking verwenden dieselbe Auswahl.
+
+Artist-Roster mit Genre, Booking-Verfügbarkeit, Kollektiv und Label.
+
+![Artist-Roster mit Genre, Booking-Verfügbarkeit, Kollektiv und Label.](images/admin-artists.png)
+
+Booking-Tab: interne Gage und Notiz, öffentliche Verfügbarkeit und externer Kontakt.
+
+![Booking-Tab: interne Gage und Notiz, öffentliche Verfügbarkeit und externer Kontakt.](images/admin-artist-booking.png)
+
+Öffentliches Booking-Roster mit Artist-Bildern, Genres und individuellen Anfragelinks.
+
+![Öffentliches Booking-Roster mit Artist-Bildern, Genres und individuellen Anfragelinks.](images/storefront-booking.png)
+
+Artists ohne externen Bookingkontakt führen zur konfigurierten Kontaktkategorie.
+
+![Artists ohne externen Bookingkontakt führen zur konfigurierten Kontaktkategorie.](images/storefront-contact.png)
 
 Im Event unter „Programm“ Stages und Auftritte anlegen. Ein Artist kann mehrere Sets haben; Stage und Uhrzeiten sind optional. Der native Datum-/Uhrzeit-Picker erlaubt vollständige Zeitpunkte und Sets über Mitternacht. Line-up und Timetable werden am Event unabhängig freigegeben. Das gemeinsame Line-up führt jeden Artist einmal auf und hebt sein Kollektiv, ersatzweise das Label, in der Primärfarbe hervor. Jede Stage erhält eine eigene Timetable mit festen Spalten für Zeit, Artist und Genre; Auftritte ohne Stage stehen separat unter „Ohne Stage“. Kollektiv und Label stehen ausschließlich im Line-up. Beginn und Ende enthalten jeweils Datum und Uhrzeit und bleiben unabhängig optional. Die Eingabe und Ausgabe erfolgen in der Event-Zeitzone; gespeichert wird UTC. Die öffentliche Timetable zeigt nur Uhrzeiten; das Datum dient intern der Sortierung. Die Timetable sortiert nach Beginn; Auftritte ohne Beginn stehen zuletzt. Ein separates Auftrittsdatum entfällt. Eine optionale maximale Teilnehmerzahl begrenzt alle Tickettypen gemeinsam. „In öffentlichen Listen anzeigen“ kann ausgeschaltet werden; der direkte Eventlink bleibt erreichbar.
 
+Programm-Tab: Stages der Veranstaltung und zugeordnete Sets.
+
+![Programm-Tab: Stages der Veranstaltung und zugeordnete Sets.](images/admin-program.png)
+
+Eine Stage über ihr Zeilenmenü bearbeiten.
+
+![Eine Stage über ihr Zeilenmenü bearbeiten.](images/admin-stage.png)
+
+Set-Bearbeitung mit Artist, Stage und vollständigen Start-/Endzeitpunkten in der Event-Zeitzone.
+
+![Set-Bearbeitung mit Artist, Stage und vollständigen Start-/Endzeitpunkten in der Event-Zeitzone.](images/admin-performance.png)
+
+Veröffentlichtes Line-up und Timetable nach Stages, einschließlich eines Sets ohne feste Uhrzeit.
+
+![Veröffentlichtes Line-up und Timetable nach Stages, einschließlich eines Sets ohne feste Uhrzeit.](images/storefront-program.png)
+
 Am kostenlosen Tickettyp unter Gästeliste die Registrierung aktivieren, Ehrenämter pflegen und den geheimen Link kopieren. Einleitung und Regeln bleiben am Event. Bei mehreren Storefront-Domains die gewünschte Linkadresse auswählen; der tatsächliche Formularaufruf bleibt als Anmeldungsursprung gespeichert. Tickets und Anmeldungen benötigen einen Verkaufskanal; bei manueller Anlage oder CSV-Import muss er ausgewählt bzw. zugeordnet werden. Eine fehlende Sprache wird mit der Shopware-Systemsprache vorbelegt. Neue Gästelisten-Tickets übernehmen beide Werte aus der Anmeldung. Bereits ausgestellte Tickets bleiben unverändert. Telefonnummern sind optional, separate Registrierungszeitfenster entfallen. Anmeldungen reservieren keinen Platz. Bei vollem Typkontingent oder voller Eventkapazität schließt das Formular automatisch und öffnet bei wieder freien Plätzen erneut. Nach Prüfung erstellt „Ticket erstellen und senden“ ein normales Ticket und stößt die E-Mail an; Wiederholungen verwenden dasselbe Ticket. Mehrere Gäste dürfen dieselbe E-Mail nutzen. Im Bearbeitungsdialog eines Gästelisteneintrags lassen sich alle verfügbaren Unterstützungsoptionen per Mehrfachauswahl zuordnen. Die Auswahl kann auch nach der Ticketausstellung ergänzt, geändert oder geleert werden. Tickets werden einzeln über das Kontextmenü der Anmeldung erstellt und versendet. Über „Bestätigungslink versenden“ im Kontextmenü kann die Bestätigung auch für manuelle und importierte Anmeldungen angefordert oder erneut versendet werden. Dafür ist das Zusatzrecht zum Versenden von Bestätigungslinks erforderlich. Bereits bestätigte Anmeldungen sind von der Aktion ausgenommen. Nach neuer Storefront-Anmeldung benachrichtigt der Flow „Ticket Vendor - Neue Gästelisten-Anmeldung“ standardmäßig die Administration mit Name, E-Mail, Handynummer und einem direkten Admin-Link zum Tickettyp. Empfänger und Vorlage lassen sich im Flow Builder anpassen; CSV-/Admin-Einträge und wiederholte Anfragen lösen diese Benachrichtigung nicht aus.
+
+Gästelisten-Anmeldungen und Formulareinstellungen am kostenlosen Tickettyp.
+
+![Gästelisten-Anmeldungen und Formulareinstellungen am kostenlosen Tickettyp.](images/admin-guestlist.png)
+
+Anmeldung bearbeiten: Gast, Einladender, Tickettyp, Sprache und Verkaufskanal.
+
+![Anmeldung bearbeiten: Gast, Einladender, Tickettyp, Sprache und Verkaufskanal.](images/admin-guestlist-entry.png)
+
+Die private Anmeldeseite erläutert Veranstaltung und Gästelistenablauf.
+
+![Die private Anmeldeseite erläutert Veranstaltung und Gästelistenablauf.](images/storefront-guestlist.png)
+
+Das vollständige Anmeldeformular enthält Unterstützungsoptionen, Bemerkungen und die Zustimmung zu den Eventregeln.
+
+![Das vollständige Anmeldeformular enthält Unterstützungsoptionen, Bemerkungen und die Zustimmung zu den Eventregeln.](images/storefront-guestlist-form.png)
 
 Nach neuer Storefront-Anmeldung erhält auch der Gast eine Eingangsbestätigung mit individuellem Link „Anmeldung bestätigen“. Jede Anmeldung wird separat bestätigt, auch bei gemeinsamer E-Mail-Adresse. Das Aufrufen des signierten Links setzt direkt „Anmeldung bestätigt am“; eine weitere Aktion ist nicht erforderlich. Das ist keine Ticketfreigabe; die manuelle Ticketerstellung bleibt unverändert. Der separate Gast-Flow und die DE/EN-Vorlage gehören zu guestlist-mail. Bestands-, CSV- und Demoeinträge erhalten keine automatische Bestätigungsmail. Vor Bereitstellung die beiden neuen Gästelistenfelder bei bestehenden Datenbanken gemäß schema.md ergänzen; neue Installationen verwenden die SQL-Migrationen.
 
 Gästelisteneinträge und Tickets können über die normale Löschfunktion in der Administration einzeln gelöscht werden. Ein gelöschter Gästelisteneintrag lässt ein bereits ausgestelltes Ticket bestehen. Wird ein Ticket gelöscht, bleiben Anmeldung und Check-in-Protokoll erhalten und ihre Ticketverknüpfung wird aufgehoben. Belegtes Kontingent wird frei; Bestellungen und Kunden bleiben bestehen. Das Feld Decision und die Ablehnungs-/Stornoaktionen entfallen. Vor Verwendung das Schema bei bestehenden Datenbanken gemäß schema.md abgleichen, insbesondere die beiden Ticket-Fremdschlüssel auf SET NULL.
 
 Neue Installationen verwenden die mitgelieferten SQL-Migrationen. Bestehende Tabellen und Daten vor dem Update gezielt abgleichen. Bestehende Bestellpositionsbezüge müssen vor dem Entfernen der alten Spalten übernommen werden; der Befehl moorl-tv:backfill-ticket-orders zeigt zunächst nur eine Vorschau. Ablauf und explizite Anwendung stehen in [Schema und Datenübernahme](schema.md). Anschließend Administration/Storefront bauen und Worker neu starten.
-
-## Screenshots aus Storefront und Administration
-
-Die folgenden Aufnahmen vom 21.10.2026 zeigen den vorhandenen Demoshop mit SIDEQUEST-Theme und die Shopware-Administration. Alle PNGs haben **1920 × 1080 Pixel (FullHD)** bei 100 % Browserzoom. Die Oberfläche dieser Demo ist Englisch, die Veranstaltungsdaten sind teilweise Deutsch. Theme, Inhalte und verfügbare Optionen hängen von Ihrer Installation ab.
-
-### Veranstaltungsübersicht
-
-![Veranstaltungsübersicht](images/storefront-events.png)
-
-### Veranstaltung mit Line-up
-
-![Veranstaltung mit Line-up](images/storefront-event.png)
-
-### Ticketwahl mit Gruppen- und Verzehrpaketen
-
-![Ticketwahl mit Gruppen- und Verzehrpaketen](images/storefront-tickets.png)
-
-### Privates Gästelistenformular
-
-![Privates Gästelistenformular](images/storefront-guestlist.png)
-
-### Veranstaltungen in der Administration
-
-![Veranstaltungen in der Administration](images/admin-events.png)
-
-### Veranstaltungsdaten bearbeiten
-
-![Veranstaltungsdaten bearbeiten](images/admin-event.png)
-
-### Gruppenticket: Preis, Einlösungen und Kontingent
-
-![Gruppenticket: Preis, Einlösungen und Kontingent](images/admin-type.png)
-
-### Stages und Auftritte verwalten
-
-![Stages und Auftritte verwalten](images/admin-program.png)
-
-### Scanner mit Veranstaltung und manueller Eingabe
-
-![Scanner mit Veranstaltung und manueller Eingabe](images/admin-scanner.png)
