@@ -54,4 +54,4 @@ Eine leere Eingabe entfernt die Ergänzungen dieser Sprache; Shopwares Sprachfal
 
 ## Schema und Deployment
 
-Die bestehende Tabelle `moorl_tv_ticket_sale_translation` erhält die nullable JSON-Spalte `schema_org`. Sie wird aus `TicketSaleTranslationDefinition` mit dem externen Schemawerkzeug erzeugt; keine zusätzliche PHP-Migration. Anschließend Cache leeren und Administration bauen. Das öffentliche Schema und die REST-API stellen das Feld als `schemaOrg` bereit.
+Die bestehende Tabelle `moorl_tv_ticket_sale_translation` erhält die nullable JSON-Spalte `schema_org`. Sie wird aus `TicketSaleTranslationDefinition` bei bestehenden Tabellen gezielt per SQL erzeugt; im initialen SQL-Migrationssatz enthalten. Anschließend Cache leeren und Administration bauen. Das öffentliche Schema und die REST-API stellen das Feld als `schemaOrg` bereit.

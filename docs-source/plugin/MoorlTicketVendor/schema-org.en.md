@@ -28,4 +28,4 @@ Default metadata uses `EventScheduled` and `OfflineEventAttendanceMode`. `eventS
 
 ## Schema and deployment
 
-Generate the nullable JSON column `moorl_tv_ticket_sale_translation.schema_org` using the external schema tool and the updated DAL definition. No additional PHP migration is included. Clear caches and build administration assets. The API exposes the translated field as `schemaOrg`.
+Generate the nullable JSON column `moorl_tv_ticket_sale_translation.schema_org` when updating an existing schema and the updated DAL definition. No additional PHP migration is included. Clear caches and build administration assets. The API exposes the translated field as `schemaOrg`.
