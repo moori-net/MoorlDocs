@@ -204,7 +204,18 @@ In den zusätzlichen Berechtigungen steht **Ticket Vendor → Tickets scannen un
 
 ## Daten- und Demopakete
 
-Der Demoimport legt die aktive Kategorie **Veranstaltungen** unter der Shop-Navigation an und weist ihr die CMS-Vorlage **Ticket Vendor – Events** mit dem Veranstaltungslisting zu. Der Einstieg erfolgt über die normale Kategorienavigation; ein zusätzlicher Tickets-Link in den Header-Aktionen entfällt. Beim Entfernen des Demopakets wird die Demo-Kategorie entfernt, sofern sie keine Unterkategorien enthält. Die CMS-Vorlage und selbst angelegte Kategorien bleiben erhalten.
+Das optionale Demopaket **standard** ergänzt eine eigenständige Demo-Site unter der Shop-Navigation. Die vorhandene Shop-Startseite und ihre Kategorie bleiben erhalten. Im Foundation-Demo-Assistenten **MoorlTicketVendor → standard** und den gewünschten Storefront-Verkaufskanal wählen.
+
+| Seite | SEO-Pfad | Inhalt |
+| --- | --- | --- |
+| Einstieg | `/MoorlTicketVendor` | Eventtexte in drei Spalten und Social Links |
+| Events | `/MoorlTicketVendor/Events` | Statisches Veranstaltungslisting |
+| Booking | `/MoorlTicketVendor/Booking` | Artist-Roster mit Booking-Anfragen |
+| Kontakt | `/MoorlTicketVendor/Kontakt` | Natives Shopware-Kontaktformular |
+
+Alle drei Veranstaltungen und vier Artists erhalten eigene JPEG-Bilder mit **1080 × 1350 px (4:5)**. Sie liegen im Paket unter `media/moorl_tv_ticket_sale` beziehungsweise `media/moorl_tv_artist` und werden ausdrücklich in die zugehörigen Medienordner importiert. Die Social Links sind erkennbare Demo-Platzhalter; vor Verwendung eigene Profile eintragen. Das vergangene Digital Forum bleibt als inaktives Verwaltungsbeispiel erhalten.
+
+Leere Einstellungen für die Veranstaltungs- und Booking-Kontaktkategorie werden im gewählten Verkaufskanal mit den Demo-Kategorien vorbelegt. Bereits vorhandene Auswahlen bleiben erhalten. Beim Entfernen werden nur eigene Demo-Kategorien ohne fremde Unterkategorien und nicht anderweitig verwendete Demo-CMS-Seiten entfernt. Die Basis-CMS-Vorlagen und selbst angelegte Kategorien bleiben erhalten. Weiterverwendete Demo-Layouts, etwa in eigenen Kategorien oder Produkten, bleiben auch bei einer späteren Deinstallation erhalten.
 
 Die regulären Foundation-Datenpakete installieren Medienordner, Import-/Exportprofile, Nummernkreis, Mailvorlage, SEO-Vorlage und Scanner-Rolle. Sie werden bei regulärer Aktivierung beziehungsweise Aktualisierung nachgeladen. Einzelne Pakete können über Foundations Datenverwaltung nachinstalliert werden.
 

@@ -6,6 +6,25 @@ Die vollständige [Händleranleitung](index.md), [Installation](manual.md), [Kun
 
 ## Einstieg
 
+### Vollständige Standarddemo
+
+Das optionale Demopaket **standard** ergänzt eine eigenständige Demo-Site unter der Shop-Navigation. Die vorhandene Shop-Startseite und ihre Kategorie bleiben erhalten. Im Foundation-Demo-Assistenten **MoorlTicketVendor → standard** und den gewünschten Storefront-Verkaufskanal wählen.
+
+| Seite | SEO-Pfad | Inhalt |
+| --- | --- | --- |
+| Einstieg | `/MoorlTicketVendor` | Eventtexte in drei Spalten und Social Links |
+| Events | `/MoorlTicketVendor/Events` | Statisches Veranstaltungslisting |
+| Booking | `/MoorlTicketVendor/Booking` | Artist-Roster mit Booking-Anfragen |
+| Kontakt | `/MoorlTicketVendor/Kontakt` | Natives Shopware-Kontaktformular |
+
+Alle drei Veranstaltungen und vier Artists erhalten eigene JPEG-Bilder mit **1080 × 1350 px (4:5)**. Sie liegen im Paket unter `media/moorl_tv_ticket_sale` beziehungsweise `media/moorl_tv_artist` und werden ausdrücklich in die zugehörigen Medienordner importiert. Die Social Links sind erkennbare Demo-Platzhalter; vor Verwendung eigene Profile eintragen. Das vergangene Digital Forum bleibt als inaktives Verwaltungsbeispiel erhalten.
+
+Leere Einstellungen für die Veranstaltungs- und Booking-Kontaktkategorie werden im gewählten Verkaufskanal mit den Demo-Kategorien vorbelegt. Bereits vorhandene Auswahlen bleiben erhalten. Beim Entfernen werden nur eigene Demo-Kategorien ohne fremde Unterkategorien und nicht anderweitig verwendete Demo-CMS-Seiten entfernt. Die Basis-CMS-Vorlagen und selbst angelegte Kategorien bleiben erhalten. Weiterverwendete Demo-Layouts, etwa in eigenen Kategorien oder Produkten, bleiben auch bei einer späteren Deinstallation erhalten.
+
+### Booking-Kontaktseite
+
+Unter **Erweiterungen → Meine Erweiterungen → Ticket Vendor → Konfigurieren → Artist-Booking → Kontaktseite (Kategorie)** lässt sich die Kategorie der Kontaktseite auswählen (`MoorlTicketVendor.config.bookingContactCategoryId`). „Booking anfragen“ verwendet deren SEO-URL. Ein individueller Booking-Kontakt am Artist (E-Mail oder HTTP(S)-URL) hat weiterhin Vorrang. Ohne Kategorieauswahl bleibt die bisherige zentrale Kontakt-CMS-Seite der Rückfall.
+
 ### Einheitliche Storefront-Überschriften
 
 `storefront/component/moorl-tv-header.html.twig` liefert den gemeinsamen Header für Seiten (`headingLevel: 1`), Sektionen (`2`) und Karten/Untersektionen (`3`). Er nimmt `title`, `titleId`, `eyebrow`, `lead`, `detail` und `additionalClasses` entgegen. Normale Texte werden escaped, Detailinhalte sanitisiert. Ohne eigenen Eyebrow nutzt nur die Seitenvariante den Shopnamen. Die Darstellung verwendet feste Größen an responsiven Breakpoints und für Seitenheader einen unteren Abstand von 3rem.

@@ -202,7 +202,18 @@ The additional permission **Ticket Vendor → Scan tickets and read events** is 
 
 ## Data and demo packages
 
-The demo import adds the active **Veranstaltungen** category below the shop navigation and assigns the **Ticket Vendor – Events** CMS layout with its event listing. Visitors enter through the regular category navigation; there is no additional ticket link among the header actions. Removing the demo package removes its category if it has no subcategories. The CMS layout and merchant-created categories are retained.
+The optional **standard** package adds a standalone demo site below the shop navigation. The existing shop homepage and its category are retained. In Foundation's demo assistant, select **MoorlTicketVendor → standard** and the intended storefront sales channel.
+
+| Page | SEO path | Content |
+| --- | --- | --- |
+| Home | `/MoorlTicketVendor` | Three columns of event copy and social links |
+| Events | `/MoorlTicketVendor/Events` | Static event listing |
+| Booking | `/MoorlTicketVendor/Booking` | Artist roster with booking enquiries |
+| Contact | `/MoorlTicketVendor/Kontakt` | Native Shopware contact form |
+
+All three events and four artists receive individual JPEG images at **1080 × 1350 px (4:5)**. Package files are located in `media/moorl_tv_ticket_sale` and `media/moorl_tv_artist` and imported explicitly into their respective entity folders. Social links are identifiable demo placeholders; replace them with your own profiles before use. The past Digital Forum remains an inactive administration example.
+
+Empty event-category and booking-contact-category settings are initialised with the demo categories in the selected sales channel. Existing selections are retained. Removing the package only deletes its own categories without merchant subcategories and demo CMS pages that are not used elsewhere. Base CMS templates and merchant-created categories are retained. Demo layouts reused by your own categories or products also survive subsequent plugin uninstallation.
 
 Regular Foundation packages install media folders, import/export profiles, number range, mail template, SEO template and scanner role. They are installed during normal activation/update and can also be loaded individually through Foundation's data management.
 
