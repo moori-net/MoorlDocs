@@ -1,3 +1,13 @@
+**Important note:** You need the Foundation Plugin, which is available free of charge: [Foundation](https://store.shopware.com/en/search?search=MoorlFoundation)
+
+
+## Plugin Demo
+
+A storefront demo is available for testing this plugin. The plugin can be tested at the following link:
+
+- [https://demo-sw67.moori.net/MoorlTicketVendor](https://demo-sw67.moori.net/MoorlTicketVendor)
+
+
 ## Sell event tickets directly in Shopware
 
 Ticket Vendor lets you manage events and sell admission through your existing Shopware shop. Concerts, workshops, seminars and community events receive dedicated pages, ticket categories and defined quotas. Sales use the native cart and checkout without requiring additional Shopware products.
@@ -70,21 +80,3 @@ Public event pages, CMS listings with an optional archive, translated content an
 - Event archive and configurable ticket presentation.
 - Ticket views on events, orders and customers.
 - Flow Builder action and Foundation data/demo packages.
-
-## Requirements
-
-Requires **MoorlFoundation 1.7** and **Shopware 6.7 with Storefront**. Automatic delivery/deadline processing require running Shopware workers and configured mail transport. Scanning is online; camera recognition depends on HTTPS/browser support. Seat maps, offline admission and a standalone mobile app are outside the current scope.
-
-## Screenshots
-
-The captures from 22 October 2026 show Shopware **6.7.15.1**, the installed demo data and the current light Shopware Storefront layout. All screenshots use an English interface and **1920 × 1080 pixels (FullHD)** at 100% browser zoom. Appearance and available options depend on your theme and configuration.
-
-![Event page with date, venue and ticket selection](images/storefront-event.png)
-
-![Public artist booking roster](images/storefront-booking.png)
-
-![Line-up and stage timetables](images/storefront-program.png)
-
-![Group ticket with price, redemptions and quota](images/admin-type.png)
-
-![Browser scanner with event selection and manual input](images/admin-scanner.png)

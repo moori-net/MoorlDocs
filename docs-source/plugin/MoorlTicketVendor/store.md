@@ -1,3 +1,13 @@
+**Wichtiger Hinweis:** Sie benötigen das Foundation Plugin, welches Ihnen kostenlos zur Verfügung steht: [Foundation](https://store.shopware.com/de/search?search=MoorlFoundation)
+
+
+## Plugin Demo
+
+Zu diesem Plugin steht eine Storefront-Demo zum Testen bereit. Unter folgenden Link kann das Plugin getestet werden:
+
+- [https://demo-sw67.moori.net/MoorlTicketVendor](https://demo-sw67.moori.net/MoorlTicketVendor)
+
+
 ## Veranstaltungen und Tickets direkt in Shopware
 
 Mit Ticket Vendor verwalten Sie Veranstaltungen und verkaufen Eintrittskarten über Ihren vorhandenen Shopware-Shop. Konzerte, Workshops, Seminare oder Community-Events erhalten eigene Veranstaltungsseiten, passende Ticketkategorien und klar definierte Kontingente. Der Verkauf nutzt den normalen Warenkorb und Checkout; zusätzliche Shopware-Produkte müssen Sie dafür nicht anlegen.
@@ -70,21 +80,3 @@ Veranstaltungen bündeln Tickettypen, generierte Kundentickets und Check-in-Prot
 - Eventarchiv und konfigurierbare Ticketdarstellung.
 - Ticketansichten an Veranstaltung, Bestellung und Kunde.
 - Flow-Builder-Aktion sowie Foundation-Daten- und Demopakete.
-
-## Voraussetzungen
-
-Die Erweiterung setzt **MoorlFoundation 1.7** und **Shopware 6.7 mit Storefront** voraus. Automatischer Versand und Fristverarbeitung benötigen die regulären Shopware-Worker und einen eingerichteten Mailtransport. Der Scanner arbeitet online; Kameraerkennung hängt von HTTPS und Browserunterstützung ab. Sitzplatzpläne, Offline-Einlass und eine eigenständige mobile App gehören nicht zum aktuellen Umfang.
-
-## Einblicke in die Erweiterung
-
-Die Aufnahmen vom 22.10.2026 zeigen Shopware **6.7.15.1**, die installierten Demodaten und das aktuell verwendete helle Shopware-Storefront-Layout. Alle Screenshots verwenden eine englische Oberfläche und **1920 × 1080 Pixel (FullHD)** bei 100 % Browserzoom. Gestaltung und verfügbare Optionen hängen von Theme und Konfiguration ab.
-
-![Eventseite mit Datum, Veranstaltungsort und Ticketwahl](images/storefront-event.png)
-
-![Öffentliches Artist-Booking-Roster](images/storefront-booking.png)
-
-![Line-up und Timetables je Stage](images/storefront-program.png)
-
-![Gruppenticket mit Preis, Einlösungen und Kontingent](images/admin-type.png)
-
-![Browser-Scanner mit Veranstaltungsauswahl und manueller Eingabe](images/admin-scanner.png)

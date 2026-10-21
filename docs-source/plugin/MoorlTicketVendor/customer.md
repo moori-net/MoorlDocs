@@ -6,8 +6,6 @@
 
 Ein Platz wird erst beim Bestellabschluss belegt. Die Verfügbarkeit kann sich daher ändern, solange Tickets nur im Warenkorb liegen.
 
-Beispiel: ein Standardticket im Warenkorb vor dem Bestellabschluss.
-
 ![Beispiel: ein Standardticket im Warenkorb vor dem Bestellabschluss.](images/storefront-cart.png)
 
 ## Tickets erhalten
@@ -46,6 +44,6 @@ Für Umbuchungen, Erstattungen und Änderungen gelten die Bedingungen des jeweil
 
 ## Ticketwahl im Shop
 
-Das FullHD-Beispiel (1920 × 1080 Pixel) zeigt Einzeltickets und Pakete im englischen Demoshop. Verfügbare Kategorien und Gestaltung hängen von der Veranstaltung ab.
+Wählen Sie ein Einzelticket oder Paket und die gewünschte Menge.
 
 ![Ticketwahl im Demoshop](images/storefront-tickets.png)
