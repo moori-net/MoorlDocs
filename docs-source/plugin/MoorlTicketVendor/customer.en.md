@@ -40,3 +40,9 @@ A normal single ticket can be redeemed once. Group and service packages allow th
 - **Wrong event:** Check event name and date on the PDF.
 
 Changes, refunds and rebookings are subject to the shop's or organiser's terms. Contact their customer service for assistance.
+
+## Choosing tickets in the shop
+
+The example shows individual tickets and packages in the demo shop. The available categories and design depend on the event.
+
+![Ticket selection in the demo shop](images/storefront-tickets.png)

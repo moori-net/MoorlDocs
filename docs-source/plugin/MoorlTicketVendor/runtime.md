@@ -1,5 +1,7 @@
 # Ticket Vendor: Betrieb und Funktionen
 
+Prüfstand 21.10.2026 nach der Datenbankbehebung: **325 PHP-Tests mit 3332 Assertions** und **92 Administrationstests** bestanden. Der PHP-Lauf meldet sieben bestehende Deprecations in der Core-/Foundation-Listingsuche. Die SQL-Initialinstallation und die additive Indexergänzung mit bestehenden Testdaten wurden isoliert geprüft; der bestehende Demoshop wurde lesend abgeglichen. Synthetische Lastmessungen ergänzen die Funktionsprüfung; ihre Ergebnisse und Grenzen stehen unter [Datenbankprüfung und Lastverhalten](#datenbankprüfung-und-lastverhalten). Neun reale FullHD-Aufnahmen aus Storefront und Administration sind in der [Händleranleitung](index.md#screenshots-aus-storefront-und-administration) eingebunden. Echte Payment-/SMTP-Transporte und Gerätekameras sind nicht Teil dieser Prüfung.
+
 Die vollständige [Händleranleitung](index.md), [Installation](manual.md), [Kundenanleitung](customer.md) und [App-/API-Dokumentation](mobile-app.md) stehen zusätzlich als deutsche und englische `.tpl.md`-Vorlagen mit gerenderten Markdown-Dateien bereit. Die mobile App ist ein dokumentiertes Zielbild und noch nicht implementiert.
 
 ## Einstieg
@@ -12,7 +14,7 @@ Veranstaltungen werden unter Kataloge verwaltet, Tickettypen unter Einstellungen
 
 Die Veranstaltungsübersicht ist eine normale Shopware-Kategorie mit dem Foundation-CMS-Baustein `moorl-tv-ticket-sale-listing`; in der Plugin-Konfiguration wird sie unter `category` ausgewählt. Die eigene Listing-Route `/tickets` entfällt. Der Detailcontroller bedient ausschließlich `/tickets/{saleId}`. Native SEO-URLs verwenden standardmäßig `tickets/{{ sale.translated.name }}/{{ sale.id }}`. Angemeldete Kunden finden berechtigte Tickets unter `/account/tickets` und können gültige Tickets als PDF herunterladen.
 
-Bestell- und Kundendetails enthalten Ticket-Tabs. In der Veranstaltung lassen sich Tickets direkt anlegen. Der Tickettyp wird auf die Veranstaltung eingeschränkt. Ticketnummern entstehen beim Speichern aus dem Core-Nummernkreis `moorl_tv_ticket` und bleiben anschließend unveränderlich. Token werden für neue Tickets kryptographisch zufällig mit 32 Zeichen erzeugt und erscheinen ausschließlich im berechtigten PDF beziehungsweise QR-Code.
+Bestell- und Kundendetails enthalten Ticket-Tabs. In der Veranstaltung lassen sich Tickets direkt anlegen. Der Tickettyp wird auf die Veranstaltung eingeschränkt. Ticketnummern entstehen beim Speichern aus dem Core-Nummernkreis `moorl_tv_ticket` und bleiben anschließend unveränderlich. Standardtickets erhalten weiterhin kryptographisch zufällige Tokens mit acht Zeichen; der bestehende Gästelistenpfad verwendet weiterhin 32 Zeichen. Die QR-Ausgabe enthält nur den jeweiligen Token. Vorhandene Codes und persönliche Links bleiben unverändert.
 
 ## Gästelisten aus CSV importieren
 
@@ -92,7 +94,7 @@ Flow Builder bietet die Aktion „Tickets versenden“ für Ereignisse mit Beste
 
 ## Check-in und Zugriffe
 
-Der Admin-Scanner bietet Kamera-QR-Erkennung über `BarcodeDetector` und manuelle Token-Eingabe. Kameraerkennung hängt von Browserunterstützung und einem sicheren Browserkontext ab; die manuelle Eingabe bleibt verfügbar. Bei einem Netzwerkfehler verwendet ein erneuter Versuch dieselbe Scan-Anfrage-ID.
+Der Admin-Scanner bevorzugt Kamera-QR-Erkennung über `BarcodeDetector` und verwendet bei fehlender oder fehlerhafter nativer Erkennung den lokal eingebundenen jsQR-Fallback. Manuelle Token-Eingabe ist ebenfalls möglich. Kameraerkennung hängt von Browserunterstützung und einem sicheren Browserkontext ab; die manuelle Eingabe bleibt verfügbar. Bei einem Netzwerkfehler verwendet ein erneuter Versuch dieselbe Scan-Anfrage-ID.
 
 `POST /api/_action/moorl-tv/check-in` erwartet `saleId`, `token`, `scanRequestId` und optional `deviceId` sowie `redemptionCategory`. Bereiche sind `admission`, `drinks`, `food`; fehlt das Feld, gilt Einlass. Unbekannte oder falsch typisierte Werte ergeben HTTP 400. Benötigt wird weiterhin `moorl_tv_ticket:scan`; der Controller führt nur die feste Scanneraktion im System-Scope aus. Die Antwort ergänzt `redemptionCategory`, `redemptionCount`, `maxRedemptions`, `remainingRedemptions`. Unbekannte oder veranstaltungsfremde Tickets liefern diese Felder und Teilnehmerdaten als null. `wrong_category` zeigt den tatsächlichen Bereich und verbraucht nichts.
 
@@ -144,3 +146,13 @@ Anmeldung bedeutet noch keine Reservierung. Sobald das Typkontingent oder die Ev
 Neue kundenlose Tickets verwenden ihren gespeicherten Kanal und ihre Sprache für Zugang, Domain und Versand. Mailbezeichnungen und PDF werden in diesem Kontext neu geladen. Die optionale Gesamtkapazität eines Events gilt über alle Tickettypen einschließlich manueller und Gästetickets.
 
 Prüfstand vom 21.10.2026: sechzehn Tabellen durch die neuen direkten SQL-Migrationen in isolierter Datenbank erzeugt; 285 PHP-Tests mit 2616 Assertions sowie 77 Administrationstests bestanden. Der PHP-Lauf meldet sieben Deprecations zu dynamischen Eigenschaften in der vorhandenen Core-/Foundation-Listingsuche. Die Prüfungen umfassen den Abgleich aller persistenten DAL-Spalten mit dem SQL-Schema, Fremdschlüssel und Löschregeln, wiederholte Initialmigrationen, Übersetzungen, native Adminbeziehungen, öffentliche Formularvalidierung und einen veralteten Transaktions-Snapshot. Es wurden keine normalen Shopdaten migriert und keine echten Mails verschickt.
+
+## Datenbankprüfung und Lastverhalten
+
+Der [lesende Schema-/Bestandsabgleich und die gezielte Ergänzung der Jobindizes](schema.md#lesender-schema--und-bestandsabgleich) sind getrennte Betriebsschritte. Die 16 Initialmigrationen ändern weiterhin keine vorhandenen Tabellen.
+
+Scans, Teilnehmeränderungen und Versandtracking verändern normalerweise keine Belegung. Diese Updates behalten die bisherigen Sperren und Einzelprüfungen, überspringen jedoch die vollständigen Typ-/Eventzählungen und das erneute Schreiben unveränderter Verkaufszähler. Bei echter Belegungsänderung und Kontingentabsenkung bleibt die vollständige Prüfung erhalten.
+
+Eine isolierte lokale Messung unter MySQL 8.0.46 mit 10.000 belegenden Tickets ergab bei zehn Scans rund 52 ms vor und 13 ms nach der Änderung im Median; vollständige Bestandszählungen je Scan sanken von drei auf null. Sieben parallele Prozesse für vier Scanner, Ticketausstellung, manuellen Ablauf und Versandbuchhaltung hielten die Bestands-/Einlöseregeln bei 1.000 und 10.000 Tickets ein. Gemeinsame Event-/Typsperren bleiben bestehen. Diese Messung ist keine Zusage für eine bestimmte Scannerzahl und umfasst keinen Browser-Checkout, Payment-Provider oder SMTP-Versand.
+
+Die reproduzierbaren Messskripte liegen im Entwicklungscheckout unter `tests/performance/lifecycle-queries.php` und `tests/performance/inventory-writes.php`. Sie akzeptieren nur ausdrücklich ausgewählte `moorl_tv_*_test`-Datenbanken. Die Inventarmessung verlangt leere Ticketbestände; niemals gegen den laufenden Shop ausführen. Indexmessungen verwenden eine temporäre Tabellenkopie. Messberichte gehören außerhalb der Pluginverzeichnisse unter `var/testing/`.

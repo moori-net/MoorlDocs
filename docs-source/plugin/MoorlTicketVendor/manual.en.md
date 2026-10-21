@@ -148,10 +148,18 @@ The public form marks full name, email and acceptance of the event rules as requ
 
 ### Managing voluntary support
 
-Create options centrally under **Catalogues → Voluntary support** and translate them using the language switcher. In the ticket type's guest list tab, select the options offered by its public registration form. A type without assigned options has an empty form selection. Before ticket issuance, a guest list entry can independently be assigned any option from the catalogue. The optional standard demo package includes six sample options.
+Create options centrally under **Catalogues → Voluntary support** and translate them using the language switcher. In the ticket type's guest list tab, select the options offered by its public registration form. A type without assigned options has an empty form selection. Before and after ticket issuance, a guest list entry can independently be assigned any option from the catalogue. The optional standard demo package includes six sample options.
 
 ## Multiple redemption schema
 
 New installations use sixteen initial SQL migrations that directly include areas, redemption limits, person-place weights and protected counters. This reset migration set contains no historical upgrades or data conversion. Existing databases require a separate schema and data update before deployment. Development checks use an isolated test database.
 
 Type import/export profiles include the three editable fields. Ticket snapshots/counters stay protected. Reimport `ticket-mail` to upgrade unchanged shipped bodies while preserving merchant-edited fields. The standard demo adds five-person admission, five-drink and three-meal types while retaining its twelve example tickets.
+
+## Scanner setup example
+
+Select the event and redemption category before starting admission. The screenshot shows manual input; camera capture is the alternative tab.
+
+![Administration scanner, FullHD](images/admin-scanner.png)
+
+For larger events, test several scanners together with checkout and background workers on representative ticket volumes. Also check database schema compatibility before each update; installation migrations do not upgrade existing tables.

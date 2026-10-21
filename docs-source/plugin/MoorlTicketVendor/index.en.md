@@ -133,7 +133,7 @@ For an internal guest list:
 
 Tickets without an account or order are supported. Without an email recipient they can be saved and issued as PDFs, but require a recipient before delivery. The automatic recovery task also considers undelivered valid manual tickets, so saving a ticket with a recipient is not a permanent “save only” mode.
 
-A separate named guest-list manager with free-text first/last names, companion counts or admission lookup by name is not included. The current workflow uses individual tickets and codes.
+The guest-list tab of a free ticket type also provides a private registration form with name, email, optional phone number and voluntary support options. Registrations can be confirmed and individually converted into tickets. Registration does not reserve capacity. Companion counts and admission lookup by name are not provided.
 
 ## PDFs and email delivery
 
@@ -220,7 +220,7 @@ No order is needed. A configured Foundation demo customer is associated optional
 
 **Why is no email arriving?** Check recipient, delivery state, template, SMTP, Messenger and scheduled tasks. Downloading an eligible PDF can work independently of email delivery.
 
-**Can guest customers receive tickets?** Yes, through the order email. Account downloads require an authorised login; there is no public guest download link.
+**Can guest customers receive tickets?** Yes, through the order email. Each ticket email also contains a personal link allowing guest purchasers to manage that ticket without logging in and download its PDF when valid. Keep this link private.
 
 **Are assigned seats or offline admission available?** The current implementation uses quotas per type, without seat maps or offline approval. The standalone mobile app is not available yet.
 
@@ -237,3 +237,43 @@ New storefront registrations also receive a guest acknowledgment with an individ
 Guestlist entries and tickets can be deleted individually through the normal Administration row action. Deleting a guestlist entry preserves its issued ticket. Deleting a ticket retains the registration and check-in history and clears their ticket links. Occupied quota is released; orders and customers remain. The Decision field and rejection/cancellation actions have been removed. Before using deletion, update the schema externally as described in schema.md, including both nullable ticket foreign keys with ON DELETE SET NULL.
 
 New installations use the supplied SQL migrations. Existing schemas require a separate update before deployment. Backfill existing order-position references before removing legacy columns; moorl-tv:backfill-ticket-orders is read-only unless --apply is explicitly supplied. See [schema and backfill instructions](schema.md). Rebuild assets and restart workers after the transition.
+
+## Screenshots from Storefront and Administration
+
+These captures from 21 October 2026 show the existing demo shop with the SIDEQUEST theme and Shopware Administration. All PNGs are **1920 × 1080 pixels (FullHD)** at 100% browser zoom. This demo uses an English interface with some German event content. Theme, content and available options depend on your installation.
+
+### Event listing
+
+![Event listing](images/storefront-events.png)
+
+### Event with line-up
+
+![Event with line-up](images/storefront-event.png)
+
+### Ticket selection with group and service packages
+
+![Ticket selection with group and service packages](images/storefront-tickets.png)
+
+### Private guest-list registration form
+
+![Private guest-list registration form](images/storefront-guestlist.png)
+
+### Events in Administration
+
+![Events in Administration](images/admin-events.png)
+
+### Editing event details
+
+![Editing event details](images/admin-event.png)
+
+### Group ticket: price, redemptions and quota
+
+![Group ticket: price, redemptions and quota](images/admin-type.png)
+
+### Managing stages and sets
+
+![Managing stages and sets](images/admin-program.png)
+
+### Scanner with event selection and manual input
+
+![Scanner with event selection and manual input](images/admin-scanner.png)

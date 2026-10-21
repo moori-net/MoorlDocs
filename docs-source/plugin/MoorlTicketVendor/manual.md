@@ -148,10 +148,18 @@ Das öffentliche Formular markiert Name, E-Mail und die Zustimmung zu den Verans
 
 ### Ehrenamtliche Unterstützung verwalten
 
-Die Optionen werden zentral unter **Kataloge → Ehrenamtliche Unterstützung** angelegt und über die Sprachauswahl übersetzt. Im Gästelisten-Tab des Tickettyps legen Sie per Mehrfachauswahl fest, welche Optionen dessen öffentliches Formular anbietet. Ohne zugeordnete Optionen bleibt die Formularauswahl leer. Am Gästelisten-Eintrag können Sie vor der Ticketausstellung unabhängig davon sämtliche Katalogoptionen zuweisen. Das optionale Standard-Demopaket liefert sechs Beispieloptionen.
+Die Optionen werden zentral unter **Kataloge → Ehrenamtliche Unterstützung** angelegt und über die Sprachauswahl übersetzt. Im Gästelisten-Tab des Tickettyps legen Sie per Mehrfachauswahl fest, welche Optionen dessen öffentliches Formular anbietet. Ohne zugeordnete Optionen bleibt die Formularauswahl leer. Am Gästelisten-Eintrag können Sie vor und nach der Ticketausstellung unabhängig davon sämtliche Katalogoptionen zuweisen. Das optionale Standard-Demopaket liefert sechs Beispieloptionen.
 
 ## Schema für Mehrfacheinlösung
 
 Die sechzehn initialen SQL-Migrationen enthalten Bereiche, Einlöselimits, Personenplatzgewichte und geschützte Zähler direkt für die Erstinstallation. Dieser zurückgesetzte Migrationssatz enthält keine historischen Upgrades oder Datenübernahmen. Bestehende Datenbanken benötigen vor einem Deployment einen gesonderten Schema- und Datenabgleich. Entwicklungsprüfungen verwenden eine isolierte Testdatenbank.
 
 Typ-Import-/Exportprofile enthalten die drei bearbeitbaren Felder. Ticket-Ausstellungswerte/Zähler bleiben geschützt. Erneuter Import von `ticket-mail` ergänzt unveränderte ausgelieferte Standardtexte und erhält eigene Textfelder. Die Demo ergänzt Fünfer-Gruppeneinlass, Fünfer-Getränke und Dreier-Essen bei weiterhin zwölf Beispieltickets.
+
+## Scanner einrichten: Beispiel
+
+Vor dem Einlass Veranstaltung und Einlösebereich auswählen. Der Screenshot zeigt die manuelle Eingabe; die Kamera ist über den benachbarten Tab erreichbar.
+
+![Admin-Scanner in FullHD](images/admin-scanner.png)
+
+Vor größeren Veranstaltungen mehrere Scanner zusammen mit Checkout und Hintergrunddiensten mit einer repräsentativen Ticketmenge prüfen. Vor jedem Update außerdem das Datenbankschema abgleichen; Installationsmigrationen aktualisieren keine vorhandenen Tabellen.

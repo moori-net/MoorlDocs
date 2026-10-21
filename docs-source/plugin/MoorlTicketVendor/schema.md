@@ -154,7 +154,7 @@ Der Testname ist eine Entwicklungsreferenz; niemals eine reguläre Shopdatenbank
 
 Die vier neuen Tabellen bei bestehenden Tabellen gezielt per SQL aus den DAL-Definitionen erzeugen. Die kurzen Tabellennamen halten auch die daraus erzeugten Fremdschlüsselnamen unter der MySQL-Grenze von 64 Zeichen. Die Zuordnungstabellen verwenden zusammengesetzte Primärschlüssel aus `moorl_tv_ticket_type_id` beziehungsweise `moorl_tv_guestlist_entry_id` und `moorl_tv_volunteer_id`. Beim Löschen einer Option werden nur die Zuordnungen kaskadierend entfernt; Tickettypen, Anmeldungen und Tickets bleiben erhalten.
 
-Unter **Kataloge → Ehrenamtliche Unterstützung** lassen sich Optionen mit Namen, Beschreibung, Übersetzungen und Reihenfolge verwalten. Am Tickettyp und an der Anmeldung verwendet `volunteerRoles` dieselbe EntityCollection. Beide Adminfelder bieten den gesamten Katalog. Anmeldungen mit bereits ausgestelltem Ticket bleiben gegen Änderungen geschützt, auch beim direkten Schreiben in die Zuordnungstabelle. Das Formular lädt nur am Typ zugeordnete Optionen in seiner Sprache mit Shopware-Sprachfallback. Ohne Zuordnung bleibt die Auswahl leer; es gibt keine impliziten Standardoptionen. Beim Absenden werden nur UUIDs aus dieser Typzuordnung akzeptiert.
+Unter **Kataloge → Ehrenamtliche Unterstützung** lassen sich Optionen mit Namen, Beschreibung, Übersetzungen und Reihenfolge verwalten. Am Tickettyp und an der Anmeldung verwendet `volunteerRoles` dieselbe EntityCollection. Beide Adminfelder bieten den gesamten Katalog. Die Unterstützungsoptionen bleiben auch nach der Ticketausstellung bearbeitbar, einschließlich direkter Mappingzugriffe. Geschützt bleiben Ticketverknüpfung und Ausstellungsmetadaten; die Änderung von Optionen beeinflusst weder Ticket noch Kontingent. Das Formular lädt nur am Typ zugeordnete Optionen in seiner Sprache mit Shopware-Sprachfallback. Ohne Zuordnung bleibt die Auswahl leer; es gibt keine impliziten Standardoptionen. Beim Absenden werden nur UUIDs aus dieser Typzuordnung akzeptiert.
 
 Bestandsübernahme vor dem Entfernen alter Spalten separat durchführen: `moorl_tv_ticket_type.guestlist_config` und `moorl_tv_guestlist_entry.volunteer_roles` exportieren und sichern. Für jeden bisherigen Schlüssel samt Beschriftungen passende Katalogeinträge anlegen und eine eindeutige Zuordnung vom alten Schlüssel zur neuen UUID festhalten. Bei gleichen Schlüsseln mit unterschiedlichen Beschriftungen getrennte Optionen erhalten. Bisherige implizite Standardoptionen bei Bedarf ausdrücklich anlegen und den betroffenen Typen zuordnen; ausdrücklich leere Konfigurationen bleiben leer. Gespeicherte Auswahlwerte einschließlich historischer, nicht mehr am Typ angebotener Werte auf die neuen Anmeldungszuordnungen übertragen. Ursprungsdaten, ausgestellte Tickets und Metadaten erhalten. Erst nach geprüftem Abgleich der Auswahlwerte und Zuordnungen die beiden alten JSON-Spalten extern entfernen. Die Anwendung liest sie anschließend nicht mehr. Der ältere Befehl `moorl-tv:backfill-guestlist-types` ist nur für den früheren Event-zu-Typ-Übergang gedacht und muss gegebenenfalls davor mit dessen vollständigem additiven Altschema ausgeführt werden. Die SQL-Initialmigrationen übernehmen keine historischen Daten.
 
@@ -172,3 +172,86 @@ Die initialen SQL-Migrationen beschreiben diesen Stand für neue Tabellen. Bei b
 Die Erstinstallation verwendet für start_at und end_at unabhängig optionale DATETIME(3)-Spalten ohne performance_date. UTC-Zeitpunkte werden direkt gespeichert; Bearbeitung und Timetable verwenden die Event-Zeitzone. Der Migrationssatz enthält keine Umrechnung alter Uhrzeittexte.
 
 Vor dem Einsatz dieses Modellstands in einer bestehenden Datenbank alte Uhrzeittexte und performance_date separat sichern und in vollständige UTC-Zeitpunkte überführen. Der neue Initialmigrationssatz erledigt keinen Bestandsumbau.
+
+## Beziehungen und Integritätsgrenzen
+
+Die Übersicht zeigt die fachlichen Hauptbeziehungen. Übersetzungstabellen ergänzen Event, Typ, Artist, Stage und Unterstützungsoption; die beiden Zuordnungstabellen verbinden Unterstützungsoptionen mit Typen und Anmeldungen.
+
+```mermaid
+erDiagram
+    EVENT ||--o{ TICKETTYP : hat
+    EVENT ||--o{ TICKET : umfasst
+    TICKETTYP ||--o{ TICKET : erzeugt
+    BESTELLUNG o|--o{ TICKET : referenziert
+    KUNDE o|--o{ TICKET : besitzt
+    TICKET o|--o{ CHECKIN : protokolliert
+    TICKETTYP ||--o{ ANMELDUNG : erfasst
+    TICKET o|--o| ANMELDUNG : zugeordnet
+    EVENT ||--o{ STAGE : hat
+    EVENT ||--o{ AUFTRITT : plant
+    STAGE o|--o{ AUFTRITT : beherbergt
+    ARTIST ||--o{ AUFTRITT : spielt
+    TICKETTYP }o--o{ UNTERSTUETZUNG : bietet
+    ANMELDUNG }o--o{ UNTERSTUETZUNG : waehlt
+```
+
+| Regel | Sicherung |
+| --- | --- |
+| Referenzierte Datensätze existieren; definierte Löschregeln gelten | SQL-Fremdschlüssel und DAL-Relationen |
+| Nummer, QR-Token, Bestelleinheit, Scan- und Anmeldeanfrage sind eindeutig | SQL-Unique-Indizes |
+| Bereich, Einlöselimit, Personenplätze und Verbrauch sind zulässig | DAL-Validierung und SQL-CHECKs |
+| Tickettyp und Ticket gehören zum selben Event; Stage und Auftritt ebenfalls | DAL-Schreibsubscriber |
+| Typ-/Eventkontingente werden eingehalten und `quantitySold` bleibt aktuell | Transaktionale Subscriber mit Event-/Typsperren |
+| Ticketverbrauch darf nur der Scanner ändern | Geschütztes Feld und begrenzte Freigabe im Scannerpfad |
+
+Importe und Integrationen müssen den DAL verwenden. Direkte SQL-Schreibzugriffe können trotz gültiger Fremdschlüssel fachlich falsche Kombinationen oder veraltete Verkaufszähler erzeugen. Die Kontingentzählung umfasst `pending`, `valid` und `redeemed`; Typen zählen `GREATEST(1, capacity_units)`, Events ausschließlich `capacity_units`.
+
+## Betrieb bei wachsendem Datenbestand
+
+Scans und Ticketänderungen halten weiterhin gemeinsame Event-/Typsperren. Belegungsneutrale Änderungen an Einlösung, Personalisierung oder Versandtracking zählen den gesamten Typ-/Eventbestand jedoch nicht erneut und schreiben keinen unveränderten Verkaufszähler. Auch `pending → valid` und `valid → redeemed` behalten dieselbe Belegung. Ausstellung, Ablauf, Widerruf, Löschung, erlaubter Typwechsel und Kontingentabsenkung werden weiterhin gegen den aktuellen gesperrten Bestand geprüft. Nach belegungsrelevanten Änderungen wird der Verkaufszähler vollständig abgeglichen.
+
+Die Initialmigration enthält zwei gemessene Jobindizes: `idx.moorl_tv_ticket.expiry` auf `(status, expires_at, order_id, order_version_id)` und `idx.moorl_tv_ticket.delivery` auf `(delivery_status, status, created_at)`. Sie unterstützen Ablauf und Versandwiederherstellung. Versuchslimit, Änderungszeit und Sortierung können weiterhin Restprüfungen erfordern. Die Zahl sichtbarer Ergebniszeilen oder das Joblimit von 500 begrenzt nicht die intern untersuchten Datensätze. Die lokale Messung ersetzt keine Prüfung der eigenen Datenverteilung.
+
+Lesender Abgleich am 21.10.2026: Die aktuellen Spalten stimmten in Typ, Pflichtfeldern, Default und Kollation zwischen lokalem Demoshop und isolierter Neuinstallation überein. Beide besitzen 45 Fremdschlüssel und acht CHECKs. Im Demoshop existiert zusätzlich noch die alte Spalte `moorl_tv_performance.position`. Es wurden keine fehlerhaften Ticket-/Event- oder Stage-/Eventbezüge, abweichenden Verkaufszähler, Überbelegungen oder fehlenden Versandkontexte gefunden. Dieser Befund gilt für die geprüfte Installation und ersetzt keinen Schemaabgleich anderer Shops.
+
+## Lesender Schema- und Bestandsabgleich
+
+Der Entwicklungscheckout enthält `tests/audit-schema.php`. Das Werkzeug benötigt MySQL 8 und eine auf demselben Server getrennt vorbereitete, aktuelle Referenzinstallation mit den 16 Plugin-Tabellen. Der geprüfte Stand ist MySQL 8.0.46; MariaDB ist damit nicht verifiziert. `tests/` ist im Store-ZIP nicht enthalten. Das Werkzeug hat keinen Reparaturmodus und startet weder Shopware-Kernel noch Migrationen auf der Zielverbindung.
+
+Vom Pluginverzeichnis aus, bei korrekt konfigurierter Shopware-`DATABASE_URL`:
+
+```sh
+php tests/audit-schema.php --reference=moorl_tv_remediation_reference_test --output=/tmp/ticket-schema-audit.json
+```
+
+Die Zielverbindung stammt aus der Shopware-Umgebung. Die Referenz muss einen anderen Namen im Format `moorl_tv_*_test` haben und zuvor mit den aktuellen Initialmigrationen erzeugt worden sein. `tests/create-schema.php` ausschließlich auf einer ausdrücklich ausgewählten leeren Testdatenbank ausführen. Eine bestehende Datenbank nie mit diesem Setup-Skript vorbereiten. Ein lesender Datenbankzugang mit Zugriff auf beide Schemata genügt für den Abgleich.
+
+Der JSON-Bericht vergleicht Spalten, Indizes, zusammengesetzte Fremdschlüssel samt Bestellversionen/Löschregeln und CHECK-Ausdrücke einschließlich Aktivierung. Datenprüfungen umfassen fachliche Querbezüge, Fremdschlüsselziele, Eindeutigkeit, Kontexte, Einlösegrenzen und Kontingente. Zusätzliche harmlose Altspalten oder nicht eindeutige Indizes werden als Warnung erhalten; zusätzliche Pflichtspalten ohne Default, Unique-/FK-/CHECK-Regeln benötigen eine manuelle Prüfung. Fehlende Voraussetzungen werden als ausgelassene Prüfung gemeldet. Betroffene Datensätze erscheinen mit Anzahl und bis zu 20 IDs; Tokens und Personendaten werden nicht ausgegeben.
+
+Exitcodes: **0** vollständig geprüft, gegebenenfalls Warnungen; **1** Struktur-/Datenabweichung oder ausgelassene Datenprüfung; **2** Aufruf-/Verbindungs-/Ausgabefehler. Während eines verbindlichen Abgleichs kein paralleles DDL ausführen. Zähler lassen sich aus Tickets ableiten; widersprüchliche Herkunft, fehlende Kanäle oder bestehende Überbelegung verlangen eine konkrete fachliche Klärung. Keine Kanäle erraten, keine Personen nach E-Mail zusammenführen und keine Tickets automatisch löschen oder umschreiben.
+
+## Jobindizes bei bestehenden Installationen ergänzen
+
+`CREATE TABLE IF NOT EXISTS` ergänzt die beiden neuen Indizes **nicht** in vorhandenen Tabellen. Die folgenden Statements sind ein gesonderter Betriebsschritt; sie werden nicht automatisch vom Plugin ausgeführt.
+
+1. Sicherung erstellen und deren Wiederherstellung getrennt prüfen. Schema-/Bestandsbericht mit einer aktuellen Referenz erzeugen.
+2. `SHOW INDEX FROM moorl_tv_ticket` prüfen: bereits identische Indizes auslassen. Bei gleichem Namen und anderer Spaltenfolge/Eindeutigkeit abbrechen und gezielt klären.
+3. Nur die fehlenden Indizes zuerst auf einer befüllten Kopie ergänzen; Laufzeit und Sperrwirkung messen. Die Statements können auf Metadatensperren warten und gehören in ein geeignetes Wartungsfenster.
+
+```sql
+ALTER TABLE moorl_tv_ticket
+  ADD INDEX `idx.moorl_tv_ticket.expiry`
+    (`status`, `expires_at`, `order_id`, `order_version_id`);
+
+ALTER TABLE moorl_tv_ticket
+  ADD INDEX `idx.moorl_tv_ticket.delivery`
+    (`delivery_status`, `status`, `created_at`);
+```
+
+4. Bericht und Bestandswerte erneut vergleichen, danach den passenden Code bereitstellen und die fachlichen Abläufe prüfen. Bei erneuter Bereitstellung bereits identische Indizes nach erneuter Prüfung auslassen; die rohen SQL-Statements selbst sind nicht idempotent. Das Audit führt selbst kein SQL zur Anpassung aus.
+
+Der getestete Bestandsweg erhält alle Datensatzwerte einschließlich alter QR-Tokens, Deeplinks, Einlösungen und wiederholbarer Scanantworten. Eine Altspalte wie `moorl_tv_performance.position` bleibt erhalten. Die additiven Indizes sind mit dem bisherigen Code vereinbar; ein Code-Rollback benötigt keinen Indexabbau. Ein PHP-Transaktionsrollback macht DDL nicht rückgängig, und ein alter Dump darf zwischenzeitlich ausgestellte Tickets nicht überschreiben.
+
+## QR-Codes
+
+Standardtickets behalten ihre **achtstelligen** zufälligen Tokens. Der bereits vorhandene Gästelistenpfad bleibt bei seiner bisherigen Tokenlänge. `VARCHAR(64)`, eindeutiger Tokenindex und `utf8mb4_unicode_ci` bleiben unverändert. Vorhandene Codes werden weder verlängert noch neu erzeugt; die PDF-Ausgabe codiert weiterhin nur den Token. Das im Audit beschriebene Zufallskollisionsrisiko kurzer Tokens wird durch diese Änderung nicht beseitigt.

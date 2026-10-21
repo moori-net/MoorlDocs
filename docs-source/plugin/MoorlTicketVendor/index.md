@@ -135,7 +135,7 @@ Für eine interne Gästeliste:
 
 Ein Ticket ohne Kundenkonto und ohne Bestellposition ist zulässig. Ohne erreichbaren E-Mail-Empfänger ist es speicherbar und kann als PDF ausgegeben werden; für den Versand muss ein Empfänger ergänzt werden. Der automatische Wiederherstellungslauf berücksichtigt auch noch nicht versendete gültige manuelle Tickets: Das Speichern eines Tickets mit Empfänger ist daher kein dauerhafter „nur speichern“-Modus.
 
-Eine namentliche Gästelistenverwaltung mit freien Vor-/Nachnamen, Begleitpersonenzähler oder Einlasssuche nach Namen ist nicht enthalten. Der vorhandene Ablauf arbeitet mit individuellen Tickets und Codes.
+Zusätzlich bietet der Gästelisten-Tab eines kostenlosen Tickettyps ein privates Anmeldeformular mit Name, E-Mail, optionaler Telefonnummer und Ehrenämtern. Anmeldungen lassen sich bestätigen und anschließend einzeln in Tickets umwandeln. Eine Anmeldung reserviert noch keinen Platz. Begleitpersonenzähler und Einlasssuche nach Namen sind nicht vorgesehen.
 
 ## PDF und E-Mail-Versand
 
@@ -222,7 +222,7 @@ Die Daten brauchen keine Bestellung. Ein konfigurierter Foundation-Demokunde wir
 
 **Warum kommt keine E-Mail?** Prüfen Sie Empfänger, Versandstatus, Mailvorlage, SMTP-Konfiguration sowie Messenger und geplante Aufgaben. Ein PDF-Download kann unabhängig vom Mailversand funktionieren.
 
-**Können Gastbesteller Tickets erhalten?** Ja, der Versand kann die Bestell-E-Mail verwenden. Der Kontodownload erfordert dagegen einen berechtigten Login; es gibt keinen öffentlichen Gast-Downloadlink.
+**Können Gastbesteller Tickets erhalten?** Ja, der Versand kann die Bestell-E-Mail verwenden. Die Mail enthält außerdem einen persönlichen Link je Ticket, über den auch Gastbesteller dieses Ticket ohne Login bearbeiten und bei gültigem Status als PDF herunterladen können. Den Link vertraulich behandeln.
 
 **Gibt es Sitzplätze oder Offline-Einlass?** Der aktuelle Umfang arbeitet mit Kontingenten je Tickettyp, ohne Sitzplan und ohne Offline-Freigabe. Die separate mobile App ist noch nicht vorhanden.
 
@@ -239,3 +239,43 @@ Nach neuer Storefront-Anmeldung erhält auch der Gast eine Eingangsbestätigung 
 Gästelisteneinträge und Tickets können über die normale Löschfunktion in der Administration einzeln gelöscht werden. Ein gelöschter Gästelisteneintrag lässt ein bereits ausgestelltes Ticket bestehen. Wird ein Ticket gelöscht, bleiben Anmeldung und Check-in-Protokoll erhalten und ihre Ticketverknüpfung wird aufgehoben. Belegtes Kontingent wird frei; Bestellungen und Kunden bleiben bestehen. Das Feld Decision und die Ablehnungs-/Stornoaktionen entfallen. Vor Verwendung das Schema bei bestehenden Datenbanken gemäß schema.md abgleichen, insbesondere die beiden Ticket-Fremdschlüssel auf SET NULL.
 
 Neue Installationen verwenden die mitgelieferten SQL-Migrationen. Bestehende Tabellen und Daten vor dem Update gezielt abgleichen. Bestehende Bestellpositionsbezüge müssen vor dem Entfernen der alten Spalten übernommen werden; der Befehl moorl-tv:backfill-ticket-orders zeigt zunächst nur eine Vorschau. Ablauf und explizite Anwendung stehen in [Schema und Datenübernahme](schema.md). Anschließend Administration/Storefront bauen und Worker neu starten.
+
+## Screenshots aus Storefront und Administration
+
+Die folgenden Aufnahmen vom 21.10.2026 zeigen den vorhandenen Demoshop mit SIDEQUEST-Theme und die Shopware-Administration. Alle PNGs haben **1920 × 1080 Pixel (FullHD)** bei 100 % Browserzoom. Die Oberfläche dieser Demo ist Englisch, die Veranstaltungsdaten sind teilweise Deutsch. Theme, Inhalte und verfügbare Optionen hängen von Ihrer Installation ab.
+
+### Veranstaltungsübersicht
+
+![Veranstaltungsübersicht](images/storefront-events.png)
+
+### Veranstaltung mit Line-up
+
+![Veranstaltung mit Line-up](images/storefront-event.png)
+
+### Ticketwahl mit Gruppen- und Verzehrpaketen
+
+![Ticketwahl mit Gruppen- und Verzehrpaketen](images/storefront-tickets.png)
+
+### Privates Gästelistenformular
+
+![Privates Gästelistenformular](images/storefront-guestlist.png)
+
+### Veranstaltungen in der Administration
+
+![Veranstaltungen in der Administration](images/admin-events.png)
+
+### Veranstaltungsdaten bearbeiten
+
+![Veranstaltungsdaten bearbeiten](images/admin-event.png)
+
+### Gruppenticket: Preis, Einlösungen und Kontingent
+
+![Gruppenticket: Preis, Einlösungen und Kontingent](images/admin-type.png)
+
+### Stages und Auftritte verwalten
+
+![Stages und Auftritte verwalten](images/admin-program.png)
+
+### Scanner mit Veranstaltung und manueller Eingabe
+
+![Scanner mit Veranstaltung und manueller Eingabe](images/admin-scanner.png)

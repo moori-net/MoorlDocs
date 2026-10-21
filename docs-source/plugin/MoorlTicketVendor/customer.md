@@ -39,3 +39,9 @@ Ein normales Einzelticket kann einmal eingelöst werden. Gruppen- und Verzehrpak
 - **Andere Veranstaltung:** Veranstaltungsname und Datum auf dem PDF prüfen.
 
 Für Umbuchungen, Erstattungen und Änderungen gelten die Bedingungen des jeweiligen Shops beziehungsweise Veranstalters. Wenden Sie sich dafür an dessen Kundenservice.
+
+## Ticketwahl im Shop
+
+Das Beispiel zeigt Einzeltickets und Pakete im Demoshop. Verfügbare Kategorien und Gestaltung hängen von der Veranstaltung ab.
+
+![Ticketwahl im Demoshop](images/storefront-tickets.png)

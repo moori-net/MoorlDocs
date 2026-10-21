@@ -18,7 +18,7 @@ Administration shows whether tickets are valid, redeemed, expired or revoked, se
 
 ## PDF tickets and customer accounts
 
-PDF attachments contain event information, ticket category, number and QR code. Signed-in customers can also download their authorised tickets from their accounts. Guest purchasers can receive tickets through their order email address.
+PDF attachments contain event information, ticket category, number and QR code. Signed-in customers can also download their authorised tickets from their accounts. Guest purchasers receive PDFs and personal ticket links by email. Each link allows them to personalise and download that individual ticket without a customer login.
 
 German/English email templates, delivery tracking, retries and explicit resending support daily operations. The **Send tickets** Flow Builder action additionally queues tickets from an order context.
 
@@ -26,7 +26,7 @@ German/English email templates, delivery tracking, retries and explicit resendin
 
 Create tickets directly within an event, without an order or customer account. A free, publicly hidden type with its own quota supports invitations and guest-list tickets. They use the same PDFs, codes and admission checks as purchased tickets.
 
-The guest-list workflow uses individual tickets. A separate named guest-list manager with companion counts is not included.
+A private registration form collects names, email, optional phone numbers and voluntary support choices. Confirmation links, CSV import and manual ticket issuance support administration. Registrations do not reserve places; capacity is occupied when a ticket is issued.
 
 ## Admission with a dedicated scanner role
 
@@ -61,3 +61,13 @@ Public event pages, a CMS listing for Shopping Experiences, translated content a
 Requires **MoorlFoundation 1.7** and **Shopware 6.7 with Storefront**. Automatic delivery/deadline processing require running Shopware workers and configured mail transport. Scanning is online; camera recognition depends on HTTPS/browser support. Seat maps, offline admission and a standalone mobile app are outside the current scope.
 
 Group admission and drinks/food packages offer configurable redemptions in a fixed area on one QR code. Each deliberate scan uses one unit and shows progress. Group tickets occupy weighted person places; service packages use no event admission capacity.
+
+## Screenshots
+
+These captures from 21 October 2026 show the existing demo shop with the SIDEQUEST theme and Shopware Administration. All PNGs are **1920 × 1080 pixels (FullHD)** at 100% browser zoom. This demo uses an English interface with some German event content. Theme, content and available options depend on your installation.
+
+![Event with line-up](images/storefront-event.png)
+
+![Group ticket: price, redemptions and quota](images/admin-type.png)
+
+![Scanner with event selection and manual input](images/admin-scanner.png)

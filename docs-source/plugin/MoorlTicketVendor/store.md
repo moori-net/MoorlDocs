@@ -18,7 +18,7 @@ In der Verwaltung sehen Sie getrennt, ob ein Ticket gültig, bereits eingelöst,
 
 ## PDF-Tickets und Kundenbereich
 
-Der PDF-Anhang enthält Veranstaltungsinformationen, Tickettyp, Ticketnummer und QR-Code. Angemeldete Kunden finden ihre berechtigten Tickets zusätzlich im Kundenkonto. Gastbesteller können ihre Tickets über die Bestell-E-Mail erhalten.
+Der PDF-Anhang enthält Veranstaltungsinformationen, Tickettyp, Ticketnummer und QR-Code. Angemeldete Kunden finden ihre berechtigten Tickets zusätzlich im Kundenkonto. Gastbesteller erhalten PDF und persönlichen Ticketlink per E-Mail. Über diesen Link können sie ihr einzelnes Ticket ohne Kundenlogin personalisieren und herunterladen.
 
 Deutsche und englische Mailvorlagen, Versandstatus, Wiederholungsversuche und ein gezielter erneuter Versand unterstützen den laufenden Betrieb. Mit der Flow-Builder-Aktion **Tickets versenden** lassen sich Tickets aus einem Bestellkontext zusätzlich zum Versand vormerken.
 
@@ -26,7 +26,7 @@ Deutsche und englische Mailvorlagen, Versandstatus, Wiederholungsversuche und ei
 
 Erstellen Sie Tickets auch direkt in der Veranstaltung – ohne Bestellung und ohne Kundenkonto. Ein kostenloser, öffentlich ausgeblendeter Tickettyp mit eigenem Kontingent eignet sich für Einladungen und Gästelistentickets. Diese verwenden dieselben PDFs, Codes und Einlassprüfungen wie verkaufte Tickets.
 
-Die Gästeliste basiert auf individuellen Tickets. Eine separate namentliche Gästelistenverwaltung mit Begleitpersonen ist nicht enthalten.
+Ein privates Anmeldeformular erfasst Namen, E-Mail, optionale Telefonnummer und Ehrenämter. Bestätigungslinks, CSV-Import und die manuelle Ticketausstellung unterstützen die Verwaltung. Anmeldungen reservieren noch keine Plätze; erst das ausgestellte Ticket belegt das Kontingent.
 
 ## Kontrollierter Einlass mit eigener Scanner-Rolle
 
@@ -61,3 +61,13 @@ Veranstaltungen bündeln Tickettypen, generierte Kundentickets und Check-in-Prot
 Die Erweiterung setzt **MoorlFoundation 1.7** und **Shopware 6.7 mit Storefront** voraus. Automatischer Versand und Fristverarbeitung benötigen die regulären Shopware-Worker und einen eingerichteten Mailtransport. Der Scanner arbeitet online; Kameraerkennung hängt von HTTPS und Browserunterstützung ab. Sitzplatzpläne, Offline-Einlass und eine eigenständige mobile App gehören nicht zum aktuellen Umfang.
 
 Gruppeneinlass sowie Getränke-/Essenspakete bieten konfigurierbare Einlösungen in einem festen Bereich auf einem QR-Code. Jeder bewusste Scan verbraucht eine Einheit und zeigt den Fortschritt. Gruppentickets belegen gewichtete Personenplätze; Verzehrpakete keine Einlassplätze des Events.
+
+## Einblicke in die Erweiterung
+
+Die folgenden Aufnahmen vom 21.10.2026 zeigen den vorhandenen Demoshop mit SIDEQUEST-Theme und die Shopware-Administration. Alle PNGs haben **1920 × 1080 Pixel (FullHD)** bei 100 % Browserzoom. Die Oberfläche dieser Demo ist Englisch, die Veranstaltungsdaten sind teilweise Deutsch. Theme, Inhalte und verfügbare Optionen hängen von Ihrer Installation ab.
+
+![Veranstaltung mit Line-up](images/storefront-event.png)
+
+![Gruppenticket: Preis, Einlösungen und Kontingent](images/admin-type.png)
+
+![Scanner mit Veranstaltung und manueller Eingabe](images/admin-scanner.png)
