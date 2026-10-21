@@ -6,6 +6,14 @@ Die vollständige [Händleranleitung](index.md), [Installation](manual.md), [Kun
 
 ## Einstieg
 
+### Einheitliche Storefront-Überschriften
+
+`storefront/component/moorl-tv-header.html.twig` liefert den gemeinsamen Header für Seiten (`headingLevel: 1`), Sektionen (`2`) und Karten/Untersektionen (`3`). Er nimmt `title`, `titleId`, `eyebrow`, `lead`, `detail` und `additionalClasses` entgegen. Normale Texte werden escaped, Detailinhalte sanitisiert. Ohne eigenen Eyebrow nutzt nur die Seitenvariante den Shopnamen. Die Darstellung verwendet feste Größen an responsiven Breakpoints und für Seitenheader einen unteren Abstand von 3rem.
+
+Unter **Erweiterungen → Meine Erweiterungen → Ticket Vendor → Konfigurieren → Storefront-Überschriften** lassen sich die Header für CMS-/Kategorie-/Landingpages und Login-/Checkout-Anmeldeseiten getrennt deaktivieren. Beide Optionen sind standardmäßig aktiv (`pageHeaderCmsEnabled`, `pageHeaderLoginEnabled`). Bei deaktivierter Einbindung erscheint die native Shopware-Darstellung. Statische redaktionelle CMS-Inhalte bleiben erhalten; bereits im Header enthaltene dynamische Kategorienamen und Beschreibungen werden nicht doppelt ausgegeben.
+
+Die Plugin-Seiten verwenden den Header unabhängig vom aktiven Theme. Sidequest benötigt dafür keine eigenen Seitenheader-Templates.
+
 Eventfotos werden im Hochformat **4:5** dargestellt; das passende Uploadformat ist **1080 × 1350 px**. Im Event-Header steht das Foto ab 768 px links und der Hero-Bereich rechts, auf kleineren Bildschirmen untereinander. Ohne Foto nutzt der Hero die volle Breite. Das Format gilt auch für die Standard-Veranstaltungslisten. Themes können den rechten Bereich über `moorl_tv_detail_header_hero` überschreiben; Foto und Spaltenlayout bleiben dabei erhalten.
 
 Die Kunden-Ticketübersicht verwendet die Struktur und Styles der nativen Shopware-Bestellübersicht mit aufklappbaren Details. Jedes Ticket hat zusätzlich einen zufälligen, vom QR-Token unabhängigen Deeplink unter `/account/tickets/{id}/{deeplink}`. Er öffnet nur dieses Ticket ohne Kundenlogin; Bearbeitung per POST auf `/personalize` und PDF-Download per GET auf `/download` verwenden denselben Link. Bestelltickets bleiben an ihren Verkaufskanal gebunden. Bearbeitung ist bei `pending`/`valid`, PDF-Download bei `valid`/`redeemed` möglich. Der Link erzeugt keine Kundenanmeldung. Antworten sind nicht cachebar, nicht indexierbar und übertragen keinen Referrer.
