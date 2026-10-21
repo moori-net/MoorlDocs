@@ -59,3 +59,5 @@ Veranstaltungen bündeln Tickettypen, generierte Kundentickets und Check-in-Prot
 ## Voraussetzungen
 
 Die Erweiterung setzt **MoorlFoundation 1.7** und **Shopware 6.7 mit Storefront** voraus. Automatischer Versand und Fristverarbeitung benötigen die regulären Shopware-Worker und einen eingerichteten Mailtransport. Der Scanner arbeitet online; Kameraerkennung hängt von HTTPS und Browserunterstützung ab. Sitzplatzpläne, Offline-Einlass und eine eigenständige mobile App gehören nicht zum aktuellen Umfang.
+
+Gruppeneinlass sowie Getränke-/Essenspakete bieten konfigurierbare Einlösungen in einem festen Bereich auf einem QR-Code. Jeder bewusste Scan verbraucht eine Einheit und zeigt den Fortschritt. Gruppentickets belegen gewichtete Personenplätze; Verzehrpakete keine Einlassplätze des Events.

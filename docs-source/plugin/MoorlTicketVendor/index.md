@@ -37,7 +37,7 @@ Ein erster vollständiger Durchlauf sieht so aus:
 4. Eine Kategorie mit dem CMS-Veranstaltungslisting anlegen und in der Plugin-Konfiguration unter **Seite mit Veranstaltungen (Liste)** auswählen. Die Veranstaltung über diese Kategorie öffnen und eine Testbestellung aufgeben.
 5. Den tatsächlichen Zahlungsablauf prüfen. Sobald Shopware die maßgebliche Transaktion als `paid` meldet, werden die Tickets gültig und zum Versand vorgemerkt.
 6. Das PDF im Kundenkonto beziehungsweise in der Administration öffnen.
-7. Im Ticketscanner dieselbe Veranstaltung auswählen und den QR-Code einmal einlösen. Ein weiterer Scan muss als bereits eingelöst erkannt werden.
+7. Im Scanner Event und Einlösebereich wählen. Einzeltickets sind nach einem Scan verbraucht; Pakete bleiben bis zur letzten Einlösung gültig.
 
 ## Veranstaltungen verwalten
 
@@ -66,11 +66,13 @@ Tickettypen stehen unter **Einstellungen** zur Verfügung und können außerdem 
 | --- | --- |
 | Veranstaltung | Zugehörige Veranstaltung. Ein Typ mit ausgestellten Tickets kann nicht in eine andere Veranstaltung verschoben werden. |
 | Name | Bezeichnung für Kunden und Verwaltung. |
-| Technischer Name | Technische Kennung des Tickettyps, beispielsweise `concert-vip`. |
 | Aktiv | Aktive Typen können öffentlich angeboten werden. Inaktive Typen eignen sich für interne Einladungen. |
 | Preis und Steuer | Shopware-Preise und Steuersatz. Die Preisberechnung erfolgt serverseitig in der Warenkorbwährung. |
 | Gesamtkontingent | Maximale Zahl gleichzeitig belegter Plätze dieses Typs. |
-| Verkaufte Tickets | Automatisch berechnete Belegung; das Feld ist schreibgeschützt und zählt auch offene und bereits eingelöste Tickets. |
+| Belegte Kontingenteinheiten | Automatisch berechnete, schreibgeschützte Belegung einschließlich offener und eingelöster Tickets. |
+| Einlösebereich | Einlass, Getränke oder Essen; genau ein Bereich pro Ticket. |
+| Einlösungen pro Ticket | Ganze Zahl ab 1; jeder bewusste Scan verbraucht eine. |
+| Personenplätze pro Ticket | Beim Einlass mindestens 1; bei Getränken/Essen genau 0. |
 | Mindest-/Maximalabnahme | Zulässige Gesamtmenge dieses Typs im Kaufvorgang. |
 | Anzeigen ab/bis | Optionaler Verkaufszeitraum zusätzlich zur Veranstaltung. |
 | Position | Reihenfolge der Tickettypen. |
@@ -78,6 +80,12 @@ Tickettypen stehen unter **Einstellungen** zur Verfügung und können außerdem 
 `pending`, `valid` und `redeemed` belegen das Kontingent. `expired` und `revoked` geben es frei. Ein eingelöstes Ticket gibt keinen Platz für einen weiteren Verkauf frei. Ein Warenkorb reserviert noch keinen Platz; die Belegung entsteht erst beim Bestellabschluss. Die abschließende Kontingentprüfung und Ticketerstellung erfolgen gemeinsam, sodass konkurrierende Käufe nicht denselben letzten Platz erhalten.
 
 Auch manuell erstellte Tickets unterliegen der Kontingentprüfung. Das Gesamtkontingent darf nicht unter die bestehende Belegung gesenkt werden.
+
+## Pakete und feste Ticketwerte
+
+Ein Fünfer-Gruppenticket belegt fünf Typkontingent-Einheiten und fünf Eventplätze und enthält fünf Einlösungen auf einem QR-Code. Ein Fünfer-Getränkepaket belegt eine Typkontingent-Einheit und keinen Eventplatz. Ein Kontingent von 100 erlaubt daher 20 Gruppentickets oder 100 Getränkepakete. Bei vier freien Eventplätzen ist das Gruppenticket nicht mehr kaufbar; das Getränkepaket kann weiterhin verfügbar sein. Preis und Kaufmenge zählen vollständige Tickets/Pakete.
+
+Jedes ausgestellte Ticket speichert Bereich, Limit und Personenplätze aus seinem Typ. Spätere Typänderungen gelten für neue Tickets. Ein ungebundenes manuelles Ticket kann vor der ersten Einlösung mit neuen Ausstellungswerten und Kontingentprüfung einem anderen Typ zugeordnet werden; nach der ersten Nutzung sind Typ und Event fest. Widerruf und Reaktivierung erhalten den Verbrauch. Vollständig verbrauchte Tickets werden dadurch nicht erneut einlösbar. Konto/PDF zeigen den gespeicherten Leistungsumfang; das Konto den aktuellen Verbrauch.
 
 ## Öffentliche Darstellung und Erlebniswelten
 
@@ -159,7 +167,7 @@ Die Aktion **Tickets versenden** steht für Flow-Ereignisse mit Bestellkontext z
 
 1. Einen Benutzer mit der Rolle **Ticket Vendor – Scanner** anmelden lassen.
 2. **Dashboard → Ticketscanner** öffnen.
-3. Die richtige Veranstaltung auswählen.
+3. Die richtige Veranstaltung und den Bereich Einlass, Getränke oder Essen auswählen.
 4. **QR mit Kamera scannen** starten und gegebenenfalls die Kameraberechtigung erteilen. Alternativ den Ticket-Token manuell eingeben oder mit einem geeigneten Scanner als Text erfassen.
 5. Das Ergebnis prüfen. Nur **Check-in akzeptiert** bestätigt eine neue Einlösung.
 
@@ -172,6 +180,7 @@ Die Kameraerkennung benötigt einen sicheren Browserkontext, üblicherweise HTTP
 | Ergebnis | Vorgehen am Einlass |
 | --- | --- |
 | Check-in akzeptiert | Einlass gewähren. Das Ticket wurde eingelöst. |
+| Falscher Bereich | Den angezeigten Bereich verwenden; es wurde nichts verbraucht. |
 | Ticket bereits eingelöst | Keinen weiteren Einlass allein anhand dieses Codes gewähren; Klärung durch Veranstaltungsleitung. |
 | Andere Veranstaltung | Veranstaltungsauswahl prüfen. |
 | Veranstaltung geschlossen | Aktivierung und Endzeit durch die Verwaltung prüfen lassen. |
@@ -179,7 +188,7 @@ Die Kameraerkennung benötigt einen sicheren Browserkontext, üblicherweise HTTP
 | Unbekanntes Ticket | Vollständigen Code prüfen; bei Bedarf Verwaltung einschalten. |
 | Netzwerkfehler | Es liegt noch kein verlässliches Ergebnis vor. Denselben Scan erneut versuchen. |
 
-Die API verhindert eine doppelte Einlösung bei parallelen Scans. Eine technische Wiederholung derselben Anfrage liefert das ursprüngliche Ergebnis, ein neuer Scan eines eingelösten Tickets meldet dagegen „bereits eingelöst“. Das Check-in-Protokoll dokumentiert Ergebnis, Zeitpunkt, Anfrage-ID und gegebenenfalls Gerät sowie Benutzer/Integration. Es bietet keine Funktion zum Zurücksetzen eines Check-ins.
+Jeder bewusste Scan verbraucht eine Einlösung und zeigt Verbrauch, Limit und Rest. Bis zur letzten Einlösung bleibt das Ticket gültig. Die Kamera pausiert nach einem Ergebnis bis **Nächstes Ticket**. Event- oder Bereichswechsel setzen Kamera, Eingabe und offene Wiederholung zurück. Die API verhindert einen doppelten Verbrauch der letzten Einlösung bei parallelen Scans. Eine technische Wiederholung derselben Anfrage liefert das ursprüngliche Ergebnis, ein neuer Scan eines eingelösten Tickets meldet dagegen „bereits eingelöst“. Das Check-in-Protokoll dokumentiert Ergebnis, Zeitpunkt, Anfrage-ID und gegebenenfalls Gerät sowie Benutzer/Integration. Es bietet keine Funktion zum Zurücksetzen eines Check-ins.
 
 Der Einlass verlangt eine aktive Veranstaltung, deren vorhandenes Enddatum nicht überschritten ist. Es gibt derzeit keine separate konfigurierbare Einlassöffnung: Ein künftiger Veranstaltungsbeginn verhindert einen Scan allein nicht.
 
@@ -199,7 +208,7 @@ Der Demoimport legt die aktive Kategorie **Veranstaltungen** unter der Shop-Navi
 
 Die regulären Foundation-Datenpakete installieren Medienordner, Import-/Exportprofile, Nummernkreis, Mailvorlage, SEO-Vorlage und Scanner-Rolle. Sie werden bei regulärer Aktivierung beziehungsweise Aktualisierung nachgeladen. Einzelne Pakete können über Foundations Datenverwaltung nachinstalliert werden.
 
-Das optionale Demopaket **standard** enthält drei Veranstaltungen, sieben Tickettypen, zwölf Kundentickets und drei Check-in-Beispiele. „Live im Stadtpark“ umfasst Standard, VIP und die interne Gästeliste mit 20 Plätzen und drei gültigen Beispieltickets. Ein zukünftiger Fotografie-Workshop und ein vergangenes Forum zeigen weitere Statusfälle.
+Das optionale Demopaket **standard** enthält drei Veranstaltungen, zehn Tickettypen, zwölf Kundentickets und drei Check-in-Beispiele. „Live im Stadtpark“ umfasst Standard, VIP und die interne Gästeliste mit 20 Plätzen und drei gültigen Beispieltickets. Ein zukünftiger Fotografie-Workshop und ein vergangenes Forum zeigen weitere Statusfälle.
 
 Die Daten brauchen keine Bestellung. Ein konfigurierter Foundation-Demokunde wird optional verknüpft. Nummern, Tokens und Versand-/Check-in-Status sind feste Beispieldaten; sie eignen sich nicht für produktiven Einlass. Der Import versendet selbst keine Mails. Laufende Worker können später noch nicht versendete gültige Demotickets aufgreifen; verwenden Sie deshalb eine Testumgebung mit Test-Mailtransport.
 
@@ -221,9 +230,9 @@ Die Daten brauchen keine Bestellung. Ein konfigurierter Foundation-Demokunde wir
 
 Artists werden unter den Kataloginhalten gepflegt. „Auf der Website für Booking anbieten“ zeigt das Profil in der Booking-Auswahl; Anfragen führen zur vorhandenen Kontaktseite oder zum optionalen externen Bookingkontakt. Gage und Bookingnotiz bleiben intern. Das CMS-Element „Artists für Booking“ und die Seite /artists/booking verwenden dieselbe Auswahl.
 
-Im Event unter „Programm“ Stages und Auftritte anlegen. Ein Artist kann mehrere Sets haben; Stage und Uhrzeiten sind optional. Der Core-Time-Picker speichert Beginn und Ende als einfache HH:mm-Texte. Sets über Mitternacht sind möglich; „Position“ legt die Reihenfolge der Timetable fest. Line-up und Timetable werden separat am Event veröffentlicht. Eine optionale maximale Teilnehmerzahl begrenzt alle Tickettypen gemeinsam. „In öffentlichen Listen anzeigen“ kann ausgeschaltet werden; der direkte Eventlink bleibt erreichbar.
+Im Event unter „Programm“ Stages und Auftritte anlegen. Ein Artist kann mehrere Sets haben; Stage und Uhrzeiten sind optional. Der native Datum-/Uhrzeit-Picker erlaubt vollständige Zeitpunkte und Sets über Mitternacht. Line-up und Timetable werden am Event unabhängig freigegeben. Das gemeinsame Line-up führt jeden Artist einmal auf und hebt sein Kollektiv, ersatzweise das Label, in der Primärfarbe hervor. Jede Stage erhält eine eigene Timetable mit festen Spalten für Zeit, Artist und Genre; Auftritte ohne Stage stehen separat unter „Ohne Stage“. Kollektiv und Label stehen ausschließlich im Line-up. Beginn und Ende enthalten jeweils Datum und Uhrzeit und bleiben unabhängig optional. Die Eingabe und Ausgabe erfolgen in der Event-Zeitzone; gespeichert wird UTC. Die öffentliche Timetable zeigt nur Uhrzeiten; das Datum dient intern der Sortierung. Die Timetable sortiert nach Beginn; Auftritte ohne Beginn stehen zuletzt. Ein separates Auftrittsdatum entfällt. Eine optionale maximale Teilnehmerzahl begrenzt alle Tickettypen gemeinsam. „In öffentlichen Listen anzeigen“ kann ausgeschaltet werden; der direkte Eventlink bleibt erreichbar.
 
-Am kostenlosen Tickettyp unter Gästeliste die Registrierung aktivieren, Ehrenämter pflegen und den geheimen Link kopieren. Einleitung und Regeln bleiben am Event. Bei mehreren Storefront-Domains die gewünschte Linkadresse auswählen; der tatsächliche Formularaufruf bleibt als Anmeldungsursprung gespeichert. Tickets und Anmeldungen benötigen einen Verkaufskanal; bei manueller Anlage oder CSV-Import muss er ausgewählt bzw. zugeordnet werden. Eine fehlende Sprache wird mit der Shopware-Systemsprache vorbelegt. Neue Gästelisten-Tickets übernehmen beide Werte aus der Anmeldung. Bereits ausgestellte Tickets bleiben unverändert. Telefonnummern sind optional, separate Registrierungszeitfenster entfallen. Anmeldungen reservieren keinen Platz. Bei vollem Typkontingent oder voller Eventkapazität schließt das Formular automatisch und öffnet bei wieder freien Plätzen erneut. Nach Prüfung erstellt „Ticket erstellen und senden“ ein normales Ticket und stößt die E-Mail an; Wiederholungen verwenden dasselbe Ticket. Mehrere Gäste dürfen dieselbe E-Mail nutzen. Im Bearbeitungsdialog eines Gästelisteneintrags lassen sich alle verfügbaren Unterstützungsoptionen per Mehrfachauswahl zuordnen. Die Auswahl kann auch nach der Ticketausstellung ergänzt, geändert oder geleert werden. Tickets werden einzeln über das Kontextmenü der Anmeldung erstellt und versendet. Nach neuer Storefront-Anmeldung benachrichtigt der Flow „Ticket Vendor - Neue Gästelisten-Anmeldung“ standardmäßig die Administration mit Name, E-Mail, Handynummer und einem direkten Admin-Link zum Tickettyp. Empfänger und Vorlage lassen sich im Flow Builder anpassen; CSV-/Admin-Einträge und wiederholte Anfragen lösen diese Benachrichtigung nicht aus.
+Am kostenlosen Tickettyp unter Gästeliste die Registrierung aktivieren, Ehrenämter pflegen und den geheimen Link kopieren. Einleitung und Regeln bleiben am Event. Bei mehreren Storefront-Domains die gewünschte Linkadresse auswählen; der tatsächliche Formularaufruf bleibt als Anmeldungsursprung gespeichert. Tickets und Anmeldungen benötigen einen Verkaufskanal; bei manueller Anlage oder CSV-Import muss er ausgewählt bzw. zugeordnet werden. Eine fehlende Sprache wird mit der Shopware-Systemsprache vorbelegt. Neue Gästelisten-Tickets übernehmen beide Werte aus der Anmeldung. Bereits ausgestellte Tickets bleiben unverändert. Telefonnummern sind optional, separate Registrierungszeitfenster entfallen. Anmeldungen reservieren keinen Platz. Bei vollem Typkontingent oder voller Eventkapazität schließt das Formular automatisch und öffnet bei wieder freien Plätzen erneut. Nach Prüfung erstellt „Ticket erstellen und senden“ ein normales Ticket und stößt die E-Mail an; Wiederholungen verwenden dasselbe Ticket. Mehrere Gäste dürfen dieselbe E-Mail nutzen. Im Bearbeitungsdialog eines Gästelisteneintrags lassen sich alle verfügbaren Unterstützungsoptionen per Mehrfachauswahl zuordnen. Die Auswahl kann auch nach der Ticketausstellung ergänzt, geändert oder geleert werden. Tickets werden einzeln über das Kontextmenü der Anmeldung erstellt und versendet. Über „Bestätigungslink versenden“ im Kontextmenü kann die Bestätigung auch für manuelle und importierte Anmeldungen angefordert oder erneut versendet werden. Dafür ist das Zusatzrecht zum Versenden von Bestätigungslinks erforderlich. Bereits bestätigte Anmeldungen sind von der Aktion ausgenommen. Nach neuer Storefront-Anmeldung benachrichtigt der Flow „Ticket Vendor - Neue Gästelisten-Anmeldung“ standardmäßig die Administration mit Name, E-Mail, Handynummer und einem direkten Admin-Link zum Tickettyp. Empfänger und Vorlage lassen sich im Flow Builder anpassen; CSV-/Admin-Einträge und wiederholte Anfragen lösen diese Benachrichtigung nicht aus.
 
 Nach neuer Storefront-Anmeldung erhält auch der Gast eine Eingangsbestätigung mit individuellem Link „Anmeldung bestätigen“. Jede Anmeldung wird separat bestätigt, auch bei gemeinsamer E-Mail-Adresse. Das Aufrufen des signierten Links setzt direkt „Anmeldung bestätigt am“; eine weitere Aktion ist nicht erforderlich. Das ist keine Ticketfreigabe; die manuelle Ticketerstellung bleibt unverändert. Der separate Gast-Flow und die DE/EN-Vorlage gehören zu guestlist-mail. Bestands-, CSV- und Demoeinträge erhalten keine automatische Bestätigungsmail. Vor Bereitstellung die beiden neuen Gästelistenfelder bei bestehenden Datenbanken gemäß schema.md ergänzen; neue Installationen verwenden die SQL-Migrationen.
 

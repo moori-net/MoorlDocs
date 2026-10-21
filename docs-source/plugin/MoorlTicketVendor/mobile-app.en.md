@@ -87,7 +87,8 @@ Content-Type: application/json
   "saleId": "0123456789abcdef0123456789abcdef",
   "token": "<ticket QR code contents>",
   "scanRequestId": "b360a0d88ae44b8fa9d96cd58491c079",
-  "deviceId": "entrance-north-01"
+  "deviceId": "entrance-north-01",
+  "redemptionCategory": "admission"
 }
 ```
 
@@ -97,6 +98,7 @@ Content-Type: application/json
 | `token` | Required string, non-empty after trimming, at most 64 bytes. New tickets use 32 random characters; imported tokens may differ. |
 | `scanRequestId` | Required unique string, 16–64 characters from `A–Z`, `a–z`, `0–9`, `_`, `-`. Random hexadecimal UUID recommended. |
 | `deviceId` | Optional string, at most 128 bytes, for example a local device label without personal information. |
+| `redemptionCategory` | String: `admission`, `drinks` or `food`. Missing values default to `admission` for existing clients; null, unknown or wrongly typed values produce HTTP 400. New clients should always send the selected area. |
 
 The QR contains the token itself, not a URL to open. Do not substitute the visible ticket number. The server derives the scanner user/integration from authentication; `scannerIdentifier` is not a client-controlled field.
 
@@ -108,16 +110,24 @@ Processed requests return HTTP 200, for example:
   "ticketNumber": "T-10000",
   "attendeeName": "Ada Lovelace",
   "attendeePhone": "+491701234567",
+  "redemptionCategory": "admission",
+  "redemptionCount": 2,
+  "maxRedemptions": 5,
+  "remainingRedemptions": 3,
   "checkinId": "f948564f0fc744f1bb26a8317ab55e4a4"
 }
 ```
+
+
+`redemptionCategory` in the response is the actual ticket area; the audit column records the requested area. `redemptionCount`, `maxRedemptions` and `remainingRedemptions` describe consumption after processing, and retries retain that exact snapshot. Unknown and wrong-event scans return null for all four fields, ticket number and attendee data. Each deliberate scan uses exactly one redemption. Pause camera recognition after each result until **Next scan**; an unchanged code must not consume multiple units automatically.
 
 HTTP 200 means the request was processed. Only `accepted` confirms redemption for that request. Responses never contain the QR token.
 
 | `result` | Meaning | Intended app display |
 | --- | --- | --- |
-| `accepted` | Valid ticket atomically redeemed. | Admission accepted. |
-| `already_redeemed` | A different independent request already redeemed the ticket. | No additional admission; consult staff. |
+| `accepted` | One redemption consumed atomically. | Confirm one admission/service and show progress. |
+| `already_redeemed` | All included redemptions consumed. | No additional admission/service; show exhausted progress. |
+| `wrong_category` | Requested area differs from the ticket area. No use consumed. | Show the required `redemptionCategory`. |
 | `wrong_event` | Ticket belongs to another event. | Check event selection; `ticketNumber` is `null`. |
 | `event_closed` | Event inactive or configured end time passed. | Contact event manager. |
 | `not_valid` | Ticket pending, expired or revoked, for example. | No approval; contact administration. |
@@ -127,11 +137,11 @@ There is no separate admission opening time. A future event start alone does not
 
 ## Retries and concurrent devices
 
-Generate a `scanRequestId` before the first attempt and retain it with the event/token until the outcome is known. If the response is lost, repeat the **same request with the same ID**. It returns the original outcome and `checkinId`, even if the first attempt already redeemed the ticket.
+Generate a `scanRequestId` before the first attempt and retain it with the event/token/area until the outcome is known. If the response is lost, repeat the **same request with the same ID**. It returns the original outcome, `checkinId` and original progress snapshot, even when later scans have increased consumption.
 
-Use a **new ID** for each new deliberate scan, whether of the same or a different ticket. Replaying a previously accepted request must not count another attendee in the UI. Changing event or token for a used ID produces HTTP 409.
+Use a **new ID** for each new deliberate scan, whether of the same or a different ticket. Replaying a previously accepted request must not count another attendee in the UI. Changing event, token or area for a used ID produces HTTP 409. An event or area change must cancel pending camera callbacks and reset input, result and pending retry. Existing legacy fingerprints are accepted for admission retries only.
 
-Multiple devices can scan the same event concurrently. Server transactions serialise competing redemptions. Two different requests for one valid token produce one acceptance and one “already redeemed” outcome.
+Multiple devices can scan the same event concurrently. Server transactions serialise competing redemptions. Two different requests competing for the last redemption produce one acceptance and one “already redeemed” outcome. Earlier independent scans each consume one unit until the limit. A package stays `valid` until the final unit sets `redeemed` and `redeemedAt`.
 
 ## Technical failures
 
@@ -161,7 +171,7 @@ Offline ticket databases, later conflict synchronisation, admission without serv
 - Personal login/logout and expired sessions work with the scanner role.
 - Event search handles pagination and shows the selected event before scanning.
 - Camera/manual entry work on explicitly chosen iOS/Android devices; these implementations are still outstanding.
-- All six business outcomes and technical failures have clear text displays.
+- All seven business outcomes and technical failures have clear text displays.
 - Lost responses can be retried without double redemption or double attendee counting.
 - Two devices cannot both accept one ticket as a new redemption.
 - No local admission approval without connectivity.

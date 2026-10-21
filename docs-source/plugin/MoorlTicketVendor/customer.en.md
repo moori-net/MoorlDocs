@@ -22,20 +22,21 @@ Download the updated PDF after saving a change. The name appears on the ticket a
 
 You can optionally add or change a **mobile number** for each ticket under the same editing rules as the attendee name. The number appears in scan results and can be dialled using **Call** in the browser scanner.
 
-## At the entrance
+## Admission and service packages
 
 1. Open the PDF on your phone or print it legibly.
 2. Have the correct QR code for this event ready.
-3. Show one individual ticket for each person.
+3. Present the QR code in the specified area: admission, drinks or food. A group or service package can contain several redemptions on one code.
 
-A code can only be redeemed once. Copies and repeat downloads do not create extra admissions. Keep your PDF safe and share a code only with the person who should use it. The ticket number helps customer support; regular scanning requires the QR code.
+A normal single ticket can be redeemed once. Group and service packages allow the number of redemptions printed on the ticket; each deliberate scan uses one. Your account shows the current redeemed and remaining amounts. The PDF shows the state when it was generated. Copies and repeat downloads do not create extra admissions. Keep your PDF safe and share a code only with the person who should use it. The ticket number helps customer support; regular scanning requires the QR code.
 
 ## If something goes wrong
 
 - **No email:** Check spam and contact the shop with your order or ticket number. Staff can investigate or resend.
 - **Payment pending:** Check payment completion. Activation follows confirmation in the shop system.
 - **Expired or revoked:** The ticket is not valid for admission. Contact the organiser.
-- **Already redeemed:** The ticket has already been used. Printing again does not reset it.
+- **Fully redeemed:** All included redemptions have been used. Printing again does not reset them.
+- **Wrong area:** Present the code at the admission, drinks or food station indicated on the ticket.
 - **Wrong event:** Check event name and date on the PDF.
 
 Changes, refunds and rebookings are subject to the shop's or organiser's terms. Contact their customer service for assistance.

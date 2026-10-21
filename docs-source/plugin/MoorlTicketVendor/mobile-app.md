@@ -87,7 +87,8 @@ Content-Type: application/json
   "saleId": "0123456789abcdef0123456789abcdef",
   "token": "<Inhalt des Ticket-QR-Codes>",
   "scanRequestId": "b360a0d88ae44b8fa9d96cd58491c079",
-  "deviceId": "entrance-north-01"
+  "deviceId": "entrance-north-01",
+  "redemptionCategory": "admission"
 }
 ```
 
@@ -97,6 +98,7 @@ Content-Type: application/json
 | `token` | Erforderlicher, nach Trimmen nicht leerer String, maximal 64 Bytes. Neue Tickets verwenden 32 zufällige Zeichen; importierte Tokens können anders aussehen. |
 | `scanRequestId` | Erforderlicher eindeutiger String mit 16–64 Zeichen aus `A–Z`, `a–z`, `0–9`, `_`, `-`. Empfohlen: zufällige UUID in Hex-Darstellung. |
 | `deviceId` | Optionaler String, maximal 128 Bytes, etwa eine lokale Gerätekennung ohne personenbezogene Daten. |
+| `redemptionCategory` | String `admission`, `drinks` oder `food`. Ohne Feld gilt für bestehende Clients `admission`; null, unbekannte oder falsch typisierte Werte ergeben HTTP 400. Neue Clients senden den gewählten Bereich immer. |
 
 Das QR enthält den Token selbst, keine zu öffnende URL. Die App darf den Token nicht gegen die sichtbare Ticketnummer austauschen. Der Server ermittelt Benutzer beziehungsweise Integration aus der Authentifizierung; `scannerIdentifier` ist kein vom Client zu setzendes Feld.
 
@@ -108,16 +110,24 @@ Eine erfolgreiche Verarbeitung liefert HTTP 200, zum Beispiel:
   "ticketNumber": "T-10000",
   "attendeeName": "Ada Lovelace",
   "attendeePhone": "+491701234567",
+  "redemptionCategory": "admission",
+  "redemptionCount": 2,
+  "maxRedemptions": 5,
+  "remainingRedemptions": 3,
   "checkinId": "f948564f0fc744f1bb26a8317ab55e4a4"
 }
 ```
+
+
+`redemptionCategory` in der Antwort bezeichnet den tatsächlichen Ticketbereich; die Auditspalte speichert den angefragten Bereich. `redemptionCount`, `maxRedemptions` und `remainingRedemptions` zeigen den Stand nach Verarbeitung. Wiederholungen behalten genau diesen Snapshot. Unbekannte oder veranstaltungsfremde Tickets liefern alle vier Felder, Ticketnummer und Teilnehmerdaten als null. Jeder bewusste Scan verbraucht genau eine Einlösung. Nach dem Ergebnis die Kamera bis **Nächster Scan** pausieren, damit derselbe sichtbare Code keine Einheiten automatisch verbraucht.
 
 HTTP 200 bedeutet eine fachlich verarbeitete Anfrage. Nur `accepted` bestätigt eine erfolgreiche Einlösung dieser Anfrage. Die Antwort enthält niemals den QR-Token.
 
 | `result` | Bedeutung | Vorgesehene Appanzeige |
 | --- | --- | --- |
-| `accepted` | Gültiges Ticket atomar eingelöst. | Einlass akzeptiert. |
-| `already_redeemed` | Ticket durch eine andere eigenständige Anfrage bereits eingelöst. | Kein erneuter Einlass; Klärung anbieten. |
+| `accepted` | Eine Einlösung atomar verbraucht. | Eine Person/Leistung bestätigen und Fortschritt zeigen. |
+| `already_redeemed` | Alle enthaltenen Einlösungen verbraucht. | Keine weitere Person/Leistung bestätigen; Verbrauch zeigen. |
+| `wrong_category` | Gewählter Bereich passt nicht zum Ticket; kein Verbrauch. | Erforderlichen Bereich aus `redemptionCategory` anzeigen. |
 | `wrong_event` | Ticket gehört zu einer anderen Veranstaltung. | Auswahl prüfen; `ticketNumber` bleibt `null`. |
 | `event_closed` | Veranstaltung inaktiv oder vorhandene Endzeit überschritten. | Veranstaltungsleitung kontaktieren. |
 | `not_valid` | Ticket ist beispielsweise offen, abgelaufen oder widerrufen. | Keine Freigabe; Verwaltung kontaktieren. |
@@ -127,11 +137,11 @@ Die Einlassprüfung berücksichtigt derzeit keine gesonderte Einlassöffnungszei
 
 ## Wiederholungen und parallele Geräte
 
-Die App muss vor dem ersten Sendeversuch eine `scanRequestId` erzeugen und mit Veranstaltung und Token bis zum endgültigen Ergebnis zusammenhalten. Geht eine Antwort verloren, wird **dieselbe** Anfrage mit **derselben** ID wiederholt. Sie erhält dasselbe gespeicherte Ergebnis und dieselbe `checkinId`, auch wenn der erste Versuch bereits eingelöst hat.
+Die App muss vor dem ersten Sendeversuch eine `scanRequestId` erzeugen und mit Veranstaltung, Token und Bereich bis zum endgültigen Ergebnis zusammenhalten. Geht eine Antwort verloren, wird **dieselbe** Anfrage mit **derselben** ID wiederholt. Sie erhält dasselbe gespeicherte Ergebnis, dieselbe `checkinId` und den damaligen Fortschritt, auch wenn spätere Scans den Verbrauch erhöht haben.
 
-Für eine neue bewusste Erfassung desselben oder eines anderen Tickets wird eine **neue** ID verwendet. Die Wiederholung einer alten akzeptierten Anfrage darf in der Bedienoberfläche nicht als zusätzliche neue Person gezählt werden. Werden Event oder Token zu einer bereits benutzten ID geändert, antwortet der Server mit HTTP 409.
+Für eine neue bewusste Erfassung desselben oder eines anderen Tickets wird eine **neue** ID verwendet. Die Wiederholung einer alten akzeptierten Anfrage darf in der Bedienoberfläche nicht als zusätzliche neue Person gezählt werden. Werden Event, Token oder Bereich zu einer benutzten ID geändert, antwortet der Server mit HTTP 409. Ein Event-/Bereichswechsel muss alte Kameracallbacks entwerten und Eingabe, Ergebnis und offene Wiederholung zurücksetzen. Historische Fingerprints bleiben ausschließlich für Einlass-Wiederholungen gültig.
 
-Mehrere Geräte dürfen dieselbe Veranstaltung gleichzeitig scannen. Die serverseitige Transaktion serialisiert konkurrierende Einlösungen. Zwei unterschiedliche Anfragen für denselben gültigen Code führen zu einer Annahme und einer Meldung „bereits eingelöst“.
+Mehrere Geräte dürfen dieselbe Veranstaltung gleichzeitig scannen. Die serverseitige Transaktion serialisiert konkurrierende Einlösungen. Zwei unterschiedliche Anfragen um die letzte Einlösung führen zu einer Annahme und einer Meldung „bereits eingelöst“. Frühere bewusste Scans verbrauchen jeweils eine Einheit bis zum Limit. Das Paket bleibt `valid`; erst die letzte Einheit setzt `redeemed` und `redeemedAt`.
 
 ## Technische Fehler
 
@@ -161,7 +171,7 @@ Offline-Ticketdatenbank, spätere Konfliktsynchronisierung, Einlass ohne Serverb
 - Persönliche Anmeldung und Abmeldung einschließlich abgelaufener Sitzungen funktionieren mit der Scanner-Rolle.
 - Veranstaltungssuche unterstützt Seitennavigation und zeigt das ausgewählte Event vor jedem Scan.
 - Kamera und manuelle Eingabe funktionieren auf den konkret festgelegten iOS-/Android-Zielgeräten; diese Implementierung steht noch aus.
-- Alle sechs fachlichen Ergebnisse und technische Fehler haben eindeutige Textanzeigen.
+- Alle sieben fachlichen Ergebnisse und technische Fehler haben eindeutige Textanzeigen.
 - Ein Antwortverlust lässt sich ohne doppelte Einlösung und ohne doppelte Personenzählung wiederholen.
 - Zwei Geräte können den letzten Scan nicht gleichzeitig als neue Einlösung akzeptieren.
 - Ohne Netz gibt es keine lokale Einlassfreigabe.

@@ -1,6 +1,16 @@
 # Ticket Vendor: Datenmodell und Schemaübergang
 
-Stand: 21.10.2026. Das Plugin liefert sechzehn native Shopware-Migrationen unter `src/Migration`. Jede Migration führt ein direktes `CREATE TABLE IF NOT EXISTS` aus; die Reihenfolge berücksichtigt alle Tabellenabhängigkeiten. DAL-Definitionen und SQL beschreiben denselben aktuellen Stand. MoorlDevTools-Migrationsfunktionen werden weder zur Installation noch in den Schematests verwendet. Der Migrationssatz ist eine neue Installationsbasis: Vorhandene Tabellen werden dadurch nicht automatisch auf das neue Modell umgebaut und Bestandsdaten nicht übernommen.
+Stand: 21.10.2026. Das Plugin liefert sechzehn neu erstellte native SQL-Initialmigrationen unter `src/Migration`. Jede Migration legt eine Tabelle mit einem direkten `CREATE TABLE IF NOT EXISTS` im aktuellen Modellstand an; die Reihenfolge berücksichtigt Tabellenabhängigkeiten. DAL und SQL beschreiben denselben Stand. MoorlDevTools-Migrationsfunktionen werden nicht verwendet. Der Migrationssatz enthält ausschließlich die Erstinstallation, keine historischen Upgrade- oder Datenübernahmeschritte. Bestehende Datenbanken benötigen einen gesonderten Abgleich.
+
+## Mehrfacheinlösung und gewichtete Kontingente
+
+Typ und Ticket enthalten `redemption_category` (VARCHAR(32), Default `admission`), `max_redemptions` (INT, Default 1) und `capacity_units` (INT, Default 1). Kategorien sind `admission`, `drinks`, `food`. Das Limit ist mindestens 1. Einlass benötigt mindestens einen Personenplatz; Getränke und Essen exakt 0. Das Ticket speichert diese Ausstellungswerte zentral aus seinem Typ. Allgemeine Schreibzugriffe ändern weder diese Snapshots noch `redemption_count` (INT, Default 0). Es gilt `0 <= redemption_count <= max_redemptions`; SQL-CHECKs sichern Kategorien, Grenzen und Personenplätze zusätzlich ab. Nach dem ersten Verbrauch bleiben Typ und Event fest.
+
+Der Typverbrauch pro belegtem Ticket beträgt `GREATEST(1, capacity_units)`, der Eventverbrauch exakt `capacity_units`. `quantity_sold` summiert Typkontingent-Einheiten in `pending`, `valid`, `redeemed`, keine Ticketanzahl. `moorl_tv_ticket_checkin.redemption_category` speichert den angefragten Bereich; die Metadaten enthalten tatsächlichen Bereich, Verbrauch, Limit und Rest nach Verarbeitung. Ein Scan erhöht den Zähler atomar um eins. Nur die letzte Einlösung setzt `redeemed` und `redeemed_at`. Widerruf und Reaktivierung löschen keinen Verbrauch.
+
+Die Initialmigrationen für Tickettyp, Ticket und Check-in enthalten alle Einlösefelder und SQL-CHECKs direkt im CREATE-Statement. Neue Tickets beginnen mit Zähler 0. Der zurückgesetzte Migrationssatz übernimmt keine historischen Einlösungen und verändert keine vorhandenen Tabellen.
+
+Die Migrationstests prüfen die Erstinstallation und Wiederholung ausschließlich in einer ausdrücklich benannten isolierten Testdatenbank. Sie führen keine Migration am laufenden Shop aus.
 
 ## Sechzehn Tabellen
 
@@ -18,12 +28,12 @@ Stand: 21.10.2026. Das Plugin liefert sechzehn native Shopware-Migrationen unter
 | moorl_tv_artist_translation | Foundation-Basistexte, Name/Beschreibung/Teaser mit Fallback |
 | moorl_tv_stage | Eventbezogene Bühne/Area, Bild und Reihenfolge |
 | moorl_tv_stage_translation | Name und Beschreibung |
-| moorl_tv_performance | Artist-Auftritt am Event mit optionaler Stage und Uhrzeiten als Text |
+| moorl_tv_performance | Artist-Auftritt am Event mit optionaler Stage und optionalem Beginn/Ende als DATETIME(3) |
 | moorl_tv_guestlist_entry | Persönliche Anfrage an einen Tickettyp, Regel-Snapshot, Bestätigung und optionales Ticket |
 | moorl_tv_ticket_type_volunteer | ManyToMany: im Formular angebotene Optionen eines Tickettyps |
 | moorl_tv_guestlist_volunteer | ManyToMany: tatsächlich ausgewählte Optionen einer Anmeldung |
 
-UUIDs sind BINARY(16), vollständige Zeitpunkte UTC und Event-Zeitzonen IANA-Namen. Timetable-Uhrzeiten sind einfache lokale HH:mm-Texte ohne Datum oder Umrechnung. FK-Storage-Namen folgen Foundation: saleId = moorl_tv_ticket_sale_id, typeId = moorl_tv_ticket_type_id, artistId = moorl_tv_artist_id, stageId = moorl_tv_stage_id. Native Core-Bezüge verwenden ihre Core-Spaltennamen.
+UUIDs sind BINARY(16), vollständige Zeitpunkte UTC und Event-Zeitzonen IANA-Namen. Timetable-Beginn und -Ende sind vollständige optionale UTC-Zeitpunkte mit Anzeige in der Event-Zeitzone. FK-Storage-Namen folgen Foundation: saleId = moorl_tv_ticket_sale_id, typeId = moorl_tv_ticket_type_id, artistId = moorl_tv_artist_id, stageId = moorl_tv_stage_id. Native Core-Bezüge verwenden ihre Core-Spaltennamen.
 
 Tickettypen verwenden ihre UUID und den übersetzten Namen; `technicalName`/`technical_name` entfällt aus Modell, Administration, Demo und Import-/Exportmapping. Die bisherige erforderliche Spalte `moorl_tv_ticket_type.technical_name` vor Verwendung der geänderten Definition bei bestehenden Tabellen gezielt per SQL entfernen und generierte Migrationen entsprechend abgleichen. Vorhandene Import-/Exportprofile ebenfalls aktualisieren. Die SQL-Initialmigrationen ändern bestehende Tabellen nicht automatisch.
 
@@ -39,7 +49,7 @@ Ticketnummer aus NumberRange, QR-token und persönlicher deeplink bleiben getren
 
 ## Neue Eventfelder
 
-listed (Default true), lineupPublished/timetablePublished (Default false), capacity nullable. Timetable setzt Line-up-Freigabe voraus. listed ist nur Auffindbarkeit, kein Geheimhaltungsschutz. capacity gilt zusätzlich zu Typkontingenten für alle belegenden Tickets.
+listed (Default true), lineupPublished/timetablePublished (Default false), capacity nullable. lineupPublished gibt das gemeinsame Event-Line-up frei; timetablePublished steuert unabhängig die Timetable je Stage. listed ist nur Auffindbarkeit, kein Geheimhaltungsschutz. capacity gilt zusätzlich zu Typkontingenten für alle belegenden Tickets.
 
 Einleitung (`guestlistIntroduction`) und Regeln (`guestlistRules`) bleiben übersetzbare Eventtexte. Am Tickettyp liegen `guestlistEnabled` (Default false), `guestlistAccessKey` (nullable VARCHAR(40), intern) und die ManyToMany-Relation `volunteerRoles`. `guestlistTicketTypeId`, Registrierungszeitfenster, konfigurierter Registrierungs-Verkaufskanal und `phoneRequired` entfallen. Telefonnummern bleiben optional. Ein freigegebener Gästelistentyp muss kostenlos sein, darf für den öffentlichen Verkauf aber `active=false` haben.
 
@@ -49,13 +59,13 @@ Die Anmeldung besitzt required, unveränderlichen `typeId` (`moorl_tv_ticket_typ
 
 Artist hat bookingEnabled (false), bookingContact (E-Mail/HTTP(S)), priority (höher zuerst), media/Logo, Social-Link-Liste, genre und Kollektiv/Label. genre ist ein optionales, nicht übersetztes StringField (moorl_tv_artist.genre, nullable VARCHAR(255)), wird in Administration und öffentlichen Artistkarten angezeigt und ist im Import-/Exportprofil enthalten. Die Spalte wird bei bestehenden Tabellen gezielt per SQL ergänzt. feeAmount ist optional und nichtnegativ in kleinster Geldeinheit ohne Währungsrelation; bookingNote ist intern. Artist.currencyId/currency und die Spalte currency_id entfallen. Keine zusätzliche Artist-/Stage-/Auftrittsaktivierung.
 
-Stage und Performance haben saleId, position (aufsteigend), CustomFields und Zeitstempel. Performance hat erforderlichen Artist, optionale Stage und unabhängig optionale startAt/endAt als StringField: start_at/end_at sind nullable VARCHAR(5) für HH:mm. Der Core-Picker mt-datepicker mit dateType=time liefert die Uhrzeit als Text. Es gibt keine zusätzliche Datums-, Reihenfolge-, Sommerzeit- oder Überschneidungsprüfung; beispielsweise 23:30–01:00 ist erlaubt. Die Timetable folgt position, bei gleicher Position dem Beginn (fehlender Beginn zuletzt). Stage muss demselben Event angehören; belegte Stages werden nicht auf andere Events verschoben. Mehrere Sets desselben Artists sind erlaubt. Die öffentliche Ausgabe ist eine explizite Projektion ohne interne Angaben.
+Stage und Performance haben saleId, CustomFields und Zeitstempel. Nur Stages besitzen position für die Reihenfolge; Auftritte haben kein Positionsfeld. Performance hat erforderlichen Artist, optionale Stage und unabhängig optionale startAt/endAt als native DateTimeFields (start_at/end_at DATETIME(3) NULL). Das separate performance_date-Feld entfällt. Der Admin lädt die Event-Zeitzone und verwendet den nativen mt-datepicker mit dateType=datetime; ISO-Zeitpunkte werden unverändert an den DAL weitergegeben und in UTC gespeichert. Die Timetable sortiert nach Beginn und ID; fehlender Beginn steht zuletzt. Stage muss demselben Event angehören; belegte Stages werden nicht auf andere Events verschoben. Mehrere Sets desselben Artists sind erlaubt. Die öffentliche Ausgabe ist eine explizite Projektion ohne interne Angaben.
 
-Bestehende DATETIME-Spalten start_at/end_at ausschließlich an moorl_tv_performance bei bestehenden Tabellen gezielt per SQL auf VARCHAR(5) umstellen. Vorhandene Werte vorher aus UTC in die jeweilige Event-Zeitzone umrechnen und als HH:mm übernehmen; nicht durch direktes Kürzen des DATETIME-Texts. Event-, Ticket- und Gästelistenfristen bleiben vollständige Zeitpunkte. Der SQL-Migrationssatz enthält diese Struktur; Bestandsdaten werden nicht automatisch umgestellt.
+Die Initialmigration legt start_at und end_at unmittelbar als DATETIME(3) NULL an. performance_date wird nicht angelegt. Die früheren Uhrzeit-/Datums-Upgrade-Migrationen sind entfernt.
 
 ## Gästelistenintegrität und Rechte
 
-Die Bestätigung gehört zum einzelnen `moorl_tv_guestlist_entry`, niemals zur E-Mail-Adresse. Bei bestehenden Tabellen gezielt per SQL ergänzen: `confirmation_key` nullable VARCHAR(64), interner zufälliger Signierschlüssel, und `confirmed_at` nullable DATETIME(3), Bestätigungszeitpunkt in UTC. Beide Felder sind gegen allgemeine DAL-Schreibzugriffe geschützt; der Schlüssel wird weder über die API noch über JSON ausgegeben. Neue Storefront-Anmeldungen erhalten einen eigenen Schlüssel. Bestands-, CSV- und Demoeinträge bleiben ohne automatische Bestätigung und ohne Bestätigungsmail. Eine Änderung der E-Mail-Adresse setzt beide Werte zurück und entwertet den bisherigen Link. Die E-Mail-Adresse bleibt ausdrücklich nicht eindeutig. Im initialen SQL-Migrationssatz enthalten; bestehende Tabellen werden nicht automatisch abgeglichen.
+Die Bestätigung gehört zum einzelnen `moorl_tv_guestlist_entry`, niemals zur E-Mail-Adresse. Bei bestehenden Tabellen gezielt per SQL ergänzen: `confirmation_key` nullable VARCHAR(64), interner zufälliger Signierschlüssel, und `confirmed_at` nullable DATETIME(3), Bestätigungszeitpunkt in UTC. Beide Felder sind gegen allgemeine DAL-Schreibzugriffe geschützt; der Schlüssel wird weder über die API noch über JSON ausgegeben. Neue Storefront-Anmeldungen erhalten einen eigenen Schlüssel. Bestands-, CSV-, Admin- und Demoeinträge bleiben ohne automatische Bestätigung und ohne automatische Bestätigungsmail. Die dedizierte Adminaktion `send-confirmation` mit Zusatzrecht `moorl_tv_guestlist_entry:send_confirmation` initialisiert einen fehlenden Schlüssel für eine unbestätigte Anmeldung und löst denselben Bestätigungs-Flow aus. Wiederholungen behalten den Schlüssel; die API-Antwort enthält weder Schlüssel noch Link. Eine Änderung der E-Mail-Adresse setzt beide Werte zurück und entwertet den bisherigen Link. Die E-Mail-Adresse bleibt ausdrücklich nicht eindeutig. Im initialen SQL-Migrationssatz enthalten; bestehende Tabellen werden nicht automatisch abgeglichen.
 
 Unique-Keys auf submission_id und nullable moorl_tv_ticket_id. Keine Eindeutigkeit auf E-Mail. Gleiche Anfrage-ID erzeugt keinen zweiten Eintrag; eine Wiederholung an einem anderen Typ ist ein Konflikt. Mehrere Gäste dürfen dieselbe Adresse verwenden. Ein separates Entscheidungsfeld entfällt; der Ausstellungsstatus folgt ticketId. Versand- und Ticketstatus werden nicht dupliziert.
 
@@ -155,3 +165,10 @@ Das optionale Standard-Demopaket enthält sechs Katalogoptionen und passende Typ
 `moorl_tv_ticket` und `moorl_tv_guestlist_entry` speichern `sales_channel_id` und `language_id` als `BINARY(16) NOT NULL`. Nur `language_id` hat den festen SQL-Default `0x2FBB5FE2E29A4D70AA5854CE7CE3E20B` (Shopware-Systemsprache); der Verkaufskanal hat keinen Default. Die DAL-Definitionen verwenden dieselbe Sprachvorgabe. Explizit leere Pflichtfelder werden abgewiesen. Verwendete Sprachen und Verkaufskanäle sind durch Fremdschlüssel mit `ON DELETE RESTRICT` geschützt, auch bei Anmeldungen ohne Ticket.
 
 Die initialen SQL-Migrationen beschreiben diesen Stand für neue Tabellen. Bei bestehenden Tabellen vor der Umstellung alle fehlenden Verkaufskanäle bewusst zuordnen und fehlende Sprachen auf die Systemsprache setzen. Erst danach die Spalten auf `NOT NULL`, den festen Sprachdefault und die Fremdschlüssel auf `RESTRICT` umstellen. Die Initialmigrationen erledigen keinen Bestandsumbau; ein Verkaufskanal wird dafür nicht geraten.
+
+
+## Vollständige Auftrittszeitpunkte
+
+Die Erstinstallation verwendet für start_at und end_at unabhängig optionale DATETIME(3)-Spalten ohne performance_date. UTC-Zeitpunkte werden direkt gespeichert; Bearbeitung und Timetable verwenden die Event-Zeitzone. Der Migrationssatz enthält keine Umrechnung alter Uhrzeittexte.
+
+Vor dem Einsatz dieses Modellstands in einer bestehenden Datenbank alte Uhrzeittexte und performance_date separat sichern und in vollständige UTC-Zeitpunkte überführen. Der neue Initialmigrationssatz erledigt keinen Bestandsumbau.

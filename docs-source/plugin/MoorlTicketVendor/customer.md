@@ -22,13 +22,13 @@ Laden Sie nach einer Änderung das aktuelle PDF herunter. Der gespeicherte Name 
 
 Optional können Sie pro Ticket eine **Handynummer** ergänzen oder ändern. Für die Bearbeitung gelten dieselben Regeln wie beim Namen. Die Nummer erscheint beim Scan und kann im Browser-Scanner über **Anrufen** gewählt werden.
 
-## Am Einlass
+## Einlass und Verzehrpakete
 
 1. Das PDF auf dem Smartphone öffnen oder gut lesbar ausdrucken.
 2. Den passenden QR-Code für die Veranstaltung bereithalten.
-3. Für jede Person deren eigenes Ticket vorzeigen.
+3. Den passenden Code des Einzel- oder Gruppentickets vorzeigen.
 
-Der Code kann nur einmal erfolgreich eingelöst werden. Kopien oder erneute Downloads schaffen keine weiteren Eintritte. Schützen Sie Ihr PDF und teilen Sie den Code nur mit der Person, die das Ticket nutzen soll. Die Ticketnummer dient Rückfragen; beim regulären Scan wird der QR-Code benötigt.
+Ein normales Einzelticket kann einmal eingelöst werden. Gruppen- und Verzehrpakete erlauben die auf dem Ticket angegebene Zahl von Einlösungen; jeder bewusste Scan verbraucht eine davon. Das Konto zeigt den aktuellen Verbrauch und Rest. Das PDF zeigt den Stand seiner Erstellung. Zeigen Sie den Code im angegebenen Bereich Einlass, Getränke oder Essen vor. Kopien oder erneute Downloads schaffen keine weiteren Eintritte. Schützen Sie Ihr PDF und teilen Sie den Code nur mit der Person, die das Ticket nutzen soll. Die Ticketnummer dient Rückfragen; beim regulären Scan wird der QR-Code benötigt.
 
 ## Wenn etwas nicht funktioniert
 

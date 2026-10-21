@@ -35,7 +35,7 @@ Ticket Vendor requires Shopware 6.7 with Storefront and MoorlFoundation 1.7. Fou
 4. Create a category with the CMS event listing and select it under **Page with events (list)** in the plugin configuration. Open the event through that category and place a test order.
 5. Test the actual payment process. Tickets become valid and are queued for delivery when Shopware reports the relevant transaction as `paid`.
 6. Open the PDF in the customer account or Administration.
-7. Select the same event in the ticket scanner and redeem its QR code. A separate second scan must report that the ticket has already been redeemed.
+7. Choose the event and redemption area in the scanner. A single ticket is exhausted after one scan; packages stay valid until their final redemption.
 
 ## Managing events
 
@@ -64,11 +64,13 @@ Ticket types are available under **Settings** and within their event. Each type 
 | --- | --- |
 | Event | Assigned event. Types with issued tickets cannot be moved to another event. |
 | Name | Public and administrative label. |
-| Technical name | Technical identifier, for example `concert-vip`. |
 | Active | Active types can be sold publicly. Inactive types can be used for internal invitations. |
 | Price and tax | Shopware prices and tax rate; the server calculates prices in the cart currency. |
 | Total quota | Maximum occupied places for this type. |
-| Tickets sold | System-managed occupancy. Includes pending and redeemed tickets and is read-only. |
+| Occupied quota units | System-managed, read-only occupancy including pending and redeemed tickets. |
+| Redemption area | Admission, drinks or food. One ticket belongs to exactly one area. |
+| Redemptions per ticket | Whole number from 1; each deliberate scan consumes one. |
+| Person places per ticket | At least 1 for admission; exactly 0 for drinks/food. |
 | Minimum/maximum purchase | Allowed aggregate quantity of this type in a purchase. |
 | Show from/until | Optional type sales window in addition to the event window. |
 | Position | Ordering of ticket types. |
@@ -76,6 +78,12 @@ Ticket types are available under **Settings** and within their event. Each type 
 `pending`, `valid` and `redeemed` occupy quota; `expired` and `revoked` release it. Redeeming a ticket does not release a place for another sale. A cart does not reserve places. Quota is occupied when the order is completed, with final availability checks and ticket creation in the same transaction to protect the last place against competing purchases.
 
 Manual tickets are subject to the same quota checks. Total quota cannot be reduced below current occupancy.
+
+## Packages and fixed ticket values
+
+A five-person admission ticket occupies five type quota units and five event places and includes five redemptions on one QR code. A five-drink package occupies one type quota unit and no event places. A quota of 100 therefore permits 20 group tickets or 100 drink packages. With four event places free, the group ticket is unavailable while a drink package can remain available. Price and purchase quantity count complete tickets/packages.
+
+Each ticket stores its area, limit and person places from its type. Later type changes apply to new tickets. An unbound manual ticket can change type before first use, with fresh snapshots and quota checks; after first use its type/event are fixed. Revocation and reactivation preserve consumption. Fully consumed tickets cannot be made redeemable again. Account/PDF show the stored entitlement; the account shows current consumption.
 
 ## Storefront, CMS and SEO
 
@@ -157,7 +165,7 @@ The **Send tickets** action is available for events with an order context. It ne
 
 1. Sign in as a user with the **Ticket Vendor – Scanner** role.
 2. Open **Dashboard → Ticket scanner**.
-3. Select the correct event.
+3. Select the correct event and area: admission, drinks or food.
 4. Start **Scan QR with camera** and allow camera access, or enter the complete ticket token manually/use a compatible scanner that enters it as text.
 5. Check the result. Only **Check-in accepted** confirms a new redemption.
 
@@ -170,6 +178,7 @@ Camera scanning needs a secure browser context, normally HTTPS, and camera permi
 | Result | Entrance action |
 | --- | --- |
 | Check-in accepted | Admit the attendee; the ticket was redeemed. |
+| Wrong area | Use the required area shown; no redemption was consumed. |
 | Already redeemed | Do not grant another admission based on that code; consult the event manager. |
 | Wrong event | Check the selected event. |
 | Event closed | Ask an administrator to check event activation and end time. |
@@ -177,7 +186,7 @@ Camera scanning needs a secure browser context, normally HTTPS, and camera permi
 | Unknown ticket | Check the complete code and contact administration if necessary. |
 | Network error | No reliable outcome yet. Retry the same scan request. |
 
-The API prevents double redemption during concurrent scans. Retrying the same request returns its original outcome; a new independent scan of a redeemed ticket reports “already redeemed”. The audit records outcome, time, request ID and optionally device and authenticated user/integration. There is no dedicated check-in reset operation.
+Each deliberate scan uses one redemption and shows consumed, total and remaining amounts. A ticket stays valid until its final redemption. The camera pauses after results until **Next ticket**. Changing event or area resets camera, input and pending retries. The API prevents spending the last redemption twice during concurrent scans. Retrying the same request returns its original outcome; a new independent scan of a redeemed ticket reports “already redeemed”. The audit records outcome, time, request ID and optionally device and authenticated user/integration. There is no dedicated check-in reset operation.
 
 Admission requires an active event whose configured end time has not passed. There is no separate configurable admission opening time: a future start time alone does not prevent scanning.
 
@@ -197,7 +206,7 @@ The demo import adds the active **Veranstaltungen** category below the shop navi
 
 Regular Foundation packages install media folders, import/export profiles, number range, mail template, SEO template and scanner role. They are installed during normal activation/update and can also be loaded individually through Foundation's data management.
 
-The optional **standard** demo contains three events, seven ticket types, twelve tickets and three check-in examples. “Live im Stadtpark” includes Standard, VIP and an internal Guest list with twenty places and three valid example tickets. A future photography workshop and a past forum demonstrate other status cases.
+The optional **standard** demo contains three events, ten ticket types, twelve tickets and three check-in examples. “Live im Stadtpark” includes Standard, VIP and an internal Guest list with twenty places and three valid example tickets. A future photography workshop and a past forum demonstrate other status cases.
 
 No order is needed. A configured Foundation demo customer is associated optionally. Numbers, tokens and delivery/check-in states are fixed examples, unsuitable for real admission. Import itself does not send emails. Running workers may subsequently process undelivered valid demo tickets; use a test environment with a test mail transport.
 
@@ -219,9 +228,9 @@ No order is needed. A configured Foundation demo customer is associated optional
 
 Manage artist profiles in the catalogue. “Offer for booking on the website” controls the public booking selection; inquiries use the existing contact page or an optional external booking contact. Fees and internal notes remain private. The “Artists available for booking” CMS element and /artists/booking share this selection; no booking workflow is introduced.
 
-Add event stages and sets under Programme. Artists may have multiple sets, with optional stage and times. The core time picker stores start and end as simple HH:mm strings. Sets may cross midnight; Position controls the timetable order. Publish the line-up and timetable separately. Optional event capacity limits all ticket categories together. Disabling “Show in public lists” removes the event from lists/search/sitemap while its direct URL remains reachable.
+Add event stages and sets under Programme. Artists may have multiple sets, with optional stage and times. The native date/time picker supports full timestamps and sets across midnight. Publish the line-up and timetable independently. The event-wide line-up lists each artist once, with their collective or fallback label highlighted in the primary colour. Each stage has its own timetable with fixed columns for time, artist and genre; unassigned sets appear under “Without stage”. Collectives and labels appear only in the line-up. Start and end each include a date and time and remain independently optional. Editing and display use the event timezone; storage uses UTC. The public timetable shows times only; dates are used internally for sorting. The timetable sorts by start, then ID, with missing starts last. There is no separate performance date. Optional event capacity limits all ticket categories together. Disabling “Show in public lists” removes the event from lists/search/sitemap while its direct URL remains reachable.
 
-Enable guestlist registration on the free ticket category, configure voluntary roles and copy its secret link. Introduction and event rules remain on the event. With multiple storefront domains, choose the link address to copy; the actual form request remains stored as the registration origin. Tickets and registrations require a sales channel; select it for manual entries or map it during CSV import. An omitted language defaults to the Shopware system language. New guestlist tickets copy both values from the registration. Existing tickets keep their saved delivery context. Mobile phone is optional and separate registration time windows are no longer used. Registrations do not reserve admission. The form closes automatically when the category quota or event capacity is exhausted and reopens when places become available. After review, Create and send ticket issues one normal ticket and queues its email; retries keep that ticket. Multiple guests may share an email address. In the guestlist entry editor, use the multi-select to assign any available voluntary roles. The selection can be added to, changed or cleared even after a ticket has been issued. Create and send each ticket individually from the registration row context menu. After a new storefront registration, the “Ticket Vendor - Neue Gästelisten-Anmeldung” flow notifies administrators with the name, email, mobile number and a direct Administration link to the ticket type. Adjust recipients and the template in Flow Builder; CSV/admin entries and repeated requests do not trigger this notification.
+Enable guestlist registration on the free ticket category, configure voluntary roles and copy its secret link. Introduction and event rules remain on the event. With multiple storefront domains, choose the link address to copy; the actual form request remains stored as the registration origin. Tickets and registrations require a sales channel; select it for manual entries or map it during CSV import. An omitted language defaults to the Shopware system language. New guestlist tickets copy both values from the registration. Existing tickets keep their saved delivery context. Mobile phone is optional and separate registration time windows are no longer used. Registrations do not reserve admission. The form closes automatically when the category quota or event capacity is exhausted and reopens when places become available. After review, Create and send ticket issues one normal ticket and queues its email; retries keep that ticket. Multiple guests may share an email address. In the guestlist entry editor, use the multi-select to assign any available voluntary roles. The selection can be added to, changed or cleared even after a ticket has been issued. Create and send each ticket individually from the registration row context menu. Use Send confirmation link in the row context menu to request or resend confirmation for manual and imported registrations. This requires the additional permission to send confirmation links. The action is unavailable for registrations that are already confirmed. After a new storefront registration, the “Ticket Vendor - Neue Gästelisten-Anmeldung” flow notifies administrators with the name, email, mobile number and a direct Administration link to the ticket type. Adjust recipients and the template in Flow Builder; CSV/admin entries and repeated requests do not trigger this notification.
 
 New storefront registrations also receive a guest acknowledgment with an individual Confirm registration link. Each registration must be confirmed separately, even when guests share an email address. Opening the signed link directly records Registration confirmed at; no further action is required. This does not approve a ticket; manual ticket issuance remains available. The separate guest flow and DE/EN template are included in guestlist-mail. Existing, CSV and demo entries receive no automatic confirmation email. Before deployment, add the two guestlist fields for existing databases as described in schema.md; new installations use the supplied SQL migrations.
 

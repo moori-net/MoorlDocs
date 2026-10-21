@@ -59,3 +59,5 @@ Public event pages, a CMS listing for Shopping Experiences, translated content a
 ## Requirements
 
 Requires **MoorlFoundation 1.7** and **Shopware 6.7 with Storefront**. Automatic delivery/deadline processing require running Shopware workers and configured mail transport. Scanning is online; camera recognition depends on HTTPS/browser support. Seat maps, offline admission and a standalone mobile app are outside the current scope.
+
+Group admission and drinks/food packages offer configurable redemptions in a fixed area on one QR code. Each deliberate scan uses one unit and shows progress. Group tickets occupy weighted person places; service packages use no event admission capacity.
