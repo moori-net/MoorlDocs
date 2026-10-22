@@ -6,6 +6,18 @@ Die vollständige [Händleranleitung](index.md), [Installation](manual.md), [Kun
 
 ## Einstieg
 
+### Automatische Cache-Invalidierung
+
+Veranstaltungen, Tickettypen, Artists, Stages und Performances (Timetable) sind über `EntityAutoCacheInterface` und den Service-Tag `moorl.foundation.entity_auto_cache` an die Foundation angebunden. Änderungen invalidieren Kategorien mit Event-Listing-, statischem Listing- und Event-Detail-Baustein; Artist-Änderungen zusätzlich Kategorien mit Artist-Booking.
+
+Öffentliche Seiten, die diese Entities laden, erhalten außerdem den gemeinsamen Shopware-Cache-Tag `moorl-tv-storefront`. Schreibvorgänge, Löschungen und separat gespeicherte Übersetzungen invalidieren diesen Tag sofort. Dadurch werden auch direkte Eventseiten, Booking, Suche, bisher leere Listen und beide Eventseiten bei einer verschobenen Performance erneuert. Die Invalidierung umfasst bewusst alle so markierten TicketVendor-Seiten. `MoorlFoundation.config.entityAutoCacheSkip` unterdrückt die Invalidierung bei Schreibvorgängen wie in der Foundation.
+
+Der Foundation-Zeitscanner berücksichtigt bei aktiven Veranstaltungen `show_from`, `show_until`, `start_at` und `end_at`, bei aktiven Tickettypen `show_from` und `show_until`. Die vorhandenen Einstellungen für Live-/Scheduled-Trigger und Update-/Clear-Methode gelten weiterhin, einschließlich des bestehenden Zeitversatzes von zehn Sekunden. Für die periodische Prüfung ohne Storefront-Aufruf den Foundation-Scheduled-Task betreiben. Performances haben derzeit keine zeitgesteuerte Sichtbarkeit; ihre Start-/Endzeiten werden bei Änderungen invalidiert.
+
+Ticket-Erstellung, -Löschung sowie Status- und Typzuordnungsänderungen invalidieren ebenfalls die öffentlichen Seiten, da der Bestandszähler direkt per SQL aktualisiert wird. Reine Personalisierungs- oder Versandupdates lösen keine zusätzliche Storefront-Invalidierung aus.
+
+Die Foundation-Erweiterung erlaubt mehrere Spalten in `START_TIME` und `END_TIME`; bisherige einzelne Spaltennamen bleiben gültig. Foundation und TicketVendor müssen gemeinsam mit dieser Erweiterung bereitgestellt werden. Nach der Bereitstellung den Shopware-Cache leeren, damit die neuen Service-Tags und Event-Subscriber geladen werden.
+
 ### Vollständige Standarddemo
 
 Das optionale Demopaket **standard** ergänzt eine eigenständige Demo-Site unter der Shop-Navigation. Die vorhandene Shop-Startseite und ihre Kategorie bleiben erhalten. Im Foundation-Demo-Assistenten **MoorlTicketVendor → standard** und den gewünschten Storefront-Verkaufskanal wählen.
