@@ -174,7 +174,7 @@ Für eine interne Gästeliste:
 
 Ein Ticket ohne Kundenkonto und ohne Bestellposition ist zulässig. Ohne erreichbaren E-Mail-Empfänger ist es speicherbar und kann als PDF ausgegeben werden; für den Versand muss ein Empfänger ergänzt werden. Der automatische Wiederherstellungslauf berücksichtigt auch noch nicht versendete gültige manuelle Tickets: Das Speichern eines Tickets mit Empfänger ist daher kein dauerhafter „nur speichern“-Modus.
 
-Zusätzlich bietet der Gästelisten-Tab eines kostenlosen Tickettyps ein privates Anmeldeformular mit Name, E-Mail, optionaler Telefonnummer und Ehrenämtern. Anmeldungen lassen sich bestätigen und anschließend einzeln in Tickets umwandeln. Eine Anmeldung reserviert noch keinen Platz. Begleitpersonenzähler und Einlasssuche nach Namen sind nicht vorgesehen.
+Zusätzlich bietet der Gästelisten-Tab eines kostenlosen Tickettyps ein privates Anmeldeformular mit Name, E-Mail, optionaler Telefonnummer und Ehrenämtern. Anmeldungen lassen sich bestätigen und anschließend einzeln in Tickets umwandeln. Eine Anmeldung reserviert noch keinen Platz. Ausgestellte Tickets lassen sich im Scanner auch über den Namen finden; Anmeldungen ohne Ticket erscheinen dort nicht. Ein Begleitpersonenzähler ist nicht vorgesehen.
 
 ## PDF und E-Mail-Versand
 
@@ -207,8 +207,10 @@ Die Aktion **Tickets versenden** steht für Flow-Ereignisse mit Bestellkontext z
 1. Einen Benutzer mit der Rolle **Ticket Vendor – Scanner** anmelden lassen.
 2. **Dashboard → Ticketscanner** öffnen.
 3. Die richtige Veranstaltung und den Bereich Einlass, Getränke oder Essen auswählen.
-4. **QR mit Kamera scannen** starten und gegebenenfalls die Kameraberechtigung erteilen. Alternativ den Ticket-Token manuell eingeben oder mit einem geeigneten Scanner als Text erfassen.
+4. **QR mit Kamera scannen** starten und gegebenenfalls die Kameraberechtigung erteilen. Alternativ **Manuell** wählen und im Feld **Ticket-Token** nach Token, Handynummer, E-Mail oder Namen suchen. Das passende Ticket auswählen, die Angaben prüfen und anschließend auf **Einchecken** klicken. Die Auswahl allein löst das Ticket nicht ein.
 5. Das Ergebnis prüfen. Nur **Check-in akzeptiert** bestätigt eine neue Einlösung.
+
+Die Suche zeigt ausschließlich Tickets der ausgewählten Veranstaltung, einschließlich bereits eingelöster und ungültiger Tickets. Ticketnummer, Name, E-Mail, Handynummer, Status, Einlösebereich und Verbrauch helfen bei der Auswahl. Weitere Treffer werden beim Scrollen nachgeladen. Bereits vollständig eingelöste Tickets liefern auch bei manueller Auswahl keine weitere Einlösung. Der gewählte Einlösebereich und alle übrigen Check-in-Regeln gelten weiterhin. Die bestehende Scanner-Rolle reicht für die Suche aus.
 
 Der Scanner füllt den Bildschirm aus und passt seine Bedienelemente an Smartphones und Tablets an. **Kamera** und **Manuell** wechseln die Erfassungsart. Nach einem Ergebnis startet **Nächstes Ticket** die Kamera erneut oder fokussiert die manuelle Eingabe. Erfolgreiche Einlösung, bereits eingelöstes Ticket und Ablehnung werden mit Text, Symbol und unterschiedlichen Farben angezeigt.
 
@@ -237,7 +239,7 @@ Der Einlass verlangt eine aktive Veranstaltung, deren vorhandenes Enddatum nicht
 
 Das Foundation-Datenpaket **scanner-role** legt **Ticket Vendor – Scanner** an. Weisen Sie es unter **Einstellungen → System → Benutzer & Berechtigungen** einem separaten Benutzer zu und lassen Sie dessen Administrator-Schalter ausgeschaltet.
 
-Die Rolle enthält ausschließlich `moorl_tv_ticket_sale:read` und `moorl_tv_ticket:scan`. Damit kann sie Veranstaltungen lesen und den definierten Check-in ausführen. Sie erhält keine allgemeine Ticketlese-/Schreibberechtigung, keinen PDF-, Versand- oder Widerrufszugriff und keinen Zugriff auf Kunden oder Bestellungen. Shopwares standardmäßige Login-Berechtigungen gelten zusätzlich.
+Die Rolle enthält ausschließlich `moorl_tv_ticket_sale:read` und `moorl_tv_ticket:scan`. Damit kann sie Veranstaltungen lesen, Tickets innerhalb einer Veranstaltung suchen und den definierten Check-in ausführen. Sie erhält keine allgemeine Ticketlese-/Schreibberechtigung, keinen PDF-, Versand- oder Widerrufszugriff und keinen Zugriff auf Kunden oder Bestellungen. Shopwares standardmäßige Login-Berechtigungen gelten zusätzlich.
 
 Berechtigungen mehrerer Rollen addieren sich. Prüfen Sie daher auch weitere Rollen und verwenden Sie für Einlasspersonal keinen Administratorzugang. Die Rolle ist nicht auf einzelne Veranstaltungen beschränkt; sie kann für alle Veranstaltungen des Shops eingesetzt werden. Individuell geänderte Rollennamen, Rechte und Zuweisungen bleiben bei erneutem Import erhalten.
 

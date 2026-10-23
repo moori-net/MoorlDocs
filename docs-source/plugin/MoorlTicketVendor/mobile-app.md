@@ -26,7 +26,7 @@ Das Foundation-Datenpaket **scanner-role** installiert **Ticket Vendor – Scann
 | Recht | Zweck |
 | --- | --- |
 | `moorl_tv_ticket_sale:read` | Veranstaltungen über die native Admin API suchen und lesen. |
-| `moorl_tv_ticket:scan` | Ausschließlich den Check-in-Vorgang ausführen. |
+| `moorl_tv_ticket:scan` | Tickets über die begrenzte Scanner-Suche finden und den Check-in-Vorgang ausführen. |
 
 Keine allgemeinen Ticketänderungs-, Ticketlese-, Kunden- oder Bestellrechte sind erforderlich. Die Rolle erlaubt keinen PDF-Download, Versand oder Widerruf. Sie beschränkt den Scanner jedoch nicht auf bestimmte Veranstaltungen. Zusätzliche Rollen und Administratorrechte erweitern die effektiven Berechtigungen.
 
@@ -78,6 +78,10 @@ Die App muss die native Suchantwort und weitere Seiten verarbeiten und für den 
 
 ## Ticket einchecken: vorhandener Plugin-Endpunkt
 
+Für die manuelle Auswahl steht außerdem `POST /api/_action/moorl-tv/scanner/tickets` mit derselben Authentifizierung und demselben Scan-Recht bereit. Der JSON-Body enthält `saleId`, optional `term` (bis 511 Zeichen) und `page` (ab 1, maximal 10000). Die Suche berücksichtigt Token, Ticketnummer, Handynummer, E-Mail und Namen einschließlich verknüpfter Kunden-/Bestellkundendaten. Sie bleibt auf die angegebene Veranstaltung begrenzt und schließt keinen Ticketstatus aus.
+
+Die Antwort enthält `data` (höchstens 25 Tickets pro Seite) und `total`. Pro Treffer werden `id`, `saleId`, `token`, `ticketNumber`, `attendeeName`, `attendeePhone`, `recipientEmail`, `status`, `redemptionCategory`, `redemptionCount` und `maxRedemptions` geliefert. Keine vollständigen Kunden-/Bestelldatensätze oder persönlichen Verwaltungslinks. Der Browser-Scanner verwendet diese Auswahl bereits; die mobile App ist weiterhin ein Zielbild. Erst nach Auswahl und ausdrücklicher Bestätigung über Einchecken wird der Token an den folgenden Check-in-Endpunkt geschickt. Das Finden eines Tickets bestätigt noch keine Einlösung.
+
 ```http
 POST /api/_action/moorl-tv/check-in
 Authorization: Bearer <access_token>
@@ -95,7 +99,7 @@ Content-Type: application/json
 | Feld | Vertrag |
 | --- | --- |
 | `saleId` | Erforderlicher String mit gültiger Shopware-UUID. Üblicherweise 32 Hex-Zeichen ohne Bindestriche. |
-| `token` | Erforderlicher, nach Trimmen nicht leerer String, maximal 64 Bytes. Neue Tickets verwenden 32 zufällige Zeichen; importierte Tokens können anders aussehen. |
+| `token` | Erforderlicher, nach Trimmen nicht leerer String, maximal 64 Bytes. Neue Standard- und Gästelistentickets verwenden acht zufällige Zeichen; bestehende und importierte Tokens können anders aussehen. |
 | `scanRequestId` | Erforderlicher eindeutiger String mit 16–64 Zeichen aus `A–Z`, `a–z`, `0–9`, `_`, `-`. Empfohlen: zufällige UUID in Hex-Darstellung. |
 | `deviceId` | Optionaler String, maximal 128 Bytes, etwa eine lokale Gerätekennung ohne personenbezogene Daten. |
 | `redemptionCategory` | String `admission`, `drinks` oder `food`. Ohne Feld gilt für bestehende Clients `admission`; null, unbekannte oder falsch typisierte Werte ergeben HTTP 400. Neue Clients senden den gewählten Bereich immer. |
@@ -164,7 +168,7 @@ Die künftige App sollte nur notwendige Sitzungs- und offene Wiederholungsdaten 
 
 ## Bewusst außerhalb des aktuellen Umfangs
 
-Offline-Ticketdatenbank, spätere Konfliktsynchronisierung, Einlass ohne Serverbestätigung, App-Verteilung über Apple/Google, Push-Mitteilungen, Gerätepaarung, veranstaltungsbezogene Benutzerfreigaben und namentliche Gästelistensuche sind nicht vorhanden. Auch Tickets anlegen, bearbeiten, erstatten oder einen Check-in zurücksetzen gehören nicht zur Scanner-Rolle.
+Offline-Ticketdatenbank, spätere Konfliktsynchronisierung, Einlass ohne Serverbestätigung, App-Verteilung über Apple/Google, Push-Mitteilungen, Gerätepaarung und veranstaltungsbezogene Benutzerfreigaben sind nicht vorhanden. Die Namenssuche umfasst ausgestellte Tickets, keine Gästelistenanmeldungen ohne Ticket. Auch Tickets anlegen, bearbeiten, erstatten oder einen Check-in zurücksetzen gehören nicht zur Scanner-Rolle.
 
 ## Abnahmekriterien für die zukünftige App
 

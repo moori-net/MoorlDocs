@@ -26,7 +26,7 @@ The **scanner-role** Foundation package creates **Ticket Vendor – Scanner** wi
 | Privilege | Purpose |
 | --- | --- |
 | `moorl_tv_ticket_sale:read` | Search/read events through the native Admin API. |
-| `moorl_tv_ticket:scan` | Execute the fixed check-in action only. |
+| `moorl_tv_ticket:scan` | Find tickets through the limited scanner search and execute check-in. |
 
 General ticket read/update, customer and order privileges are unnecessary. PDF download, sending and revocation are excluded. The role is not restricted to selected events. Other roles and administrator access expand effective permissions.
 
@@ -78,6 +78,10 @@ Parse the native search response and subsequent pages. Use the selected event's 
 
 ## Check-in: implemented plugin endpoint
 
+Manual selection also supports `POST /api/_action/moorl-tv/scanner/tickets` with the same authentication and scan permission. The JSON body contains `saleId`, optional `term` (up to 511 characters) and `page` (from 1 to 10000). Search matches token, ticket number, mobile number, email and names, including associated customers and order customers. It is limited to the specified event and includes all ticket statuses.
+
+The response contains `data` (up to 25 tickets per page) and `total`. Each result provides `id`, `saleId`, `token`, `ticketNumber`, `attendeeName`, `attendeePhone`, `recipientEmail`, `status`, `redemptionCategory`, `redemptionCount` and `maxRedemptions`. Full customer/order records and personal management links are excluded. The browser scanner already uses this selection; the mobile app remains planned. After selection and explicit confirmation using Check in, send the token to the check-in endpoint below. Finding a ticket does not confirm redemption.
+
 ```http
 POST /api/_action/moorl-tv/check-in
 Authorization: Bearer <access_token>
@@ -95,7 +99,7 @@ Content-Type: application/json
 | Field | Contract |
 | --- | --- |
 | `saleId` | Required string containing a valid Shopware UUID, conventionally 32 hexadecimal characters without hyphens. |
-| `token` | Required string, non-empty after trimming, at most 64 bytes. New tickets use 32 random characters; imported tokens may differ. |
+| `token` | Required string, non-empty after trimming, at most 64 bytes. New standard and guestlist tickets use eight random characters; existing and imported tokens may differ. |
 | `scanRequestId` | Required unique string, 16–64 characters from `A–Z`, `a–z`, `0–9`, `_`, `-`. Random hexadecimal UUID recommended. |
 | `deviceId` | Optional string, at most 128 bytes, for example a local device label without personal information. |
 | `redemptionCategory` | String: `admission`, `drinks` or `food`. Missing values default to `admission` for existing clients; null, unknown or wrongly typed values produce HTTP 400. New clients should always send the selected area. |
@@ -164,7 +168,7 @@ The future app should retain only necessary session/pending-retry data in secure
 
 ## Outside the current scope
 
-Offline ticket databases, later conflict synchronisation, admission without server confirmation, Apple/Google distribution, push messages, device pairing, per-event user restrictions and named guest-list search are unavailable. Creating/editing/refunding tickets and resetting check-ins are also outside the scanner role.
+Offline ticket databases, later conflict synchronisation, admission without server confirmation, Apple/Google distribution, push messages, device pairing and per-event user restrictions are unavailable. Name search covers issued tickets, not guestlist registrations without a ticket. Creating/editing/refunding tickets and resetting check-ins are also outside the scanner role.
 
 ## Acceptance criteria for future development
 

@@ -170,7 +170,7 @@ For an internal guest list:
 
 Tickets without an account or order are supported. Without an email recipient they can be saved and issued as PDFs, but require a recipient before delivery. The automatic recovery task also considers undelivered valid manual tickets, so saving a ticket with a recipient is not a permanent “save only” mode.
 
-The guest-list tab of a free ticket type also provides a private registration form with name, email, optional phone number and voluntary support options. Registrations can be confirmed and individually converted into tickets. Registration does not reserve capacity. Companion counts and admission lookup by name are not provided.
+The guest-list tab of a free ticket type also provides a private registration form with name, email, optional phone number and voluntary support options. Registrations can be confirmed and individually converted into tickets. Registration does not reserve capacity. Issued tickets can also be found by name in the scanner; registrations without tickets are not listed there. Companion counts are not provided.
 
 ## PDFs and email delivery
 
@@ -203,8 +203,10 @@ The **Send tickets** action is available for events with an order context. It ne
 1. Sign in as a user with the **Ticket Vendor – Scanner** role.
 2. Open **Dashboard → Ticket scanner**.
 3. Select the correct event and area: admission, drinks or food.
-4. Start **Scan QR with camera** and allow camera access, or enter the complete ticket token manually/use a compatible scanner that enters it as text.
+4. Start **Scan QR with camera** and allow camera access, or choose **Manual** and search the **Ticket token** field by token, mobile number, email or name. Select the matching ticket, verify its details, then click **Check in**. Selection alone does not redeem the ticket.
 5. Check the result. Only **Check-in accepted** confirms a new redemption.
+
+Search results are limited to the selected event and include redeemed and invalid tickets. Ticket number, name, email, mobile number, status, redemption area and usage help identify the right ticket. More results load as you scroll. Fully redeemed tickets cannot be redeemed again through manual selection. The selected redemption area and all other check-in rules still apply. The existing scanner role is sufficient for searching.
 
 The scanner fills the screen and adapts its controls to smartphones and tablets. **Camera** and **Manual** switch the capture mode. After a result, **Next ticket** restarts the camera or focuses the manual input. Successful redemption, an already redeemed ticket and a refusal use distinct text, icons and colours.
 
@@ -233,7 +235,7 @@ Admission requires an active event whose configured end time has not passed. The
 
 The **scanner-role** Foundation package creates **Ticket Vendor – Scanner**. Assign it under **Settings → System → Users & permissions** to a separate user with administrator access switched off.
 
-Its only privileges are `moorl_tv_ticket_sale:read` and `moorl_tv_ticket:scan`. It can read events and perform the fixed check-in action, without general ticket read/write, PDF, send, revoke, customer or order access. Shopware's default authenticated Administration privileges still apply.
+Its only privileges are `moorl_tv_ticket_sale:read` and `moorl_tv_ticket:scan`. It can read events, search tickets within an event and perform the fixed check-in action, without general ticket read/write, PDF, send, revoke, customer or order access. Shopware's default authenticated Administration privileges still apply.
 
 Privileges from multiple roles add together. Check all assignments and avoid administrator accounts for entrance staff. The role is not restricted to individual events. Reimporting preserves changes to the role's name, privileges and assignments.
 
