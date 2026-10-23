@@ -1,6 +1,6 @@
 # Ticket Vendor: Datenmodell und Schemaübergang
 
-Stand: 21.10.2026. Das Plugin liefert sechzehn neu erstellte native SQL-Initialmigrationen unter `src/Migration`. Jede Migration legt eine Tabelle mit einem direkten `CREATE TABLE IF NOT EXISTS` im aktuellen Modellstand an; die Reihenfolge berücksichtigt Tabellenabhängigkeiten. DAL und SQL beschreiben denselben Stand. MoorlDevTools-Migrationsfunktionen werden nicht verwendet. Der Migrationssatz enthält ausschließlich die Erstinstallation, keine historischen Upgrade- oder Datenübernahmeschritte. Bestehende Datenbanken benötigen einen gesonderten Abgleich.
+Stand: 23.10.2026. Das Plugin liefert sechzehn native SQL-Initialmigrationen unter `src/Migration`. Jede Initialmigration legt eine Tabelle mit einem direkten `CREATE TABLE IF NOT EXISTS` an; die Reihenfolge berücksichtigt Tabellenabhängigkeiten. Die anschließende Migration `Migration1792713600EventDeletion` aktualisiert die Löschregeln auch für bestehende Tabellen. Nach Ausführung aller Migrationen beschreiben DAL und SQL denselben Stand. MoorlDevTools-Migrationsfunktionen werden nicht verwendet. Andere historische Schemaänderungen und Datenübernahmen benötigen weiterhin einen gesonderten Abgleich.
 
 ## Mehrfacheinlösung und gewichtete Kontingente
 
@@ -41,7 +41,7 @@ Tickettypen verwenden ihre UUID und den übersetzten Namen; `technicalName`/`tec
 
 orderId/order_id ist nullable. orderVersionId/order_version_id ist nativ erforderlich mit Live-Default, auch ohne Bestellung. Association order ersetzt orderLineItem. Die aktuelle Definition enthält keine order_line_item_id oder order_line_item_version_id mehr.
 
-unitIndex ist eine technische Einheit innerhalb Bestellung/Version/Tickettyp. Der Unique-Key umfasst moorl_tv_ticket_type_id, order_id, order_version_id und unit_index. Mengen gleicher Typen aus mehreren Positionen werden aggregiert. Wiederholungen berücksichtigen alle historischen Ticketzustände. Ein bestellgebundenes Ticket wird nicht hart gelöscht; Herkunft/Einheit bleiben unveränderlich.
+unitIndex ist eine technische Einheit innerhalb Bestellung/Version/Tickettyp. Der Unique-Key umfasst moorl_tv_ticket_type_id, order_id, order_version_id und unit_index. Mengen gleicher Typen aus mehreren Positionen werden aggregiert. Wiederholungen berücksichtigen alle vorhandenen historischen Ticketzustände. Auch bestellgebundene Tickets können explizit gelöscht werden; bei bestehenden Tickets bleiben Herkunft/Einheit unveränderlich.
 
 saleId und typeId sind erforderlich und müssen zusammenpassen. customerId, recipientEmail, attendeeName (511), attendeePhone (64) bleiben eigenständige Angaben. salesChannelId und languageId sind Pflichtfelder. Der Verkaufskanal muss ausgewählt werden; eine fehlende Sprache wird bei neuen Datensätzen auf Defaults::LANGUAGE_SYSTEM gesetzt. Neue Gästetickets übernehmen den Anmeldekontext, Bestelltickets speichern den Bestellkontext. Explizite Empfängeradresse hat Vorrang vor Kunde und Bestellkunde.
 
@@ -53,7 +53,7 @@ listed (Default true), lineupPublished/timetablePublished (Default false), capac
 
 Einleitung (`guestlistIntroduction`) und Regeln (`guestlistRules`) bleiben übersetzbare Eventtexte. Am Tickettyp liegen `guestlistEnabled` (Default false), `guestlistAccessKey` (nullable VARCHAR(40), intern) und die ManyToMany-Relation `volunteerRoles`. `guestlistTicketTypeId`, Registrierungszeitfenster, konfigurierter Registrierungs-Verkaufskanal und `phoneRequired` entfallen. Telefonnummern bleiben optional. Ein freigegebener Gästelistentyp muss kostenlos sein, darf für den öffentlichen Verkauf aber `active=false` haben.
 
-Die Anmeldung besitzt required, unveränderlichen `typeId` (`moorl_tv_ticket_type_id`, FK RESTRICT); ihr Event ergibt sich über `type.sale`. Der bisherige direkte Event-FK der Anmeldung entfällt. Typen mit Anmeldungen lassen sich weder löschen noch auf andere Events verschieben. Auch kundenlose verknüpfte Tickets behalten ihren Typ/Event. Die zyklische Event-/Typreferenz entfällt vollständig.
+Die Anmeldung besitzt required, unveränderlichen `typeId` (`moorl_tv_ticket_type_id`, FK CASCADE); ihr Event ergibt sich über `type.sale`. Der bisherige direkte Event-FK der Anmeldung entfällt. Beim Löschen eines Tickettyps werden dessen Anmeldungen mitgelöscht. Vorhandene Tickets verhindern weiterhin das Löschen des Typs. Typen mit Anmeldungen lassen sich nicht auf andere Events verschieben. Auch kundenlose verknüpfte Tickets behalten ihren Typ/Event. Die zyklische Event-/Typreferenz entfällt vollständig.
 
 ## Artist, Stage und Auftritt
 
@@ -85,18 +85,22 @@ Registrierungen reservieren keine Plätze. Formulare schließen bei erschöpftem
 
 Neue Storefront-Anmeldungen speichern Kanal und Sprache des tatsächlichen Aufrufs. Im Admin und CSV-Import muss der Verkaufskanal ausgewählt bzw. zugeordnet werden; eine fehlende Sprache wird beim Anlegen auf `Defaults::LANGUAGE_SYSTEM` gesetzt. Die Ausstellung übernimmt beide gespeicherten Werte aus der Anmeldung. Es gibt keine globalen Plugin-Vorgaben und keine automatische Wahl eines Verkaufskanals. Bestehende Tickets und Wiederholungen behalten ihren gespeicherten Versandkontext. Die Adminaktion erzeugt Domainlinks unter `/guestlist/type/{typeId}/{accessKey}`; die Wahl einer Linkdomain wird nicht am Typ gespeichert.
 
-## Gästelisteneinträge und Tickets löschen
+## Events, Gästelisteneinträge und Tickets löschen
 
 `Decision` samt Ablehnungs-/Stornoaktion entfällt vollständig. Die Spalte `moorl_tv_guestlist_entry.decision` und gegebenenfalls darauf basierende Indizes bei bestehenden Tabellen gezielt per SQL entfernen. Das alte Zusatzrecht `moorl_tv_guestlist_entry:decide` wird nicht mehr verwendet.
 
-Tickets sind unabhängig von einer Bestellung und von vorhandenen Check-ins löschbar. Vor Verwendung der Löschfunktion die folgenden Fremdschlüssel extern auf **ON DELETE SET NULL** abgleichen:
+Events können gelöscht werden, sobald keine Tickets mehr vorhanden sind. Jeder Ticketstatus blockiert die Eventlöschung; Tickets müssen vorher ausdrücklich gelöscht werden. Beim Eventdelete werden Tickettypen, deren Gästelistenanmeldungen und Helferzuordnungen, Bühnen, Auftritte, Übersetzungen sowie verbleibende Event-Check-ins mitgelöscht. Globale Künstler und Helferrollen bleiben erhalten.
 
-| Tabelle | Nullable Ticket-FK |
+Tickets sind unabhängig von einer Bestellung und von vorhandenen Check-ins löschbar. Für ihre abhängigen Daten gelten folgende Regeln:
+
+| Tabelle | Ticket-FK und Löschregel |
 | --- | --- |
-| `moorl_tv_guestlist_entry` | `moorl_tv_ticket_id` |
-| `moorl_tv_ticket_checkin` | `moorl_tv_ticket_id` |
+| `moorl_tv_guestlist_entry` | `moorl_tv_ticket_id`: ON DELETE SET NULL |
+| `moorl_tv_ticket_checkin` | `moorl_tv_ticket_id`: ON DELETE CASCADE |
 
-Die inversen DAL-Relationen `ticket.guestlistEntries` und `ticket.checkins` tragen `SetNullOnDelete`. Anmeldung und Check-in-Protokoll bleiben erhalten. Das Löschen einer Anmeldung löscht ihr ausgestelltes Ticket nicht automatisch. Normale DAL-Ticketlöschungen aktualisieren den verkauften Zähler und geben belegtes Typ-/Eventkontingent frei. Bestellungen und Kunden bleiben bestehen. Event-/Typ-Löschschutz bleibt erhalten. Im initialen SQL-Migrationssatz enthalten; bestehende Tabellen werden nicht automatisch abgeglichen.
+Die inverse DAL-Relation `ticket.guestlistEntries` trägt `SetNullOnDelete`, `ticket.checkins` trägt `CascadeDelete`. Die Anmeldung bleibt ohne Ticketbezug erhalten; alle dem Ticket zugeordneten Check-in-Protokolle werden gelöscht. Das Löschen einer Anmeldung löscht ihr ausgestelltes Ticket nicht automatisch. Normale DAL-Ticketlöschungen aktualisieren den verkauften Zähler und geben belegtes Typ-/Eventkontingent frei. Bestellungen und Kunden bleiben bestehen.
+
+Die Initialmigrationen legen die sechs betroffenen Fremdschlüssel direkt mit CASCADE an. `Migration1792713600EventDeletion` stellt sie bei bestehenden Installationen auf CASCADE um, ohne bestehende Datensätze zu löschen. Bereits passende Fremdschlüssel werden übersprungen. Die Ticket-Fremdschlüssel zu Event und Typ bleiben RESTRICT. Die Migration muss auch bei bestehenden Installationen ausgeführt werden, damit DAL und Datenbank dieselben Löschregeln verwenden.
 
 ## Bestehende Event-Gästelisten übernehmen
 
@@ -108,13 +112,13 @@ Die Vorschau schreibt nichts. Ausgestellte Einträge erhalten ihren tatsächlich
 
     bin/console moorl-tv:backfill-guestlist-types --apply
 
-Nur dieses Flag schreibt Daten; bei Konflikten wird nichts übernommen. Wiederholung ist stabil und erhält Verarbeitungsdaten, Ticket-IDs, Regeltexte und Versandursprünge. Der Befehl führt kein DDL aus und wird nie automatisch vom Plugin-Lifecycle gestartet. Nach vollständiger Prüfung `entry.typeId` required machen und FK RESTRICT aktivieren; erst danach alten Anmeldungs-Event-FK und obsolete Eventkonfiguration über das externe Werkzeug entfernen. `guestlistIntroduction` und `guestlistRules` bleiben bestehen. Eigene Exportprofile auf `typeId` umstellen.
+Nur dieses Flag schreibt Daten; bei Konflikten wird nichts übernommen. Wiederholung ist stabil und erhält Verarbeitungsdaten, Ticket-IDs, Regeltexte und Versandursprünge. Der Befehl führt kein DDL aus und wird nie automatisch vom Plugin-Lifecycle gestartet. Nach vollständiger Prüfung `entry.typeId` required machen und FK CASCADE aktivieren; erst danach alten Anmeldungs-Event-FK und obsolete Eventkonfiguration über das externe Werkzeug entfernen. `guestlistIntroduction` und `guestlistRules` bleiben bestehen. Eigene Exportprofile auf `typeId` umstellen.
 
 In bestehenden ACL-Rollen das bisherige `moorl_tv_ticket_sale:guestlist_link` gezielt durch `moorl_tv_ticket_type:guestlist_link` ersetzen und `moorl_tv_ticket_type:read` ergänzen; andere Rechte/Zuweisungen erhalten. Aktuelle Administration bauen, Cache und Worker aktualisieren. Alte gültige Eventlinks leiten auf den passenden Typ weiter; bereits geöffnete alte Formulare müssen neu geladen werden. Eine Rotation entwertet beide Linkformen. Vor Entfernen alter Felder ist ein Rückweg über die gesicherten Werte möglich; danach ist für ein Rollback ein geprüftes Backup erforderlich.
 
 Der Benutzer, der ein Ticket ausstellt, wird über userId/user mit UserDefinition referenziert (nullable user_id, ON DELETE SET NULL). Nur die dedizierte Ticketausstellung schreibt diese Zuordnung. Beim Löschen eines Benutzers bleiben Anmeldung, Ticket und processedAt erhalten. Der bisherige Name processedById/processed_by_id entfällt; vorhandene Bearbeiter-IDs bei einer Umstellung vor dem Entfernen der alten Spalte nach user_id übernehmen. Der initiale SQL-Migrationssatz enthält die aktuellen Spalten und Fremdschlüssel; vorhandene Tabellen separat abgleichen.
 
-Restriktive inverse Relationen schützen Events, Typen, Artists, Stages und relevante Core-Referenzen. Übersetzungen folgen ihren Eltern. Tickets/Check-ins/ausgestellte Anmeldungen werden nicht implizit kaskadierend gelöscht.
+Restriktive inverse Relationen schützen Events, Typen, Artists, Stages und relevante Core-Referenzen. Übersetzungen folgen ihren Eltern. Tickets verhindern das Löschen ihres Events und Typs. Check-in-Protokolle ohne Ticketzuweisung dürfen einzeln gelöscht werden; bei zugewiesenem Ticket verhindert `TicketCheckinDeleteSubscriber` das direkte Löschen über das DAL. Beim Löschen eines Tickets wird sein Protokoll weiterhin kaskadierend entfernt.
 
 Die TaxExtension schützt Steuern, die von Tickettypen verwendet werden, bereits im DAL. Der generierte FK moorl_tv_ticket_type.tax_id verwendet RESTRICT statt CASCADE; auch unverkaufte Typen werden beim Löschen einer Steuer nicht entfernt. Die inverse Steuerrelation wird nicht als zusätzliche öffentliche API-Association angeboten.
 
