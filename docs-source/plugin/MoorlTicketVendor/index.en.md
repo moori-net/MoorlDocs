@@ -8,7 +8,7 @@ tags:
   - Shopware 6.7
 ---
 
-# Ticket Vendor
+# Events and Tickets
 
 Manage events and sell tickets in Shopware with quotas, PDF/QR tickets, payment activation, artist booking, line-ups, guest lists and online check-in.
 
@@ -44,7 +44,7 @@ Go to `Settings` → [`Demo Assistant`](../MoorlFoundation/demo-assistant.md) an
 
 ## Requirements and first walkthrough
 
-Ticket Vendor requires Shopware 6.7 with Storefront and MoorlFoundation 1.7. Foundation supplies forms, grids, CMS helpers and data packages. Install and activate Foundation first. Scheduled tasks and message consumers must run for payment deadlines and automatic delivery.
+Ticket Vendor requires Shopware 6.7 with Storefront and MoorlFoundation 1.7.109 or later within the 1.7 series. Foundation supplies forms, grids, CMS helpers and data packages. Install and activate Foundation first. Scheduled tasks and message consumers must run for payment deadlines and automatic delivery.
 
 1. Create an event under **Catalogues → Ticket Vendor - Events**.
 2. Enter its start, end, location and content; activate it.
@@ -120,7 +120,7 @@ The Foundation **Events** CMS element (`moorl-tv-ticket-sale-listing`) embeds an
 
 The supplied native SEO template uses `tickets/<event-name>/<ID>`. Keep SEO indexes current after changes. Existing customised SEO templates are preserved when importing the data package again.
 
-Use **Events with archive (static)** (`moorl-tv-ticket-sale-static-listing`) for a fixed overview of all active events. Ongoing and upcoming events appear first, with the nearest date at the top; past events follow in descending order with a grey appearance. Ticket selling windows do not restrict this overview. Known issue in 0.7.18: **Alternative event URL** is stored but ignored by the default listing template. Available events currently link to their internal event page even when an alternative URL is configured. Past events have no purchase button. Add the optional nullable `moorl_tv_ticket_sale.alternative_url` column (`VARCHAR(2048)`) using targeted SQL for existing tables, then rebuild Administration and the theme.
+Use **Events with archive (static)** (`moorl-tv-ticket-sale-static-listing`) for a fixed overview of all active events. Ongoing and upcoming events appear first, with the nearest date at the top; past events follow in descending order with a grey appearance. Ticket selling windows do not restrict this overview. Available events always link to their internal event detail page. A configured **Alternative event URL** appears as an action button on that detail page. HTTP(S) addresses and internal paths are supported; external addresses open in a new tab. Without a valid alternative URL, the button leads to ticket selection. Past events and upcoming events outside their selling window have no link in the listing, even when an alternative URL is configured. Add the optional nullable `moorl_tv_ticket_sale.alternative_url` column (`VARCHAR(2048)`) using targeted SQL for existing tables, then rebuild Administration and the theme.
 
 ![The static CMS listing shows upcoming events with images and ticket links.](images/storefront-events.png)
 
@@ -254,7 +254,7 @@ The optional **standard** package adds a standalone demo site below the shop nav
 
 All three events and four artists receive individual JPEG images at **1080 × 1350 px (4:5)**. Package files are located in `media/moorl_tv_ticket_sale` and `media/moorl_tv_artist` and imported explicitly into their respective entity folders. Social links are identifiable demo placeholders; replace them with your own profiles before use. The past Digital Forum is active and appears as an archive example in the static event listing.
 
-Empty event-category and booking-contact-category settings are initialised with the demo categories in the selected sales channel. Existing selections are retained. Removing the package only deletes its own categories without merchant subcategories and demo CMS pages that are not used elsewhere. Base CMS templates and merchant-created categories are retained. Demo layouts reused by your own categories or products also survive subsequent plugin uninstallation. Known issue in 0.7.18: uninstalling without keeping user data can delete a retained demo category together with merchant-created subcategories during the subsequent lifecycle cleanup. Move your own subcategories out of the demo tree before such an uninstall. The protection test remains failing until this is fixed.
+Empty event-category and booking-contact-category settings are initialised with the demo categories in the selected sales channel. Existing selections are retained. Removing the package only deletes its own categories without merchant subcategories and demo CMS pages that are not used elsewhere. Base CMS templates and merchant-created categories are retained. Demo layouts reused by your own categories or products also survive subsequent plugin uninstallation. Uninstalling without keeping user data removes the plugin category tree, including merchant-created subcategories, during subsequent lifecycle cleanup. This is the intended uninstall behaviour. Move your own subcategories out of the demo tree beforehand if you want to retain them.
 
 Regular Foundation packages install media folders, import/export profiles, number range, mail template, SEO template and scanner role. They are installed during normal activation/update and can also be loaded individually through Foundation's data management.
 

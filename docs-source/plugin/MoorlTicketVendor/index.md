@@ -8,7 +8,7 @@ tags:
   - Shopware 6.7
 ---
 
-# Ticket Vendor – Veranstaltungen und Eintrittskarten
+# Veranstaltungen und Eintrittskarten
 
 Veranstaltungen und Tickets direkt in Shopware verwalten: mit Kontingenten, PDF-/QR-Tickets, Zahlungsfreigabe, Artist-Booking, Line-up, Gästelisten und Online-Check-in.
 
@@ -46,7 +46,7 @@ Gehen Sie zu `Einstellungen` → [`Demo Assistent`](../MoorlFoundation/demo-assi
 
 ## Voraussetzungen und erster Ablauf
 
-Ticket Vendor setzt Shopware 6.7 mit Storefront und MoorlFoundation 1.7 voraus. Foundation stellt unter anderem Formulare, Listen, CMS-Helfer und Datenpakete bereit. Installieren und aktivieren Sie Foundation zuerst. Für Zahlungsfristen und automatischen Versand müssen Shopwares geplante Aufgaben und Nachrichtenverarbeitung laufen.
+Ticket Vendor setzt Shopware 6.7 mit Storefront und MoorlFoundation ab 1.7.109 (Versionsreihe 1.7) voraus. Foundation stellt unter anderem Formulare, Listen, CMS-Helfer und Datenpakete bereit. Installieren und aktivieren Sie Foundation zuerst. Für Zahlungsfristen und automatischen Versand müssen Shopwares geplante Aufgaben und Nachrichtenverarbeitung laufen.
 
 Ein erster vollständiger Durchlauf sieht so aus:
 
@@ -124,7 +124,7 @@ Die in der Plugin-Konfiguration unter `category` gewählte Shopware-Kategorie ve
 
 Die mitgelieferte SEO-Vorlage erzeugt URLs nach dem Muster `tickets/<Veranstaltungsname>/<ID>`. Nach Änderungen müssen die SEO-Indizes aktuell sein. Ein vorhandenes, angepasstes SEO-Template wird bei erneutem Datenimport erhalten.
 
-Mit **Veranstaltungen mit Archiv (statisch)** (`moorl-tv-ticket-sale-static-listing`) fügen Sie eine feste Übersicht aller aktiven Events hinzu. Laufende und kommende Veranstaltungen stehen mit dem nächsten Termin zuerst oben; vergangene folgen absteigend und ausgegraut. Verkaufszeiträume begrenzen diese Übersicht nicht. Bekannter Fehler in 0.7.18: **Alternative Veranstaltungs-URL** wird gespeichert, vom Standardtemplate des Listings aber ignoriert. Bei verfügbaren Events führt der Link derzeit auch mit hinterlegter alternativer URL zur internen Veranstaltungsseite. Vergangene Events erhalten keinen Kaufbutton. Die optionale Spalte `moorl_tv_ticket_sale.alternative_url` (`VARCHAR(2048)`, nullable) bei bestehenden Tabellen gezielt per SQL ergänzen und anschließend Administration und Theme neu bauen.
+Mit **Veranstaltungen mit Archiv (statisch)** (`moorl-tv-ticket-sale-static-listing`) fügen Sie eine feste Übersicht aller aktiven Events hinzu. Laufende und kommende Veranstaltungen stehen mit dem nächsten Termin zuerst oben; vergangene folgen absteigend und ausgegraut. Verkaufszeiträume begrenzen diese Übersicht nicht. Verfügbare Events verlinken immer auf ihre interne Veranstaltungsdetailseite. Dort wird eine hinterlegte **Alternative Veranstaltungs-URL** als Aktionsbutton angezeigt. Erlaubt sind HTTP(S)-Adressen und interne Pfade; externe Adressen öffnen in einem neuen Tab. Ohne gültige alternative URL führt der Button zur Ticketauswahl. Vergangene Events und kommende Events außerhalb ihres Verkaufszeitraums erhalten im Listing keinen Link, auch mit alternativer URL. Die optionale Spalte `moorl_tv_ticket_sale.alternative_url` (`VARCHAR(2048)`, nullable) bei bestehenden Tabellen gezielt per SQL ergänzen und anschließend Administration und Theme neu bauen.
 
 ![Die statische CMS-Liste zeigt kommende Veranstaltungen mit Bildern und Ticketlinks.](images/storefront-events.png)
 
@@ -258,7 +258,7 @@ Das optionale Demopaket **standard** ergänzt eine eigenständige Demo-Site unte
 
 Alle drei Veranstaltungen und vier Artists erhalten eigene JPEG-Bilder mit **1080 × 1350 px (4:5)**. Sie liegen im Paket unter `media/moorl_tv_ticket_sale` beziehungsweise `media/moorl_tv_artist` und werden ausdrücklich in die zugehörigen Medienordner importiert. Die Social Links sind erkennbare Demo-Platzhalter; vor Verwendung eigene Profile eintragen. Das vergangene Digital Forum ist aktiv und erscheint als Archivbeispiel im statischen Veranstaltungslisting.
 
-Leere Einstellungen für die Veranstaltungs- und Booking-Kontaktkategorie werden im gewählten Verkaufskanal mit den Demo-Kategorien vorbelegt. Bereits vorhandene Auswahlen bleiben erhalten. Beim Entfernen werden nur eigene Demo-Kategorien ohne fremde Unterkategorien und nicht anderweitig verwendete Demo-CMS-Seiten entfernt. Die Basis-CMS-Vorlagen und selbst angelegte Kategorien bleiben erhalten. Weiterverwendete Demo-Layouts, etwa in eigenen Kategorien oder Produkten, bleiben auch bei einer späteren Deinstallation erhalten. Bekannter Fehler in 0.7.18: Bei einer Deinstallation ohne „Benutzerdaten behalten“ kann die anschließende Lifecycle-Bereinigung eine zunächst erhaltene Demo-Kategorie samt selbst angelegten Unterkategorien löschen. Eigene Unterkategorien vor einer solchen Deinstallation aus dem Demo-Baum verschieben. Der Schutztest bleibt bis zur Behebung fehlgeschlagen.
+Leere Einstellungen für die Veranstaltungs- und Booking-Kontaktkategorie werden im gewählten Verkaufskanal mit den Demo-Kategorien vorbelegt. Bereits vorhandene Auswahlen bleiben erhalten. Beim Entfernen werden nur eigene Demo-Kategorien ohne fremde Unterkategorien und nicht anderweitig verwendete Demo-CMS-Seiten entfernt. Die Basis-CMS-Vorlagen und selbst angelegte Kategorien bleiben erhalten. Weiterverwendete Demo-Layouts, etwa in eigenen Kategorien oder Produkten, bleiben auch bei einer späteren Deinstallation erhalten. Bei einer Deinstallation ohne „Benutzerdaten behalten“ entfernt die anschließende Lifecycle-Bereinigung den Plugin-Kategoriebaum einschließlich selbst angelegter Unterkategorien. Dies ist das vorgesehene Deinstallationsverhalten. Sollen eigene Unterkategorien erhalten bleiben, diese vorher aus dem Demo-Baum verschieben.
 
 Die regulären Foundation-Datenpakete installieren Medienordner, Import-/Exportprofile, Nummernkreis, Mailvorlage, SEO-Vorlage und Scanner-Rolle. Sie werden bei regulärer Aktivierung beziehungsweise Aktualisierung nachgeladen. Einzelne Pakete können über Foundations Datenverwaltung nachinstalliert werden.
 
