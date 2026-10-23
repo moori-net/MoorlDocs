@@ -8,7 +8,7 @@ Typ und Ticket enthalten `redemption_category` (VARCHAR(32), Default `admission`
 
 Der Typverbrauch pro belegtem Ticket beträgt `GREATEST(1, capacity_units)`, der Eventverbrauch exakt `capacity_units`. `quantity_sold` summiert Typkontingent-Einheiten in `pending`, `valid`, `redeemed`, keine Ticketanzahl. `moorl_tv_ticket_checkin.redemption_category` speichert den angefragten Bereich; die Metadaten enthalten tatsächlichen Bereich, Verbrauch, Limit und Rest nach Verarbeitung. Ein Scan erhöht den Zähler atomar um eins. Nur die letzte Einlösung setzt `redeemed` und `redeemed_at`. Widerruf und Reaktivierung löschen keinen Verbrauch.
 
-Die Initialmigrationen für Tickettyp, Ticket und Check-in enthalten alle Einlösefelder und SQL-CHECKs direkt im CREATE-Statement. Neue Tickets beginnen mit Zähler 0. Der zurückgesetzte Migrationssatz übernimmt keine historischen Einlösungen und verändert keine vorhandenen Tabellen.
+Die Initialmigrationen für Tickettyp, Ticket und Check-in enthalten alle Einlösefelder und SQL-CHECKs direkt im CREATE-Statement. Neue Tickets beginnen mit Zähler 0. Die sechzehn Initialmigrationen übernehmen keine historischen Einlösungen und verändern keine vorhandenen Tabellen. Die zusätzliche Migration `Migration1792713600EventDeletion` ändert ausschließlich die dokumentierten Fremdschlüssel-Löschregeln.
 
 Die Migrationstests prüfen die Erstinstallation und Wiederholung ausschließlich in einer ausdrücklich benannten isolierten Testdatenbank. Sie führen keine Migration am laufenden Shop aus.
 
@@ -147,12 +147,12 @@ Der Befehl führt keinerlei DDL aus und wird nie automatisch durch Aktivierung/U
 
 `tests/create-schema.php` akzeptiert ausschließlich eine explizite `moorl_tv_*_test`-Datenbank und verweigert das Ersetzen nichtleerer Plugin-Tabellen. Es führt die ausgelieferten SQL-Migrationen in Zeitstempelreihenfolge aus. Fremdschlüssel und Indizes stehen direkt in den `CREATE TABLE`-Statements, einschließlich der Suchindizes `(moorl_tv_ticket_type_id, email)` und `(moorl_tv_ticket_type_id, created_at)` für Anmeldungen. Die aktuelle Gästelistenstruktur benötigt keinen Event-/Typ-FK-Zyklus mehr.
 
-Die Tests gleichen die tatsächlich durch diese Migrationen erzeugten Spalten aller sechzehn Tabellen mit den persistenten DAL-Feldern ab. Weitere Prüfungen decken Fremdschlüssel, Löschregeln, eindeutige Indizes, individuelle Ticketwerte und die Wiederholung der Initialmigrationen ohne Datenverlust ab. Für bestehende Datenbanken zuerst die unten beschriebenen Datenübergänge planen und sichern; `CREATE TABLE IF NOT EXISTS` ersetzt keine gezielte Aktualisierung bereits vorhandener Tabellen. Die neuen Migrationen enthalten keine automatischen `DROP`-, `ALTER`- oder Datenübernahmeschritte.
+Die Tests gleichen die tatsächlich durch diese Migrationen erzeugten Spalten aller sechzehn Tabellen mit den persistenten DAL-Feldern ab. Weitere Prüfungen decken Fremdschlüssel, Löschregeln, eindeutige Indizes, individuelle Ticketwerte und die Wiederholung der Initialmigrationen ohne Datenverlust ab. Für bestehende Datenbanken zuerst die unten beschriebenen Datenübergänge planen und sichern; `CREATE TABLE IF NOT EXISTS` ersetzt keine gezielte Aktualisierung bereits vorhandener Tabellen. Die sechzehn Initialmigrationen enthalten keine `DROP`-, `ALTER`- oder Datenübernahmeschritte. Die zusätzliche Migration `Migration1792713600EventDeletion` verwendet `ALTER TABLE`, um vorhandene Fremdschlüssel auf die dokumentierten Löschregeln umzustellen; sie übernimmt keine Daten.
 
     docker exec -e MOORL_TV_TEST_DATABASE_NAME=moorl_tv_extension_20261019_test -w /var/www/html shopware_6.7.14.1 php custom/plugins/MoorlTicketVendor/tests/create-schema.php
     docker exec -e MOORL_TV_TEST_DATABASE_NAME=moorl_tv_extension_20261019_test -w /var/www/html shopware_6.7.14.1 php vendor/bin/phpunit -c custom/plugins/MoorlTicketVendor/phpunit.xml.dist
 
-Der Testname ist eine Entwicklungsreferenz; niemals eine reguläre Shopdatenbank als Testdatenbank verwenden. Native Mailtransporte werden in Versandtests ersetzt. Weitere Laufzeitdetails stehen in runtime.md.
+Der Testname ist eine Entwicklungsreferenz; niemals eine reguläre Shopdatenbank als Testdatenbank verwenden. Native Mailtransporte werden in Versandtests ersetzt. `GuestlistNotificationTest` übernimmt die Abhängigkeiten der tatsächlich installierten `SendMailAction` aus dem Container und ersetzt nur den Mailtransport; die interne Konstruktorsignatur unterscheidet sich innerhalb von Shopware 6.7. Der Sidequest-spezifische Header-Test benötigt das aktive optionale Theme und wird sonst mit Begründung übersprungen. Für die Audit-Tests zusätzlich `MOORL_TV_AUDIT_REFERENCE_DATABASE` auf eine getrennte aktuelle `moorl_tv_*_test`-Referenz setzen. Weitere Laufzeitdetails und offene Fehler stehen in runtime.md.
 
 ## Ehrenamtliche Unterstützung als eigener Katalog
 
@@ -258,4 +258,4 @@ Der getestete Bestandsweg erhält alle Datensatzwerte einschließlich alter QR-T
 
 ## QR-Codes
 
-Standardtickets behalten ihre **achtstelligen** zufälligen Tokens. Der bereits vorhandene Gästelistenpfad bleibt bei seiner bisherigen Tokenlänge. `VARCHAR(64)`, eindeutiger Tokenindex und `utf8mb4_unicode_ci` bleiben unverändert. Vorhandene Codes werden weder verlängert noch neu erzeugt; die PDF-Ausgabe codiert weiterhin nur den Token. Das im Audit beschriebene Zufallskollisionsrisiko kurzer Tokens wird durch diese Änderung nicht beseitigt.
+Neue Standard- und Gästelistentickets erhalten einheitlich **achtstellige** zufällige Tokens über denselben DAL-Standardwert. Bereits ausgestellte Gästelistentickets behalten ihre bisherigen Codes. `VARCHAR(64)`, eindeutiger Tokenindex und `utf8mb4_unicode_ci` bleiben unverändert. Vorhandene Codes werden weder verlängert noch neu erzeugt; die PDF-Ausgabe codiert weiterhin nur den Token. Das im Audit beschriebene Zufallskollisionsrisiko kurzer Tokens wird durch diese Änderung nicht beseitigt.

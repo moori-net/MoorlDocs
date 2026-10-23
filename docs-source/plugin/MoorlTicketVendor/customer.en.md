@@ -22,12 +22,13 @@ In your account or through the personal ticket link, enter and save the attendee
 
 Download the updated PDF after saving a change. The name appears on the ticket and in the entrance scanner. Changing the name does not send another email or change the purchaser or delivery recipient. Guest purchasers can make the same changes through the ticket link in their email.
 
-You can optionally add or change a **mobile number** for each ticket under the same editing rules as the attendee name. The number appears in scan results and can be dialled using **Call** in the browser scanner.
+You can optionally add or change a **mobile number** for each ticket under the same editing rules as the attendee name. Spaces are removed when saving; an empty input removes the number. The number appears in scan results and can be dialled using **Call** in the browser scanner.
 
 ## Admission and service packages
 
 1. Open the PDF on your phone or print it legibly.
 2. Have the correct QR code for this event ready.
+   If the code cannot be scanned, staff can manually enter the **ticket token** printed directly below it.
 3. Present the QR code in the specified area: admission, drinks or food. A group or service package can contain several redemptions on one code.
 
 A normal single ticket can be redeemed once. Group and service packages allow the number of redemptions printed on the ticket; each deliberate scan uses one. Your account shows the current redeemed and remaining amounts. The PDF shows the state when it was generated. Copies and repeat downloads do not create extra admissions. Keep your PDF safe and share a code only with the person who should use it. The ticket number helps customer support; regular scanning requires the QR code.

@@ -73,7 +73,7 @@ The event list provides access to all created events. Event details combine gene
 
 Public visibility requires a matching sales window. When an end time is configured, public sales end at that time; otherwise they end at the event start. Set “Show until” for an earlier sales cutoff.
 
-Events do not have a technical name. Their ID identifies them; the translated name is for display. Existing ticket and audit references restrict deletion. Deactivate the event or restrict its selling window to stop sales.
+Events do not have a technical name. Their ID identifies them; the translated name is for display. Existing tickets of any status restrict event deletion; after they are deleted, the remaining event check-ins are deleted with the event. Deactivate the event or restrict its selling window to stop sales.
 
 ![Event details: title, teaser and description.](images/admin-event.png)
 
@@ -120,7 +120,7 @@ The Foundation **Events** CMS element (`moorl-tv-ticket-sale-listing`) embeds an
 
 The supplied native SEO template uses `tickets/<event-name>/<ID>`. Keep SEO indexes current after changes. Existing customised SEO templates are preserved when importing the data package again.
 
-Use **Events with archive (static)** (`moorl-tv-ticket-sale-static-listing`) for a fixed overview of all active events. Ongoing and upcoming events appear first, with the nearest date at the top; past events follow in descending order with a grey appearance. Ticket selling windows do not restrict this overview. Set **Alternative event URL** on an event to link private events to a community, for example. Without an alternative URL, available events link to their event page. Past events have no purchase button. Add the optional nullable `moorl_tv_ticket_sale.alternative_url` column (`VARCHAR(2048)`) using the schema tool, then rebuild Administration and the theme.
+Use **Events with archive (static)** (`moorl-tv-ticket-sale-static-listing`) for a fixed overview of all active events. Ongoing and upcoming events appear first, with the nearest date at the top; past events follow in descending order with a grey appearance. Ticket selling windows do not restrict this overview. Known issue in 0.7.18: **Alternative event URL** is stored but ignored by the default listing template. Available events currently link to their internal event page even when an alternative URL is configured. Past events have no purchase button. Add the optional nullable `moorl_tv_ticket_sale.alternative_url` column (`VARCHAR(2048)`) using targeted SQL for existing tables, then rebuild Administration and the theme.
 
 ![The static CMS listing shows upcoming events with images and ticket links.](images/storefront-events.png)
 
@@ -151,6 +151,10 @@ Tickets are shown in event details and in the ticket tabs on order and customer 
 | `revoked` | Blocked, for example after cancellation or manual revocation. |
 
 The native **Ticket numbers** number range (`moorl_tv_ticket`) defaults to `T-{n}` starting at 10000. Numbers are generated on save and immutable afterwards. The QR code contains a separate random token. The visible ticket number is not a substitute for the QR code or token at check-in.
+
+The QR code contains only the ticket token, without personal data, event details or links. New standard and guestlist tickets both receive eight characters. Demo tickets use their own example codes. Previously issued longer tokens remain valid. The complete token is printed directly below the QR code in the PDF and can be entered manually in the scanner. Download the ticket again to update an older PDF.
+
+Spaces, including non-breaking spaces and tabs, are removed from ticket and guestlist phone numbers when saving. `+`, parentheses and hyphens are preserved. This also applies to Administration and CSV imports. Empty input clears the optional number; existing records are not rewritten in bulk. Editing restrictions on redeemed tickets and issued guestlist entries still apply.
 
 ## Manual tickets and guest lists
 
@@ -246,9 +250,9 @@ The optional **standard** package adds a standalone demo site below the shop nav
 | Booking | `/MoorlTicketVendor/Booking` | Artist roster with booking enquiries |
 | Contact | `/MoorlTicketVendor/Kontakt` | Native Shopware contact form |
 
-All three events and four artists receive individual JPEG images at **1080 × 1350 px (4:5)**. Package files are located in `media/moorl_tv_ticket_sale` and `media/moorl_tv_artist` and imported explicitly into their respective entity folders. Social links are identifiable demo placeholders; replace them with your own profiles before use. The past Digital Forum remains an inactive administration example.
+All three events and four artists receive individual JPEG images at **1080 × 1350 px (4:5)**. Package files are located in `media/moorl_tv_ticket_sale` and `media/moorl_tv_artist` and imported explicitly into their respective entity folders. Social links are identifiable demo placeholders; replace them with your own profiles before use. The past Digital Forum is active and appears as an archive example in the static event listing.
 
-Empty event-category and booking-contact-category settings are initialised with the demo categories in the selected sales channel. Existing selections are retained. Removing the package only deletes its own categories without merchant subcategories and demo CMS pages that are not used elsewhere. Base CMS templates and merchant-created categories are retained. Demo layouts reused by your own categories or products also survive subsequent plugin uninstallation.
+Empty event-category and booking-contact-category settings are initialised with the demo categories in the selected sales channel. Existing selections are retained. Removing the package only deletes its own categories without merchant subcategories and demo CMS pages that are not used elsewhere. Base CMS templates and merchant-created categories are retained. Demo layouts reused by your own categories or products also survive subsequent plugin uninstallation. Known issue in 0.7.18: uninstalling without keeping user data can delete a retained demo category together with merchant-created subcategories during the subsequent lifecycle cleanup. Move your own subcategories out of the demo tree before such an uninstall. The protection test remains failing until this is fixed.
 
 Regular Foundation packages install media folders, import/export profiles, number range, mail template, SEO template and scanner role. They are installed during normal activation/update and can also be loaded individually through Foundation's data management.
 
@@ -308,6 +312,6 @@ Enable guestlist registration on the free ticket category, configure voluntary r
 
 New storefront registrations also receive a guest acknowledgment with an individual Confirm registration link. Each registration must be confirmed separately, even when guests share an email address. Opening the signed link directly records Registration confirmed at; no further action is required. This does not approve a ticket; manual ticket issuance remains available. The separate guest flow and DE/EN template are included in guestlist-mail. Existing, CSV and demo entries receive no automatic confirmation email. Before deployment, add the two guestlist fields for existing databases as described in schema.md; new installations use the supplied SQL migrations.
 
-Guestlist entries and tickets can be deleted individually through the normal Administration row action. Deleting a guestlist entry preserves its issued ticket. Deleting a ticket retains the registration and check-in history and clears their ticket links. Occupied quota is released; orders and customers remain. The Decision field and rejection/cancellation actions have been removed. Before using deletion, update the schema externally as described in schema.md, including both nullable ticket foreign keys with ON DELETE SET NULL.
+Guestlist entries and tickets can be deleted individually or through a confirmed bulk selection with the corresponding delete privileges. Deleting a guestlist entry preserves its issued ticket. Deleting a ticket retains the registration without its ticket link and deletes the associated check-in history. Occupied quota is released; orders and customers remain. Linked check-ins cannot be deleted individually; records without a ticket assignment can. Events can only be deleted after all their tickets have been explicitly deleted; their types, registrations, stages, performances and remaining check-ins are then deleted together. Global artists and volunteer roles remain. `Migration1792713600EventDeletion` updates these deletion rules for existing tables; other schema transitions are described in [schema.md](schema.md).
 
 New installations use the supplied SQL migrations. Existing schemas require a separate update before deployment. Backfill existing order-position references before removing legacy columns; moorl-tv:backfill-ticket-orders is read-only unless --apply is explicitly supplied. See [schema and backfill instructions](schema.md). Rebuild assets and restart workers after the transition.
