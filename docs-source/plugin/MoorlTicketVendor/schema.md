@@ -37,6 +37,17 @@ UUIDs sind BINARY(16), vollständige Zeitpunkte UTC und Event-Zeitzonen IANA-Nam
 
 Tickettypen verwenden ihre UUID und den übersetzten Namen; `technicalName`/`technical_name` entfällt aus Modell, Administration, Demo und Import-/Exportmapping. Die bisherige erforderliche Spalte `moorl_tv_ticket_type.technical_name` vor Verwendung der geänderten Definition bei bestehenden Tabellen gezielt per SQL entfernen und generierte Migrationen entsprechend abgleichen. Vorhandene Import-/Exportprofile ebenfalls aktualisieren. Die SQL-Initialmigrationen ändern bestehende Tabellen nicht automatisch.
 
+## E-Mail-Hinweis am Tickettyp
+
+`emailNote` ist ein optionaler übersetzbarer Text für die Ticket-Mail. Neue Installationen erhalten `moorl_tv_ticket_type_translation.email_note` über das Initialschema. Bei bestehenden Tabellen vor Verwendung des aktualisierten Plugins die Spalte prüfen und bei Fehlen gezielt ergänzen:
+
+```sql
+SHOW COLUMNS FROM `moorl_tv_ticket_type_translation` LIKE 'email_note';
+ALTER TABLE `moorl_tv_ticket_type_translation` ADD COLUMN `email_note` LONGTEXT NULL;
+```
+
+Das `ALTER TABLE` nur ausführen, wenn die Spalte fehlt. Anschließend Cache leeren, Administration neu bauen und das Foundation-Datenpaket `ticket-mail` erneut importieren. Unveränderte deutsche und englische Standard-Mailtexte werden aktualisiert. Individuelle Mailtexte bleiben erhalten; innerhalb ihrer Ticket-Schleife steht `ticket.emailNote` bereit. Für HTML `{{ ticket.emailNote|escape|nl2br }}`, für Text `{{ ticket.emailNote }}` jeweils nur bei vorhandenem Inhalt ausgeben. Bestehende Tickets werden dadurch nicht erneut versendet.
+
 ## Ticket und Bestellung
 
 orderId/order_id ist nullable. orderVersionId/order_version_id ist nativ erforderlich mit Live-Default, auch ohne Bestellung. Association order ersetzt orderLineItem. Die aktuelle Definition enthält keine order_line_item_id oder order_line_item_version_id mehr.
