@@ -158,6 +158,10 @@ Spaces, including non-breaking spaces and tabs, are removed from ticket and gues
 
 ## Manual tickets and guest lists
 
+The event's **Guest list** tab shows registrations across all its ticket types. Registration date is the first column, with newest registrations first. Ticket and delivery statuses are omitted from this list. Remarks, volunteering and the linked ticket appear on the registration form's general tab.
+
+Ticket and delivery statuses use translated labels. Authorized administrators can correct the ticket status in its form. Changing a fully redeemed ticket back to **Valid** restores exactly one redemption; earlier uses and scan records remain. Automatic payment, expiry and check-in transitions continue. **Copy ticket management link** in ticket and issued-registration context menus copies the public management link for sharing, for example via WhatsApp.
+
 Create a customer ticket directly within an event. The event is preselected and the type selector only offers its types. Neither an order nor a customer account is required. Manual tickets default to **Valid** without waiting for payment.
 
 For an internal guest list:
@@ -171,6 +175,8 @@ For an internal guest list:
 Tickets without an account or order are supported. Without an email recipient they can be saved and issued as PDFs, but require a recipient before delivery. The automatic recovery task also considers undelivered valid manual tickets, so saving a ticket with a recipient is not a permanent “save only” mode.
 
 The guest-list tab of a free ticket type also provides a private registration form with name, email, optional phone number and voluntary support options. Registrations can be confirmed and individually converted into tickets. Registration does not reserve capacity. Issued tickets can also be found by name in the scanner; registrations without tickets are not listed there. Companion counts are not provided.
+
+The **General → Personalization allowed** checkbox on the ticket type controls name changes in the customer account and through the public management link. It is enabled by default. Disable it for fixed attendee names, for example on guestlists. Price and guestlist assignment do not affect permission. Mobile numbers remain editable on pending and valid tickets. Authorized administrators can still correct names subject to the existing status rules. Existing installations require the [schema update](schema.md#personalisierung-am-tickettyp).
 
 ## PDFs and email delivery
 

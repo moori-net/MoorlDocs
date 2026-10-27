@@ -26,7 +26,7 @@ Group admission and drinks/food packages offer configurable redemptions in a fix
 
 ## Payment activation and traceable states
 
-Order tickets initially wait for confirmed payment. The native `paid` state activates them and queues automatic delivery. Payment deadlines, expiry, cancellation, full refunds and chargebacks affect validity. Pending tickets can expire after the configured deadline and release quota.
+Order tickets initially wait for confirmed payment. The native paid state activates them and queues automatic delivery. Payment deadlines, expiry, cancellation, full refunds and chargebacks affect validity. Pending tickets can expire after the configured deadline and release quota.
 
 Administration shows whether tickets are valid, redeemed, expired or revoked, separately from pending, accepted or failed delivery. Late payment on already cancelled orders requires manual reconciliation.
 
@@ -59,24 +59,3 @@ Assign artists to stages and sets with optional start/end times, including perfo
 Event details bring together ticket categories, individual customer tickets and check-in records. Ticket tabs on order/customer details assist support. Foundation forms and lists provide consistent management.
 
 Public event pages, CMS listings with an optional archive, translated content and native SEO URLs support event presentation. Configure ticket cards or a compact list, availability, images and descriptions per sales channel. Foundation supplies import/export profiles and data packages. The optional demo site includes a homepage with social links, Events, Booking and Contact pages, event and artist images, ticket examples and a guest list.
-
-## Features
-
-- Dedicated events/types without creating extra products.
-- Per-type prices, taxes, quotas, purchase limits and sales windows.
-- Native Shopware cart/checkout with atomic allocation.
-- Individual ticket numbers, QR codes and PDFs.
-- Payment-based activation, deadlines, expiry and revocation.
-- Automatic email delivery, tracking and resending.
-- Downloads for authorised signed-in customers.
-- Manual tickets and internal free guest-list categories.
-- Browser scanner, check-in audit and restricted scanner role.
-- Authenticated check-in endpoint for custom integrations.
-- Event pages, CMS listing, translations and SEO URLs.
-- Private guest registration with confirmation links and voluntary support.
-- Artist booking roster, stages, line-up and timetables.
-- Group and service packages with multiple redemptions.
-- Personal ticket links for editing and downloads without a customer login.
-- Event archive and configurable ticket presentation.
-- Ticket views on events, orders and customers.
-- Flow Builder action and Foundation data/demo packages.

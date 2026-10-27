@@ -18,11 +18,11 @@ Mit einem Kundenkonto finden Sie Ihre zugeordneten Tickets nach Anmeldung unter 
 
 Die Ticketübersicht ist wie die Shopware-Bestellübersicht aufgebaut: mit Status, Veranstaltungsdatum, Tickettyp und Veranstaltungsort sowie aufklappbaren Details. Der PDF-Download verwendet die Ticketnummer als Dateinamen (zum Beispiel `T-10000.pdf`). Öffnen Sie die Ticketdetails, um Name und Handynummer anzupassen oder das PDF herunterzuladen. Mit **Ticket öffnen** gelangen Sie zur einzelnen Ticketseite.
 
-Im Kundenkonto oder über den persönlichen Ticketlink können Sie für jedes noch nicht eingelöste Ticket den **Vor- und Nachnamen** der teilnehmenden Person eintragen und speichern. Anfangs wird der Name des Käufers verwendet. Offene und gültige Tickets sind bearbeitbar; eingelöste, abgelaufene und widerrufene Tickets sind gesperrt.
+Im Kundenkonto oder über den persönlichen Ticketlink können Sie den **Vor- und Nachnamen** der teilnehmenden Person ändern, wenn der Veranstalter die Personalisierung für den Tickettyp erlaubt. Andernfalls ist das Namensfeld schreibgeschützt. Anfangs wird der Name des Käufers verwendet. Änderungen sind nur bei offenen und gültigen Tickets möglich; eingelöste, abgelaufene und widerrufene Tickets sind gesperrt.
 
 Laden Sie nach einer Änderung das aktuelle PDF herunter. Der gespeicherte Name steht auf dem Ticket und erscheint beim Einlass im Scanner. Die Änderung verschickt keine neue E-Mail und ändert weder den Käufer noch den E-Mail-Empfänger. Gastbesteller können dieselben Änderungen über den Ticketlink aus der E-Mail vornehmen.
 
-Optional können Sie pro Ticket eine **Handynummer** ergänzen oder ändern. Für die Bearbeitung gelten dieselben Regeln wie beim Namen. Leerzeichen werden beim Speichern entfernt; eine leere Eingabe entfernt die Nummer. Die Nummer erscheint beim Scan und kann im Browser-Scanner über **Anrufen** gewählt werden.
+Optional können Sie bei offenen und gültigen Tickets eine **Handynummer** ergänzen oder ändern, auch wenn der Name schreibgeschützt ist. Leerzeichen werden beim Speichern entfernt; eine leere Eingabe entfernt die Nummer. Die Nummer erscheint beim Scan und kann im Browser-Scanner über **Anrufen** gewählt werden.
 
 ## Einlass und Verzehrpakete
 

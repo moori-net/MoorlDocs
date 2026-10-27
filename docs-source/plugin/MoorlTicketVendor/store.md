@@ -26,7 +26,7 @@ Gruppeneinlass sowie Getränke-/Essenspakete bieten konfigurierbare Einlösungen
 
 ## Freigabe nach Zahlung und nachvollziehbare Status
 
-Tickets aus Bestellungen warten zunächst auf die bestätigte Zahlung. Nach dem nativen Status `paid` erfolgt die Freigabe und der automatische Versand. Zahlungsfristen, Ablauf, Stornierung, vollständige Erstattung und Chargeback fließen in die Ticketgültigkeit ein. Offene Tickets können nach Ablauf der konfigurierten Zahlungsfrist verfallen und ihr Kontingent wieder freigeben.
+Tickets aus Bestellungen warten zunächst auf die bestätigte Zahlung. Nach dem nativen Status paid erfolgt die Freigabe und der automatische Versand. Zahlungsfristen, Ablauf, Stornierung, vollständige Erstattung und Chargeback fließen in die Ticketgültigkeit ein. Offene Tickets können nach Ablauf der konfigurierten Zahlungsfrist verfallen und ihr Kontingent wieder freigeben.
 
 In der Verwaltung sehen Sie getrennt, ob ein Ticket gültig, bereits eingelöst, abgelaufen oder widerrufen ist und ob sein Versand aussteht, erfolgreich angenommen wurde oder fehlgeschlagen ist. Verspätete Zahlungen auf bereits stornierte Bestellungen benötigen eine manuelle Abstimmung.
 
@@ -59,24 +59,3 @@ Ordnen Sie Artists den Stages und Sets zu, mit optionalen Start-/Endzeiten auch 
 Veranstaltungen bündeln Tickettypen, generierte Kundentickets und Check-in-Protokolle. Zusätzliche Ticketansichten in Bestell- und Kundendetails erleichtern Rückfragen und Support. Foundation-Formulare und Listen sorgen für eine einheitliche Verwaltung.
 
 Öffentliche Veranstaltungsseiten, CMS-Listen mit optionalem Archiv, übersetzbare Inhalte und native SEO-URLs unterstützen die Präsentation im Shop. Ticketkarten oder kompakte Listen, Verfügbarkeit, Bilder und Beschreibungen lassen sich je Verkaufskanal konfigurieren. Foundation liefert Import-/Exportprofile und Datenpakete. Die optionale Demo enthält eine Startseite mit Social Links, Seiten für Events, Booking und Kontakt, Event- und Artist-Bilder sowie Ticketbeispiele und eine Gästeliste.
-
-## Funktionsübersicht
-
-- Eigene Veranstaltungen und Tickettypen ohne zusätzliche Produktanlage.
-- Preise, Steuern, Kontingente, Kaufgrenzen und Verkaufszeiträume je Tickettyp.
-- Nativer Shopware-Warenkorb und Checkout mit atomarer Ticketzuteilung.
-- Individuelle Ticketnummern, QR-Codes und PDF-Tickets.
-- Zahlungsabhängige Freigabe, Zahlungsfrist, Ablauf und Widerruf.
-- Automatischer E-Mail-Versand, Versandstatus und erneuter Versand.
-- Ticketdownloads für berechtigte angemeldete Kunden.
-- Manuelle Tickets und interne kostenlose Gästelistentypen.
-- Browser-Scanner, Check-in-Protokoll und eingeschränkte Scanner-Rolle.
-- Authentifizierter Check-in-Endpunkt für eigene Anbindungen.
-- Veranstaltungsseiten, CMS-Listing, Übersetzungen und SEO-URLs.
-- Private Gästelistenanmeldung mit Bestätigungslinks und Unterstützungsoptionen.
-- Artist-Booking-Roster, Stages, Line-up und Timetables.
-- Gruppen- und Verzehrpakete mit Mehrfacheinlösung.
-- Persönliche Ticketlinks für Bearbeitung und Download ohne Kundenlogin.
-- Eventarchiv und konfigurierbare Ticketdarstellung.
-- Ticketansichten an Veranstaltung, Bestellung und Kunde.
-- Flow-Builder-Aktion sowie Foundation-Daten- und Demopakete.

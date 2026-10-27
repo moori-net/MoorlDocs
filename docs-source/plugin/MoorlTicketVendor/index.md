@@ -144,6 +144,8 @@ Bestellstornierung, vollständige Erstattung und Chargeback widerrufen noch bele
 
 ## Kundentickets und Status
 
+Ticketstatus und Versandstatus werden übersetzt angezeigt. Den Ticketstatus können berechtigte Administratoren im Ticketformular korrigieren. Wird ein vollständig eingelöstes Ticket wieder auf **Gültig** gesetzt, steht genau eine Einlösung erneut zur Verfügung; frühere Einlösungen und Scanprotokolle bleiben erhalten. Zahlungs-, Ablauf- und Check-in-Automatismen gelten weiterhin. Im Kontextmenü von Tickets und Gästelisten-Anmeldungen mit ausgestelltem Ticket kopiert **Ticket-Bearbeitungslink kopieren** den öffentlichen Bearbeitungslink, beispielsweise zum Teilen per WhatsApp.
+
 Generierte Tickets finden Sie in der Veranstaltung sowie in den Ticket-Tabs der Bestell- und Kundendetails. Die Ticketansicht zeigt unter anderem Nummer, Veranstaltung, Typ, Empfänger, Bestellbezug, Gültigkeits- und Versandstatus.
 
 | Ticketstatus | Bedeutung |
@@ -162,6 +164,8 @@ Handynummern in Tickets und Gästelisten werden beim Speichern von Leerzeichen, 
 
 ## Manuelle Tickets und Gästeliste
 
+Im Reiter **Gästeliste** der Veranstaltung stehen die Anmeldungen aller zugehörigen Tickettypen. Das Anmeldedatum ist die erste Spalte; neue Anmeldungen stehen oben. Ticketstatus und Versandstatus sind in dieser Liste ausgeblendet. Bemerkungen, Ehrenamtliche Unterstützung und das verknüpfte Ticket finden Sie im allgemeinen Reiter des Anmeldungsformulars.
+
 Sie können innerhalb einer Veranstaltung direkt ein neues Kundenticket anlegen. Der Veranstaltungsbezug wird vorbelegt, und die Typauswahl enthält nur deren Tickettypen. Bestellung und Kundenkonto sind optional. Manuelle Tickets starten mit Status **Gültig**; sie warten nicht auf eine Zahlung.
 
 Für eine interne Gästeliste:
@@ -175,6 +179,8 @@ Für eine interne Gästeliste:
 Ein Ticket ohne Kundenkonto und ohne Bestellposition ist zulässig. Ohne erreichbaren E-Mail-Empfänger ist es speicherbar und kann als PDF ausgegeben werden; für den Versand muss ein Empfänger ergänzt werden. Der automatische Wiederherstellungslauf berücksichtigt auch noch nicht versendete gültige manuelle Tickets: Das Speichern eines Tickets mit Empfänger ist daher kein dauerhafter „nur speichern“-Modus.
 
 Zusätzlich bietet der Gästelisten-Tab eines kostenlosen Tickettyps ein privates Anmeldeformular mit Name, E-Mail, optionaler Telefonnummer und Ehrenämtern. Anmeldungen lassen sich bestätigen und anschließend einzeln in Tickets umwandeln. Eine Anmeldung reserviert noch keinen Platz. Ausgestellte Tickets lassen sich im Scanner auch über den Namen finden; Anmeldungen ohne Ticket erscheinen dort nicht. Ein Begleitpersonenzähler ist nicht vorgesehen.
+
+Die Checkbox **Allgemein → Personalisierung möglich** am Tickettyp steuert Namensänderungen im Kundenkonto und über den öffentlichen Bearbeitungslink. Sie ist standardmäßig aktiviert. Deaktivieren Sie sie für feste Teilnehmernamen, beispielsweise bei der Gästeliste. Preis und Gästelistenzuordnung haben keinen Einfluss auf die Freigabe. Die Handynummer bleibt bei ausstehenden und gültigen Tickets änderbar. Berechtigte Administratoren können Namen weiterhin nach den bestehenden Statusregeln korrigieren. Bestehende Installationen benötigen den [Schemaabgleich](schema.md#personalisierung-am-tickettyp).
 
 ## PDF und E-Mail-Versand
 

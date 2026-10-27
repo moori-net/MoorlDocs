@@ -18,11 +18,11 @@ With a customer account, sign in and open **My account → Tickets** to download
 
 The ticket overview follows the Shopware order history layout, with status, event date, ticket type and venue, plus expandable details. PDF downloads use the ticket number as the filename (for example, `T-10000.pdf`). Expand the ticket details to edit the attendee name and mobile number or download the PDF. **Open ticket** takes you to the individual ticket page.
 
-In your account or through the personal ticket link, enter and save the attendee's **first and last name** for each ticket. The purchaser's name is used initially. Pending and valid tickets can be edited; redeemed, expired and revoked tickets are locked.
+In your account or through the personal ticket link, you can change the attendee's **first and last name** if the organizer allows personalization for the ticket type. Otherwise, the name field is read-only. The purchaser's name is used initially. Changes are only possible on pending and valid tickets; redeemed, expired and revoked tickets are locked.
 
 Download the updated PDF after saving a change. The name appears on the ticket and in the entrance scanner. Changing the name does not send another email or change the purchaser or delivery recipient. Guest purchasers can make the same changes through the ticket link in their email.
 
-You can optionally add or change a **mobile number** for each ticket under the same editing rules as the attendee name. Spaces are removed when saving; an empty input removes the number. The number appears in scan results and can be dialled using **Call** in the browser scanner.
+You can optionally add or change a **mobile number** on pending and valid tickets, even when the name is read-only. Spaces are removed when saving; an empty input removes the number. The number appears in scan results and can be dialled using **Call** in the browser scanner.
 
 ## Admission and service packages
 
