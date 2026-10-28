@@ -118,7 +118,7 @@ Jedes ausgestellte Ticket speichert Bereich, Limit und Personenplätze aus seine
 
 ## Öffentliche Darstellung und Erlebniswelten
 
-Die in der Plugin-Konfiguration unter `category` gewählte Shopware-Kategorie verwendet eine Erlebniswelt mit dem Element `moorl-tv-ticket-sale-listing`. Sie zeigt verfügbare Veranstaltungen mit Seitennavigation und ist das Ziel des Zurück-Links auf Veranstaltungsdetails. Die Detailseite `/tickets/{saleId}` verwendet die am Event hinterlegte CMS-Seite, ersatzweise die konfigurierte Standardseite `cmsPageId`. Ohne CMS-Auswahl wird die einfache Detaildarstellung verwendet; ohne ausgewählte Kategorie entfällt der Zurück-Link. Der Ticketkauf verwendet den normalen Shopware-Warenkorb und Checkout. Tickets sind digitale Warenkorbpositionen; sie benötigen keinen physischen Versand.
+Die in der Plugin-Konfiguration unter `category` gewählte Shopware-Kategorie verwendet eine Erlebniswelt mit dem Element `moorl-tv-ticket-sale-listing`. Sie zeigt verfügbare Veranstaltungen mit Seitennavigation und ist das Ziel des Zurück-Links auf Veranstaltungsdetails. Die Detailseite `/moorl-tv/tickets/{saleId}` verwendet die am Event hinterlegte CMS-Seite, ersatzweise die konfigurierte Standardseite `cmsPageId`. Ohne CMS-Auswahl wird die einfache Detaildarstellung verwendet; ohne ausgewählte Kategorie entfällt der Zurück-Link. Der Ticketkauf verwendet den normalen Shopware-Warenkorb und Checkout. Tickets sind digitale Warenkorbpositionen; sie benötigen keinen physischen Versand.
 
 Über das Foundation-CMS-Element **Veranstaltungen** (`moorl-tv-ticket-sale-listing`) können Sie eine Veranstaltungsliste in Erlebniswelten einbinden. Die Veranstaltungsdetailseite kann zusätzlich ihre zugewiesene CMS-Seite laden.
 
@@ -294,7 +294,7 @@ Die Daten brauchen keine Bestellung. Ein konfigurierter Foundation-Demokunde wir
 
 ## Artists, Stages und geheime Gästeliste
 
-Artists werden unter **Einstellungen → Erweiterungen → Ticketverkäufer - Artists** gepflegt. „Auf der Website für Booking anbieten“ zeigt das Profil in der Booking-Auswahl; Anfragen führen zur vorhandenen Kontaktseite oder zum optionalen externen Bookingkontakt. Gage und Bookingnotiz bleiben intern. Das CMS-Element „Artists für Booking“ und die Seite /artists/booking verwenden dieselbe Auswahl.
+Artists werden unter **Einstellungen → Erweiterungen → Ticketverkäufer - Artists** gepflegt. „Auf der Website für Booking anbieten“ zeigt das Profil in der Booking-Auswahl; Anfragen führen zur vorhandenen Kontaktseite oder zum optionalen externen Bookingkontakt. Gage und Bookingnotiz bleiben intern. Das CMS-Element „Artists für Booking“ und die Seite /moorl-tv/artists/booking verwenden dieselbe Auswahl.
 
 ![Artist-Roster mit Genre, Booking-Verfügbarkeit, Kollektiv und Label.](images/admin-artists.png)
 

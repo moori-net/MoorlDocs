@@ -114,7 +114,7 @@ Each ticket stores its area, limit and person places from its type. Later type c
 
 ## Storefront, CMS and SEO
 
-The Shopware category selected through `category` in the plugin configuration uses a shopping experience with the `moorl-tv-ticket-sale-listing` element. It lists available events with pagination and is the destination of the back link on event details. The `/tickets/{saleId}` detail page uses the CMS layout assigned to the event or the configured default `cmsPageId`. Without a CMS selection, the basic detail view is used; without a category selection, the back link is hidden. Purchases use Shopware's normal cart and checkout. Ticket line items are digital and do not require physical shipping.
+The Shopware category selected through `category` in the plugin configuration uses a shopping experience with the `moorl-tv-ticket-sale-listing` element. It lists available events with pagination and is the destination of the back link on event details. The `/moorl-tv/tickets/{saleId}` detail page uses the CMS layout assigned to the event or the configured default `cmsPageId`. Without a CMS selection, the basic detail view is used; without a category selection, the back link is hidden. Purchases use Shopware's normal cart and checkout. Ticket line items are digital and do not require physical shipping.
 
 The Foundation **Events** CMS element (`moorl-tv-ticket-sale-listing`) embeds an event listing in Shopping Experiences. Event detail pages can also load an assigned CMS page.
 
@@ -290,7 +290,7 @@ No order is needed. A configured Foundation demo customer is associated optional
 
 ## Artists, stages and private guest registration
 
-Manage artist profiles under **Settings → Extensions → Ticket Vendor - Artists**. “Offer for booking on the website” controls the public booking selection; inquiries use the existing contact page or an optional external booking contact. Fees and internal notes remain private. The “Artists available for booking” CMS element and /artists/booking share this selection; no booking workflow is introduced.
+Manage artist profiles under **Settings → Extensions → Ticket Vendor - Artists**. “Offer for booking on the website” controls the public booking selection; inquiries use the existing contact page or an optional external booking contact. Fees and internal notes remain private. The “Artists available for booking” CMS element and /moorl-tv/artists/booking share this selection; no booking workflow is introduced.
 
 ![Artist roster with genre, booking availability, collective and label.](images/admin-artists.png)
 

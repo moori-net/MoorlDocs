@@ -1,6 +1,6 @@
 # Ticket Vendor: Datenmodell und Schemaübergang
 
-Stand: 23.10.2026. Das Plugin liefert sechzehn native SQL-Initialmigrationen unter `src/Migration`. Jede Initialmigration legt eine Tabelle mit einem direkten `CREATE TABLE IF NOT EXISTS` an; die Reihenfolge berücksichtigt Tabellenabhängigkeiten. Die anschließende Migration `Migration1792713600EventDeletion` aktualisiert die Löschregeln auch für bestehende Tabellen. Nach Ausführung aller Migrationen beschreiben DAL und SQL denselben Stand. MoorlDevTools-Migrationsfunktionen werden nicht verwendet. Andere historische Schemaänderungen und Datenübernahmen benötigen weiterhin einen gesonderten Abgleich.
+Stand: 28.10.2026. Das Plugin liefert die mit `bin/console database:create-migration --plugin MoorlTicketVendor --name Initial` erzeugte `Migration1793194127Initial` unter `src/Migration`. Sie enthält die Schritte aller siebzehn unter `src/Migration_Old` archivierten Migrationen in ihrer bisherigen Reihenfolge: sechzehn direkte `CREATE TABLE IF NOT EXISTS`-Statements und die abschließende Anpassung der Fremdschlüssel-Löschregeln auch für bestehende Tabellen. Die archivierten Dateien werden nicht als aktive Migrationen ausgeführt. Nach Ausführung der Initialmigration beschreiben DAL und SQL denselben Stand. MoorlDevTools-Migrationsfunktionen werden nicht verwendet. Andere historische Schemaänderungen und Datenübernahmen benötigen weiterhin einen gesonderten Abgleich.
 
 ## Mehrfacheinlösung und gewichtete Kontingente
 
@@ -8,7 +8,7 @@ Typ und Ticket enthalten `redemption_category` (VARCHAR(32), Default `admission`
 
 Der Typverbrauch pro belegtem Ticket beträgt `GREATEST(1, capacity_units)`, der Eventverbrauch exakt `capacity_units`. `quantity_sold` summiert Typkontingent-Einheiten in `pending`, `valid`, `redeemed`, keine Ticketanzahl. `moorl_tv_ticket_checkin.redemption_category` speichert den angefragten Bereich; die Metadaten enthalten tatsächlichen Bereich, Verbrauch, Limit und Rest nach Verarbeitung. Ein Scan erhöht den Zähler atomar um eins. Nur die letzte Einlösung setzt `redeemed` und `redeemed_at`. Widerruf und Reaktivierung löschen keinen Verbrauch.
 
-Die Initialmigrationen für Tickettyp, Ticket und Check-in enthalten alle Einlösefelder und SQL-CHECKs direkt im CREATE-Statement. Neue Tickets beginnen mit Zähler 0. Die sechzehn Initialmigrationen übernehmen keine historischen Einlösungen und verändern keine vorhandenen Tabellen. Die zusätzliche Migration `Migration1792713600EventDeletion` ändert ausschließlich die dokumentierten Fremdschlüssel-Löschregeln.
+Die CREATE-Statements für Tickettyp, Ticket und Check-in enthalten alle Einlösefelder und SQL-CHECKs direkt. Neue Tickets beginnen mit Zähler 0. Die Initialmigration übernimmt keine historischen Einlösungen. Bei bereits vorhandenen Tabellen werden die CREATE-Statements übersprungen; der übernommene abschließende Schritt aus `Migration1792713600EventDeletion` aktualisiert ausschließlich die dokumentierten Fremdschlüssel-Löschregeln.
 
 Die Migrationstests prüfen die Erstinstallation und Wiederholung ausschließlich in einer ausdrücklich benannten isolierten Testdatenbank. Sie führen keine Migration am laufenden Shop aus.
 
@@ -108,7 +108,7 @@ Dedizierte Adminrechte `moorl_tv_guestlist_entry:issue` und `moorl_tv_ticket_typ
 
 Registrierungen reservieren keine Plätze. Formulare schließen bei erschöpftem Typkontingent oder voller Eventkapazität und öffnen bei wieder freien Plätzen automatisch, solange der Schalter gesetzt und das Event aktiv/nicht beendet ist. Bestehende Anfragen dürfen bei abgeschalteter Registrierung weiterhin nach den normalen Regeln bearbeitet werden. Typ- und Eventkontingent zählen `pending`, `valid`, `redeemed`; der Schalter wird durch Vollbelegung nicht umgeschrieben. Wiederholungen bereits erfolgreicher Anmeldungen werden auch bei Vollbelegung bestätigt.
 
-Neue Storefront-Anmeldungen speichern Kanal und Sprache des tatsächlichen Aufrufs. Im Admin und CSV-Import muss der Verkaufskanal ausgewählt bzw. zugeordnet werden; eine fehlende Sprache wird beim Anlegen auf `Defaults::LANGUAGE_SYSTEM` gesetzt. Die Ausstellung übernimmt beide gespeicherten Werte aus der Anmeldung. Es gibt keine globalen Plugin-Vorgaben und keine automatische Wahl eines Verkaufskanals. Bestehende Tickets und Wiederholungen behalten ihren gespeicherten Versandkontext. Die Adminaktion erzeugt Domainlinks unter `/guestlist/type/{typeId}/{accessKey}`; die Wahl einer Linkdomain wird nicht am Typ gespeichert.
+Neue Storefront-Anmeldungen speichern Kanal und Sprache des tatsächlichen Aufrufs. Im Admin und CSV-Import muss der Verkaufskanal ausgewählt bzw. zugeordnet werden; eine fehlende Sprache wird beim Anlegen auf `Defaults::LANGUAGE_SYSTEM` gesetzt. Die Ausstellung übernimmt beide gespeicherten Werte aus der Anmeldung. Es gibt keine globalen Plugin-Vorgaben und keine automatische Wahl eines Verkaufskanals. Bestehende Tickets und Wiederholungen behalten ihren gespeicherten Versandkontext. Die Adminaktion erzeugt Domainlinks unter `/moorl-tv/guestlist/type/{typeId}/{accessKey}`; die Wahl einer Linkdomain wird nicht am Typ gespeichert.
 
 ## Events, Gästelisteneinträge und Tickets löschen
 
