@@ -52,7 +52,59 @@ In der Basiskonfiguration kannst du den Logger des Plugins aktivieren. So werden
 
 Du kannst diese Logdatei mit dem "Frosh Tools" Plugin einsehen.
 
-Zudem gibt es einen Kompatibilitätsmodus für diverse Hosting Anbieter. Weitere Informationen findest du am Ende dieser Dokumentation.
+Den Hosting-Kompatibilitätsmodus wählst du ausschließlich in der Plugin-Konfiguration.
+Er legt die Binärpfade und die empfohlenen Anfangswerte der Staging-Prozesse fest.
+Neue Staging-Systeme übernehmen diese Werte automatisch. Bereits gespeicherte
+individuelle Prozesseinstellungen bleiben beim Laden erhalten. Eine zweite
+Provider-Auswahl oder ein zusätzlicher Lade-Button in der Staging-Maske entfällt.
+Weitere Informationen zu den Hosting-Anbietern findest du am Ende dieser Dokumentation.
+
+### Befehlsausführung
+
+Die Plugin-Konfiguration bietet vier ausdrücklich getrennte Verfahren:
+
+| Auswahl | Ausführung | Voraussetzung |
+| --- | --- | --- |
+| **PHP shell** | Lokal als PHP-Benutzer | PHP-Funktion `exec` |
+| **PHP shell via SSH** | Als SSH-Benutzer auf `localhost:22` | PHP-Erweiterung `ssh2`, Benutzername und Passwort |
+| **Symfony Process** | Lokal als PHP-Benutzer | PHP-Funktion `proc_open` |
+| **Symfony Process via SSH** | Über OpenSSH als SSH-Benutzer auf `localhost:22` | `proc_open`, OpenSSH; bei Passwortanmeldung zusätzlich `sshpass` |
+
+Ein separater SSH-Schalter entfällt. Beim Plugin-Update wird die bisherige
+SSH-Einstellung in die passende Auswahl übernommen. Neue Installationen
+beginnen mit **PHP shell**.
+
+Bei **Symfony Process via SSH** muss der Hostschlüssel von `localhost` für den
+PHP-Benutzer bereits in `known_hosts` oder systemweit hinterlegt sein. Unbekannte
+oder geänderte Hostschlüssel führen zum Abbruch. Ein leeres Passwort aktiviert
+die Schlüsselanmeldung über die SSH-Konfiguration des PHP-Benutzers. Bei
+Passwortanmeldung erhält `sshpass` das Passwort als Umgebungsvariable, nicht als
+Kommandozeilenargument.
+
+Die Symfony-Varianten haben kein eigenes Prozess-Zeitlimit. Die PHP- und
+Webserver-Laufzeitgrenzen gelten weiterhin. Fehlerausgaben werden direkt
+erfasst, ohne fehlgeschlagene Befehle erneut auszuführen.
+
+### SSH-Zugangsdaten aus ENV
+
+Unter **Quelle der SSH-Zugangsdaten** wählst du für beide SSH-Verfahren zwischen
+**Plugin-Konfiguration** und **Umgebungsvariablen (ENV)**. Für ENV setzt du auf
+dem Server, beispielsweise in `.env.local`:
+
+```dotenv
+MOORL_STAGING_SSH_USERNAME=staging
+MOORL_STAGING_SSH_PASSWORD='dein-ssh-passwort'
+```
+
+Die Werte werden ausschließlich auf dem Server gelesen und nicht in die
+Plugin-Konfiguration übernommen oder im Admin angezeigt. Die Admin-Felder für
+SSH-Benutzer und Passwort werden im ENV-Modus ignoriert; bei fehlenden
+ENV-Zugangsdaten gibt es keinen Rückgriff auf diese Felder. Bereits dort
+gespeicherte Zugangsdaten solltest du nach dem Wechsel leeren, damit auch die
+alten Werte nicht mehr über die Administration abrufbar sind.
+
+Für **Symfony Process via SSH** kannst du `MOORL_STAGING_SSH_PASSWORD` leer lassen,
+um Schlüsselanmeldung zu verwenden. **PHP shell via SSH** benötigt ein Passwort.
 
 ### Testumgebung erstellen
 

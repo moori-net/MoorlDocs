@@ -52,7 +52,56 @@ In the basic configuration you can activate the logger of the plugin. This way, 
 
 You can view this log file with the "Frosh Tools" plugin.
 
-There is also a compatibility mode for various hosting providers. Further info on this can be found at the end of this documentation.
+Select the hosting compatibility mode exclusively in the plugin configuration.
+It sets database binary paths and the recommended initial staging process values.
+New staging environments load these values automatically. Saved per-staging
+process settings are preserved when loading. The staging screen no longer has a
+second provider selector or a separate load button. Further hosting provider
+information is available at the end of this documentation.
+
+### Command execution
+
+The plugin configuration provides four explicit execution methods:
+
+| Selection | Execution | Requirement |
+| --- | --- | --- |
+| **PHP shell** | Locally as the PHP user | PHP `exec` function |
+| **PHP shell via SSH** | As the SSH user on `localhost:22` | PHP `ssh2` extension, username and password |
+| **Symfony Process** | Locally as the PHP user | PHP `proc_open` function |
+| **Symfony Process via SSH** | Through OpenSSH as the SSH user on `localhost:22` | `proc_open`, OpenSSH; password login additionally requires `sshpass` |
+
+The separate SSH switch is removed. Plugin updates convert the previous SSH
+setting to the corresponding selection. New installations start with **PHP shell**.
+
+For **Symfony Process via SSH**, the PHP user must already trust the `localhost`
+host key in `known_hosts` or a system-wide file. Unknown or changed host keys
+abort execution. An empty password enables key authentication through the PHP
+user's SSH configuration. Password authentication passes the password to
+`sshpass` through an environment variable rather than a command argument.
+
+The Symfony variants do not impose a process timeout. PHP and web server runtime
+limits still apply. Error output is captured directly without executing failed
+commands again.
+
+### SSH credentials from ENV
+
+For either SSH method, **SSH credentials source** selects **Plugin configuration**
+or **Environment variables (ENV)**. Configure ENV values on the server, for
+example in `.env.local`:
+
+```dotenv
+MOORL_STAGING_SSH_USERNAME=staging
+MOORL_STAGING_SSH_PASSWORD='your-ssh-password'
+```
+
+The values are read only on the server and are never copied into plugin settings
+or displayed in administration. The administration username and password fields
+are ignored in ENV mode, with no fallback if ENV credentials are missing. Clear
+any credentials previously saved in those fields after switching to ENV so the
+old values are no longer accessible through administration either.
+
+For **Symfony Process via SSH**, leave `MOORL_STAGING_SSH_PASSWORD` empty to use
+key authentication. **PHP shell via SSH** requires a password.
 
 ### Create test environment
 
