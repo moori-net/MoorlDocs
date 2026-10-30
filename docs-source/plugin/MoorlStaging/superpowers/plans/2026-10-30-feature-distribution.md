@@ -31,6 +31,15 @@
 
 **Operational limit:** Actual GitHub pushes, API requests, and repository permissions are not exercised by local tests. Conflict drafts deliberately contain conflict markers and require full review, including binary and modify/delete conflicts.
 
+## GitHub permissions and retrying a failed distribution
+
+- In repository **Settings → Actions → General → Workflow permissions**, enable **Allow GitHub Actions to create and approve pull requests** when using `GITHUB_TOKEN`. Organization policy may also restrict this setting.
+- `contents: write` and `actions: write` do not grant permission to modify workflow files. Backports containing workflow edits may be rejected with `without workflows permission`.
+- Configure a fine-grained personal access token limited to this repository with **Contents**, **Pull requests**, **Actions**, and **Workflows** set to **Read and write**, and store it under **Settings → Secrets and variables → Actions → New repository secret** as **AUTOMATION_TOKEN**. The distribution job uses it for both checkout/push and GitHub CLI. Without the secret, it falls back to `GITHUB_TOKEN` and its existing limitations. The token is not added to the read-only PR checker or used to bypass branch rules.
+- Unlike `GITHUB_TOKEN`, an external token can trigger workflows on its pushes and PR creation. Dependency-only Composer pushes are excluded by the existing release version guard.
+- Install the updated distribution workflow on the default branch and the branch selected for retry. Start **Actions → Distribute merged features → Run workflow**, select the original destination (for example `6.7`), and enter the original feature PR number (for example `3`). A retry uses existing backport branches to create missing PRs, and retries missing targets. Previously created/merged PRs remain idempotent.
+- A rerun of an older Actions run still uses its original workflow definition. Use the new manual dispatch to pick up the updated token configuration.
+
 ## Composer version protection
 
 - `.github/workflows/protect-composer-version.yml` checks feature/backport PRs against their merge base. It uses `pull_request_target`, a checkout of the exact base SHA, and read-only contents permissions; PR code is fetched only as Git data and never executed.
