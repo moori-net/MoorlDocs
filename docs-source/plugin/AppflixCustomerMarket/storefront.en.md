@@ -1,5 +1,9 @@
 # Storefront
 
+The category selector in the ad form supports branches of different depths. Every loaded category can be selected and is displayed with its full path, for example `Vehicles → Cars → Classics → Parts`.
+
+The plugin setting `Category selection depth` controls how many levels below the configured all classifieds category are loaded per sales channel. The default is 10 and the minimum is 1. Increase this value for deeper category structures.
+
 Customers can create their own ads. To do so, a seller profile is created.
 
 ![](images/storefront-customer-profile.png)

@@ -1,5 +1,9 @@
 # Storefront
 
+Die Kategorieauswahl im Anzeigenformular unterstützt unterschiedlich tiefe Kategorieäste. Jede geladene Kategorie ist auswählbar und wird mit ihrem vollständigen Pfad angezeigt, zum Beispiel `Fahrzeuge → Autos → Oldtimer → Ersatzteile`.
+
+Die Plugin-Einstellung `Tiefe der Kategorieauswahl` bestimmt pro Verkaufskanal, wie viele Ebenen unterhalb der konfigurierten Kategorie mit allen Anzeigen geladen werden. Der Standardwert ist 10, der Mindestwert 1. Für tiefere Strukturen kann der Wert erhöht werden.
+
 Der Kunde kann eigene Anzeigen erstellen. Dazu wird ein Verkäuferprofil angelegt.
 
 ![](images/storefront-customer-profile.png)
