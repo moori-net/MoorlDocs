@@ -325,3 +325,8 @@ New storefront registrations also receive a guest acknowledgment with an individ
 Guestlist entries and tickets can be deleted individually or through a confirmed bulk selection with the corresponding delete privileges. Deleting a guestlist entry preserves its issued ticket. Deleting a ticket retains the registration without its ticket link and deletes the associated check-in history. Occupied quota is released; orders and customers remain. Linked check-ins cannot be deleted individually; records without a ticket assignment can. Events can only be deleted after all their tickets have been explicitly deleted; their types, registrations, stages, performances and remaining check-ins are then deleted together. Global artists and volunteer roles remain. `Migration1792713600EventDeletion` updates these deletion rules for existing tables; other schema transitions are described in [schema.md](schema.md).
 
 New installations use the supplied SQL migrations. Existing schemas require a separate update before deployment. Backfill existing order-position references before removing legacy columns; moorl-tv:backfill-ticket-orders is read-only unless --apply is explicitly supplied. See [schema and backfill instructions](schema.md). Rebuild assets and restart workers after the transition.
+
+
+## Event series
+
+Group dates under an optional parent with shared text and media, independent venues and tickets, its own CMS page and search. Generate dates at an interval in days or on selected weekdays, choosing activation during generation. See [Event series](event-series.en.md).

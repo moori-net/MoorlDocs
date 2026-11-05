@@ -215,3 +215,8 @@ Scans, Teilnehmeränderungen und Versandtracking verändern normalerweise keine 
 Eine isolierte lokale Messung unter MySQL 8.0.46 mit 10.000 belegenden Tickets ergab bei zehn Scans rund 52 ms vor und 13 ms nach der Änderung im Median; vollständige Bestandszählungen je Scan sanken von drei auf null. Sieben parallele Prozesse für vier Scanner, Ticketausstellung, manuellen Ablauf und Versandbuchhaltung hielten die Bestands-/Einlöseregeln bei 1.000 und 10.000 Tickets ein. Gemeinsame Event-/Typsperren bleiben bestehen. Diese Messung ist keine Zusage für eine bestimmte Scannerzahl und umfasst keinen Browser-Checkout, Payment-Provider oder SMTP-Versand.
 
 Die reproduzierbaren Messskripte liegen im Entwicklungscheckout unter `tests/performance/lifecycle-queries.php` und `tests/performance/inventory-writes.php`. Sie akzeptieren nur ausdrücklich ausgewählte `moorl_tv_*_test`-Datenbanken. Die Inventarmessung verlangt leere Ticketbestände; niemals gegen den laufenden Shop ausführen. Indexmessungen verwenden eine temporäre Tabellenkopie. Messberichte gehören außerhalb der Pluginverzeichnisse unter `var/testing/`.
+
+
+## Veranstaltungsserien
+
+Optionale Hauptveranstaltungen ergänzen die bestehenden Termine. Gemeinsame Inhalte werden als Präsentationskopien aufgelöst, niemals in laufende Bestellungen zurückgeschrieben. Serienfreigaben werden auch bei der finalen Bestellzuteilung unter aktuellen Zeilensperren geprüft; gespeicherte Einlösungen bleiben termingebunden. Serienänderungen invalidieren gemeinsame Storefront-Caches und abhängige SEO-URLs. Foundation AutoCache berücksichtigt zeitgesteuerte Freigaben. Details zu Zuordnung, Intervall/Wochentagen, Aktivierungswahl, Rechten, CMS und separatem Demopaket: [Veranstaltungsserien](event-series.md).
