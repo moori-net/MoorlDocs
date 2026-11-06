@@ -42,7 +42,7 @@
 
 ## Composer version protection
 
-- `.github/workflows/protect-composer-version.yml` checks feature/backport PRs against their merge base. It uses `pull_request_target`, a checkout of the exact base SHA, and read-only contents permissions; PR code is fetched only as Git data and never executed.
+- `.github/workflows/protect-composer-version.yml` checks feature/backport PRs against their merge base. It uses `pull_request_target`, a checkout of the trusted default branch, and read-only contents permissions; PR code is fetched only as Git data and never executed. The checker must be present on the default branch; older destination branches need not contain it. The compared base/head SHAs still come explicitly from the PR event, independent of the checkout's HEAD.
 - Other Composer metadata and dependencies remain editable. Release version commits outside feature/backport PRs remain permitted.
 - Distribution applies linear feature commits as one net change, retaining their original SHA references in the commit message. This allows complete draft PRs even when multiple Composer edits conflict.
 - During distribution, every target retains its original root `version`. Version-only conflicts are resolved automatically; other Composer conflicts still require a draft PR.

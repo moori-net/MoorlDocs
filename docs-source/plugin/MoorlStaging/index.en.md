@@ -1,237 +1,144 @@
 ---
-description: Create and delete a staging system in Shopware 6 with just one click? This plugin makes it possible!
+description: "Create, configure and manage staging and test environments for Shopware 6.7."
 tags:
-- Shopware 6 Plugin
-- Staging
-- Testsystem
+  - Shopware 6.7
+  - Staging
+  - Test environment
+  - Database
 ---
 
-# Staging and test environments
+# Create staging / test environments
 
-Create and delete a staging system in Shopware 6 with just one click? This plugin makes it possible!
+MoorlStaging creates a copy of your Shopware shop with its own database and shop directory. Test updates, plugins and configuration changes before applying them to production. Configure database contents, file exclusions and destination settings separately for each environment.
 
-Thanks to high-performance processes on the shell level, this plugin is up to five times faster than other staging plugins!
+![List of saved staging environments.](images/admin-list.png)
 
-A shop with 10,000 products (incl. variants) can be set up as a test environment with the recommended settings can be ready as a test environment within one minute.
+The extension requires Shopware 6.7 and a suitable server with shell tools. MoorlFoundation is not required. Copies are created on the same server; SSH methods connect to `localhost:22`. See the [installation and operations manual](manual.en.md) for requirements and setup.
 
-You don't believe? Convince yourself.
+## Create a staging environment
 
-## What is this plugin good for?
+Open **Settings → Extensions → Staging** and select **New staging system**. The detail view provides three tabs:
 
-Shopware 6 is based on the PHP framework "Symfony" but the interaction of Shopware Core and many plugins unfortunately does not run as harmoniously as one should actually expect.
+| Tab | Purpose |
+| --- | --- |
+| Dashboard | Name for a new environment, internal notes and, after creation, Storefront and Administration links. Also contains the deletion action. |
+| System & database | System check and credentials for the separate destination database. Both checks must pass. |
+| Create staging | Five configurable steps, a full run and individual step execution. |
 
-This can have a variety of causes; minor errors are no big deal. But what happens when suddenly the whole shop is paralysed and it is not so easy to make a backup? easy to make a backup? To avoid this scenario, new updates should be tested in a test environment. If everything runs, you can install these updates in the Live Shop without hesitation.
+### Dashboard
 
-Setting up a test environment usually takes up to half a day. It is not time-consuming, the smallest error can lead to an enormous loss of data.
+Enter a unique name. It becomes the directory name and URL path; permitted characters are letters `A–Z`, `a–z`, digits, hyphens and underscores. Reserved Shopware public directories such as `media` or `theme` are excluded. The name field is only available when creating a record. Use internal notes for the test purpose, owner and planned changes.
 
-With this plugin, a fully functional test environment is ready for use in less than ten minutes and any risks are kept to a minimum.
+![New staging environment with name and internal notes before its first save.](images/admin-new.png)
 
-## Installation
+**Continue to checks**, or selecting **System & database**, saves a new record first. A save failure keeps you on the Dashboard. **Save** stores changes without running creation. After successful creation, this tab provides the Storefront and Administration links.
 
-!!! note
+![Dashboard with internal notes and destination shop access.](images/admin-dashboard.png)
 
-      If you have problems with the plugin, please read the following [notes](../) in the FAQ section.
+### System & database
 
-!!! note
+Loading a saved record starts the system check and a connection test with the current database credentials in the background. Switching tabs alone does not restart the checks. The system check checks file operations and execution of required tools. It does not validate web server routing or every subsequent copy operation.
 
-      The staging systems are NOT deleted when the plug-in is uninstalled.
+Enter the **Host**, **Port**, **User**, **Password** and **Database name** of a separate destination database that you have already created. Replace the example values with your credentials. The extension rejects a database name identical to the source name; use a dedicated database for each environment. The interface rejects a single quotation mark (`'`) in the database password.
 
-## Settings
+Changing database credentials invalidates a successful check. Select **Test connection** again. Only successful, green results for both the system and database checks enable **Continue to creation** and the **Create staging** tab. Reopening a record runs the checks again. Use **Run system check again** after changing the server configuration.
 
-### System requirements
+![Successful system check and connection to a separate destination database.](images/admin-system-check.png)
 
-- min. PHP v7.4
-- php.ini: max_execution_time > 120 (greater than 2 minutes)
-- Server must support execution of commands by PHP (a list of providers can be found at the end of this page).
-  can be found at the bottom of this page)
-- The APP_URL in the .env file of the live system must be configured correctly!
+## The five creation steps
 
-### Basic configuration
+The following values are the step defaults. The hosting compatibility mode may adjust initial settings for new environments. Saved individual settings take precedence; review the actual values displayed before each run.
 
-In the basic configuration you can activate the logger of the plugin. This way, further information about the processes is saved in a log file.
+### 1. Database backup
 
-You can view this log file with the "Frosh Tools" plugin.
+The source database is exported to `backup/backup.sql`. Table structures are included even when their contents are excluded. The staging management table `moorl_staging` is copied without its contents.
 
-Select the hosting compatibility mode exclusively in the plugin configuration.
-It sets database binary paths and the recommended initial staging process values.
-New staging environments load these values automatically. Saved per-staging
-process settings are preserved when loading. The staging screen no longer has a
-second provider selector or a separate load button. Further hosting provider
-information is available at the end of this documentation.
-
-### Command execution
-
-The plugin configuration provides four explicit execution methods:
-
-| Selection | Execution | Requirement |
+| Option | Default | Purpose |
 | --- | --- | --- |
-| **PHP shell** | Locally as the PHP user | PHP `exec` function |
-| **PHP shell via SSH** | As the SSH user on `localhost:22` | PHP `ssh2` extension, username and password |
-| **Symfony Process** | Locally as the PHP user | PHP `proc_open` function |
-| **Symfony Process via SSH** | Through OpenSSH as the SSH user on `localhost:22` | `proc_open`, OpenSSH; password login additionally requires `sshpass` |
+| Exclude carts | On | Omit the contents of `cart`. |
+| Exclude log entries | On | Omit the contents of `log_entry`. |
+| Exclude orders | On | Omit contents of the order tables listed in the step, including order customers and order addresses. |
+| Exclude customers | On | Omit contents of `customer` and `customer_address`. |
+| Exclude SEO URLs | On | Omit contents of `seo_url`. |
+| Exclude search keywords | On | Omit contents of `product_search_keyword`; copy or rebuild these when testing search. |
+| Exclude contents of additional tables | Empty / disabled | Enter exact table names on separate lines and enable the associated switch. |
 
-The separate SSH switch is removed. Plugin updates convert the previous SSH
-setting to the corresponding selection. New installations start with **PHP shell**.
+Exclusions apply to specific tables and do not automatically cover all related tables or data held by other extensions. Review relationships and required test data when choosing exclusions.
 
-For **Symfony Process via SSH**, the PHP user must already trust the `localhost`
-host key in `known_hosts` or a system-wide file. Unknown or changed host keys
-abort execution. An empty password enables key authentication through the PHP
-user's SSH configuration. Password authentication passes the password to
-`sshpass` through an environment variable rather than a command argument.
+### 2. Clone database
 
-The Symfony variants do not impose a process timeout. PHP and web server runtime
-limits still apply. Error output is captured directly without executing failed
-commands again.
+The backup is imported into the destination database. **Completely empty the destination database before import** is off by default. Enabling it deletes every table in the destination database. A normal import can also overwrite existing tables; use a database dedicated exclusively to this environment.
 
-### SSH credentials from ENV
+The optional **MariaDB bugfix**, off by default, removes collation declarations for generated columns from the backup. Enable it only when needed. Choose database tools suitable for the MySQL/MariaDB versions in use.
 
-For either SSH method, **SSH credentials source** selects **Plugin configuration**
-or **Environment variables (ENV)**. Configure ENV values on the server, for
-example in `.env.local`:
+![Step 1: database backup and content exclusions.](images/admin-create-database.png)
 
-```dotenv
-MOORL_STAGING_SSH_USERNAME=staging
-MOORL_STAGING_SSH_PASSWORD='your-ssh-password'
-```
+![Additional data exclusions and step 2 with database import options.](images/admin-create-database-import.png)
 
-The values are read only on the server and are never copied into plugin settings
-or displayed in administration. The administration username and password fields
-are ignored in ENV mode, with no fallback if ENV credentials are missing. Clear
-any credentials previously saved in those fields after switching to ENV so the
-old values are no longer accessible through administration either.
+### 3. Copy files
 
-For **Symfony Process via SSH**, leave `MOORL_STAGING_SSH_PASSWORD` empty to use
-key authentication. **PHP shell via SSH** requires a password.
+`rsync` copies the shop into its staging directory. Staging directories themselves are excluded to avoid recursive copies.
 
-### Create test environment
+| Option | Default | Purpose |
+| --- | --- | --- |
+| Exclude media and thumbnails | Off | Omit `public/media` and `public/thumbnail`; step 4 can link them to the source. |
+| Exclude cache directories | On | Omit contents under `var/cache`. |
+| Exclude log directories | On | Omit contents under `var/log`. |
+| Exclude version control | On | Omit Git, SVN and IDE files, among others. |
+| Do not preserve permissions / owner / group | Each off | Adapt corresponding `rsync` options to the hosting permissions model. |
+| Set directory permissions | Off | When permissions are not preserved, recursively apply `u+rwX,go+rX,go-w`. |
+| Set .pem file permissions | Off | When permissions are not preserved, set `.pem` files to `0660`. |
+| Excluded files | On | Default patterns: `*.zip`, `*.gz`, `*.rar`, `*.sql`; enter custom patterns on separate lines, using `*` as a wildcard. |
 
-The plugin is located under "Settings" - "Extensions" - "Staging".
+**Excluding media while creating symlinks makes the live and staging shops share media and thumbnails. Deleting or changing those files in staging also affects the live shop.** Copy media for independent media tests, and check existing links when reusing a previously created environment.
 
-![](images/ms-01.jpg)
+### 4. Set symlinks
 
-Here you will find a list of your staging systems. Click on "New Staging System" in the upper right corner.
+A symlink at `<shopware_root>/public/<name>` points to the destination shop's public directory. If media is excluded, media and thumbnail directories are also linked to the source.
 
-![](images/ms-02.jpg)
+**Use PHP to create the symlink** is on by default. Switching it off uses the shell tool `ln`. **Skip this step** is off by default; skipping also prevents media links from being created. In that case, configure web access and media access yourself.
 
-Now a short system check is executed to check if the plugin is compatible with your web server. If there is an error here, you will not be able to use the plugin and will either have to use a different or choose an alternative staging plugin.
+![Step 3: file exclusions and permissions.](images/admin-create-files.png)
 
-The name of your staging system is also the subdirectory where you can reach your staging system. You can also leave the name blank, in which case a name is generated automatically.
+### 5. Configure destination shop
 
-![](images/ms-03.jpg)
+The destination receives its own `DATABASE_URL` and `APP_ENV` in existing `.env`/`.env.local` files and existing PHP dumps of those files. Sales channel domains are mapped to the staging path while preserving language paths and other subpaths. Internal `default.headless` placeholders are preserved. The configuration also sets Shopware's staging flag.
 
-![](images/ms-04.jpg)
+| Option | Default | Purpose |
+| --- | --- | --- |
+| Set app URL | On | Build the destination `APP_URL` from the source `APP_URL` and staging name. A valid source `APP_URL` is also required for access links. |
+| Set dev mode | Off | Use `APP_ENV=dev` instead of `prod`. |
+| Set maintenance mode | On | Enable maintenance mode for destination sales channels. |
+| Disable all plugins | Off | Deactivate all plugin records in the destination shop. |
+| Anonymize customer data | Off | Replace the destination customer data described below. |
+| Create/change/delete environment variables | Pre-filled | `NAME=VALUE` sets a value; `NAME` without an equals sign removes it. Use one entry per line. |
 
-In the next step you enter the access data to the database of your staging system. database. To be on the safe side, the plug-in checks that you do not accidentally enter the data of your live database.
+The pre-filled ENV list disables Elasticsearch, sets HTTP cache values and removes listed Messenger/Redis entries. Adapt it to your installation and also check server-wide environment variables and other integrations. Maintenance mode and the staging flag do not replace checks of mail transport, payment methods, webhooks or background services.
 
-![](images/ms-05.jpg)
+![Step 5: destination configuration with optional customer anonymization.](images/admin-create-destination.png)
 
-![](images/ms-06.jpg)
+### Scope of customer anonymization
 
-If the connection to the database has been established successfully, you can now make your own settings for operations. The default settings correspond to recommendations regarding performance and data protection.
+This option is off by default and operates only on the destination database. To test with anonymized customers and orders, include those records in step 1: turn off **Exclude customers** and, where needed, **Exclude orders**.
 
-**Caution**
+Anonymization replaces names, company and title in `customer`, `customer_address`, `order_customer` and `order_address` with test data or empty values. Customer emails become unique addresses under `example.invalid`; customer numbers become `ANON-…`. Addresses receive a test street, city and postal code; phone numbers, departments and additional address lines are removed. Custom fields in these records, birth dates, VAT details and IP addresses are cleared. Guest orders, orders from deleted customers and existing order versions are included.
 
-If you exclude the media directories, a link to the media of your live shop will be set automatically. This means that if you remove files in the media manager in the staging system, they will also be removed in the live shop. in the Staging System, these files will also be removed in the Live System.
+**Existing customer passwords, legacy passwords and associated hashes are cleared, and `customer_recovery` is emptied. Existing customer login credentials no longer work in staging afterwards.** Customer/order relationships and business order data remain intact. This option does not anonymize Administration users.
 
-![](images/ms-07.jpg)
+Documents, files, logs, reviews, newsletter data and other plugins' data are not anonymized. The SQL backup created earlier is not retroactively anonymized either. Review and protect these separately. This option does not anonymize the entire shop.
 
-![](images/ms-08.jpg)
+## Run, verify and repeat
 
-![](images/ms-09.jpg)
+**Create staging system now** saves the current settings and executes all five steps in order. Status labels and progress show running, completed and failed steps. A reported step error stops the full run; subsequent steps are not executed. A successful full run returns to the Dashboard with access links.
 
-Now you can create the staging system. The processes are run through step by step.
+**Run single step** repeats a selected step and also saves the current settings. Outputs from prerequisite steps must already exist. An individual run is not automatic resumption and may overwrite destination data again.
 
-If there is an error, this may be because your php.ini is configured incorrectly. You can find hints at the top of this page.
+Open the Storefront and Administration afterwards. Check domains, maintenance mode, plugins, test data, file permissions and connections to external services before starting tests or background workers. Duration depends on data volume, the file system and server limits.
 
-![](images/ms-10.jpg)
+## Delete staging
 
-Once the staging system has been created, you can access it via the links to Admin or Storefront via the links.
+**Kill staging** on the Dashboard opens a confirmation. The deletion routine attempts to remove all tables in the configured destination database, the shop copy and SQL backup, and the public staging symlink; it also removes the management record. Review the saved destination credentials before deleting and inspect the database and directories afterwards, especially after errors or permission changes.
 
-![](images/ms-11.jpg)
+Uninstalling the extension does not automatically remove existing staging files or destination databases. Uninstalling without retaining user data removes the management records. Clean up unneeded environments explicitly before uninstalling.
 
-
-## Notes on hosting providers
-
-If the server generally offers SSH access and is based on Apache, the plugin should work without any problems.
-
-Servers based on NGINX require an additional configuration so that the test system is accessible.
-
-### General Notes for Hosts with NGINX Web Server Configuration (e.g. TimmeHosting)
-
-Directory structure:
-
-1. The main directory of the staging system is located at  
-   ```<shopware_root>/_moorl_staging/<staging_name>/```
-
-2. The database backup of the staging system is located at  
-   ```<shopware_root>/_moorl_staging/<staging_name>/backup/backup.sql```
-
-3. The Shopware directory of the staging system is located at  
-   ```<shopware_root>/_moorl_staging/<staging_name>/shop```
-
-4. The webroot of the staging system is located at  
-   ```<shopware_root>/_moorl_staging/<staging_name>/shop/public```
-
-5. In the webroot of the production system, a symlink is created pointing to the staging system’s webroot:  
-   ```<shopware_root>/_public/<staging_name>``` points to  
-   ```<shopware_root>/_moorl_staging/<staging_name>/shop/public```.  
-   This symlink (or an alternative domain) must be enabled in the NGINX configuration.
-
-!!! note
-
-      If an alternative domain is configured in the NGINX web server, the environment variable `APP_URL` must also be adjusted in ```<shopware_root>/_moorl_staging/<staging_name>/shop/.env.local```.
-
-### ALL-INKL.COM
-
-If no connection to the database is possible, please allow accessibility from everywhere!
-
-| Package | Supported | Notes |
-| ----------- | ----------- | ----------- |
-| ALL-INKL.COM - Private | NO | |
-| ALL-INKL.COM - PrivatePlus | YES | |
-| ALL-INKL.COM - Premium | YES | |
-| ALL-INKL.COM - Business | YES | |
-
-### enerSpace
-
-| Package                      | Supported | Notes |
-|----------------------------|-------------| ----------- |
-| Shopware 6 SSD Hosting     | YES | |
-| Managed-SSD - Basic        | YES | |
-| Managed-SSD - Medium       | YES | |
-| Managed-SSD - Professional | YES | |
-| Managed-SSD - Premium      | YES | |
-
-### Profihost
-
-In the plug-in settings, set Hosting compatibility mode to Profihost (MariaDB) or Profihost (MySQL). It is important that the staging environment uses the same type of database (MySQL or MariaDB) as the live shop!
-
-| Package | Supported | Notes |
-| ----------- | ----------- | ----------- |
-| Managed Hosting | YES | Apache server must be restarted |
-| Managed Shop-Hosting | YES | Apache server must be restarted |
-| Managed Server (FlexServer) | YES | Apache server must be restarted |
-
-### Hosteurope
-
-Poor performance was observed when cloning the database. Nevertheless, staging systems could be created on Hosteurope without any problems.
-
-| Package | Supported | Notes |
-| ----------- | ----------- | ----------- |
-| WebHosting - Basic | YES | |
-| WebHosting - Medium | YES | |
-| WebHosting - Premium | YES | |
-| WebHosting - Supreme | YES | |
-| WebServer - Basic SSD | YES | |
-| WebServer - Medium SSD | YES | |
-| WebServer - Premium SSD | YES | |
-| WebServer - Supreme SSD | YES | |
-
-### Mittwald
-
-Unfortunately, this provider does not offer the technical basis, various options are missing.
-
-- Binary "rsync" is not enabled
-- PHP shell_exec() has no permission to execute binaries which write to the file system, e.g. mysqldump
-- PHP SSH extension must be enabled, but you can only use the SSH root user to execute binaries
-- SSH operations are not executed synchronously, it does not wait until one operation is executed, instead the next one starts and causes errors
+See the manual for [server configuration, directory layout and troubleshooting](manual.en.md).
