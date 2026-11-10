@@ -24,6 +24,8 @@ Die Warnmeldung wird im Storefront-Feedback als Warnung dargestellt. Eine konfig
 
 ## Technischer Bericht und Logs
 
+Fehlende Aktionsprovider werden mit Aktionsname und Phase als `Form action provider missing` geloggt und übersprungen. Sie erzeugen keinen Fehler im Formularbericht und keine Warnmeldung für den Kunden. Fehler bei der Ausführung vorhandener Provider werden weiterhin gesammelt und als Warnung ausgegeben.
+
 `FormProcessingResult` sammelt Name, Phase, Status und bei Fehlern eine Logreferenz. `isSuccess()` dieses technischen Berichts zeigt, ob alle erfassten Schritte fehlerfrei waren; `hasWarnings()` zeigt gesammelte Probleme an. Der Bericht ist vom Annahmestatus der Formularantwort getrennt.
 
 Fehler bleiben für die aktuelle Verarbeitung erhalten: Ein späterer erfolgreicher Aufruf desselben Schritts überschreibt weder einen früheren Fehler noch dessen Referenz. `resetForSubmission()` eröffnet die nächste Verarbeitung und übernimmt Meldungen aus der vorausgehenden Initialisierung. `processing` in der Antwort enthält die Schritte und die Angabe `partial`. Exception-Texte und übermittelte Werte gehören nicht in diesen Bericht; sie werden nicht an den Kunden ausgegeben.
