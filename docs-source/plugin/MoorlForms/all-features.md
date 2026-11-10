@@ -1,105 +1,276 @@
 ---
-description: Hier findest du einen Überblick über alle verfügbaren Elemente und Features vom Formular Baukasten 2
+description: Funktionsübersicht der gesamten MoorlForms-Pluginfamilie, abgeglichen mit registrierten Erweiterungen und ihren Verarbeitungspfaden.
 tags:
 - Shopware 6 Plugin
 - Formulare erstellen
+- Add-Ons
 ---
 
 # Formular Baukasten 2 | Alle Features
 
-## Formular Typen
+Diese Übersicht beschreibt die Basis und alle zwölf lokal vorhandenen Add-ons. Stand des Quellcodeabgleichs: **10. November 2026**. Sie beschreibt verfügbare Implementierungen und deren Grenzen. Den Stand der Admin-Prüfung, Screenshots und noch offenen Laufzeitprüfungen findest du im [Prüfbericht](plugin-audit.md). Die Konfiguration richtet sich nach den installierten und aktiven Add-ons.
 
-| Add-On                                                              | Name                             | Beschreibung                                                                                                                                                                                                                                                                                                                                                                                   |
-|:--------------------------------------------------------------------|:---------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Basis Version](./index.md)                                         | CMS                              | Das CMS Formular kann vielseitig auf allen Inhaltsseiten (Erlebniswelten) von Shopware 6 eingesetzt werden. Bei einigen moori Plugins, in denen eine E-Mail Adresse im Inhaltsbereich hinterlegt werden kann z.B. [Händlersuche](../MoorlMerchantFinder/index.md) kann man diese als Empfänger für das Kontaktformular definieren.                                                             |
-| [Basis Version](./index.md)                                         | Test                             | Das Test-Formular verhält sich wie ein normales CMS Formular, dieses kann eingesetzt werden um Fehler zu ermitteln oder ausschließlich die serverseitige Validierung zu prüfen                                                                                                                                                                                                                 |
-| [Classic Add-On](../MoorlFormsClassic/index.md)                     | Twig Template Snippet            | Jedes Formular kann direkt im Theme eingebunden werden, dazu dient ein vordefiniertes [Twig Snippet](./how-tos.md)                                                                                                                                                                                                                                                                             |
-| [Classic Add-On](../MoorlFormsClassic/index.md)                     | Inline-Formular                  | Das Formular im Formular. Hiermit kannst du beliebige Formulare im Shopware Standard auf Template-Basis erweitern. Denke daran, dass eine Erweiterung nicht ausreicht. Es müssen auch die entsprechende Datenverarbeitung angepasst werden.                                                                                                                                                    |
-| [Kunden Add-On](../MoorlFormsCustomer/index.md)                     | Kunden Registrierungsformular    | Dieses Formular wird in die Kundenregistrierung eingebunden, damit können weitere Daten und auch Dokumente beim Kunden eingegeben werden. Die optimale B2B Erweiterung für einen eingeschränkten Kundenkreis.                                                                                                                                                                                  |
-| [Kunden Add-On](../MoorlFormsCustomer/index.md)                     | Formular im Kundenbereich        | Dieses Formular erscheint als ein Navigationspunkt im Kundenbereich. Hiermit lassen sich bestehende Kundendaten einfach anpassen und abspeichern. Für zusätzliche Kundenangaben kannst du die Custom-Fields von Shopware 6 verwenden.                                                                                                                                                          |
-| [Produkt-Konfigurator Add-On](../MoorlFormsCustomProducts/index.md) | Produktkonfigurator              | Verwende Formulare für Produktkonfigurationen, neben Eingabefelder für individualisierte Produkte kannst du Auswahl- und Zahlenfelder für eine zusätzliche Preisberechnung verwenden. Auch hier haben deine Kunden die Möglichkeit zu ihrem Wunschprodukt eine Datei hochzuladen. Die Zuweisung erfolg über dynamische Produktgruppen.                                                         |
-| [Popup Add-On](../MoorlFormsPopup/index.md)                         | Popup-Formular                   | Dieses Formular eignet sich sehr gut um Kundenfeedback einzuholen. Es kann auf jeder beliebigen Shopseite platziert werden und sofort oder durch bestimmte Aktionen ausgelöst werden. Ein Beispiel dazu ist, wenn der Kunde im Checkout-Prozess die Seite verlassen will.                                                                                                                      |
-| [Produktanfrage Add-On](../MoorlFormsProduct/index.md)              | Produktanfrage                   | Hat der Kunde eine Frage zu einem bestimmten Produkt oder möchte ein Angebot einholen? Dieses Formular wird auf der Produktseite platziert und enthält bereits alle relevanten Produktdetails, sodass du die Anfrage besser zuordnen kannst. Die Zuweisung erfolgt über dynamische Produktgruppen.                                                                                             |
-| [Bestellung Add-On](../MoorlFormsOrder/index.md)                    | Zusätzliche Bestellinformationen | Im Shopware 6 Standard gibt es nur ein Kommentarfeld als zusätzliche Angabe zu eine Bestellung. Mit diesem Formular kannst du weitere Daten abfragen und den Checkout auch sperren wenn Angaben fehlen. Dies ist z.B. der Fall, wenn sich Produkte im Warenkorb befinden, die der Kunde nur mit einem bestimmten Nachweis erwerben darf. Die Zuweisung erfolgt über dynamische Produktgruppen. |
+## Welches Plugin benötige ich?
 
-## Formular Elemente
+| Plugin | Aufgabe | Wichtige Grenze |
+| --- | --- | --- |
+| **MoorlForms** | Formulareditor, CMS- und Testformulare, Eingabefelder, Layout, Validierung, Mail, Empfangsbestätigung, Medien, Entity-Mapping, Import/Export und Flow-Ereignis | Keine automatische Ablage aller Einsendungen im Verlauf; dafür Classic verwenden. |
+| [Classic](../MoorlFormsClassic/index.md) | Bedingungen, Repeater, Bildauswahl, zusätzliche Eingabefelder, Newsletter, Mailkopie, Verlauf, Druckansicht und ICS | Ein Druckprotokoll ist keine rechtliche Zertifizierung. |
+| [Popup](../MoorlFormsPopup/index.md) | Formulare durch Laden, Scrollen, Verlassen oder Klick auslösen | Automatische Einbindung nur auf unterstützten Seitentypen; standardmäßig einmal pro Browsersitzung und Formular. |
+| [Slides](../MoorlFormsSlides/index.md) | Formular in navigierbare Schritte aufteilen | Keine eigenständige Speicherung des aktuellen Schritts; vorhandene Animationsfragmente sind kein reguläres Animation-Element. |
+| [Customer](../MoorlFormsCustomer/index.md) | Zusätzliche Registrierungseingaben und bearbeitbare Formulare im Kundenkonto | Vorhandene Kundenfelder/Custom Fields gezielt zuordnen; keine neue allgemeine Kundendatenbank. |
+| [CustomProducts](../MoorlFormsCustomProducts/index.md) | Produktkonfiguration, Preisoptionen, Mengenbezug, Datei-Uploads und Weitergabe in Warenkorb/Bestellung | Produktzuordnung erfolgt über dynamische Produktgruppen; Preislogik und Mengenverhalten konfigurieren. |
+| [Order](../MoorlFormsOrder/index.md) | Zusätzliche Checkout-Angaben, optionale Bestellsperre, Speicherung an der Bestellung und Ausgabe | Die sichtbare Preisoption belegt keine implementierte Warenkorbpreisberechnung. |
+| [Product](../MoorlFormsProduct/index.md) | Produktbezogene Anfragen, Button/Modal und Produktinformationen im Formular | Kaufbutton/Preis ausblenden ist keine allgemeine serverseitige Kaufsperre. |
+| [Csv](../MoorlFormsCsv/index.md) | Einsendungen als CSV-Zeilen mit zugeordneten Spalten schreiben | Dateiablage und Spaltenkonfiguration einrichten; kein vollständiger Formularexport mit Medien. |
+| [Hubspot](../MoorlFormsHubspot/index.md) | Formularwerte an einen konfigurierten HubSpot-Client/Formularablauf übergeben | Benötigt die passende Foundation-Integration; Admin-Mapping allein bestätigt keine erfolgreiche Zustellung. |
+| [Mautic](../MoorlFormsMautic/index.md) | Daten an vorhandene Mautic-Formulare übermitteln | Welche Kontakte und Folgeaktionen entstehen, bestimmt das Ziel-Formular; kein eigener Kontakt-CRUD im Shopware-Admin. |
+| [Webhook](../MoorlFormsWebhook/index.md) | Formularwerte an konfigurierte HTTP-Endpunkte senden | Methode, URL, Format und Zuordnung bestimmen den tatsächlichen Request. Kein automatischer Zustellnachweis durch einen Screenshot. |
+| **MoorlFormsExample** | Entwicklerbeispiel für eigene Erweiterungen | Im aktuellen Stand veraltete Methodensignaturen; vor Aktivierung an die Basisverträge anpassen. |
 
-| Add-On                                          | Gruppe                | Name                                | Beschreibung                                                                                                                                                                                                                                |
-|:------------------------------------------------|:----------------------|:------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Basis Version](./index.md)                     | Zeilen                | Feldzeile                           | Hier kannst du alle untergeordneten Eingabefelder als responsive Bootstrap Elemente verwenden. Bestimme die Länge des Elementes anhand der Bildschirmauflösung des Kunden.                                                                  |
-| [Basis Version](./index.md)                     | Zeilen                | Sektionszeile                       | Hier kannst du alle untergeordneten Sektionen als responsive Bootstrap Elemente verwenden. Bestimme die Größe der Sektion anhand der Bildschirmauflösung des Kunden.                                                                        |
-| [Basis Version](./index.md)                     | Eingabefelder         | Text                                | Eingabefeld für einzeilige Texte.                                                                                                                                                                                                           |
-| [Basis Version](./index.md)                     | Eingabefelder         | E-Mail                              | Eingabefeld für E-Mail Adressen. Wenn dieses Feld verwendet wird und ausgefüllt ist, wird es als Antwortadresse und/oder als Kopieempfänger ([Classic Add-On](../MoorlFormsClassic/index.md)) verwendet.                                    |
-| [Basis Version](./index.md)                     | Eingabefelder         | Textbereich                         | Eingabefeld für mehrzeilige Texte.                                                                                                                                                                                                          |
-| [Basis Version](./index.md)                     | Eingabefelder         | Telefon                             | Eingabefeld für Telefonnummer.                                                                                                                                                                                                              |
-| [Basis Version](./index.md)                     | Eingabefelder         | URL                                 | Eingabefeld für Internetadressen.                                                                                                                                                                                                           |
-| [Basis Version](./index.md)                     | Eingabefelder         | Schalter                            | An-/Ausschalter.                                                                                                                                                                                                                            |
-| [Basis Version](./index.md)                     | Eingabefelder         | Checkbox                            | An-/Ausschalter.                                                                                                                                                                                                                            |
-| [Basis Version](./index.md)                     | Eingabefelder         | Upload                              | Hiermit kann man Dateien oder Anhänge hochladen. Es gibt technisch bedingt keine Mehrfachuploadfelder, du kannst aber mehrere Uploadfelder einzeln anlegen oder einen Repeater ([Classic Add-On](../MoorlFormsClassic/index.md)) verwenden. |
-| [Basis Version](./index.md)                     | Eingabefelder         | Datum                               | Eingabefeld für Datum. Du kannst ein minimales und maximales Datum definieren und auch bestimmte Wochentage ausschließen.                                                                                                                   |
-| [Basis Version](./index.md)                     | Eingabefelder         | Zeit                                | Eingabefeld für Uhrzeit. Du kannst eine minimale und maximale Uhrzeit definieren.                                                                                                                                                           |
-| [Basis Version](./index.md)                     | Eingabefelder         | Passwort                            | Eingabefeld für Passwort, der Inhalt des Feldes ist nicht sichtbar.                                                                                                                                                                         |
-| [Basis Version](./index.md)                     | Eingabefelder         | Zahl                                | Eingabefeld für Zahlen. Du kannst eine minimale und maximale Zahl definieren. Zusätzlich kannst du bestimmen, in welchen Schritten die Zahl hoch oder runter zählt.                                                                         |
-| [Basis Version](./index.md)                     | Eingabefelder         | Zahl-Slider                         | Eingabefeld für Zahlen als Slider mit selber Funktion.                                                                                                                                                                                      |
-| [Basis Version](./index.md)                     | Eingabefelder         | Versteckt                           | Dieses Eingabefeld ist versteckt und kann z.B. mit Standartwerten oder anderweitig befüllt werden.                                                                                                                                          |
-| [Basis Version](./index.md)                     | Eingabefelder         | Aktuelle URL                        | Dieses Eingabefeld ist versteckt und enthält die aktuelle URL.                                                                                                                                                                              |
-| [Classic Add-On](../MoorlFormsClassic/index.md) | Eingabefelder         | Bewertungsfeld                      | Ein visuelles Bewertungsfeld. Tip: Verwende ein Emoji als Platzhalter!                                                                                                                                                                      |
-| [Classic Add-On](../MoorlFormsClassic/index.md) | Eingabefelder         | Ust-ID Nummer                       | Eingabefeld für eine EU Ust-ID Nummer. Inklusive Prüfung mit EU Datenbank!                                                                                                                                                                  |
-| [Classic Add-On](../MoorlFormsClassic/index.md) | Eingabefelder         | Unterschrift                        | Ein Feld für digitale Unterschriften. Rechtssicherheit bisher __unbestätigt__.                                                                                                                                                              |
-| [Classic Add-On](../MoorlFormsClassic/index.md) | Eingabefelder         | BIC/IBAN                            | Eingabefelder für die Bankverbindung. Die IBAN wid nach dem MOD97-Algorithmus geprüft, somit sind mögliche Zahlendreher ausgeschlossen!                                                                                                     |
-| [Basis Version](./index.md)                     | Auswahlfelder         | Auswahlfeld                         | Auswahlfeld, kann manuell oder automatisch zugewiesene Optionen beinhalten.                                                                                                                                                                 |
-| [Basis Version](./index.md)                     | Auswahlfelder         | Mehrfach-Auswahlfeld                | Mehrfach-Auswahlfeld, kann manuell oder automatisch zugewiesene Optionen beinhalten.                                                                                                                                                        |
-| [Basis Version](./index.md)                     | Auswahlfelder         | Checkbox-Gruppe                     | Mehrfach-Auswahlfeld in Form von Checkboxen, kann manuell oder automatisch zugewiesene Optionen beinhalten.                                                                                                                                 |
-| [Basis Version](./index.md)                     | Auswahlfelder         | Radio-Gruppe                        | Auswahlfeld in Form von Radio-Eingabefeldern, kann manuell oder automatisch zugewiesene Optionen beinhalten.                                                                                                                                |
-| [Classic Add-On](../MoorlFormsClassic/index.md) | Auswahlfelder         | Bild-Mehrfach-Auswahlfeld im Slider | Mehrfach-Auswahlfeld mit Bildern im Slider, kann manuell oder automatisch zugewiesene Optionen beinhalten.                                                                                                                                  |
-| [Classic Add-On](../MoorlFormsClassic/index.md) | Auswahlfelder         | Bild-Auswahlfeld im Slider          | Auswahlfeld mit Bildern im Slider, kann manuell oder automatisch zugewiesene Optionen beinhalten.                                                                                                                                           |
-| [Classic Add-On](../MoorlFormsClassic/index.md) | Auswahlfelder         | Bild-Auswahlfeld im Grid            | Auswahlfeld mit Bildern im Grid, kann manuell oder automatisch zugewiesene Optionen beinhalten.                                                                                                                                             |
-| [Classic Add-On](../MoorlFormsClassic/index.md) | Auswahlfelder         | Bild-Mehrfach-Auswahlfeld           | Auswahlfeld mit Bildern, Es können SVGs und Bilder verwendet werden. Bei SVGs kann man die Hover-Farbe über die Element-Einstellungen festlegen.                                                                                            |
-| [Classic Add-On](../MoorlFormsClassic/index.md) | Auswahlfelder         | Bild-Auswahlfeld                    | Mehrfach-Auswahlfeld mit Bildern, Es können SVGs und Bilder verwendet werden. Bei SVGs kann man die Hover-Farbe über die Element-Einstellungen festlegen.                                                                                   |
-| [Basis Version](./index.md)                     | Formular-Bestandteile | Absenden (Button)                   | Der Button um das Formular abzusenden. Wird z.B. in Inline-Formularen (Produktkonfigurator, Kunden Registrierungsformular etc) nicht benötigt.                                                                                              |
-| [Basis Version](./index.md)                     | Formular-Bestandteile | Captcha                             | Ein Sicherheitsmechanismus um Formular vor (Spam-) Bots zu schützen.                                                                                                                                                                        |
-| [Basis Version](./index.md)                     | Formular-Bestandteile | Notiz                               | Die Standard-Notiz in Formularen, z.B. wenn erforderliche Eingaben gesondert markiert sind.                                                                                                                                                 |
-| [Basis Version](./index.md)                     | Formular-Bestandteile | Bestätigung von Datenschutzhinweis  | Die Standard-Checkbox in Formularen um die Datenschutzhinweise zu akzeptieren.                                                                                                                                                              |
-| [Basis Version](./index.md)                     | Formular-Bestandteile | Feedback Bereich                    | Hier steht das Feedback zum abgesendeten Formular, z.B. Fehler- oder Erfolgsmeldungen.                                                                                                                                                      |
-| [Classic Add-On](../MoorlFormsClassic/index.md) | Formular-Bestandteile | Kopie senden                        | Möchte der Kunde eine Kopie seiner E-Mail erhalten, kann er dieses Feld ankreuzen.                                                                                                                                                          |
-| [Classic Add-On](../MoorlFormsClassic/index.md) | Formular-Bestandteile | Newsletter abonnieren               | Möchte der Kunde einen Newsletter abonnieren, kann er dieses Feld ankreuzen.                                                                                                                                                                |
-| [Basis Version](./index.md)                     | Sektionen             | Karte                               | Bietet die Möglichkeit einer Sektion im Formular eine Überschrift zu geben. Kann auf- und zugeklappt werden.                                                                                                                                |
-| [Basis Version](./index.md)                     | Sektionen             | Sektion                             | Bietet die Möglichkeit eine Sektion im Formular zu bestimmen.                                                                                                                                                                               |
-| [Basis Version](./index.md)                     | Sektionen             | HTML                                | Bietet die Möglichkeit HTML im Formular zu verwenden. Achtung: Übersetzung ist nicht möglich, du kannst aber Textbaustele mit dem Twig-Filter `trans` verwenden.                                                                            |
-| [Classic Add-On](../MoorlFormsClassic/index.md) | Sektionen             | Verschachtelte Sektion              | Eine technische Sektionen um die technischen Namen der Eingabefelder zu beeinflussen.                                                                                                                                                       |
-| [Classic Add-On](../MoorlFormsClassic/index.md) | Sektionen             | Wiederholer/Repeater                | Mit dieser Sektion können Gruppen von Eingabefeldern mehrfach im Formular verwendet werden. z.B. für die Anmeldung von mehreren Personen.                                                                                                   |
-| [Slides Add-On](../MoorlFormsSlides/index.md)   | Sektionen             | Slides                              | Mit Slides kann man das Formular in mehrere Schritte aufteilen. Das ist Sinnvoll wenn man besonders große Formulare hat.                                                                                                                    |
+## In der Administration arbeiten
 
-## Formular Aktionen
+Einstieg: **Inhalte → Formular Baukasten 2**. Die Liste bietet vorhandene Formulare, Neuanlage, Import und Duplizieren. Die Detailansicht kombiniert links den Elementbaum mit den Einstellungen des ausgewählten Formulars oder Elements.
 
-| Add-On / Plugin                                 | Name                  | Flow-Builder geeignet? | Beschreibung                                                                                                                                                                            |
-|:------------------------------------------------|:----------------------|:-----------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Basis Version](./index.md)                     | E-Mail senden         | Nein                   | Sendet eine E-Mail an eine von dir angegebene E-Mail-Adresse. Du kannst selbst ein E-Mail Template zuweisen. Es werden dir auch weitere Einstellungen für den E-Mail versand angeboten. |
-| [Classic Add-On](../MoorlFormsClassic/index.md) | E-Mail Kopie senden   | Nein                   | Sendet eine E-Mail Kopie an den Kunden. Auch hier kannst du ein eigenes E-Mail Template zuweisen und diese Aktion optional für den Kunden anbieten.                                     |
-| [Classic Add-On](../MoorlFormsClassic/index.md) | In Verlauf speichern  | Nein                   | Speichert das gesamte Formular im Verlauf, es wird eine Text und eine HTML-Version gespeichert. Ist diese Aktion aktiv, kannst du dem Kunden `Druckansicht` anbieten.                   |
-| [Classic Add-On](../MoorlFormsClassic/index.md) | Druckansicht          | Nein                   | Bietet dem Kunden die Möglichkeit ein Übertragungsprotokoll auszudrucken. Diese Aktion ist in einigen Fällen Vorschrift bezüglich Rechtssicherheit.                                     |
-| [Classic Add-On](../MoorlFormsClassic/index.md) | Newsletter abonnieren | Nein                   | Der Kunde kann mit dem Absenden des Formulars optional den Newsletter abonnieren.                                                                                                       |
-| [Classic Add-On](../MoorlFormsClassic/index.md) | ICS Anhang            | Nein                   | Speichert einen ICS Anhang in der E-Mail für den Shopbetreiber. Kann z.B. ein Termin beinhalten.                                                                                        |
-| [Hubspot](../MoorlFormsHubspot/index.md)        | Hubspot Formular      | Ja                     | Sendet die Inhalte des Formulars direkt an Hubspot.                                                                                                                                     |
-| [Mautic](../MoorlFormsMautic/index.md)          | Mautic Formular       | Ja                     | Sendet die Inhalte des Formulars direkt an Mautic.                                                                                                                                      |
-| [Webhook](../MoorlFormsWebhook/index.md)        | Webhook               | Ja                     | Löst einen Webhook aus. Die Inhalte des Formulars können in verschiedenen Formaten als POST, GET oder HEADER Parameter übermittelt werden.                                              |
-| [CSV](../MoorlFormsCsv/index.md)                | CSV Datei             | Ja                     | Speichert die Inhalte des Formulars in eine von dir definierte CSV Datei.                                                                                                               |
+1. Formular erstellen oder JSON importieren.
+2. Technischen Namen, übersetzten Anzeigenamen, Typ und gewünschte Aktionen bestimmen.
+3. Layout und Eingabefelder im Baum anlegen. Untergeordnete Typen hängen von der gewählten Gruppe ab.
+4. Pflichtfelder, Standardwerte, Layout und Zuweisungen einstellen.
+5. Formular aktivieren und speichern.
+6. Für CMS-Nutzung in der Erlebniswelt ein vorhandenes CMS-Element gegen das Formularelement austauschen und dort das Formular wählen.
+7. Die Erlebniswelt zusätzlich speichern und das Ergebnis im passenden Verkaufskanal prüfen.
 
-!!! note
+Das Basisplugin liefert **ein CMS-Element und keinen eigenen CMS-Block**. Seine Auswahl ist auf CMS-/Testformulare ausgerichtet. Die CMS-Konfiguration besitzt zusätzlich vier frei belegbare Werte `custom1` bis `custom4`. Eine Formulareinstellung wird durch Speichern der Erlebniswelt nicht automatisch mitgespeichert.
 
-      Die Aktionen sind abhängig vom Formular Typ. Es macht z.B. wenig Sinn bei einer Produktkonfiguration jedes Mal eine E-Mail an den Shopbetreiber zu senden.
+### Formular- und Elementkonfiguration
 
-## Sonderfunktionen
+| Bereich | Möglichkeiten |
+| --- | --- |
+| Allgemein | Aktivierung, technischer Name, übersetzter Name; bei Formularen Typ und Aktionsauswahl; bei Elementen Typ, Sichtbarkeit und Farbe |
+| Layout | CSS-Klassen, CSS-Eigenschaften, responsive Bootstrap-Aufteilung, Abstände und typspezifische Gestaltung |
+| Mail | Empfänger allgemein/sprachbezogen und Mailtemplate; getrennte Vorlage für Empfangsbestätigung; Classic ergänzt Mailkopie und weitere Optionen |
+| Zuweisung | Zeitraum, Verkaufskanal, Sprache, Rule-Builder-Regel, Kundengruppe, Lieferland, Zahlungs- und Versandart, soweit für den Typ freigegeben |
+| Datenzuordnung | Ziel-Entity, Datenbankspeicherung und Feldzuordnung einschließlich vorhandener Custom Fields; Auswahllabel statt technischem Wert optional |
+| Add-on-Bereiche | Beispielsweise Popup-Trigger, Produktauswahl, Integrationsmapping, CSV-/Webhook-Einstellungen oder Classic-Verlauf |
 
-| Add-On           | Name                    | Beschreibung                                                                                                                                                                                                                                                                                                       |
-|:-----------------|:------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Basis Version](./index.md)    | In Datenbank speichern  | Du kannst die Formularfelder in einer Shopware Entity-Datenbank speichern. Gehe in den Formular Einstellungen auf Zuweisung und wähle deine gewünschte Tabelle aus. In den Element Einstellungen kannst du dann die gewünschte Spalte auswählen. Verwende das Beispiel `Entity Mapping Formular` zum Testen!       |
-| [Basis Version](./index.md)    | Floating Labels         | Dank Bootstrap 5 kannst du in jedem Eingabefeld die Floating Labels aktivieren.                                                                                                                                                                                                                                    |
-| [Basis Version](./index.md)    | Zeichenzähler           | Zählt live die Zeichen als Text oder als Fortschrittsbalken.                                                                                                                                                                                                                                                       |
-| [Basis Version](./index.md)    | Twig-Kontext-Variablen  | Du kannst Twig-Variablen verwenden um Formularfelder vorab zu befüllen.                                                                                                                                                                                                                                            |
-| [Classic Add-On](../MoorlFormsClassic/index.md)   | Interaktive Formulare   | Formular-Sektionen oder Eingabefelder können anhand vordefinierter Bedingungen ein- oder ausgeblendet werden. Nicht verwendete Felder werden direkt ausgeblendet und nicht validiert.                                                                                                                              |
-| [Classic Add-On](../MoorlFormsClassic/index.md)   | Kundeneingaben "Merken" | Jeder kennt es, man füllt über eine längere Dauer ein Formular aus, man klickt eine falsche Taste und ist nicht mehr auf der Seite mit dem Formular - Alle Eingaben sind weg! Dank dem `localStorage` deines Browser, werden deine Eingaben so lang gespeichert, bis du dein Formular erfolgreich abgesendet hast! |
-| [Classic Add-On](../MoorlFormsClassic/index.md)   | Bad-Word-Filter         | Formulare mit bösen Wörtern werden nicht gesendet!                                                                                                                                                                                                                                                                 |
+Technische Namen bestimmen Eingaben, Bedingungen und Datenpfade. Innerhalb derselben Nutzdatenebene müssen sie eindeutig sein. Verschachtelte Felder erzeugen Pfade wie `billingAddress.street`. Fehlende Add-ons können Einstellungen und Aktionsprovider ausblenden, ohne dass ein Import sie automatisch nachinstalliert.
 
-Fehlt dir etwas? Kein Problem, schreib mir eine Mail an info@moorleiche.com mit deinen Wünschen!
+## Formulartypen und Einbindung
+
+| Plugin | Technischer Typ / Einbindung | Verhalten |
+| --- | --- | --- |
+| Basis | `cms` | Eigenständig absendbares Formular in Erlebniswelten |
+| Basis | `test` | CMS-Testbetrieb mit erweiterten Optionen; technische Providerfehler werden durchgereicht |
+| Basis | Twig-Tag `{% fb_form 'technical_name' %}` | Formular über technischen Namen oder ID im Theme einbinden; ein Verkaufskanalkontext ist erforderlich |
+| Classic | `inline` | Zusätzliche Felder in ein bestehendes Formular einbetten; der umgebende Ablauf muss die Daten verarbeiten |
+| Classic | `twig` | Zusätzlicher klassischer Formulartyp für die Theme-Einbindung; der Twig-Tag selbst gehört bereits zur Basis |
+| Popup | `popup` | Triggergesteuertes Formular auf unterstützten Seiten |
+| Customer | `customer-register`, `customer-account` | Registrierung bzw. eigener Bereich im Kundenkonto, Ziel-Entity `customer` |
+| CustomProducts | `custom-product` | Zugeordnete Formulare am Produkt und Weitergabe der Konfiguration an Warenkorbpositionen, Ziel-Entity `order_line_item` |
+| Order | `order` | Zusätzliche Angaben im Checkout, Ziel-Entity `order` |
+| Product | `product-request` | Produktbezogene Anfrage, Ziel-Entity `product` |
+
+Die Twig-Einbindung gehört zur Basis. Classic wird für zusätzliche Classic-Funktionen benötigt, nicht allein für das Rendern eines Formulars im Theme.
+
+## Elemente der Basis
+
+| Gruppe | Elemente / technische Namen | Zweck und Anpassung |
+| --- | --- | --- |
+| Zeilen | `form-row`, `row` | Responsive Anordnung von Eingabefeldern bzw. Sektionen, mobile-first vererbte Breiten und Reihenfolge |
+| Text | `text`, `textarea`, `tel`, `url` | Ein-/mehrzeilige Eingaben, Telefon und HTML-URL-Feld |
+| E-Mail | `email`, `email-secondary` | E-Mail-Prüfung; primäre Mailfelder können als Antwort-/Bestätigungsadresse dienen |
+| Schalter | `checkbox`, `switch` | Einzelne Ja-/Nein-Eingaben |
+| Zahlen | `number`, `number-range` | Zahlenfeld bzw. Schieberegler; HTML-Minimum, -Maximum und Schrittweite |
+| Datum/Zeit | `date`, `time` | HTML-Datum/Zeit mit konfigurierbaren Grenzen; Wochentage bei Datum im Browser ausschließen |
+| Weitere Eingaben | `password`, `hidden`, `window-location` | Maskierte Eingabe, versteckter Wert und aktuelle Seitenadresse |
+| Datei | `upload` | Eine Datei pro Feld; Größen-/MIME-Konfiguration, Mailanhang und optional Medienablage |
+| Auswahl | `select`, `multiselect`, `checkbox-group`, `radio-group` | Manuelle oder dynamische Optionen; Suchbarkeit abhängig von der Darstellung |
+| Optionen | `option` | Technischer Wert, übersetzte Beschriftung, typspezifisch Medien/Empfänger/Preis |
+| Struktur | `section`, `card`, `html`, `nested-fields` | Sektionen, aufklappbare Karten, HTML-Inhalte und strukturierte Feldnamen |
+| Inhalte | `image`, `cms-element` | Bilder und eingebettete CMS-Elemente |
+| Formularteile | `form-submit`, `form-captcha`, `form-notice`, `form-tos`, `form-feedback` | Absenden, Shopware-Captcha, Hinweistext, Datenschutzbestätigung und Rückmeldungen |
+| Intern | `root`, `test` | Wurzel und technischer Testtyp; keine eigenständigen fachlichen Formulartypen |
+
+Eingabefelder besitzen je nach Typ Pflichtstatus, Platzhalter, Standardwert, minimale/maximale Länge, Regex, Vergleichsfeld, Zusatztext/Icon, Tooltip, deaktivierte Darstellung und Floating Label. Übersetzbare Inhalte werden über den Admin-Sprachwechsel gepflegt. HTML-Inhalte liegen in der Elementübersetzung; Twig-Übersetzungsbausteine sind zusätzlich möglich.
+
+### Dynamische Auswahl
+
+Die Basis stellt **Länder**, **Anreden** und **eigene Entities** bereit. Bei Ländern kann nach Verkaufskanal gefiltert werden. Classic ergänzt produktbezogene Auswahl.
+
+Für eigene Entities werden Entityname, Beschriftungsattribut, Sortierattribut, optional ein Mailattribut und Filter konfiguriert. Pro Zeile gilt `feld=wert`, beispielsweise:
+
+```text
+active=true
+stock=0
+```
+
+Es werden höchstens **500 Einträge** geladen; es gibt hier keine serverseitige Pagination oder Suche über weitere Treffer. Ein suchbares Select sucht deshalb nicht automatisch in der gesamten Datenbank.
+
+### Grenzen der Validierung
+
+Die Basis validiert serverseitig Pflichtstatus, Textlängen/Array-Anzahl, konfigurierte Regex und Feldvergleiche. E-Mail, Passwort und Upload ergänzen eigene Prüfungen. Browservalidierung kommt zusätzlich hinzu.
+
+Datum-/Zeitgrenzen, Wochentagausschlüsse, Zahlenbereich/Schrittweite und der URL-Eingabetyp sind in den betreffenden Klassen keine jeweils vollständigen serverseitigen Fachvalidatoren. Für verbindliche fachliche Einschränkungen sind passende Backend-Prüfungen erforderlich.
+
+Checkbox-Gruppen besitzen bereits Min-/Max-Logik im Browser und einen serverseitigen `Count`-Pfad. Beide greifen regulär im Pflichtfeldpfad; optionale Gruppen werden im MultiField-Validator früh übersprungen. Die alte TODO-Zeile bedeutet daher nicht, dass die Funktion vollständig fehlt.
+
+## Aktionen, Mail und Verarbeitung
+
+| Plugin | Aktion | Voraussetzung / Ergebnis |
+| --- | --- | --- |
+| Basis | `upload-files` | Uploads im Medienmanager speichern und Medienreferenzen für Folgeschritte bereitstellen |
+| Basis | `mail` | Einsendung mit konfigurierter Vorlage an ermittelten Shop-/Formularempfänger senden |
+| Basis | `receipt-confirmation` | Empfangsbestätigung an geeignetes ausgefülltes primäres Mailfeld; eigene Vorlage, keine automatische vollständige Datenkopie |
+| Basis | `event` | Ereignis `moorl_form.submit` für konfigurierte Flows auslösen |
+| Classic | `mail-copy` | Vollständige Kopie mit eigenem Template und optionaler Kundenauswahl |
+| Classic | `write-history` | Einsendung für spätere Admin-Ansicht ablegen |
+| Classic | `print-view` | Auf gespeichertem Verlauf basierende Druckausgabe anbieten |
+| Classic | `subscribe-newsletter` | Optionalen Newsletterablauf ausführen |
+| Classic | `ics-attachment` | Kalenderdatei für Mailanhänge aufbereiten |
+| Csv | `csv-form` | Zugeordnete Werte als CSV-Zeile schreiben |
+| Hubspot | `hubspot-form` | Werte mit Client-/Formularzuordnung übertragen |
+| Mautic | `mautic-form` | Werte mit Client-/Formularzuordnung übertragen |
+| Webhook | `webhook-form` | Request anhand konfigurierter URL, Methode, Format und Mapping ausführen |
+
+Die Aktionsliste wählt aktivierte Provider; ihre Ausführungsreihenfolge folgt der Registrierung/Priorität. Uploads laufen mit hoher Priorität vor normalen Aktionen. Ein Fehler einer verfügbaren Aktion wird geloggt und gesammelt; nachfolgende Aktionen werden weiterhin versucht. Die Basis liefert keine Hintergrundwarteschlange und keinen automatischen Retry.
+
+| Ergebnis | Kundenrückmeldung |
+| --- | --- |
+| Eingaben ungültig | Fehlermeldung und Feldverletzungen; Eingaben können korrigiert werden |
+| Gültig, Verarbeitung ohne erfassten Fehler | Konfigurierte Erfolgsmeldung |
+| Gültig, Fehler in einer ausgeführten Aktion/Speicherung | Formular wurde abgeschickt, bei der Verarbeitung sind Probleme aufgetreten |
+| Aktionsprovider fehlt | Nur Logeintrag auf Level `warning`; daraus entsteht keine Kundenwarnung |
+| Unerwartete HTTP-/JSON-Antwort im Browser | Übermittlung konnte nicht bestätigt werden; Eingaben bleiben erhalten |
+
+Bei angenommener Einsendung wird das Formular auch bei Verarbeitungswarnungen zurückgesetzt. Eine Weiterleitung wird bei Warnungen unterdrückt. Alle Details stehen unter [Verarbeitungsergebnisse](processing-results.md). Die vorhandenen Klassen `FormActionDatabase` und `FormActionBlacklist` sind keine registrierten auswählbaren Basisaktionen.
+
+### Empfänger, Templates und Anhänge
+
+Empfänger können aus Shopkonfiguration, Formularkonfiguration, Formularübersetzung, gewählter Option oder einer zugeordneten Entity stammen. Die Einstellung `entityMailDetection` steuert das Ersetzen/Ergänzen einer Entity-Adresse. Optionsabhängiges Routing muss zur tatsächlich verwendeten Auswahl passen.
+
+Mailvorlagen erhalten den Formulardaten-Kontext. Beispiele:
+
+```twig
+{{ form.getPretty()|raw }}
+{{ form.getPretty('plain') }}
+{{ form.fieldName('email') }}
+{{ form.fieldValue('billingAddress.street') }}
+```
+
+Die HTML-Zusammenfassung escaped Daten selbst; eigenes ungeprüftes HTML darf dadurch nicht automatisch als sicher gelten. Passwortwerte werden in der formatierten Ausgabe maskiert. Medien-/Dateianhänge hängen vom gewählten Ablauf ab; die Option `orderSendAttachments` für Bestellmails ist standardmäßig deaktiviert.
+
+## Die Add-ons im Detail
+
+### Classic
+
+Classic ergänzt Bedingungen mit UND-Verknüpfung und den Operatoren `is`, `not`, `contains`, `isset`, `notset`, `gt`, `lt`, `gte`, `lte`; Semikolonwerte bilden Alternativen. Bedingungen werden für Anzeige und serverseitige Verarbeitung berücksichtigt.
+
+Hinzu kommen die Elemente `form-send-copy`, `form-newsletter`, `repeater`, `rating`, `tax-id-number`, `signature`, `bic`, `iban`, `checkbox-slider`, `radio-slider`, `radio-grid`, `checkbox-media` und `radio-media`. Ein `checkbox-grid` ist nicht registriert. Eine IBAN-Prüfsumme bestätigt keine Kontoinhaberschaft. Eine Unterschrift-/Druckfunktion bestätigt keine bestimmte rechtliche Qualität.
+
+Die zusätzlichen Auswahlquellen heißen `customer-group`, `customer-order`, `customer-address` und `product-stream`. Bestellungs-/Adressquellen beziehen sich auf den angemeldeten Kunden; die Produktstream-Auswahl lädt höchstens 50 Produkte. Ein Repeater kann Feldgruppen mehrfach ausgeben. Admin/Browser setzen regulär 1 bis 10 Wiederholungen an; PHP setzt 1 bis 5 nur dann, wenn der gesamte `config.repeater`-Block fehlt oder leer ist. Die gewünschten Grenzen deshalb ausdrücklich konfigurieren.
+
+Verlauf und Druck sind eigene aktivierbare Schritte. Die Druckansicht benötigt einen gespeicherten Verlauf. Classic stellt außerdem die Cookie-Deklaration für die in der Basis implementierte Entwurfsspeicherung bereit. [Einrichtung und Grenzen](../MoorlFormsClassic/index.md).
+
+Classic ergänzt auch Einstellungen für Weiterleitungen nach fehlerfreiem Submit: Reload, Produkt, Kategorie, feste URL oder Twig-basierte URL. Der angebotene Account-Zieltyp wird vom aktuellen Basiscontroller als Reload behandelt. Bei Verarbeitungswarnungen unterbleibt die Weiterleitung, damit die Rückmeldung sichtbar bleibt.
+
+### Popup
+
+Trigger sind Laden, Scrollen, Exit Intent und Klick auf ein konfiguriertes Element. Randlose Darstellung und eine eigene CSS-Klasse sind konfigurierbar. Größe und Ausrichtung sind im Standardtemplate `modal-lg modal-dialog-centered`; abweichende Größen/Positionen erfordern Template-/CSS-Anpassungen. Der JavaScript-Standard wartet zehn Sekunden und merkt sich die Anzeige je Formular in `sessionStorage`.
+
+Der Subscriber bindet Popups auf Navigation, Produkt, Landingpage, Login sowie Checkout-Bestätigung/-Abschluss ein. Andere Seitentypen sind damit nicht pauschal abgedeckt. Die Verfügbarkeit auf Mobilgeräten hängt vom gewählten Trigger ab. [Einrichtung](../MoorlFormsPopup/index.md).
+
+### Slides
+
+`slides` enthält einzelne `slide`-Elemente mit Vor-/Zurück-Navigation und schrittbezogener Eingabeprüfung. Es handelt sich um Formularstruktur, nicht um einen zusätzlichen Formulartyp. Der aktuelle Schritt wird nicht eigenständig gespeichert. Animationsfragmente und der unregistrierte Slides-Service begründen keine weitere verfügbare Funktion. [Einrichtung](../MoorlFormsSlides/index.md).
+
+Buttontexte und -klassen sind konfigurierbar, ebenso automatisches Scrollen nach oben (`autoScrollTop`, Standard aus), der obere Abstand (`offsetTop`, Standard 60) und das Ausblenden deaktivierter Buttons (`hideButtons`). Ein optionaler Absenden-Button wird erst im letzten Schritt freigegeben. Das Container-Template benötigt sowohl `config.css` als auch `config.animateInOut`; fehlende Konfiguration kann die Ausgabe verhindern. Die Schrittprüfung betrachtet Pflichtfelder des aktiven Schritts und ersetzt nicht die abschließende serverseitige Prüfung.
+
+### Customer
+
+`customer-register` ergänzt die Registrierung; `customer-account` stellt ein bearbeitbares Formular unter `/account/form/{id}` bereit. Eingaben können vorhandenen Kunden-/Custom-Field-Eigenschaften zugeordnet werden. Registrierung und Kontoaktualisierung haben verschiedene Lebenszyklen; eine erfolgreiche Speicherung belegt keine spätere Mail-/CRM-Verarbeitung. Das Registrierungsereignis ist `checkout.customer.moorl_form_register` und enthält das erste Registrierungsformular. Der mitgelieferte Flow besitzt noch keine Aktionen; gewünschte Folgen im Flow Builder konfigurieren. [Einrichtung](../MoorlFormsCustomer/index.md).
+
+### CustomProducts
+
+Produktformulare werden über dynamische Produktgruppen zugewiesen. Konfigurationen inklusive Uploadreferenzen werden an Warenkorbpositionen weitergegeben und in Bestellungen übernommen. Preisoptionen können abhängig von Typ und Konfiguration absolute/relative Zu-/Abschläge, Zahlenmultiplikatoren und die Produktmenge berücksichtigen. Nicht jede Option wird immer mit jedem Zahlenfaktor multipliziert.
+
+Für Basiswert `B`, Summe der Optionsbeträge `S` und Zahlenmultiplikator `M` gilt bei ausgeschaltetem `priceCalculationPriority` zunächst `B × M + S`, bei eingeschalteter Option `(B + S) × M`. Die Einstellung des ersten passenden Formulars entscheidet; Preis-/Steuerberechnung und Produktmenge werden im anschließenden Warenkorbpfad berücksichtigt.
+
+Die Auswahl im Produkt, die Warenkorbberechnung und die spätere Bestellanzeige sind getrennte Verarbeitungsschritte. [Preis- und Mengenbeispiele](../MoorlFormsCustomProducts/index.md).
+
+### Order
+
+Formulare vom Typ `order` erfassen zusätzliche Angaben im Checkout. Eine Produktgruppe kann die Gültigkeit einschränken; ohne solche Zuordnung kann ein Formular global passen. `checkoutLock` ist standardmäßig aus, `remember` standardmäßig an, `addToDocuments` standardmäßig aus.
+
+Die Eingaben werden sitzungsbezogen zwischengespeichert und nach Bestellerstellung an der Bestellung abgelegt. Der aktuelle Dokumentoverride betrifft den Lieferschein. Die Admin-Zusammenfassung liegt in den Bestelldetails. Die vorhandene Preisoberfläche berechnet in diesem Add-on keine eigenen Warenkorbpreispositionen. [Einrichtung](../MoorlFormsOrder/index.md).
+
+Das Ereignis `moorl_form.order_placed` wird je verarbeitetem Formular ausgelöst; es liefert keinen eigenen `OrderAware`-/Order-Entity-Vertrag. Flowbedingungen und Vorlagen müssen die tatsächlich angebotenen Eventdaten verwenden.
+
+### Product
+
+`product-request` verbindet ein Anfrageformular mit Produkten dynamischer Produktgruppen. Anfragebutton und Modal, Preis-/Kaufbuttondarstellung und Produktinformationen lassen sich konfigurieren. `keepProductUntouched=true` schützt standardmäßig vor Produktmanipulationen. Die Oberfläche ist keine allgemeine API-Kaufsperre. [Einrichtung](../MoorlFormsProduct/index.md).
+
+Eine freie Auswahl der Formularposition beziehungsweise eine Produkttab-Integration ist im aktuellen Add-on nicht implementiert; der entsprechende Positionsselektor ist auskommentiert.
+
+### Csv, Hubspot, Mautic und Webhook
+
+CSV schreibt zugeordnete Spalten in eine ausgewählte Mediendatei. Die Konfiguration liegt unter `form.config.csv` mit `csvId` und `mapping`; reguläres Trennzeichen ist `;`, Texteinrahmung ist `"`. Der PHP-Pfad liest/schreibt lokal unter `public/<media.path>`. Das aktuelle Kopfzeilen-Einlesen erwartet eine zusätzliche leere Abschlusszeile, also beispielsweise Kopfzeile plus zwei Zeilenumbrüche. Das im Admin angebotene Escape-Zeichen wird vom PHP-Schreibpfad nicht ausgewertet. Eine reine Remote-Medienablage ist durch diesen lokalen Pfad nicht abgedeckt.
+
+CRM-Add-ons nutzen die jeweilige Foundation-Integration. Hubspot und Mautic verwenden das Integrationsmapping im Formular und Konfigurationen für `clientId`, `formId` und `mapping`; Mappingeinträge besitzen `name` und `data`, Formularplatzhalter etwa `{{ email.value }}`. Die frühere Beschreibung „einfach in den Element-Einstellungen zuweisen“ reicht dafür nicht.
+
+Webhook erzeugt HTTP-Requests aus der Formularkonfiguration. Die Oberfläche bietet GET/POST, optionale Basic-Authentifizierung, Queryparameter, Header und POST-Bodies als leerer Body, Rohtext, JSON oder URL-kodierte Formdaten. Mappingwerte und ein optionales globales Template werden im Normalbetrieb als Twig ausgewertet; Ziel-URL und Rohtextbody werden nicht gerendert. Timeout und Verbindungs-Timeout sind jeweils zehn Sekunden. Der Testbutton sendet tatsächlich an das Ziel, verwendet aber keine aufgelösten Formular-/Flow-Twigwerte. Seine Textanzeige kann wegen eines bereits fürs Log gelesenen Responsebodys „No content“ zeigen.
+
+Diese Wege sind voneinander unabhängig: CSV-Ablage ist keine CRM-Übertragung, und eine erfolgreiche Formularannahme garantiert keine erfolgreiche externe Zustellung. Webhook fängt HTTP-Fehler intern ab; sie erreichen deshalb nicht automatisch den Verarbeitungsbericht der Basis. CRM-Mapping lässt Einträge mit PHP-leerem `data` aus, darunter Text `"0"`. Auch nach erfolgreicher Formularannahme ist die tatsächliche Integration gesondert zu prüfen.
+
+Zusätzlich sind die Flow-Aktionen `action.write.csv`, `action.send.hubspot`, `action.send.mautic` und `action.send.webhook` registriert. Sie verlangen einen passenden `MailAware`-Flow-Kontext; das ist ein anderer Aufrufpfad als die direkte Formularaktion. Die vier Add-ons registrieren keine eigenen Formulartypen. Historische `*-contact`-Abfragen im Admin belegen keinen weiteren Provider.
+
+Details: [CSV](../MoorlFormsCsv/index.md), [Hubspot](../MoorlFormsHubspot/index.md), [Mautic](../MoorlFormsMautic/index.md), [Webhook](../MoorlFormsWebhook/index.md).
+
+### Example und eigene Erweiterungen
+
+`MoorlFormsExample` demonstriert einen Formulartyp, eine Aktion, ein Element (jeweils `example`) und Admin-/Produkt-Erweiterungen. Es registriert keine eigene Auswahlquelle. Seine aktuellen Methodensignaturen passen teilweise nicht zur Basis. Es ist deshalb kein ungeprüft aktivierbares Referenzplugin.
+
+Eigene Erweiterungen benötigen PHP-Implementierung **und** DI-Registrierung sowie gegebenenfalls Admin-Import, Übersetzungen und Twig-Template:
+
+| Erweiterung | Tag | Vertrag |
+| --- | --- | --- |
+| Formulartyp | `moorl.fb.form` | `FormTypeInterface` |
+| Aktion | `moorl.fb.action` | `FormActionInterface` |
+| Element | `moorl.fb.element` | `ElementTypeInterface` |
+| Auswahlquelle | `moorl.fb.selection` | `ElementSelectionInterface` |
+
+Die `CODEX.md` im jeweiligen Plugin dokumentiert die tatsächlichen Methoden und Integrationspunkte. Ein Optionsname oder eine vorhandene PHP-Datei allein schaltet keine Funktion frei.
+
+## Daten, Export und Entwürfe
+
+Der sichtbare Exportbutton lädt eine **JSON-Datei mit Dateiendung** herunter. Formulare, Elemente und geladene Übersetzungen nutzen eine gemeinsame Payload. Beim Import/Duplizieren werden IDs und Baumbeziehungen neu zugeordnet. Medienreferenzen werden beim JSON-Import entfernt; Mediendateien gehören nicht zum JSON.
+
+Ein ZIP-Exportservice mit Medien-/Sprachoptionen ist implementiert; sein Dialogbutton ist in der aktuellen Detailansicht auskommentiert. JSON- und ZIP-Funktionen deshalb nicht als identische sichtbare Workflows beschreiben.
+
+Entity-Mapping schreibt konfigurierbare Eingaben und Zusammenfassungen in bestehende DAL-Entities, einschließlich Custom Fields. Es ist kein freier SQL-Editor. Erforderliche Zielattribute müssen valide versorgt werden.
+
+Entwürfe speichert die Basis nur bei gesetzter Zustimmung `moorl-fb-store`; Classic liefert deren Cookie-Eintrag. Fehler beim Senden behalten den Entwurf, Reset/angenommene Einsendung entfernen ihn. Passwörter werden nicht gespeichert; Datei-, versteckte, deaktivierte und schreibgeschützte Felder werden nicht wiederhergestellt. URL-Parameter können Felder vorfüllen, einschließlich Mehrfachauswahl. Für die vom normalen Inputtemplate unterstützten `context`-Vorgaben gibt es asynchrones Nachladen bei angemeldeten Kunden. Versteckte Felder rendern Twig dagegen synchron; Textbereiche übernehmen den asynchronen Marker derzeit nicht. Die genaue Abgrenzung steht in den [Anleitungen](how-tos.md).
+
+## Pluginweite Einstellungen
+
+| Schlüssel | Standard / Wirkung |
+| --- | --- |
+| `loggerLevel` | `400` (ERROR); für fehlende Provider auf WARNING `300` oder niedriger stellen |
+| `orderSendAttachments` | `false`; Uploadanhänge bei Bestellbestätigung |
+| `entityMailDetection` | Kein expliziter Default in XML; `no`, `yes-replace` oder `yes-append` |
+| `showLength` | `true`; Längenanzeige aktiv |
+| `showLengthType` | `text`; alternativ `progress-bar` |
+| `trimStringValues` | `false`; Rand-Leerzeichen übermittelter Strings entfernen |
+| `modalStaticLoad` | `true`; Modalinhalte statisch laden |
+| `modalDialogSize` | `modal-md` |
+| `modalDialogOrientation` | `modal-dialog-auto` |
+| `ignoreCustomFieldSet` | `false`; Demo-Custom-Fields beim Update regulär berücksichtigen |
+
+## Weiterführend
+
+- [Hauptseite](index.md), [Anleitungen](how-tos.md) und [FAQ](faq.md)
+- [Verarbeitungsergebnisse](processing-results.md)
+- [Dokumentationsprüfung und Admin-Aufnahmen](plugin-audit.md)
+- [Englische Feature-Übersicht](all-features.en.md)
+
+Die technischen Einzelheiten, Grenzen und noch nicht reproduzierten Implementierungsbefunde stehen in der jeweiligen `CODEX.md`. Der leere Autocomplete-Endpunkt, nicht registrierte Platzhalter und alte Demos werden nicht als einsatzbereite Features gezählt.
 

@@ -21,13 +21,13 @@ Du kannst den technischen Namen oder die exakte ID des Formulars als Parameter �
 
 **Basis Version**
 
-Du kannst SVG Icons innerhalb der Eingabefelder nutzen. Dazu liefert das moori Foundation Plugin bereits passende SVG Icons aus dem FontAwesome 5 Paket.
+Du kannst SVG Icons innerhalb der Eingabefelder nutzen. Das Foundation-Plugin liefert die dafür verwendeten SVG-Assets. Die ältere Packschreibweise wird im aktuellen Foundation auf die mitgelieferten FontAwesome-7-Assets abgebildet.
 
 ![](images/how-to-01.jpg)
 
 Gib dazu `icon|<pack>|<name>` ein.
 
-- pack: Name des Icon-Pakets, z.B. far, fas, fab (FontAwesome 5), fa6r, fa6s, fa6b (FontAwesome 6) oder default (Shopware)
+- pack: Name des Icon-Pakets, z. B. `fa7r`, `fa7s`, `fa7b`; ältere Aliase `far`, `fas`, `fab`, `fa6r`, `fa6s`, `fa6b` werden im aktuellen Foundation auf FontAwesome 7 abgebildet. Für Shopware-Icons ist etwa `default` verfügbar.
 - name: Name des Icons
 
 Um den passenden Namen zu ermitteln, gehe dazu auf folgende Seiten:
@@ -54,6 +54,8 @@ Anschließend kannst du ein Eingabefeld zu einer Tabellenspalte zuweisen.
 ![](images/how-to-11.jpg)
 
 Bitte achte darauf, dass du Pflichtfelder entsprechend kennzeichnest.
+
+Aktiviere außerdem „In Datenbank schreiben“ und ordne die Eingabefelder den tatsächlichen Zielattributen zu. Die Basis unterstützt vorhandene DAL-Entities und Custom Fields; sie erzeugt keine beliebigen SQL-Tabellen. Weitere Pflichtattribute der Ziel-Entity müssen ebenfalls erfüllt sein. Bei eigenständig abgesendeten Formularen erfolgt der Schreibversuch vor dem Erfolgsereignis; Fehler werden geloggt und als Verarbeitungswarnung gemeldet. Add-ons mit eigener Kunden-/Bestellerstellung besitzen einen gesonderten Speicherablauf. Siehe [Verarbeitungsergebnisse](processing-results.md).
 
 Du findest hier ein Beispiel-Formular: [Entity Mapping Formular](examples/entity-mapping-form.json)
 
@@ -85,7 +87,7 @@ Folgende Beispiel Variablen könntest du verwenden
 
 !!! note
 
-    Alle Variablen die den Begriff "context" enthalten, sind meistens persönliche Kundendaten. Das Plugin lädt diese Variablen asynchron nach, alle anderen Variablen werden im HTTP-Cache gespeichert.
+    Das normale Inputtemplate `field.html.twig` markiert Standardwerte mit `context` für asynchrones Nachladen. Der zugehörige Endpunkt liefert diese Werte bei angemeldeten Kunden. Dieser Pfad gilt nicht pauschal für jeden Elementtyp: Versteckte Felder rendern Twig synchron, und Textbereiche übernehmen den asynchronen Inputmarker derzeit nicht. Kundenspezifische Vorgaben deshalb am tatsächlich verwendeten Feldtyp und mit aktivem HTTP-Cache prüfen; andere Twigwerte können Teil der zwischengespeicherten Seite sein.
 
 ## Produkt Anfragen nur für Produkte, die nicht lagernd sind
 
@@ -101,6 +103,8 @@ Lege eine neue dynamische Produktgruppe mit der Regel `Lagerbestand ist kleiner 
 
 Deaktiviere den "In den Warenkorb" Button, dein Kunde kann nun Alternativ das Produkt anfragen.
 
+Diese Einstellung ändert die Storefront-Darstellung. Sie stellt keine allgemeine serverseitige Kaufsperre für andere Warenkorb-/API-Aufrufe dar. Beachte außerdem die Einstellung `keepProductUntouched` des Produkt-Anfrage-Add-ons.
+
 ![](images/how-to-05.jpg)
 
 In den Formular-Einstellungen machst du eine Zuweisung für die dynamische Produktgruppe.
@@ -110,6 +114,8 @@ In den Formular-Einstellungen machst du eine Zuweisung für die dynamische Produ
 **Classic Add-On**
 
 Mit dem Element "Verschachtelte Felder" lassen sich strukturierte Eingabefelder nutzen. Damit kannst du unter anderem auch Custom-Felder für die Newsletter-Anmeldung schreiben.
+
+Das Strukturelement `nested-fields` gehört bereits zur Basis. Der Newsletter-Ablauf einschließlich der Aktion `subscribe-newsletter` wird durch Classic ergänzt.
 
 In Shopware selbst kommen strukturierte Eingabefelder unter anderem auch in den Adressen der Kunden-Registrierung vor.
 

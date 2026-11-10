@@ -21,13 +21,13 @@ You can pass the technical name or the exact ID of the form as a parameter.
 
 **Basic version**
 
-You can use SVG icons inside the input fields. The moori Foundation Plugin already provides suitable SVG icons from the FontAwesome 5 package.
+You can use SVG icons inside input fields. Foundation supplies the SVG assets. In the current Foundation version, older pack aliases are mapped to the bundled FontAwesome 7 assets.
 
 ![](images/how-to-01.jpg)
 
 Enter `icon|<pack>|<name>`.
 
-- pack: Name of the icon package, e.g. far, fas, fab (FontAwesome 5), fa6r, fa6s, fa6b (FontAwesome 6) or solid, regular (Shopware)
+- pack: Icon pack name, for example `fa7r`, `fa7s`, `fa7b`. Current Foundation maps legacy aliases `far`, `fas`, `fab`, `fa6r`, `fa6s`, `fa6b` to FontAwesome 7. Shopware icons are available in packs such as `default`.
 - name: Name of the icon
 
 To determine the appropriate name, go to the following pages:
@@ -54,6 +54,8 @@ Then you can assign an input field to a table column.
 ![](images/how-to-11.jpg)
 
 Please make sure that you mark mandatory fields accordingly.
+
+Also enable database writing and map inputs to actual target attributes. The base supports existing DAL entities and custom fields; it does not create arbitrary SQL tables. All other mandatory target attributes must also be valid. Standalone submissions attempt the write before the success event; errors are logged and reported as processing warnings. Add-ons creating customers/orders have their own storage lifecycle. See [Processing results](processing-results.md).
 
 You can find an example form here: [Entity mapping form](examples/entity-mapping-form.json)
 
@@ -85,7 +87,7 @@ You could use the following example variables
 
 !!! note
 
-    All variables containing the term "context" are usually personal customer data. The plugin loads these variables asynchronously, all other variables are saved in the HTTP cache.
+    The normal `field.html.twig` input template marks default values containing `context` for asynchronous loading. The endpoint returns these values for logged-in customers. This does not apply to every element type: hidden fields render Twig synchronously, and textareas currently do not inherit the asynchronous input marker. Check customer-specific defaults with the actual field type and an active HTTP cache; other Twig values may become part of the cached page.
 
 ## Product requests only for products that are not in stock
 
@@ -101,6 +103,8 @@ Create a new dynamic product group with the rule `stock is less than 1`.
 
 Deactivate the "Add to cart" button, your customer can now alternatively request the product.
 
+This setting changes storefront presentation. It does not establish a general server-side purchase restriction for other cart/API calls. Also check the Product Request add-on's `keepProductUntouched` setting.
+
 ![](images/how-to-05.jpg)
 
 In the form settings you make an assignment for the dynamic product group.
@@ -110,6 +114,8 @@ In the form settings you make an assignment for the dynamic product group.
 **Classic Add-On**
 
 With the element "Nested fields" you can use structured input fields. With this you can also write custom fields for newsletter registration, among other things.
+
+The `nested-fields` element already belongs to the base plugin. Classic adds the newsletter workflow and its `subscribe-newsletter` action.
 
 In Shopware itself, structured input fields can also be found in the addresses for customer registration.
 

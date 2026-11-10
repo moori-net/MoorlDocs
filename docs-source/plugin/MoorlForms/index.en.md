@@ -51,22 +51,26 @@ Further examples can be found in the respective documentation of the add-ons!
 This plugin has been shortened in its basic version by some functions, so that it can be offered at an affordable price.
 affordable price. All further functions can be obtained.
 
-It is also possible to create your own add-ons, a developer documentation will follow soon.
+The complete [feature overview](all-features.en.md) covers the base plugin and all add-ons. The [audit report](plugin-audit.md) distinguishes source findings from verified administration views. Each plugin directory contains a `CODEX.md` documenting its extension contracts and limits.
 
-1. [Classic Add-On](../MoorlFormsClassic/index.md): Contains all functions of the [Form Builder](../MoorlFormBuilder/index.md).
+1. [Classic Add-On](../MoorlFormsClassic/index.en.md): Conditions, repeaters, additional fields, submission history, printing and additional actions
 2. [Exit-Intent-Popups Add-On](../MoorlFormsPopup/index.md): Use forms as popup
 3. [Slides Add-On](../MoorlFormsSlides/index.md): Use slides
 4. [Customer-Forms Add-On](../MoorlFormsCustomer/index.md): Customised forms for registration and customer area
 5. [Product-Configurator Add-On](../MoorlFormsCustomProducts/index.md): Additional information on products incl. price calculation
-6. [Order Add-On](../MoorlFormsOrder/index.md): Additional order details (incl. price calculation on the shopping cart)
+6. [Order Add-On](../MoorlFormsOrder/index.en.md): Additional checkout inputs, optional checkout lock and storage on the order
 7. [Product-Request Add-On](../MoorlFormsProduct/index.md): Product-specific enquiry forms
-8. customer-specific add-ons on request
+8. [CSV Add-On](../MoorlFormsCsv/index.en.md): Write mapped form inputs to CSV files
+9. [Hubspot Add-On](../MoorlFormsHubspot/index.en.md): Send data using a configured HubSpot integration
+10. [Mautic Add-On](../MoorlFormsMautic/index.en.md): Mautic form/contact integration
+11. [Webhook Add-On](../MoorlFormsWebhook/index.en.md): Configurable HTTP requests with form data
+12. Custom add-ons on request
 
 (\* In development, \*\* In concept phase)
 
 ## Example Add-On for developers
 
-[Example Add-On](https://github.com/moorl/MoorlFormsExample)
+[Example Add-On](https://github.com/moorl/MoorlFormsExample). Its local version contains outdated method signatures and must be adapted to the current base interfaces before activation. See its `CODEX.md` and the [feature overview](all-features.en.md).
 
 ## What is this plugin good for?
 
@@ -90,16 +94,18 @@ Here you can create or import a new form.
 
 ## Settings
 
+Current [Full HD administration screenshots](admin-screenshots.en.md) were captured on 10 November 2026 (English UI). Remaining JPGs illustrate earlier versions. The receipt-confirmation image shows a temporary, unsaved action selection; see the gallery for capture conditions.
+
 ### Basic configuration
 
-![](images/fb-01.jpg)
+![](images/admin-fhd/en/admin-list.png)
 
-![](images/fb-02.jpg)
+![](images/admin-fhd/en/admin-new-import.png)
 
 1. create new form
 2. import
 
-![](images/fb-03.jpg)
+![](images/admin-fhd/en/admin-form-general.png)
 
 1. form settings
 2. save form
@@ -107,7 +113,7 @@ Here you can create or import a new form.
 4. structure area of the form elements
 5. settings area (form/element)
 
-![](images/fb-04.jpg)
+![](images/admin-fhd/en/admin-element-text.png)
 
 1. context menu for creating, deleting or duplicating elements
 2. general element settings
@@ -136,7 +142,7 @@ An element of the group Sections...
 
 Some of these assignments are only available in the Form Builder 2 Add-Ons!
 
-![](images/fb-05.jpg)
+![](images/admin-fhd/en/admin-form-assignment.png)
 
 #### Layout and stylesheet settings
 
@@ -144,7 +150,7 @@ You can assign stylesheet attributes to each form/element.
 
 The CSS options vary depending on the type of form/element.
 
-![](images/fb-06.jpg)
+![](images/admin-fhd/en/admin-form-layout.png)
 
 ### Settings for elements
 
@@ -152,13 +158,13 @@ The CSS options vary depending on the type of form/element.
 
 All elements from the Field and Multi-Field group can have additional properties in this configuration.
 
-![](images/fb-07.jpg)
+![](images/admin-fhd/en/admin-element-field-settings.png)
 
 #### Selection Configuration
 
 All elements from the Multi-Field group can receive database-specific values. Add-ons offer more possibilities here.
 
-![](images/fb-08.jpg)
+![](images/admin-fhd/en/admin-element-selection-settings.png)
 
 #### Responsive behaviour
 
@@ -169,11 +175,11 @@ The distribution is as follows.
 
 Viewport (xs to xxl) | Inherited (Yes/No) | Display (Yes/No) | Width | Sorting/Arrangement
 
-![](images/fb-09.jpg)
+![](images/admin-fhd/en/admin-element-layout.png)
 
 #### Configuration Upload Field
 
-![](images/fb-10.jpg)
+![](images/admin-fhd/en/admin-element-upload-settings.png)
 
 #### Configuration Date
 
@@ -202,11 +208,11 @@ Viewport (xs to xxl) | Inherited (Yes/No) | Display (Yes/No) | Width | Sorting/A
 Here you can configure the e-mail recipient. If no value is entered, the shop's standard e-mail address will be used.
 of the shop is used.
 
-The function "Send copy" and "Recipient according to selection condition" are available in the Classic Add-On!
+The base plugin already provides `receipt-confirmation` for an acknowledgement and resolves recipients from form settings, translations, suitable selected options or entity context. Classic adds a full mail copy with its own template and optional customer checkbox. An acknowledgement and a full copy are different features.
 
-![](images/fb-16.jpg)
+![](images/admin-fhd/en/admin-form-mail.png)
 
-![](images/fb-17.jpg)
+![](images/admin-fhd/en/admin-form-mail-receipt-draft.png)
 
 ## CMS settings
 
@@ -214,7 +220,7 @@ The form does not have its own block, but can be accessed via the "Replace eleme
 
 After the CMS element has been inserted, you can assign forms of type CMS or Test to the CMS page.
 
-![](images/fb-22.jpg)
+![](images/admin-fhd/en/admin-cms-element-settings.png)
 
 ## Output in the storefront
 
@@ -239,4 +245,4 @@ In this example I show you how the e-mail is sent in the standard.
 
 ## Security
 
-- HTML tags are masked to prevent harmful scripts.
+- The formatted HTML summary escapes input values. Custom HTML/Twig and integrations still require configuration appropriate to their use; not every browser constraint has a corresponding server-side domain validator. See the [feature overview](all-features.en.md).
