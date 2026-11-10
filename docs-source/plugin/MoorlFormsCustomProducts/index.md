@@ -2,14 +2,20 @@
 
 Mit diesem Add-On für [Formular Baukasten 2](../MoorlForms/index.md) kannst du Produkte individuell konfigurierbar machen und den Preis beeinflussen! Eingabefelder lassen sich Datenbankfeldern zuweisen!
 
+Die Beschreibung wurde am 10.11.2026 mit dem lokalen Quellcode der Version 2.7.1 abgeglichen. Die vorhandenen Abbildungen stammen aus früheren Versionen und sind nicht frisch im aktuellen Admin verifiziert. Das Plugin-Paket setzt Shopware `~6.7.8`, MoorlFoundation `~1.7.29` und MoorlForms `~2.7.0` voraus.
+
 ## Beispiel Formulare zum Download
 
 - [Produkt-Konfigurator Add-On](examples/custom-products-add-on.json)
 - [Produkt-Konfigurator Add-On (Flächenberechnung)](examples/custom-products-add-on-ac.json)
 
+Prüfe nach dem Import Produktgruppe, Zielentität `order_line_item`, Steuer-/Währungsdaten und individuelle Custom Fields. Das Flächenbeispiel enthält keine Produktgruppenzuweisung. Die Beispiele verwenden ältere Exportdaten; ein echter Import in der aktuellen Oberfläche wurde für diesen Dokumentationsabgleich nicht durchgeführt.
+
 ## Neues Formular vom Typ "Produkt-Konfigurator"
 
 Mit diesem Formular kannst du einerseits die Produktpreise über die Optionen beeinflussen und andererseits kannst du das Mapping nutzen, um die Konfiguration in Custom-Feldern zu speichern, z.B. für weitere technische Verarbeitung der Daten.
+
+Lege das Formular unter **Inhalte → Formular Baukasten 2** mit dem Typ „Produkt-Konfigurator“ (`custom-product`) an. Das Add-On verwendet den Basiseditor und ergänzt dort die Einstellung zur Preisreihenfolge. Es besitzt keine eigene Admin-Navigation. Die Konfiguration wird in das bestehende Kauf-Formular eingebettet; ein zusätzlicher Absende-Button ist dort nicht nötig.
 
 ![](images/fbcp-01.jpg)
 
@@ -17,18 +23,15 @@ Beispiel Formular.
 
 ![](images/fbcp-04.jpg)
 
-Die zugeordnete Entität ist vom Typ "order_line_item", diese gleicht dem Namen der Datenbank-Tabelle. Dort wird der Payload und die Custom-Felder deiner Produkt-Konfiguration gespeichert!
+Die zugeordnete Entität ist `order_line_item`, also die Bestellposition. Die Konfiguration liegt zunächst als Payload an der Warenkorbposition. Nach Bestellabschluss werden die Mappings und Zusammenfassungen an die Bestellposition geschrieben.
 
 ![](images/fbcp-02.jpg)
 
 ![](images/fbcp-03.jpg)
 
-Bevor du mit der Preiskonfiguration startest, muss das Formular:
+Weise das Formular einer dynamischen Produktgruppe zu. Diese bestimmt, für welche Produkte es angeboten wird. Produkte ohne Produktstream-IDs werden in der aktuellen Zuordnung übersprungen.
 
-1. einer dynamischen Produktgruppe zuweisen.
-2. eine Steuerrate zuweisen.
-
-Die dynamische Produktgruppe sagt aus, für welche Produkte das Formular aktiviert wird.
+Prüfe außerdem die Preis- und Währungseinstellungen. Die aktuelle Warenkorbberechnung verwendet für Optionspreise die Steuerregeln der Produkt-Preisdefinition; eine eigene Formularsteuerrate ist dafür nicht pauschal erforderlich.
 
 Es ist auch möglich mehrere Formulare für die Produkte zu kombinieren! Achte jedoch darauf, dass du immer individuelle technische Namen für deine Eingabefelder nutzt!
 
@@ -38,9 +41,7 @@ Du kannst für die Optionen Preisdefinitionen festlegen.
 
 ![](images/fbcp-05.jpg)
 
-Absolute Preise können zum Produktpreis aufgeschlagen werden.
-
-Leider ist es nicht möglich negative Preise einzugeben, ich arbeite jedoch schon an einer Lösung dieses Problems.
+Für Optionen gibt es absolute Zuschläge und absolute Abschläge. Wähle für einen festen Rabatt die Preisart „Absoluter Preisnachlass“ (`absolute-discount`); der konfigurierte Betrag wird vom Preis abgezogen. Die frühere Einschränkung auf positive absolute Zuschläge gilt damit nicht mehr.
 
 ![](images/fbcp-06.jpg)
 
@@ -48,7 +49,16 @@ Prozentuale Preise sind relativ zum Preis des Produktes. Du kannst auch negative
 
 ## Längen- und Flächenberechnungen
 
-Mithilfe der Felder vom Typ "Nummer" oder "Nummernbereich" kannst du den Basispreis des Produktes mit dem Wert im Feld multiplizieren. Vorsicht: Wenn du diese Berechnung mit den Optionen nutzt, werden die Optionen ebenfalls multipliziert!
+Mit Feldern vom Typ „Nummer“ oder „Nummernbereich“ und deren Preismultiplikator kannst du den Produktpreis mit dem Eingabewert multiplizieren. Mehrere Multiplikatoren werden miteinander multipliziert, etwa Länge × Breite bei einer Flächenberechnung.
+
+Die Einstellung `priceCalculationPriority` in der Produkt-Konfigurator-Karte bestimmt, ob Optionsbeträge ebenfalls multipliziert werden. Mit `B` als Basisstückpreis, `S` als Summe der gewählten Optionsbeträge und `M` als Produkt aller Multiplikatoren gilt:
+
+| Einstellung | Stückpreis |
+| --- | --- |
+| Aus oder nicht gesetzt | `B × M + S` |
+| An | `(B + S) × M` |
+
+Bei mehreren kombinierten Formularen ist die Einstellung des ersten Formulars nach Formularpriorität maßgeblich. Die Produktmenge wird zusätzlich berücksichtigt. Ein numerischer Nullwert wird serverseitig derzeit als Multiplikator übersprungen; gleiche die Vorschau und den Warenkorb für solche Grenzwerte gesondert ab.
 
 ![](images/area-calc-01.jpg)
 
@@ -58,7 +68,7 @@ Mithilfe der Felder vom Typ "Nummer" oder "Nummernbereich" kannst du den Basispr
 
 ## Mapping
 
-Sofern die Daten aus der Entität "order_line_item" für eine weitere technische Verarbeitung relevant sind, kannst du die Eingabefelder zu Datenbankfeldern zuweisen!
+Ordne Eingabefelder den unterstützten Feldern der Bestellposition oder vorhandenen Custom Fields zu. Diese Mappings werden nach Bestellabschluss geschrieben; Uploads werden dabei als Medienreferenzen übernommen.
 
 ![](images/fbcp-07.jpg)
 
@@ -92,18 +102,36 @@ Kleine Nachbesserungen können vor Bestellabschluss jederzeit durchgeführt werd
 
 In der Bestellübersicht wird die Konfiguration in Textform angezeigt.
 
+Beim erneuten Bestellen aus der Bestellhistorie wird der gespeicherte Konfigurationspayload wieder mitgeschickt. Die Verarbeitung und Preisberechnung richten sich dabei nach den aktuell verfügbaren Formularen und Produkten.
+
 ## Admin
 
 Solltest du das Mapping nicht nutzen, hast du trotzdem jederzeit Zugriff auf die Konfiguration.
 
 ![](images/fbcp-15.jpg)
 
-Gehe dazu in die Bestellübersicht und wähle im Kontextmenü "Zeige Konfiguration".
+Öffne **Bestellungen → Bestellung → Allgemein** und wähle im Kontextmenü der Position „Zeige Konfiguration“. Die Zusammenfassung bleibt auch ohne individuelle Feldmappings verfügbar.
 
 ![](images/fbcp-16.jpg)
 
-Die rot markierten Platzhalter überträgst du in all deine E-Mail und Dokumenten Templates, damit die Konfiguration auch für den Kunden weiterhin ersichtlich sind.
+Für E-Mail- und eigene Dokumentvorlagen kannst du `{{ orderLineItem.customFields._moorl_fb_html }}` oder `{{ orderLineItem.customFields._moorl_fb_plain }}` verwenden. `orderLineItem` muss dabei die aktuelle Bestellposition in deiner Vorlage bezeichnen; passe den Variablennamen an die jeweilige Schleife an. Zusätzlich werden `_moorl_fb_json`, `_moorl_fb_xml` und `_moorl_fb_media_ids` gespeichert. Das Add-On passt nicht automatisch sämtliche Mail- und Dokumentvorlagen an.
 
 ![](images/fbcp-17.jpg)
 
 Da die Custom-Felder für Bestellpositionen nicht im Admin ersichtlich sind, ist hier ein Screenshot aus der Datenbank zur Veranschaulichung, dass das Feld richtig gespeichert wurde.
+
+## Plugin-Einstellungen
+
+Öffne **Erweiterungen → Meine Erweiterungen → Produkt-Konfigurator Add-On → Konfigurieren**.
+
+| Einstellung | Standard | Wirkung |
+| --- | --- | --- |
+| Checkout sperren, wenn erforderliche Angaben fehlen | Aus | Blockiert den Bestellabschluss bei erkannten Konfigurationsfehlern |
+| Badge in der Produktbox anzeigen | An | Kennzeichnet konfigurierbare Produkte |
+| Button in der Produktbox anzeigen | An | Führt zur Konfiguration auf der Detailseite |
+| Formulare nur für die Produktdetailseite laden | Aus | Beschränkt die Produktanreicherung auf Detailseiten |
+| Formulare nur für Produktlisten laden | Aus | Beschränkt die Produktanreicherung auf Listings |
+
+Sind beide Ladebeschränkungen aus, werden Produkte global angereichert. Sind beide an, laufen beide gezielten Ladepfade. Die Anzeige im Listing hängt davon ab, ob die Produktdaten dort angereichert werden.
+
+Die Browseranzeige ist eine Vorschau; maßgeblich ist der berechnete Warenkorb. Prüfe Preisreihenfolge, Menge, Währung und Steuerstatus sowie die Pflichtfeldsperre mit deiner eingesetzten Formular- und Theme-Konfiguration. Eine allgemeine Kompatibilität mit Rabatt-/Promotion-Erweiterungen ist durch dieses Add-On allein nicht nachgewiesen.
