@@ -1,62 +1,39 @@
 # Form Builder 2 | Exit-Intent-Popups Add-On
 
-With this add-on for [Form Builder 2](../MoorlForms/index.md) you have the possibility
-to open any form as a popup on any page. There are a number of settings for this.
-
-!!! note "Note for all customers who already own the Form Builder"
-
-    This plugin has a fundamentally different structure and does not offer the possibility to migrate the previous forms.
-          
-    Unfortunately, it is also not possible to duplicate/transfer the subscriptions after consultation with Shopware.
-          
-    Since I don't want to put my existing customers at a disadvantage, the form construction kit will continue to be provided with updates. But no new functions will be developed.
-          
-    For all interested parties with active subscriptions I offer a 50% voucher for Basis and Add-Ons.
-    
-    The voucher is issued individually and cannot be combined with discount campaigns.
+With this add-on for [Form Builder 2](https://docs.moori.net/en/plugin/MoorlForms/), you can open forms as popups on supported shop pages: the home page, product, category and landing pages, login, checkout confirmation and order completion. Settings control the trigger, delay and page selection.
 
 ## New form of type "Popup"
 
-This form opens automatically. It can be added to any shop pages.
-
-![](images/fbp-01.jpg)
+An active and available form of type `popup` is loaded on the configured supported pages. Its trigger determines when it opens. Custom controller pages, the cart and other account pages are not automatically covered by this add-on.
 
 There are further settings for this form.
 
 ## Settings
 
-![](images/fbp-02.jpg)
-
-![](images/fbp-03.jpg)
-
 As a rule, the same popup should not open again and again, unless you want to annoy your customers.
 Use the option to show the popup only once per session!
 
-popups that open immediately can be perceived as annoying. Set a dwell time,
-when the popup is allowed to open.
+Popups that open immediately can be perceived as annoying. Set a delay in seconds. Triggers are registered only after this delay; scroll, click and exit triggers still need the corresponding event to occur afterwards. Without a saved value, the storefront JavaScript uses 10 seconds.
 
-Select a page on which the popup will open. If no page is selected,
-the popup will open on any page.
+Select a supported page type. If none is selected, the popup applies to all pages covered by the add-on. For products, categories and landing pages, you can additionally select specific records; an empty ID selection means all records of that page type. General form availability, such as sales channel, language, dates and rules, still applies.
 
 You can open the popup for a specific event. If no event is selected,
 the popup will open as an "Exit-Intent".
 
-![](images/fbp-04.jpg)
+Available triggers are load (`onLoad`), first scroll (`onScroll`), exit intent (`onExit`) and clicking elements (`onClickElement`). For clicks, enter a valid CSS selector. It is evaluated after the delay, so elements inserted later do not automatically receive a listener. Exit intent uses the mouse leaving the document; no equivalent dedicated touch trigger is implemented.
+
+“Only once per session” is enabled by default. The current source stores opened form IDs in `sessionStorage` under `moorl-fb-popup`. This is browser session storage, not a permanent record on the customer account. With this restriction disabled, click triggers can reopen the popup. Multiple matching popups are not coordinated through a shared queue.
 
 ## Borderless popups
 
 You don't have to use the popup for forms, you can also display other content.
 For example, a discount code if the customer leaves the order completion after a certain time?
 
-![](images/fbp-05.jpg)
-
 You can easily customise the borderless popup.
 
-![](images/fbp-06.jpg)
+Borderless mode removes the default header and footer buttons for cancel/submit. If the content is a form, add suitable submit and, where needed, close controls to the content. The add-on itself does not generate discount codes or perform newsletter registration; content and configured form actions determine the result. Newsletter registration requires the corresponding extension or integration.
 
 This is what the popup could look like now!
-
-![](images/fbp-07.jpg)
 
 ## Ideas for using the popup
 
@@ -65,3 +42,11 @@ This is what the popup could look like now!
 3. feedback or rating form on the order confirmation.
 
 and much more...
+
+## Setup and technical limits
+
+Open Content → Form Builder → a form, choose “Popup form”, then configure its popup settings under General. There is no separate popup navigation module. Technical administration routes are `moorl.fb.form.list` and `moorl.fb.form.detail`.
+
+The popup uses the base plugin’s AJAX submission and available form elements. Remembering form input or saving a submission history is separate from remembering whether a popup was shown. The Slides add-on can provide content with several steps.
+
+Technical details were checked against source code on 10 November 2026. Local build artifacts can differ from source; this does not certify a browser test or asset build.
