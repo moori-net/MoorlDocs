@@ -1,15 +1,15 @@
 # Flow Builder Aktion | Webhook ausführen
 
-Diese Erweiterung ist mit [Formular Baukasten 2](../MoorlForms/index.md) kompatibel
+Diese Erweiterung ist mit [Formular Baukasten 2](https://docs.moori.net/plugin/MoorlForms/) kompatibel
 
 ## Installation
 
 !!! note
 
-      Falls du Probleme mit dem Plugin hast, bitte beachte folgende [Hinweise](../) im FAQ Bereich.
+      Falls du Probleme mit dem Plugin hast, bitte beachte folgende [Hinweise](https://docs.moori.net/plugin/) im FAQ Bereich.
 
 1. Installiere
-   [Foundation](../MoorlFoundation/index.md)
+   [Foundation](https://docs.moori.net/plugin/MoorlFoundation/)
 2. Installiere Webhook Integration im Plugin Manager
 
 ## Einrichtung
@@ -38,14 +38,6 @@ https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks
 - Der Reiter „Webhook testen“ führt einen echten Aufruf aus; verwende ihn nur für ein dafür vorgesehenes Ziel. Twig-Variablen werden dabei nicht ausgewertet
 
 Im normalen Betrieb werden Twig-Fehler als Fehlermeldungstext in die Parameter übernommen. Fehler des HTTP-Aufrufs werden protokolliert und abgefangen; daraus entsteht keine eigene Fehlermeldung für den Endkunden. Prüfe deshalb Zuordnungen, Zielantworten und das Pluginlog. Andere Fehler beim Aufbau der Konfiguration sind davon nicht pauschal abgedeckt.
-
-![](images/webhook-001.jpg)
-
-![](images/webhook-002.jpg)
-
-![](images/webhook-003.jpg)
-
-![](images/webhook-004.jpg)
 
 ### Webhook mit Formular Baukasten 2 Formular einrichten
 
@@ -82,10 +74,8 @@ Plugin-Einstellung `MoorlFormsWebhook.config.loggerLevel`: Standard `400/ERROR`;
 
 INFO zeichnet Konfiguration, Requestoptionen und Antwort auf; Fehlerlogs können ebenfalls Konfiguration und Optionen enthalten. Zugangsdaten, Header und Nutzdaten werden nicht maskiert. Übernimm keine echten Secrets oder Kundendaten in Screenshots und Diagnoseausgaben.
 
-Die Bilder und externen Beispiele stammen aus früheren Dokumentationsständen. Sie bestätigen keine aktuelle Oberfläche oder erfolgreiche Netzwerkprüfung.
+Die externen Beispiele bestätigen keine aktuelle Oberfläche oder erfolgreiche Netzwerkprüfung.
 
 ## Test
 
 Ein Beispiel für einen gesendeten Webhook.
-
-![](images/webhook-005.jpg)

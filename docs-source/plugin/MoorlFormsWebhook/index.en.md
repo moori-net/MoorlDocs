@@ -1,15 +1,15 @@
 # Webhook integration
 
-This extension is compatible with [Form Builder 2](../MoorlForms/index.md)
+This extension is compatible with [Form Builder 2](https://docs.moori.net/en/plugin/MoorlForms/)
 
 ## Installation
 
 !!! note
 
-      If you have problems with the plugin, please read the following [notes](../) in the FAQ section.
+      If you have problems with the plugin, please read the following [notes](https://docs.moori.net/en/plugin/) in the FAQ section.
 
 1. install
-   [Foundation](../MoorlFoundation/index.md)
+   [Foundation](https://docs.moori.net/en/plugin/MoorlFoundation/)
 2. install Webhook Integration in the Plugin Manager
 
 ## Setup
@@ -38,14 +38,6 @@ https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks
 - The “Test webhook” tab makes a real request; use it only with a designated destination. Twig variables are not rendered during the test
 
 During normal execution, Twig errors become error-message text in parameter values. HTTP request errors are logged and caught, without a plugin-specific error message for the customer. Check mappings, destination responses and the plugin log. Other configuration-building errors are not necessarily covered by that handling.
-
-![](images/webhook-001.jpg)
-
-![](images/webhook-002.jpg)
-
-![](images/webhook-003.jpg)
-
-![](images/webhook-004.jpg)
 
 ### Connect a Form Builder 2 form
 
@@ -82,10 +74,8 @@ Plugin setting `MoorlFormsWebhook.config.loggerLevel` defaults to `400/ERROR`; o
 
 INFO records configuration, request options and response; error logs can also contain configuration and options. Credentials, headers and payload data are not masked. Include no real secrets or customer data in screenshots or diagnostic output.
 
-The images and external examples come from older documentation versions. They do not confirm a current interface or successful network test.
+The external examples do not confirm a current interface or successful network test.
 
 ## Test
 
 An example for a sent webhook.
-
-![](images/webhook-005.jpg)
