@@ -8,24 +8,24 @@ tags:
 
 # Form Builder 2 | All features
 
-This overview covers the base plugin and all twelve add-ons available locally. Source review date: **10 November 2026**. It describes implemented features and their limitations. See the [audit report](plugin-audit.md) for administration checks, screenshots and outstanding runtime verification. Available configuration depends on the installed and active add-ons.
+This overview covers the base plugin and all twelve add-ons available locally. Source review date: **10 November 2026**. It describes implemented features and their limitations. Available configuration depends on the installed and active add-ons.
 
 ## Which plugin do I need?
 
 | Plugin | Purpose | Main limitation |
 | --- | --- | --- |
 | **MoorlForms** | Form editor, CMS and test forms, input fields, layout, validation, email, receipt confirmation, media, entity mapping, import/export and a Flow event | Does not automatically record every submission in history; use Classic for that. |
-| [Classic](../MoorlFormsClassic/index.md) | Conditions, repeaters, image selection, additional input fields, newsletter, email copy, history, print view and ICS | A printed record is not a legal certification. |
-| [Popup](../MoorlFormsPopup/index.md) | Trigger forms on page load, scroll, exit intent or click | Automatic integration only on supported page types; once per browser session and form by default. |
-| [Slides](../MoorlFormsSlides/index.md) | Split a form into navigable steps | Does not independently save the current step; existing animation fragments are not a regular animation element. |
-| [Customer](../MoorlFormsCustomer/index.md) | Additional registration fields and editable forms in the customer account | Map existing customer properties/custom fields deliberately; does not create a new general customer database. |
-| [CustomProducts](../MoorlFormsCustomProducts/index.md) | Product configuration, price options, quantity handling, file uploads and transfer to cart/order | Products are assigned through dynamic product groups; configure price logic and quantity behavior. |
-| [Order](../MoorlFormsOrder/index.md) | Additional checkout information, optional order lock, storage on the order and output | The visible price option does not establish that cart price calculation is implemented. |
-| [Product](../MoorlFormsProduct/index.md) | Product enquiries, button/modal and product information in forms | Hiding the buy button/price does not provide a general server-side purchase block. |
-| [Csv](../MoorlFormsCsv/index.md) | Write submissions as CSV rows with mapped columns | Requires file storage and column configuration; not a complete form export including media. |
-| [Hubspot](../MoorlFormsHubspot/index.md) | Submit form values to a configured HubSpot client/form | Requires the matching Foundation integration; an administration mapping alone does not confirm delivery. |
-| [Mautic](../MoorlFormsMautic/index.md) | Submit data to existing Mautic forms | The target form determines contacts and subsequent actions; no separate contact CRUD in the Shopware administration. |
-| [Webhook](../MoorlFormsWebhook/index.md) | Send form values to configured HTTP endpoints | Method, URL, format and mapping determine the actual request. A screenshot does not confirm delivery. |
+| [Classic](https://docs.moori.net/en/plugin/MoorlFormsClassic/) | Conditions, repeaters, image selection, additional input fields, newsletter, email copy, history, print view and ICS | A printed record is not a legal certification. |
+| [Popup](https://docs.moori.net/en/plugin/MoorlFormsPopup/) | Trigger forms on page load, scroll, exit intent or click | Automatic integration only on supported page types; once per browser session and form by default. |
+| [Slides](https://docs.moori.net/en/plugin/MoorlFormsSlides/) | Split a form into navigable steps | Does not independently save the current step; existing animation fragments are not a regular animation element. |
+| [Customer](https://docs.moori.net/en/plugin/MoorlFormsCustomer/) | Additional registration fields and editable forms in the customer account | Map existing customer properties/custom fields deliberately; does not create a new general customer database. |
+| [CustomProducts](https://docs.moori.net/en/plugin/MoorlFormsCustomProducts/) | Product configuration, price options, quantity handling, file uploads and transfer to cart/order | Products are assigned through dynamic product groups; configure price logic and quantity behavior. |
+| [Order](https://docs.moori.net/en/plugin/MoorlFormsOrder/) | Additional checkout information, optional order lock, storage on the order and output | The visible price option does not establish that cart price calculation is implemented. |
+| [Product](https://docs.moori.net/en/plugin/MoorlFormsProduct/) | Product enquiries, button/modal and product information in forms | Hiding the buy button/price does not provide a general server-side purchase block. |
+| [Csv](https://docs.moori.net/en/plugin/MoorlFormsCsv/) | Write submissions as CSV rows with mapped columns | Requires file storage and column configuration; not a complete form export including media. |
+| [Hubspot](https://docs.moori.net/en/plugin/MoorlFormsHubspot/) | Submit form values to a configured HubSpot client/form | Requires the matching Foundation integration; an administration mapping alone does not confirm delivery. |
+| [Mautic](https://docs.moori.net/en/plugin/MoorlFormsMautic/) | Submit data to existing Mautic forms | The target form determines contacts and subsequent actions; no separate contact CRUD in the Shopware administration. |
+| [Webhook](https://docs.moori.net/en/plugin/MoorlFormsWebhook/) | Send form values to configured HTTP endpoints | Method, URL, format and mapping determine the actual request. A screenshot does not confirm delivery. |
 | **MoorlFormsExample** | Developer example for custom extensions | Uses outdated method signatures in the current source; adapt them to the base contracts before activation. |
 
 ## Working in the administration
@@ -142,7 +142,7 @@ The action list selects active providers; execution order follows registration/p
 | Missing action provider | A `warning` log entry only; no customer warning is generated |
 | Unexpected HTTP/JSON response in the browser | Submission could not be confirmed; inputs are retained |
 
-An accepted submission resets the form even when processing warnings occur. Redirects are suppressed when there are warnings. See [processing results](processing-results.md) for details. The existing `FormActionDatabase` and `FormActionBlacklist` classes are not registered selectable base actions.
+An accepted submission resets the form even when processing warnings occur. Redirects are suppressed when there are warnings. See [processing results](https://docs.moori.net/en/plugin/MoorlForms/processing-results/) for details. The existing `FormActionDatabase` and `FormActionBlacklist` classes are not registered selectable base actions.
 
 ### Recipients, templates and attachments
 
@@ -169,7 +169,7 @@ It also adds `form-send-copy`, `form-newsletter`, `repeater`, `rating`, `tax-id-
 
 Additional selection sources are `customer-group`, `customer-order`, `customer-address` and `product-stream`. Order/address sources refer to the logged-in customer; the product stream selection loads at most 50 products. A repeater renders a field group multiple times. Administration/browser defaults normally allow 1 to 10 repetitions; PHP applies 1 to 5 only when the entire `config.repeater` block is missing or empty. Configure the intended limits explicitly.
 
-History and print output are separate steps that must be enabled. Print view requires saved history. Classic also provides the cookie declaration for draft storage implemented in the base plugin. [Setup and limitations](../MoorlFormsClassic/index.md).
+History and print output are separate steps that must be enabled. Print view requires saved history. Classic also provides the cookie declaration for draft storage implemented in the base plugin. [Setup and limitations](https://docs.moori.net/en/plugin/MoorlFormsClassic/).
 
 Classic also adds redirect settings after submission without processing errors: reload, product, category, fixed URL or a Twig-based URL. The available account target type is treated as a reload by the current base controller. Processing warnings suppress the redirect so the feedback remains visible.
 
@@ -177,17 +177,17 @@ Classic also adds redirect settings after submission without processing errors: 
 
 Triggers are page load, scroll, exit intent and a click on a configured element. Borderless presentation and a custom CSS class are configurable. The standard template fixes size/alignment at `modal-lg modal-dialog-centered`; different sizes/positions require template/CSS changes. The JavaScript default waits ten seconds and records display per form in `sessionStorage`.
 
-The subscriber integrates popups on navigation, product, landing page, login and checkout confirmation/finish pages. This does not cover every page type. Mobile availability depends on the trigger. [Setup](../MoorlFormsPopup/index.md).
+The subscriber integrates popups on navigation, product, landing page, login and checkout confirmation/finish pages. This does not cover every page type. Mobile availability depends on the trigger. [Setup](https://docs.moori.net/en/plugin/MoorlFormsPopup/).
 
 ### Slides
 
-`slides` contains individual `slide` elements with previous/next navigation and step-specific input checks. This is form structure, not another form type. The current step is not saved independently. Animation fragments and the unregistered Slides service do not establish another available feature. [Setup](../MoorlFormsSlides/index.md).
+`slides` contains individual `slide` elements with previous/next navigation and step-specific input checks. This is form structure, not another form type. The current step is not saved independently. Animation fragments and the unregistered Slides service do not establish another available feature. [Setup](https://docs.moori.net/en/plugin/MoorlFormsSlides/).
 
 Button labels and classes are configurable, as are automatic scrolling to the top (`autoScrollTop`, off by default), the top offset (`offsetTop`, default 60) and hiding disabled buttons (`hideButtons`). An optional submit button is enabled only in the final step. The container template requires both `config.css` and `config.animateInOut`; missing configuration can prevent output. Step validation checks required fields in the active step and does not replace final server-side validation.
 
 ### Customer
 
-`customer-register` extends registration; `customer-account` supplies an editable form at `/account/form/{id}`. Inputs can be mapped to existing customer/custom-field properties. Registration and account updates have different lifecycles; successful storage does not confirm subsequent email/CRM processing. The registration event is `checkout.customer.moorl_form_register` and contains the first registration form. The supplied Flow has no actions yet; configure the required follow-up steps in Flow Builder. [Setup](../MoorlFormsCustomer/index.md).
+`customer-register` extends registration; `customer-account` supplies an editable form at `/account/form/{id}`. Inputs can be mapped to existing customer/custom-field properties. Registration and account updates have different lifecycles; successful storage does not confirm subsequent email/CRM processing. The registration event is `checkout.customer.moorl_form_register` and contains the first registration form. The supplied Flow has no actions yet; configure the required follow-up steps in Flow Builder. [Setup](https://docs.moori.net/en/plugin/MoorlFormsCustomer/).
 
 ### CustomProducts
 
@@ -195,19 +195,19 @@ Product forms are assigned through dynamic product groups. Configurations, inclu
 
 For base value `B`, sum of option amounts `S` and numeric multiplier `M`, the initial calculation is `B × M + S` with `priceCalculationPriority` off, or `(B + S) × M` with it on. The setting of the first matching form determines which applies; the subsequent cart processing path handles price/tax calculation and product quantity.
 
-Product selection, cart calculation and later order display are separate processing steps. [Price and quantity examples](../MoorlFormsCustomProducts/index.md).
+Product selection, cart calculation and later order display are separate processing steps. [Price and quantity examples](https://docs.moori.net/en/plugin/MoorlFormsCustomProducts/).
 
 ### Order
 
 Forms of type `order` collect additional checkout information. A product group can restrict applicability; without such an assignment a form can apply globally. `checkoutLock` is off by default, `remember` is on, and `addToDocuments` is off.
 
-Inputs are cached per session and stored on the order after order creation. The current document override affects the delivery note. The administration summary appears in order details. The existing price UI does not calculate separate cart price items in this add-on. [Setup](../MoorlFormsOrder/index.md).
+Inputs are cached per session and stored on the order after order creation. The current document override affects the delivery note. The administration summary appears in order details. The existing price UI does not calculate separate cart price items in this add-on. [Setup](https://docs.moori.net/en/plugin/MoorlFormsOrder/).
 
 The event `moorl_form.order_placed` is triggered for each processed form; it does not provide its own `OrderAware`/order entity contract. Flow conditions and templates must use the event data actually offered.
 
 ### Product
 
-`product-request` associates enquiry forms with products from dynamic product groups. The enquiry button/modal, price/buy-button presentation and product information are configurable. `keepProductUntouched=true` prevents product modifications by default. The UI does not provide a general API purchase block. [Setup](../MoorlFormsProduct/index.md).
+`product-request` associates enquiry forms with products from dynamic product groups. The enquiry button/modal, price/buy-button presentation and product information are configurable. `keepProductUntouched=true` prevents product modifications by default. The UI does not provide a general API purchase block. [Setup](https://docs.moori.net/en/plugin/MoorlFormsProduct/).
 
 Free selection of the form position or integration into a product tab is not implemented in the current add-on; the corresponding position selector is commented out.
 
@@ -223,7 +223,7 @@ These paths are independent: CSV storage is not CRM transfer, and accepting a fo
 
 The Flow actions `action.write.csv`, `action.send.hubspot`, `action.send.mautic` and `action.send.webhook` are also registered. They require an appropriate `MailAware` Flow context; this is a separate entry point from the direct form action. These four add-ons register no form types of their own. Historical `*-contact` checks in the administration do not establish another provider.
 
-Details: [CSV](../MoorlFormsCsv/index.md), [Hubspot](../MoorlFormsHubspot/index.md), [Mautic](../MoorlFormsMautic/index.md), [Webhook](../MoorlFormsWebhook/index.md).
+Details: [CSV](https://docs.moori.net/en/plugin/MoorlFormsCsv/), [Hubspot](https://docs.moori.net/en/plugin/MoorlFormsHubspot/), [Mautic](https://docs.moori.net/en/plugin/MoorlFormsMautic/), [Webhook](https://docs.moori.net/en/plugin/MoorlFormsWebhook/).
 
 ### Example and custom extensions
 
@@ -248,7 +248,7 @@ A ZIP export service with media/language options is implemented; its dialog butt
 
 Entity mapping writes configurable inputs and summaries to existing DAL entities, including custom fields. It is not a free-form SQL editor. Required target attributes must receive valid values.
 
-The base plugin stores drafts only with `moorl-fb-store` consent; Classic supplies its cookie entry. Sending failures retain the draft; reset/accepted submission removes it. Passwords are not stored; file, hidden, disabled and read-only fields are not restored. URL parameters can prefill fields, including multiple selections. The `context` defaults supported by the ordinary input template can be loaded asynchronously for logged-in customers. Hidden fields instead render Twig synchronously; textareas currently do not carry the asynchronous marker. See the [how-tos](how-tos.en.md) for the precise scope.
+The base plugin stores drafts only with `moorl-fb-store` consent; Classic supplies its cookie entry. Sending failures retain the draft; reset/accepted submission removes it. Passwords are not stored; file, hidden, disabled and read-only fields are not restored. URL parameters can prefill fields, including multiple selections. The `context` defaults supported by the ordinary input template can be loaded asynchronously for logged-in customers. Hidden fields instead render Twig synchronously; textareas currently do not carry the asynchronous marker. See the [how-tos](https://docs.moori.net/en/plugin/MoorlForms/how-tos/) for the precise scope.
 
 ## Plugin-wide settings
 
@@ -267,10 +267,8 @@ The base plugin stores drafts only with `moorl-fb-store` consent; Classic suppli
 
 ## Further reading
 
-- [Main page](index.en.md), [how-tos](how-tos.en.md) and [FAQ](faq.en.md)
-- [Processing results](processing-results.md)
-- [Documentation audit and administration screenshots](plugin-audit.md)
-- [English administration screenshots in Full HD](admin-screenshots.en.md)
-- [German feature overview](all-features.md)
+- [Main page](https://docs.moori.net/en/plugin/MoorlForms/), [how-tos](https://docs.moori.net/en/plugin/MoorlForms/how-tos/) and [FAQ](https://docs.moori.net/en/plugin/MoorlForms/faq/)
+- [Processing results](https://docs.moori.net/en/plugin/MoorlForms/processing-results/)
+- [German feature overview](https://docs.moori.net/plugin/MoorlForms/all-features/)
 
 Technical details, limitations and implementation findings that have not yet been reproduced are recorded in each plugin's `CODEX.md`. The empty autocomplete endpoint, unregistered placeholders and old demos are not counted as ready-to-use features.

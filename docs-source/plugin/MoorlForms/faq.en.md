@@ -45,15 +45,15 @@ The plugin offers a basis for Shopware 6 and can be extended as desired with the
 
 Details on the areas of application can be found in the respective documentation!
 
-1. [Classic Add-On](../MoorlFormsClassic/index.en.md): Conditions, repeaters, additional fields, submission history, printing and additional actions
-2. [Exit-Intent-Popups Add-On](../MoorlFormsPopup/index.md): Use forms as popup
-3. [Slides Add-On](../MoorlFormsSlides/index.md): Use slides
-4. [Customer-Forms Add-On](../MoorlFormsCustomer/index.md): Customised forms for registration and customer area
-5. [Product-Configurator Add-On](../MoorlFormsCustomProducts/index.md): Additional information on products incl. price calculation
-6. [Order Add-On](../MoorlFormsOrder/index.en.md): Additional checkout inputs, optional checkout lock and storage on the order
-7. [Product-Request Add-On](../MoorlFormsProduct/index.md): Product-specific enquiry forms
+1. [Classic Add-On](https://docs.moori.net/en/plugin/MoorlFormsClassic/): Conditions, repeaters, additional fields, submission history, printing and additional actions
+2. [Exit-Intent-Popups Add-On](https://docs.moori.net/en/plugin/MoorlFormsPopup/): Use forms as popup
+3. [Slides Add-On](https://docs.moori.net/en/plugin/MoorlFormsSlides/): Use slides
+4. [Customer-Forms Add-On](https://docs.moori.net/en/plugin/MoorlFormsCustomer/): Customised forms for registration and customer area
+5. [Product-Configurator Add-On](https://docs.moori.net/en/plugin/MoorlFormsCustomProducts/): Additional information on products incl. price calculation
+6. [Order Add-On](https://docs.moori.net/en/plugin/MoorlFormsOrder/): Additional checkout inputs, optional checkout lock and storage on the order
+7. [Product-Request Add-On](https://docs.moori.net/en/plugin/MoorlFormsProduct/): Product-specific enquiry forms
 
-CSV, Hubspot, Mautic, Webhook and the developer example are also part of this plugin family. See [All features](all-features.en.md) for the complete feature allocation, configuration and limits.
+CSV, Hubspot, Mautic, Webhook and the developer example are also part of this plugin family. See [All features](https://docs.moori.net/en/plugin/MoorlForms/all-features/) for the complete feature allocation, configuration and limits.
 
 ## How do I create a new CMS form in Shopware 6?
 
@@ -83,7 +83,7 @@ Navigate via the worlds of experience to the CMS page where you want to use the 
 
 ### Select any element
 
-The plugin does not offer a CMS block, you can select any CMS block. For example from [Foundation Features](../MoorlFoundation/features-premium.md).
+The plugin does not offer a CMS block, you can select any CMS block. For example from [Foundation Features](https://docs.moori.net/en/plugin/MoorlFoundation/features-premium/).
 
 ### Test the form in the storefront
 

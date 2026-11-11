@@ -7,7 +7,7 @@
     "height": 1080,
     "deviceScaleFactor": 1
   },
-  "presentation": "Fresh English browser captures after a full reload. Symfony debug toolbar hidden and normal update notification dismissed. Error notifications were checked before every capture and were not hidden. German variants and obsolete diagnostics were removed.",
+  "presentation": "Fresh English browser captures after a full reload. Symfony debug toolbar hidden and normal update notification dismissed. Error notifications were checked before every capture and were not hidden. German variants and obsolete diagnostics were removed. Screenshots are stored directly in each plugin docs/images directory and shared by the existing DE and EN manuals; separate gallery pages have been removed.",
   "registeredPlugins": [
     {
       "name": "MoorlForms",
@@ -28,7 +28,7 @@
   "captures": [
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-list.png",
+      "file": "images/admin-list.png",
       "title": "Form list",
       "route": "#/moorl/fb/form/list?limit=25&page=1&sortBy=name&sortDirection=ASC&naturalSorting=false",
       "capturedAt": "2026-11-10T22:08:44.924Z",
@@ -43,7 +43,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-new-import.png",
+      "file": "images/admin-new-import.png",
       "title": "Create and import forms",
       "route": "#/moorl/fb/form/list?limit=25&page=1&sortBy=name&sortDirection=ASC&naturalSorting=false",
       "capturedAt": "2026-11-10T22:08:45.517Z",
@@ -58,7 +58,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-form-general.png",
+      "file": "images/admin-form-general.png",
       "title": "General form settings",
       "route": "#/moorl/fb/form/detail/01a17c29bdad73c8b07fa62cd39bfcfc",
       "capturedAt": "2026-11-10T22:08:46.907Z",
@@ -73,7 +73,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-form-layout.png",
+      "file": "images/admin-form-layout.png",
       "title": "Form layout",
       "route": "#/moorl/fb/form/detail/01a17c29bdad73c8b07fa62cd39bfcfc",
       "capturedAt": "2026-11-10T22:08:47.470Z",
@@ -88,7 +88,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-form-mail.png",
+      "file": "images/admin-form-mail.png",
       "title": "Mailing",
       "route": "#/moorl/fb/form/detail/01a17c29bdad73c8b07fa62cd39bfcfc",
       "capturedAt": "2026-11-10T22:08:48.054Z",
@@ -103,7 +103,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-form-assignment.png",
+      "file": "images/admin-form-assignment.png",
       "title": "Form assignment",
       "route": "#/moorl/fb/form/detail/01a17c29bdad73c8b07fa62cd39bfcfc",
       "capturedAt": "2026-11-10T22:08:48.640Z",
@@ -118,7 +118,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-element-text.png",
+      "file": "images/admin-element-text.png",
       "title": "Text field",
       "route": "#/moorl/fb/form/detail/01a17c29bdad73c8b07fa62cd39bfcfc/element/01a17c29bdad73c8b07fa62cd9833460",
       "capturedAt": "2026-11-10T22:08:50.060Z",
@@ -133,7 +133,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-element-layout.png",
+      "file": "images/admin-element-layout.png",
       "title": "Element layout",
       "route": "#/moorl/fb/form/detail/01a17c29bdad73c8b07fa62cd39bfcfc/element/01a17c29bdad73c8b07fa62cd9833460",
       "capturedAt": "2026-11-10T22:08:50.653Z",
@@ -148,7 +148,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-element-assignment.png",
+      "file": "images/admin-element-assignment.png",
       "title": "Element assignment",
       "route": "#/moorl/fb/form/detail/01a17c29bdad73c8b07fa62cd39bfcfc/element/01a17c29bdad73c8b07fa62cd9833460",
       "capturedAt": "2026-11-10T22:08:51.241Z",
@@ -163,7 +163,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-element-selection.png",
+      "file": "images/admin-element-selection.png",
       "title": "Selection field",
       "route": "#/moorl/fb/form/detail/01a17c29bdad73c8b07fa62cd39bfcfc/element/01a17c29bdad73c8b07fa62cdba33fac",
       "capturedAt": "2026-11-10T22:08:52.654Z",
@@ -178,7 +178,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-element-upload.png",
+      "file": "images/admin-element-upload.png",
       "title": "Upload field",
       "route": "#/moorl/fb/form/detail/01a17c29bdad73c8b07fa62cd39bfcfc/element/01a17c29bdad73c8b07fa62cda221a26",
       "capturedAt": "2026-11-10T22:08:54.062Z",
@@ -193,7 +193,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-element-cms.png",
+      "file": "images/admin-element-cms.png",
       "title": "Embedded CMS element",
       "route": "#/moorl/fb/form/detail/01a17c29bdad73c8b07fa62cd39bfcfc/element/01a17c29d7b07b93874e84f4b881ac1b",
       "capturedAt": "2026-11-10T22:08:55.511Z",
@@ -208,7 +208,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-element-cms-settings.png",
+      "file": "images/admin-element-cms-settings.png",
       "title": "Embedded CMS element settings",
       "route": "#/moorl/fb/form/detail/01a17c29bdad73c8b07fa62cd39bfcfc/element/01a17c29d7b07b93874e84f4b881ac1b",
       "capturedAt": "2026-11-10T22:08:56.162Z",
@@ -223,7 +223,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-element-upload-settings.png",
+      "file": "images/admin-element-upload-settings.png",
       "title": "Upload settings",
       "route": "#/moorl/fb/form/detail/01a17c29bdad73c8b07fa62cd39bfcfc/element/01a17c29bdad73c8b07fa62cda221a26",
       "capturedAt": "2026-11-10T22:08:57.938Z",
@@ -238,7 +238,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-element-validation.png",
+      "file": "images/admin-element-validation.png",
       "title": "Field comparison and regular expression",
       "route": "#/moorl/fb/form/detail/01a17c29bdad73c8b07fa62cd39bfcfc/element/01a17c29bdad73c8b07fa62cd9833460",
       "capturedAt": "2026-11-10T22:08:59.339Z",
@@ -253,7 +253,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-element-selection-settings.png",
+      "file": "images/admin-element-selection-settings.png",
       "title": "Dynamic selection settings",
       "route": "#/moorl/fb/form/detail/01a17c29bdad73c8b07fa62cd39bfcfc/element/01a17c29bdad73c8b07fa62cdba33fac",
       "capturedAt": "2026-11-10T22:09:00.748Z",
@@ -268,7 +268,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-plugin-config-general.png",
+      "file": "images/admin-plugin-config-general.png",
       "title": "Base plugin configuration",
       "route": "#/sw/extension/config/MoorlForms",
       "capturedAt": "2026-11-10T22:09:02.133Z",
@@ -283,7 +283,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-plugin-config-modal.png",
+      "file": "images/admin-plugin-config-modal.png",
       "title": "Base modal settings",
       "route": "#/sw/extension/config/MoorlForms",
       "capturedAt": "2026-11-10T22:09:02.710Z",
@@ -298,7 +298,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-cms-page.png",
+      "file": "images/admin-cms-page.png",
       "title": "Select CMS block",
       "route": "#/sw/cms/detail/695477e02ef643e5a016b83ed4cdf63a",
       "capturedAt": "2026-11-10T22:09:09.409Z",
@@ -313,7 +313,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-cms-element-settings.png",
+      "file": "images/admin-cms-element-settings.png",
       "title": "CMS form element settings",
       "route": "#/sw/cms/detail/695477e02ef643e5a016b83ed4cdf63a",
       "capturedAt": "2026-11-10T22:09:09.977Z",
@@ -328,7 +328,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-cms-form-selection.png",
+      "file": "images/admin-cms-form-selection.png",
       "title": "CMS form selection",
       "route": "#/sw/cms/detail/695477e02ef643e5a016b83ed4cdf63a",
       "capturedAt": "2026-11-10T22:09:10.803Z",
@@ -343,7 +343,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-element-custom-entity.png",
+      "file": "images/admin-element-custom-entity.png",
       "title": "Custom entity selection (unsaved)",
       "route": "#/moorl/fb/form/detail/01a17c29bdad73c8b07fa62cd39bfcfc/element/01a17c29bdad73c8b07fa62cdba33fac",
       "capturedAt": "2026-11-10T22:09:13.292Z",
@@ -358,7 +358,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-element-field-settings.png",
+      "file": "images/admin-element-field-settings.png",
       "title": "Field settings",
       "route": "#/moorl/fb/form/detail/01a17c29bdad73c8b07fa62cd39bfcfc/element/01a17c29bdad73c8b07fa62cd9833460",
       "capturedAt": "2026-11-10T22:09:14.708Z",
@@ -373,7 +373,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-form-actions.png",
+      "file": "images/admin-form-actions.png",
       "title": "Available form actions",
       "route": "#/moorl/fb/form/detail/01a17c29bdad73c8b07fa62cd39bfcfc",
       "capturedAt": "2026-11-10T22:09:16.117Z",
@@ -388,7 +388,7 @@
     },
     {
       "plugin": "MoorlForms",
-      "file": "images/admin-fhd/en/admin-form-mail-receipt-draft.png",
+      "file": "images/admin-form-mail-receipt-draft.png",
       "title": "Receipt confirmation (unsaved)",
       "route": "#/moorl/fb/form/detail/01a17c29bdad73c8b07fa62cd39bfcfc",
       "capturedAt": "2026-11-10T22:09:17.078Z",
@@ -403,7 +403,7 @@
     },
     {
       "plugin": "MoorlFormsOrder",
-      "file": "images/admin-fhd/en/admin-form-general.png",
+      "file": "images/admin-form-general.png",
       "title": "General Order form settings",
       "route": "#/moorl/fb/form/detail/01a18567c8e170ddac51825489d7f560",
       "capturedAt": "2026-11-10T22:09:04.102Z",
@@ -418,7 +418,7 @@
     },
     {
       "plugin": "MoorlFormsOrder",
-      "file": "images/admin-fhd/en/admin-form-order-settings.png",
+      "file": "images/admin-form-order-settings.png",
       "title": "Order form information",
       "route": "#/moorl/fb/form/detail/01a18567c8e170ddac51825489d7f560",
       "capturedAt": "2026-11-10T22:09:04.667Z",
@@ -433,7 +433,7 @@
     },
     {
       "plugin": "MoorlFormsOrder",
-      "file": "images/admin-fhd/en/admin-form-assignment.png",
+      "file": "images/admin-form-assignment.png",
       "title": "Order form assignment",
       "route": "#/moorl/fb/form/detail/01a18567c8e170ddac51825489d7f560",
       "capturedAt": "2026-11-10T22:09:05.250Z",
@@ -448,7 +448,7 @@
     },
     {
       "plugin": "MoorlFormsOrder",
-      "file": "images/admin-fhd/en/admin-plugin-config.png",
+      "file": "images/admin-plugin-config.png",
       "title": "Order plugin configuration",
       "route": "#/sw/extension/config/MoorlFormsOrder",
       "capturedAt": "2026-11-10T22:09:06.633Z",
@@ -463,7 +463,7 @@
     },
     {
       "plugin": "MoorlFormsOrder",
-      "file": "images/admin-fhd/en/admin-element-date.png",
+      "file": "images/admin-element-date.png",
       "title": "Date field settings",
       "route": "#/moorl/fb/form/detail/01a18567c8e170ddac51825489d7f560/element/01a18567c8e170ddac5182548a01cb81",
       "capturedAt": "2026-11-10T22:09:08.028Z",

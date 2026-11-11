@@ -23,8 +23,6 @@ Du kannst den technischen Namen oder die exakte ID des Formulars als Parameter �
 
 Du kannst SVG Icons innerhalb der Eingabefelder nutzen. Das Foundation-Plugin liefert die dafür verwendeten SVG-Assets. Die ältere Packschreibweise wird im aktuellen Foundation auf die mitgelieferten FontAwesome-7-Assets abgebildet.
 
-![](images/how-to-01.jpg)
-
 Gib dazu `icon|<pack>|<name>` ein.
 
 - pack: Name des Icon-Pakets, z. B. `fa7r`, `fa7s`, `fa7b`; ältere Aliase `far`, `fas`, `fab`, `fa6r`, `fa6s`, `fa6b` werden im aktuellen Foundation auf FontAwesome 7 abgebildet. Für Shopware-Icons ist etwa `default` verfügbar.
@@ -37,8 +35,6 @@ Um den passenden Namen zu ermitteln, gehe dazu auf folgende Seiten:
 - FontAwesome 7: [https://fontawesome.com/v7/search](https://fontawesome.com/v7/search)
 - Shopware: [https://developer.shopware.com/resources/meteor-icon-kit/](https://developer.shopware.com/resources/meteor-icon-kit/)
 
-![](images/how-to-02.jpg)
-
 ## Datenbank mit Formularen befüllen
 
 **Basis Version**
@@ -47,15 +43,15 @@ Du kannst mithilfe des Formular Baukasten 2 selbst Datenbank-Einträge in Shopwa
 
 Dazu stehen dir nützliche Features zur Verfügung. Gehe dazu in den Formular-Einstellungen in den Reiter "Zuweisung" und wähle eine Tabelle aus.
 
-![](images/how-to-10.jpg)
+![](images/admin-form-assignment.png)
 
 Anschließend kannst du ein Eingabefeld zu einer Tabellenspalte zuweisen.
 
-![](images/how-to-11.jpg)
+![](images/admin-element-assignment.png)
 
 Bitte achte darauf, dass du Pflichtfelder entsprechend kennzeichnest.
 
-Aktiviere außerdem „In Datenbank schreiben“ und ordne die Eingabefelder den tatsächlichen Zielattributen zu. Die Basis unterstützt vorhandene DAL-Entities und Custom Fields; sie erzeugt keine beliebigen SQL-Tabellen. Weitere Pflichtattribute der Ziel-Entity müssen ebenfalls erfüllt sein. Bei eigenständig abgesendeten Formularen erfolgt der Schreibversuch vor dem Erfolgsereignis; Fehler werden geloggt und als Verarbeitungswarnung gemeldet. Add-ons mit eigener Kunden-/Bestellerstellung besitzen einen gesonderten Speicherablauf. Siehe [Verarbeitungsergebnisse](processing-results.md).
+Aktiviere außerdem „In Datenbank schreiben“ und ordne die Eingabefelder den tatsächlichen Zielattributen zu. Die Basis unterstützt vorhandene DAL-Entities und Custom Fields; sie erzeugt keine beliebigen SQL-Tabellen. Weitere Pflichtattribute der Ziel-Entity müssen ebenfalls erfüllt sein. Bei eigenständig abgesendeten Formularen erfolgt der Schreibversuch vor dem Erfolgsereignis; Fehler werden geloggt und als Verarbeitungswarnung gemeldet. Add-ons mit eigener Kunden-/Bestellerstellung besitzen einen gesonderten Speicherablauf. Siehe [Verarbeitungsergebnisse](https://docs.moori.net/plugin/MoorlForms/processing-results/).
 
 Du findest hier ein Beispiel-Formular: [Entity Mapping Formular](examples/entity-mapping-form.json)
 
@@ -67,7 +63,7 @@ Du kannst dem Absende-Button eigene Stylesheet-Klassen geben.
 
 Gehe dazu in den Reiter "Stylesheet" und füge entsprechend die gewünschten Klassen ein.
 
-![](images/how-to-09.jpg)
+![](images/admin-element-layout.png)
 
 ## Twig und Kontext Variablen als Standardwert verwenden
 
@@ -83,7 +79,7 @@ Folgende Beispiel Variablen könntest du verwenden
 {{ page.product.productNumber }}
 ```
 
-![](images/form-builder-use-twig-variable-as-default-value.jpg)
+![](images/admin-element-field-settings.png)
 
 !!! note
 
@@ -95,17 +91,11 @@ Folgende Beispiel Variablen könntest du verwenden
 
 Mit dem Produkt-Anfrage Add-On kannst du mithilfe der dynamischen Produktgruppe passende Formulare zuweisen.
 
-![](images/how-to-03.jpg)
-
 Lege eine neue dynamische Produktgruppe mit der Regel `Lagerbestand ist kleiner als 1` an.
-
-![](images/how-to-04.jpg)
 
 Deaktiviere den "In den Warenkorb" Button, dein Kunde kann nun Alternativ das Produkt anfragen.
 
 Diese Einstellung ändert die Storefront-Darstellung. Sie stellt keine allgemeine serverseitige Kaufsperre für andere Warenkorb-/API-Aufrufe dar. Beachte außerdem die Einstellung `keepProductUntouched` des Produkt-Anfrage-Add-ons.
-
-![](images/how-to-05.jpg)
 
 In den Formular-Einstellungen machst du eine Zuweisung für die dynamische Produktgruppe.
 
@@ -119,15 +109,9 @@ Das Strukturelement `nested-fields` gehört bereits zur Basis. Der Newsletter-Ab
 
 In Shopware selbst kommen strukturierte Eingabefelder unter anderem auch in den Adressen der Kunden-Registrierung vor.
 
-![](images/how-to-06.jpg)
-
 Verwende das Element "Verschachtelte Felder" und nutze den technischen Namen `customFields`. Darin erstellst du weitere Eingabe-Elemente.
 
-![](images/how-to-07.jpg)
-
-In der HTML Ansicht des Formulars sehen wir nun wie das Eingabe-Element benannt ist.
-
-![](images/how-to-08.jpg)
+Die erzeugten Eingabefelder verwenden strukturierte Namen wie `customFields[meinFeld]`.
 
 Sofern die Daten valide eingegeben wurden, ist die Spalte `custom_fields` mit den richtigen Daten befüllt.
 

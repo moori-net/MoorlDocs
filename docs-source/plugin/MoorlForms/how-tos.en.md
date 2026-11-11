@@ -23,8 +23,6 @@ You can pass the technical name or the exact ID of the form as a parameter.
 
 You can use SVG icons inside input fields. Foundation supplies the SVG assets. In the current Foundation version, older pack aliases are mapped to the bundled FontAwesome 7 assets.
 
-![](images/how-to-01.jpg)
-
 Enter `icon|<pack>|<name>`.
 
 - pack: Icon pack name, for example `fa7r`, `fa7s`, `fa7b`. Current Foundation maps legacy aliases `far`, `fas`, `fab`, `fa6r`, `fa6s`, `fa6b` to FontAwesome 7. Shopware icons are available in packs such as `default`.
@@ -37,8 +35,6 @@ To determine the appropriate name, go to the following pages:
 - FontAwesome 7: [https://fontawesome.com/v7/search](https://fontawesome.com/v7/search)
 - Shopware: [https://developer.shopware.com/resources/meteor-icon-kit/](https://developer.shopware.com/resources/meteor-icon-kit/)
 
-![](images/how-to-02.jpg)
-
 ## Fill database with forms
 
 **Basic version**
@@ -47,15 +43,15 @@ You can write your own database entries in Shopware 6 with the help of the Form 
 
 Useful features are available for this purpose. To do this, go to the "Assignment" tab in the form settings and select a table.
 
-![](images/how-to-10.jpg)
+![](images/admin-form-assignment.png)
 
 Then you can assign an input field to a table column.
 
-![](images/how-to-11.jpg)
+![](images/admin-element-assignment.png)
 
 Please make sure that you mark mandatory fields accordingly.
 
-Also enable database writing and map inputs to actual target attributes. The base supports existing DAL entities and custom fields; it does not create arbitrary SQL tables. All other mandatory target attributes must also be valid. Standalone submissions attempt the write before the success event; errors are logged and reported as processing warnings. Add-ons creating customers/orders have their own storage lifecycle. See [Processing results](processing-results.md).
+Also enable database writing and map inputs to actual target attributes. The base supports existing DAL entities and custom fields; it does not create arbitrary SQL tables. All other mandatory target attributes must also be valid. Standalone submissions attempt the write before the success event; errors are logged and reported as processing warnings. Add-ons creating customers/orders have their own storage lifecycle. See [Processing results](https://docs.moori.net/en/plugin/MoorlForms/processing-results/).
 
 You can find an example form here: [Entity mapping form](examples/entity-mapping-form.json)
 
@@ -67,7 +63,7 @@ You can give the send button its own stylesheet classes.
 
 To do this, go to the "Stylesheet" tab and insert the desired classes accordingly.
 
-![](images/how-to-09.jpg)
+![](images/admin-element-layout.png)
 
 ## Use Twig and context variables as default value
 
@@ -83,7 +79,7 @@ You could use the following example variables
 {{ page.product.productNumber }}
 ```
 
-![](images/form-builder-use-twig-variable-as-default-value.jpg)
+![](images/admin-element-field-settings.png)
 
 !!! note
 
@@ -95,17 +91,11 @@ You could use the following example variables
 
 With the Product Request Add-On you can assign matching forms using the dynamic product group.
 
-![](images/how-to-03.jpg)
-
 Create a new dynamic product group with the rule `stock is less than 1`.
-
-![](images/how-to-04.jpg)
 
 Deactivate the "Add to cart" button, your customer can now alternatively request the product.
 
 This setting changes storefront presentation. It does not establish a general server-side purchase restriction for other cart/API calls. Also check the Product Request add-on's `keepProductUntouched` setting.
-
-![](images/how-to-05.jpg)
 
 In the form settings you make an assignment for the dynamic product group.
 
@@ -119,15 +109,9 @@ The `nested-fields` element already belongs to the base plugin. Classic adds the
 
 In Shopware itself, structured input fields can also be found in the addresses for customer registration.
 
-![](images/how-to-06.jpg)
-
 Use the element "Nested Fields" and use the technical name `customFields`. There you create further input elements.
 
-![](images/how-to-07.jpg)
-
-In the HTML view of the form we now see how the input element is named.
-
-![](images/how-to-08.jpg)
+The generated inputs use structured names such as `customFields[myField]`.
 
 If the data was entered validly, the column `custom_fields` is filled with the correct data.
 
