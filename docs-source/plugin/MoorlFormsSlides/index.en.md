@@ -1,17 +1,17 @@
 # Form Builder 2 | Slides Add-On
 
-With this add-on for [Form Builder 2](../MoorlForms/index.md) you can split forms into several steps in a visually appealing way. This plugin is the perfect addition to the Popup Add-On!
+With this add-on for [Form Builder 2](https://docs.moori.net/en/plugin/MoorlForms/) you can split forms into several steps in a visually appealing way. This plugin is the perfect addition to the Popup Add-On!
 
 !!! note "Note for all customers who already own the Form Builder"
 
     This plugin has a fundamentally different structure and does not offer the possibility to migrate the previous forms.
-          
+
     Unfortunately, it is also not possible to duplicate/transfer the subscriptions after consultation with Shopware.
-          
+
     Since I don't want to put my existing customers at a disadvantage, the form construction kit will continue to be provided with updates. But no new functions will be developed.
-          
+
     For all interested parties with active subscriptions I offer a 50% voucher for Basis and Add-Ons.
-    
+
     The voucher is issued individually and cannot be combined with discount campaigns.
 
 ## Example forms for download
@@ -22,13 +22,13 @@ With this add-on for [Form Builder 2](../MoorlForms/index.md) you can split form
 
 This element is very demanding in configuration, but also powerful in application.
 
-## Configuration
+Add a `slides` container and `slide` children inside it. Place the actual form fields inside those slides. These are the two element types registered by this add-on; it does not add a new form type. Popup is an optional companion, not a required dependency.
 
-![](images/fbs-01.jpg)
+## Configuration
 
 Name the back and forward buttons.
 
-![](images/fbs-02.jpg)
+You can also set button CSS classes, enable scrolling to the form with an offset, hide disabled buttons and add a submit button for the final step. The submit label and class can be configured too. The editor initializes previous/next classes with `btn btn-light`, automatic scrolling as enabled and the offset as 60 pixels.
 
 The stylesheet settings are essential for the element, here you can make the following
 configurations here:
@@ -40,23 +40,15 @@ configurations here:
 Note: The CSS properties are transferred to the slide elements within the slide.
 This way the properties are consistent and you can e.g. adjust the background colour per slide!
 
-![](images/fbs-03.jpg)
+Rendering requires both populated CSS and transition configuration (`config.css` and `config.animateInOut`). A configuration notice appears if either is missing. Child values override inherited parent values. The slider uses gallery mode without looping, touch swiping or mouse dragging; previous/next controls change the step.
 
 The element of the type "Slide" is the sub-element and can be used as often as you like.
 
-![](images/fbs-04.jpg)
-
 Since the CSS properties are set by the parent element, you can optionally adjust these settings.
-
-![](images/fbs-05.jpg)
 
 You can define a background image in the tab "Assignment".
 
-![](images/fbs-06.jpg)
-
 Each slide element supports responsive sub-elements, use this setting to align the fields.
-
-![](images/fbs-07.jpg)
 
 You can freely position the main components of the form.
 
@@ -65,8 +57,20 @@ You can freely position the main components of the form.
 In this example I used the pop-up form. But the slides are also suitable for
 CMS elements as well!
 
-![](images/fbs-08.jpg)
+## Navigation and validation
 
-![](images/fbs-09.jpg)
+When Next is clicked, the storefront JavaScript checks the active slide’s required fields with browser validation. The base plugin’s complete form and server validation still governs submission. Optional fields are not checked by this particular step-validation method.
 
-![](images/fbs-10.jpg)
+On a step change, the heading uses the active slide’s name. The optional submit button is enabled when changing to the final slide. Arrange required fields and submit controls to match the intended sequence.
+
+Classic conditions can hide slides; the Slides JavaScript skips a hidden slide during a transition. Slides does not provide its own condition configuration. Verify the specific combination in a browser, particularly if the first or last step can be hidden.
+
+## Storage and setup
+
+Structure and settings are stored as normal form elements in the base plugin. There is no separate storage of the current step, no server-side partial submission and no automatic restoration of the same slide after reloading. The base plugin’s input storage is a separate feature.
+
+Start under Content → Form Builder → a form → Structure → Slides element; technical administration routes are `moorl.fb.form.detail` and `moorl.fb.form.element`. There is no separate Slides menu entry. The downloadable example is an active CMS form with the `mail` action; popup configuration values alone do not turn it into a popup form.
+
+A separate `animation` element type is not registered by the current plugin. Slide transitions are available through the corresponding layout options.
+
+These additions reflect a source review dated 10 November 2026; they do not certify a browser test or asset build. The historical migration/voucher notice above was not checked for current commercial validity.
