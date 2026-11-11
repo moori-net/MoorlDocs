@@ -1,8 +1,8 @@
 # Form Builder 2 | Order Add-On
 
-With this add-on for [Form Builder 2](../MoorlForms/index.md), you can collect additional checkout information, optionally restrict it to certain products and save it to the order after checkout.
+With this add-on for [Form Builder 2](https://docs.moori.net/en/plugin/MoorlForms/), you can collect additional checkout information, optionally restrict it to certain products and save it to the order after checkout.
 
-This description was checked against the local source of version 2.7.3 on 10 November 2026. New PNG captures show the current local administration; remaining JPGs illustrate earlier versions. Capture conditions and the registered plugin version are documented under “Current administration screenshots”. The plugin package requires Shopware `~6.7.8`, MoorlFoundation `~1.7.29` and MoorlForms `~2.7.0`.
+This description was checked against the local source of version 2.7.3 on 10 November 2026. English Full HD screenshots show the current local administration. Capture conditions and the registered plugin version are documented under “Current administration screenshots”. The plugin package requires Shopware `~6.7.8`, MoorlFoundation `~1.7.29` and MoorlForms `~2.7.0`.
 
 ## Example forms for download
 
@@ -18,22 +18,22 @@ With this form you are much more equipped for B2B or personalised customers. You
 
 Under **Content → Form builder 2**, create a new form of type “Extended order” (`order`). Its related entity is `order`. The add-on uses the base editor and has no separate administration navigation.
 
-![](images/admin-fhd/en/admin-form-general.png)
+![](images/admin-form-general.png)
 
 Optionally restrict the form through a dynamic product group. It then appears only when the cart contains a matching product. Without a product-group assignment, it is considered a general checkout form, provided its other availability conditions are met.
 
-![](images/admin-fhd/en/admin-form-assignment.png)
+![](images/admin-form-assignment.png)
+
+The form-specific settings control the checkout form. Price settings shown here do not implement cart price calculation.
+
+![Order form settings](images/admin-form-order-settings.png)
 
 Now you can insert your input fields into the form. No technical fields, such as a submit button, are necessary.
 
 Automatic submission first saves entries in the browser session and restores them after the page reloads. Mapping to the order happens only after successful checkout. A separate submit button is unnecessary.
 
-![](images/order-add-on-07.jpg)
-
 1. you can specifically show or hide the input fields. For example, if the customer chooses a specific shipping method, you could store a phone number for the delivery person.
 2. if you need the input for a technical processing, the assignment into predefined fields is suitable.
-
-![](images/order-add-on-06.jpg)
 
 Open **Extensions → My extensions → Order Add-On → Configure** for these settings:
 
@@ -47,21 +47,21 @@ Open **Extensions → My extensions → Order Add-On → Configure** for these s
 
 The form interface also exposes price settings. However, the Order Add-On implements no cart price calculation for them; do not rely on them for surcharges or discounts. Product configurations that affect prices are handled by the separate Product Configurator Add-On.
 
+### Date fields
+
+The delivery-date example uses the base editor’s date element.
+
+![Date element settings](images/admin-element-date.png)
+
 ## Output in the storefront
 
 The form appears directly in the checkout.
-
-![](images/order-add-on-03.jpg)
-
-![](images/order-add-on-04.jpg)
 
 The form submits automatically when values change, then reloads the checkout confirmation. Stored values and field-level validation messages are shown again; general messages also appear as notices. With the checkout lock disabled, these form errors alone do not introduce an additional order block.
 
 ## View order details
 
-Open **Orders → Order → Details** in the administration. The current extension adds a configuration card before the shipping section. The older illustration shows a former position above the order items; the current Shopware structure does not guarantee that placement.
-
-![](images/order-add-on-05.jpg)
+Open **Orders → Order → Details** in the administration. The current extension adds a configuration card before the shipping section.
 
 Use the stored custom fields in e-mail and custom document templates:
 
@@ -76,8 +76,6 @@ After checkout, `moorl_form.order_placed` is dispatched for each matching form. 
 
 ## Current administration screenshots
 
-Captured on 10 November 2026 in Shopware 6.7.15.1 with the Order add-on active. Plugin registration reports version 2.7.2; the local source audited here is 2.7.3. New PNGs show the actual administration; remaining JPGs illustrate earlier versions. No form settings or orders were saved.
+Captured on 10 November 2026 in Shopware 6.7.15.1 with the Order add-on active. Plugin registration reports version 2.7.2; the local source audited here is 2.7.3. Both documentation languages use the same English Full HD images. No form settings or orders were saved.
 
-![Order plugin settings in Full HD](images/admin-fhd/en/admin-plugin-config.png)
-
-[All current screenshots and capture conditions](../MoorlForms/admin-screenshots.en.md).
+![Order plugin settings in Full HD](images/admin-plugin-config.png)

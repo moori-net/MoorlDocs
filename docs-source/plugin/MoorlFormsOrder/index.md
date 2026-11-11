@@ -1,8 +1,8 @@
 # Formular Baukasten 2 | Bestellung Add-On
 
-Mit diesem Add-On für [Formular Baukasten 2](../MoorlForms/index.md) kannst du zusätzliche Angaben im Checkout erfassen, optional auf bestimmte Produkte begrenzen und nach Bestellabschluss an der Bestellung speichern.
+Mit diesem Add-On für [Formular Baukasten 2](https://docs.moori.net/plugin/MoorlForms/) kannst du zusätzliche Angaben im Checkout erfassen, optional auf bestimmte Produkte begrenzen und nach Bestellabschluss an der Bestellung speichern.
 
-Die Beschreibung wurde am 10.11.2026 mit dem lokalen Quellcode der Version 2.7.3 abgeglichen. Neue englische PNG-Aufnahmen zeigen den aktuellen lokalen Admin; verbleibende JPGs stammen aus früheren Versionen. Aufnahmebedingungen und registrierter Pluginstand stehen im Abschnitt „Aktuelle Admin-Aufnahmen“. Das Plugin-Paket setzt Shopware `~6.7.8`, MoorlFoundation `~1.7.29` und MoorlForms `~2.7.0` voraus.
+Die Beschreibung wurde am 10.11.2026 mit dem lokalen Quellcode der Version 2.7.3 abgeglichen. Englische Full-HD-Aufnahmen zeigen den aktuellen lokalen Admin. Aufnahmebedingungen und registrierter Pluginstand stehen im Abschnitt „Aktuelle Admin-Aufnahmen“. Das Plugin-Paket setzt Shopware `~6.7.8`, MoorlFoundation `~1.7.29` und MoorlForms `~2.7.0` voraus.
 
 ## Beispiel Formulare zum Download
 
@@ -18,22 +18,22 @@ Mit diesem Formular bist du weit mehr für B2B oder personifizierte Kundschaft g
 
 Erstelle unter **Inhalte → Formular Baukasten 2** ein neues Formular. Wähle den Typ „Erweiterte Bestellung“ (`order`) aus. Die zugeordnete Entität ist `order`. Das Add-On nutzt den Basiseditor und hat keine eigene Admin-Navigation.
 
-![](images/admin-fhd/en/admin-form-general.png)
+![](images/admin-form-general.png)
 
 Optional kannst du die Anzeige über eine dynamische Produktgruppe einschränken. Dann erscheint das Formular nur, wenn ein passendes Produkt im Warenkorb liegt. Ohne Produktgruppenzuweisung wird es als allgemeines Checkout-Formular berücksichtigt, sofern seine übrigen Verfügbarkeitsbedingungen erfüllt sind.
 
-![](images/admin-fhd/en/admin-form-assignment.png)
+![](images/admin-form-assignment.png)
+
+Die formulartypbezogenen Einstellungen steuern das Checkout-Formular. Die hier sichtbaren Preiseinstellungen implementieren keine Warenkorbpreisberechnung.
+
+![Einstellungen des Bestellformulars](images/admin-form-order-settings.png)
 
 Nun kannst du deine Eingabefelder in das Formular einfügen. Es sind keine technischen Felder, wie z.B. ein Absende-Button notwendig.
 
 Die Eingaben werden beim automatischen Absenden zunächst in der Browsersitzung gespeichert und nach dem Neuladen wieder angezeigt. Das Mapping in die Bestellung erfolgt erst nach erfolgreichem Bestellabschluss. Ein eigener Absende-Button ist dafür nicht notwendig.
 
-![](images/order-add-on-07.jpg)
-
 1. Du kannst die Eingabefelder spezifisch ein- oder ausblenden. Wenn der Kunde z.B. eine bestimmte Versandart wählt, könnte man eine Telefonnummer für den Zusteller hinterlegen.
 2. Wenn du die Eingaben für eine technische Weiterverarbeitung benötigst, eignet sich die Zuweisung in vordefinierte Felder.
-
-![](images/order-add-on-06.jpg)
 
 Unter **Erweiterungen → Meine Erweiterungen → Bestellung Add-On → Konfigurieren** stehen folgende Einstellungen zur Verfügung:
 
@@ -47,21 +47,21 @@ Unter **Erweiterungen → Meine Erweiterungen → Bestellung Add-On → Konfigur
 
 Die Formularoberfläche bietet auch Preiseinstellungen an. Im Bestell-Add-On ist dafür jedoch keine Warenkorbpreisberechnung implementiert; plane damit keine Auf-/Abschläge ein. Produktbezogene Konfigurationen mit Preiswirkung übernimmt das separate Produkt-Konfigurator Add-On.
 
+### Datumsfelder
+
+Das Liefertermin-Beispiel verwendet das Datumselement des Basiseditors.
+
+![Einstellungen des Datumselements](images/admin-element-date.png)
+
 ## Ausgabe in der Storefront
 
 Das Formular erscheint direkt im Checkout.
-
-![](images/order-add-on-03.jpg)
-
-![](images/order-add-on-04.jpg)
 
 Das Formular wird bei Änderungen automatisch abgesendet und die Checkout-Bestätigung anschließend neu geladen. Gespeicherte Werte und feldbezogene Validierungsmeldungen werden wieder angezeigt. Allgemeine Meldungen erscheinen zusätzlich als Hinweis. Bei ausgeschalteter Checkout-Sperre erzeugen solche Formularfehler allein keine zusätzliche Bestellsperre.
 
 ## Angaben zur Bestellung einsehen
 
-Öffne im Admin **Bestellungen → Bestellung → Details**. Die aktuelle Erweiterung zeigt dort eine Konfigurationskarte vor dem Versandbereich. Die ältere Abbildung zeigt eine frühere Position oberhalb der Bestellpositionen; diese Position wird durch den aktuellen Shopware-Aufbau nicht zugesichert.
-
-![](images/order-add-on-05.jpg)
+Öffne im Admin **Bestellungen → Bestellung → Details**. Die aktuelle Erweiterung zeigt dort eine Konfigurationskarte vor dem Versandbereich.
 
 Für E-Mail- und eigene Dokumentvorlagen kannst du die gespeicherten Custom Fields verwenden:
 
@@ -76,8 +76,6 @@ Nach Bestellabschluss wird pro passendem Formular das Ereignis `moorl_form.order
 
 ## Aktuelle Admin-Aufnahmen
 
-Aufgenommen am 10.11.2026 in Shopware 6.7.15.1 bei aktivem Order-Add-on. Die Pluginregistrierung meldet 2.7.2; der hier geprüfte lokale Quellstand ist 2.7.3. Die erneut aufgenommenen englischen PNGs zeigen den tatsächlichen Admin; verbleibende JPGs illustrieren ältere Versionen. Es wurden weder Formulareinstellungen noch Bestellungen gespeichert.
+Aufgenommen am 10.11.2026 in Shopware 6.7.15.1 bei aktivem Order-Add-on. Die Pluginregistrierung meldet 2.7.2; der hier geprüfte lokale Quellstand ist 2.7.3. Beide Dokumentationssprachen verwenden dieselben englischen Full-HD-Bilder. Es wurden weder Formulareinstellungen noch Bestellungen gespeichert.
 
-![Order-Plugin-Einstellungen in Full HD](images/admin-fhd/en/admin-plugin-config.png)
-
-[Alle aktuellen Aufnahmen und Aufnahmebedingungen](../MoorlForms/admin-screenshots.md).
+![Order-Plugin-Einstellungen in Full HD](images/admin-plugin-config.png)
