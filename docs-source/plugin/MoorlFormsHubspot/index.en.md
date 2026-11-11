@@ -1,22 +1,22 @@
 # Hubspot Forms Integration
 
-This extension is compatible with [Form Construction Kit 2](../MoorlForms/index.md)!
+This extension is compatible with [Form Construction Kit 2](https://docs.moori.net/en/plugin/MoorlForms/)!
 
 ## Installation
 
 !!! note
 
-    If you have any problems with the plugin, please note the following [notes](../) in the FAQ section.
+    If you have any problems with the plugin, please note the following [notes](https://docs.moori.net/en/plugin/) in the FAQ section.
 
 1. install
-   [Foundation](../MoorlFoundation/index.md)
+   [Foundation](https://docs.moori.net/en/plugin/MoorlFoundation/)
 2. install Hubspot Forms Integration in the Plugin Manager
 
 ## Setup
 
 The extension submits mapped values to an existing HubSpot form. Its HubSpot configuration determines subsequent contact handling, notifications and automations. The plugin does not implement separate ticket management or file uploads.
 
-The HubSpot menus and images below are historical setup examples and have not been checked against a current external HubSpot interface.
+The HubSpot menus below are historical setup examples and have not been checked against a current external HubSpot interface.
 
 ### Create a Hubspot account
 
@@ -37,8 +37,6 @@ You can create a Hubspot account relatively easily. For example, use your Google
 - You will find the portal ID in the account menu of Hubspot under your username.
 - Test the client
 
-![](images/hs-001.jpg)
-
 ### Create a form in Hubspot
 
 - Navigate from the main menu in Hubspot to "Marketing" -> "Forms"
@@ -58,12 +56,6 @@ With this form, contacts are automatically created in Hubspot as soon as it is f
 
 Check mappings against the data of the selected Flow event. This integration does not catch Twig or HTTP errors, so processing can fail. Missing or entirely empty mappings instead skip submission.
 
-![](images/hs-007.jpg)
-
-![](images/hs-008.jpg)
-
-![](images/hs-009.jpg)
-
 ### Connect Hubspot form with Form Builder 2 form
 
 - Open your form in the Shopware Admin
@@ -75,15 +67,7 @@ Check mappings against the data of the selected Flow event. This integration doe
 - Use form placeholders with a technical field name and `.value`, for example `{{ email.value }}`
 - Assign further fields such as first name, last name and message, then save the form
 
-The current implementation does not assign individual Hubspot fields in the element settings. The older images below are examples only.
-
-![](images/hs-002.jpg)
-
-![](images/hs-003.jpg)
-
-![](images/hs-004.jpg)
-
-![](images/hs-005.jpg)
+The current implementation does not assign individual Hubspot fields in the element settings.
 
 ## Technical scope
 
@@ -98,5 +82,3 @@ The scope names above come from the existing setup documentation and Foundation 
 ## Test
 
 After a deliberate submission to your designated test account, check the form submission and mapped values in HubSpot. An email is sent only if the relevant notifications or automations are configured in HubSpot; the plugin does not guarantee one.
-
-![](images/hs-006.jpg)

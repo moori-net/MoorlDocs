@@ -1,22 +1,22 @@
 # Flow Builder Aktion | Hubspot Formular
 
-Diese Erweiterung ist mit [Formular Baukasten 2](../MoorlForms/index.md) kompatibel
+Diese Erweiterung ist mit [Formular Baukasten 2](https://docs.moori.net/plugin/MoorlForms/) kompatibel
 
 ## Installation
 
 !!! note
 
-      Falls du Probleme mit dem Plugin hast, bitte beachte folgende [Hinweise](../) im FAQ Bereich.
+      Falls du Probleme mit dem Plugin hast, bitte beachte folgende [Hinweise](https://docs.moori.net/plugin/) im FAQ Bereich.
 
 1. Installiere
-   [Foundation](../MoorlFoundation/index.md)
+   [Foundation](https://docs.moori.net/plugin/MoorlFoundation/)
 2. Installiere Hubspot Formulare Integration im Plugin Manager
 
 ## Einrichtung
 
 Diese Erweiterung übermittelt zugeordnete Werte an ein vorhandenes HubSpot-Formular. Welche Kontakte, Benachrichtigungen oder weiteren Abläufe daraus entstehen, bestimmt dessen Konfiguration in HubSpot. Eine eigene Ticket- oder Dateiuploadfunktion ist im Plugin nicht implementiert.
 
-Die folgenden HubSpot-Menüangaben und Bilder sind historische Einrichtungsbeispiele; sie wurden nicht gegen eine aktuelle externe HubSpot-Oberfläche geprüft.
+Die folgenden HubSpot-Menüangaben sind historische Einrichtungsbeispiele; sie wurden nicht gegen eine aktuelle externe HubSpot-Oberfläche geprüft.
 
 ### Hubspot Account erstellen
 
@@ -37,8 +37,6 @@ Du kannst relativ einfach einen Hubspot Account erstellen. Nutze dazu z.B. deine
 - Die Portal-ID findest du im Account-Menü von Hubspot unter deinem Benutzernamen
 - Teste den Client
 
-![](images/hs-001.jpg)
-
 ### Erstelle ein Formular in Hubspot
 
 - Navigiere vom Hauptmenü in Hubspot zu "Marketing" -> "Formulare"
@@ -58,12 +56,6 @@ Mit diesem Formular werden bereits automatisch in Hubspot Kontakte angelegt, sob
 
 Prüfe die Zuordnungen anhand der Daten des gewählten Flow-Ereignisses. Twig- und HTTP-Fehler werden von dieser Integration nicht abgefangen; die Verarbeitung kann fehlschlagen. Ein fehlendes oder vollständig leeres Mapping führt dagegen zu keinem Versand.
 
-![](images/hs-007.jpg)
-
-![](images/hs-008.jpg)
-
-![](images/hs-009.jpg)
-
 ### Hubspot Formular mit Formular Baukasten 2 Formular verbinden
 
 - Öffne dein Formular im Shopware Admin
@@ -75,15 +67,7 @@ Prüfe die Zuordnungen anhand der Daten des gewählten Flow-Ereignisses. Twig- u
 - Verwende Formularplatzhalter mit technischem Feldnamen und `.value`, z. B. `{{ email.value }}`
 - Ordne weitere Felder wie Vorname, Nachname und Nachricht zu und speichere das Formular
 
-Die aktuelle Implementierung verwendet keine einzelne Hubspot-Zuordnung in den Elementeinstellungen. Die älteren Bilder unten dienen nur als Beispiele.
-
-![](images/hs-002.jpg)
-
-![](images/hs-003.jpg)
-
-![](images/hs-004.jpg)
-
-![](images/hs-005.jpg)
+Die aktuelle Implementierung verwendet keine einzelne Hubspot-Zuordnung in den Elementeinstellungen.
 
 ## Technischer Umfang
 
@@ -98,5 +82,3 @@ Die beschriebenen Scope-Namen stammen aus der vorhandenen Einrichtungsdokumentat
 ## Test
 
 Prüfe nach einer bewusst durchgeführten Übermittlung im vorgesehenen Testkonto den Eingang und die Feldwerte des HubSpot-Formulars. Eine E-Mail entsteht nur bei entsprechenden Benachrichtigungen oder Automatisierungen in HubSpot; das Plugin garantiert sie nicht.
-
-![](images/hs-006.jpg)
