@@ -1,8 +1,8 @@
 # Formular Baukasten 2 | Produkt-Konfigurator Add-On
 
-Mit diesem Add-On für [Formular Baukasten 2](../MoorlForms/index.md) kannst du Produkte individuell konfigurierbar machen und den Preis beeinflussen! Eingabefelder lassen sich Datenbankfeldern zuweisen!
+Mit diesem Add-On für [Formular Baukasten 2](https://docs.moori.net/plugin/MoorlForms/) kannst du Produkte individuell konfigurierbar machen und den Preis beeinflussen! Eingabefelder lassen sich Datenbankfeldern zuweisen!
 
-Die Beschreibung wurde am 10.11.2026 mit dem lokalen Quellcode der Version 2.7.1 abgeglichen. Die vorhandenen Abbildungen stammen aus früheren Versionen und sind nicht frisch im aktuellen Admin verifiziert. Das Plugin-Paket setzt Shopware `~6.7.8`, MoorlFoundation `~1.7.29` und MoorlForms `~2.7.0` voraus.
+Die Beschreibung wurde am 10.11.2026 mit dem lokalen Quellcode der Version 2.7.1 abgeglichen. Die Add-on-spezifische Administration wurde in dieser Umgebung nicht visuell geprüft. Das Plugin-Paket setzt Shopware `~6.7.8`, MoorlFoundation `~1.7.29` und MoorlForms `~2.7.0` voraus.
 
 ## Beispiel Formulare zum Download
 
@@ -17,17 +17,7 @@ Mit diesem Formular kannst du einerseits die Produktpreise über die Optionen be
 
 Lege das Formular unter **Inhalte → Formular Baukasten 2** mit dem Typ „Produkt-Konfigurator“ (`custom-product`) an. Das Add-On verwendet den Basiseditor und ergänzt dort die Einstellung zur Preisreihenfolge. Es besitzt keine eigene Admin-Navigation. Die Konfiguration wird in das bestehende Kauf-Formular eingebettet; ein zusätzlicher Absende-Button ist dort nicht nötig.
 
-![](images/fbcp-01.jpg)
-
-Beispiel Formular.
-
-![](images/fbcp-04.jpg)
-
 Die zugeordnete Entität ist `order_line_item`, also die Bestellposition. Die Konfiguration liegt zunächst als Payload an der Warenkorbposition. Nach Bestellabschluss werden die Mappings und Zusammenfassungen an die Bestellposition geschrieben.
-
-![](images/fbcp-02.jpg)
-
-![](images/fbcp-03.jpg)
 
 Weise das Formular einer dynamischen Produktgruppe zu. Diese bestimmt, für welche Produkte es angeboten wird. Produkte ohne Produktstream-IDs werden in der aktuellen Zuordnung übersprungen.
 
@@ -39,11 +29,7 @@ Es ist auch möglich mehrere Formulare für die Produkte zu kombinieren! Achte j
 
 Du kannst für die Optionen Preisdefinitionen festlegen.
 
-![](images/fbcp-05.jpg)
-
 Für Optionen gibt es absolute Zuschläge und absolute Abschläge. Wähle für einen festen Rabatt die Preisart „Absoluter Preisnachlass“ (`absolute-discount`); der konfigurierte Betrag wird vom Preis abgezogen. Die frühere Einschränkung auf positive absolute Zuschläge gilt damit nicht mehr.
-
-![](images/fbcp-06.jpg)
 
 Prozentuale Preise sind relativ zum Preis des Produktes. Du kannst auch negative prozentuale Preise definieren.
 
@@ -60,47 +46,13 @@ Die Einstellung `priceCalculationPriority` in der Produkt-Konfigurator-Karte bes
 
 Bei mehreren kombinierten Formularen ist die Einstellung des ersten Formulars nach Formularpriorität maßgeblich. Die Produktmenge wird zusätzlich berücksichtigt. Ein numerischer Nullwert wird serverseitig derzeit als Multiplikator übersprungen; gleiche die Vorschau und den Warenkorb für solche Grenzwerte gesondert ab.
 
-![](images/area-calc-01.jpg)
-
-![](images/area-calc-02.jpg)
-
-![](images/area-calc-03.jpg)
-
 ## Mapping
 
 Ordne Eingabefelder den unterstützten Feldern der Bestellposition oder vorhandenen Custom Fields zu. Diese Mappings werden nach Bestellabschluss geschrieben; Uploads werden dabei als Medienreferenzen übernommen.
 
-![](images/fbcp-07.jpg)
-
 ## Storefront
 
-In diesem Beispiel siehst du den Produkt-Konfigurator in Aktion!
-
-![](images/fbcp-08.jpg)
-
-Hier gibt es die Möglichkeit einen Text, ein Upload und verschiedene Optionen auszuwählen.
-
-![](images/fbcp-09.jpg)
-
-Der Preis aktualisiert sich anhand der Auswahl, die der Kunde trifft.
-
-![](images/fbcp-10.jpg)
-
-Die Anzahl der Produkte wird ebenfalls beachtet.
-
-![](images/fbcp-11.jpg)
-
-Die Konfiguration ist abgeschlossen, ab in den Warenkorb!
-
-![](images/fbcp-12.jpg)
-
-![](images/fbcp-13.jpg)
-
-Kleine Nachbesserungen können vor Bestellabschluss jederzeit durchgeführt werden!
-
-![](images/fbcp-14.jpg)
-
-In der Bestellübersicht wird die Konfiguration in Textform angezeigt.
+Kunden geben auf der Produktseite Texte ein, laden Dateien hoch und wählen Optionen aus. Die Preisanzeige berücksichtigt Auswahl und Menge. Die Konfiguration wird in den Warenkorb übernommen und kann vor dem Bestellabschluss angepasst werden. Die Bestellübersicht zeigt eine Textzusammenfassung.
 
 Beim erneuten Bestellen aus der Bestellhistorie wird der gespeicherte Konfigurationspayload wieder mitgeschickt. Die Verarbeitung und Preisberechnung richten sich dabei nach den aktuell verfügbaren Formularen und Produkten.
 
@@ -108,17 +60,11 @@ Beim erneuten Bestellen aus der Bestellhistorie wird der gespeicherte Konfigurat
 
 Solltest du das Mapping nicht nutzen, hast du trotzdem jederzeit Zugriff auf die Konfiguration.
 
-![](images/fbcp-15.jpg)
-
 Öffne **Bestellungen → Bestellung → Allgemein** und wähle im Kontextmenü der Position „Zeige Konfiguration“. Die Zusammenfassung bleibt auch ohne individuelle Feldmappings verfügbar.
-
-![](images/fbcp-16.jpg)
 
 Für E-Mail- und eigene Dokumentvorlagen kannst du `{{ orderLineItem.customFields._moorl_fb_html }}` oder `{{ orderLineItem.customFields._moorl_fb_plain }}` verwenden. `orderLineItem` muss dabei die aktuelle Bestellposition in deiner Vorlage bezeichnen; passe den Variablennamen an die jeweilige Schleife an. Zusätzlich werden `_moorl_fb_json`, `_moorl_fb_xml` und `_moorl_fb_media_ids` gespeichert. Das Add-On passt nicht automatisch sämtliche Mail- und Dokumentvorlagen an.
 
-![](images/fbcp-17.jpg)
-
-Da die Custom-Felder für Bestellpositionen nicht im Admin ersichtlich sind, ist hier ein Screenshot aus der Datenbank zur Veranschaulichung, dass das Feld richtig gespeichert wurde.
+Die gespeicherten Zusammenfassungen stehen in den Custom Fields der Bestellposition zur Verfügung.
 
 ## Plugin-Einstellungen
 

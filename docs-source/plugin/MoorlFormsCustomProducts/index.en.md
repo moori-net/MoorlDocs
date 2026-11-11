@@ -1,8 +1,8 @@
 # Form Builder 2 | Product-Configurator Add-On
 
-With this add-on for [Form Builder 2](../MoorlForms/index.md), you can make products individually configurable and influence their prices. Input fields can be mapped to supported database fields.
+With this add-on for [Form Builder 2](https://docs.moori.net/en/plugin/MoorlForms/), you can make products individually configurable and influence their prices. Input fields can be mapped to supported database fields.
 
-This description was checked against the local source of version 2.7.1 on 10 November 2026. The existing illustrations come from earlier versions and have not been freshly verified in the current administration. The plugin package requires Shopware `~6.7.8`, MoorlFoundation `~1.7.29` and MoorlForms `~2.7.0`.
+This description was checked against the local source of version 2.7.1 on 10 November 2026. The add-on-specific administration has not been visually verified in this environment. The plugin package requires Shopware `~6.7.8`, MoorlFoundation `~1.7.29` and MoorlForms `~2.7.0`.
 
 ## Example forms for download
 
@@ -17,17 +17,7 @@ With this form you can on the one hand influence the product prices via the opti
 
 Under **Content → Form builder 2**, create a form of type “Product configurator” (`custom-product`). The add-on uses the base editor and adds its price-order setting there. It has no separate administration navigation. Configuration fields are embedded in the existing purchase form, so no additional submit button is needed there.
 
-![](images/fbcp-01.jpg)
-
-Example form.
-
-![](images/fbcp-04.jpg)
-
 The related entity is `order_line_item`, the order position. Configuration is first stored as payload on the cart item. After checkout, mappings and summaries are written to the order item.
-
-![](images/fbcp-02.jpg)
-
-![](images/fbcp-03.jpg)
 
 Assign the form to a dynamic product group to determine which products offer it. Products without product-stream IDs are skipped by the current assignment logic.
 
@@ -39,11 +29,7 @@ It is also possible to combine several forms for the products! However, make sur
 
 You can define price definitions for the options.
 
-![](images/fbcp-05.jpg)
-
 Options support absolute surcharges and absolute discounts. For a fixed discount, choose the `absolute-discount` price type; the configured amount is subtracted from the price. The earlier limitation to positive absolute surcharges no longer applies.
-
-![](images/fbcp-06.jpg)
 
 Percentage prices are relative to the price of the product. You can also define negative percentage prices.
 
@@ -60,47 +46,13 @@ The `priceCalculationPriority` switch in the Product Configurator card determine
 
 When multiple forms are combined, the first form by form priority determines this setting. Product quantity is applied in addition. A numeric zero is currently skipped as a multiplier on the server; check the preview against the cart separately for such boundary values.
 
-![](images/area-calc-01.jpg)
-
-![](images/area-calc-02.jpg)
-
-![](images/area-calc-03.jpg)
-
 ## Mapping
 
 Map input fields to supported properties of the order item or existing custom fields. These mappings are written after checkout; uploads are transferred as media references.
 
-![](images/fbcp-07.jpg)
-
 ## Storefront
 
-In this example you can see the product configurator in action!
-
-![](images/fbcp-08.jpg)
-
-Here you can select a text, an upload and various options.
-
-![](images/fbcp-09.jpg)
-
-The price is updated according to the selection the customer makes.
-
-![](images/fbcp-10.jpg)
-
-The number of products is also taken into account.
-
-![](images/fbcp-11.jpg)
-
-The configuration is finished, off to the shopping cart!
-
-![](images/fbcp-12.jpg)
-
-![](images/fbcp-13.jpg)
-
-Small adjustments can be made at any time before the order is completed!
-
-![](images/fbcp-14.jpg)
-
-The configuration is displayed in text form in the order overview.
+Customers enter text, upload files and select options on the product page. The displayed price reflects the selection and quantity. The configuration is transferred to the cart and can be adjusted before checkout. The order overview shows a text summary.
 
 When reordering from the order history, the stored configuration payload is submitted again. Processing and price calculation then use the currently available forms and products.
 
@@ -108,17 +60,11 @@ When reordering from the order history, the stored configuration payload is subm
 
 If you do not use the mapping, you can still access the configuration at any time.
 
-![](images/fbcp-15.jpg)
-
 Open **Orders → Order → General** and select “Show configuration” from the item context menu. The summary remains available without individual field mappings.
-
-![](images/fbcp-16.jpg)
 
 For e-mail and custom document templates, use `{{ orderLineItem.customFields._moorl_fb_html }}` or `{{ orderLineItem.customFields._moorl_fb_plain }}`. Here, `orderLineItem` must refer to the current order item in your template; adjust the variable name to match its loop. The add-on also stores `_moorl_fb_json`, `_moorl_fb_xml` and `_moorl_fb_media_ids`. It does not automatically update all mail and document templates.
 
-![](images/fbcp-17.jpg)
-
-Since the custom fields for order items are not visible in the admin, here is a screenshot from the database to show that the field has been saved correctly.
+The stored summaries are available in the order item’s custom fields.
 
 ## Plugin settings
 
