@@ -1,5 +1,5 @@
 ---
-description: "Produkt-Listings automatisch oder manuell in beide Richtungen nachladen. Mit Seiten-Vorladung und Unterstützung für Listing-Störer."
+description: "Produktlisten manuell oder automatisch in beide Richtungen nachladen. Mit Seiten-Vorladung, Fortschrittsanzeige und Unterstützung für Listing-Störer von MoorlInterrupter."
 tags:
   - Infinite Scroll
   - Produktlisting
@@ -9,7 +9,7 @@ tags:
 
 # Unendliches Scrollen von Listen
 
-Produkt-Listings automatisch oder manuell in beide Richtungen nachladen. Mit Seiten-Vorladung und Unterstützung für Listing-Störer.
+Produktlisten manuell oder automatisch in beide Richtungen nachladen. Mit Seiten-Vorladung, Fortschrittsanzeige und Unterstützung für Listing-Störer von MoorlInterrupter.
 
 In Verbindung mit [MoorlInterrupter](../MoorlInterrupter/index.md) bleiben deine Listing-Störer auf den vorgesehenen Seiten und an ihren eingestellten Positionen. Jede nachgeladene Seite behält ihren eigenen Produktbereich.
 

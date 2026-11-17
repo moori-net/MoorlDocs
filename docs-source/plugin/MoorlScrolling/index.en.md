@@ -1,5 +1,5 @@
 ---
-description: "Load product listings automatically or manually in both directions, with page preloading and listing interrupter support."
+description: "Load product listings manually or automatically in both directions, with page preloading, a progress bar and support for listing interrupters from MoorlInterrupter."
 tags:
   - Infinite scroll
   - Product listing
@@ -9,7 +9,7 @@ tags:
 
 # Infinite scrolling of lists
 
-Load product listings automatically or manually in both directions, with page preloading and listing interrupter support.
+Load product listings manually or automatically in both directions, with page preloading, a progress bar and support for listing interrupters from MoorlInterrupter.
 
 When used with [MoorlInterrupter](../MoorlInterrupter/index.en.md), listing interrupters remain on their configured pages and at their intended positions. Each loaded page keeps its own product section.
 
