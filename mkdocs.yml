@@ -41,27 +41,23 @@ plugins:
           name: English
           build: true
           nav_translations:
-            Blog: Blog
-            moori Plugin Dokumentation: moori Plugin Documentation
-            Appflix Plugin Dokumentation: Appflix Plugin Documentation
-            plugin/MoorlCms: Shopping worlds CMS Apps
-            plugin/MoorlFormBuilder: Form Builder
-            Extensions: Extensions
-            plugin/MoorlSignIn: Sign-In with Facebook, Google etc
-            plugin/MoorlMagazine: Blog with Wordpress Import
-            plugin/MoorlMerchantFinder: Merchant- and Storefinder
-            plugin/MoorlCreator: Public profiles
+            Fehlermeldungen: Error messages
+            Plugin Dokumentation: Plugin Documentation
+            Übersicht: Overview
             Impressum: Imprint
-            Zubehör-Finder: Accessory finder
-            Formular Baukasten 2: Form builder 2
-            Formular Baukasten (alt): Form builder (old)
-            Händlersuche: Merchant finder
-            Stücklisten Konfigurator: Parts list configurator
-            CMS Elemente: CMS elements
-            Packagist Verkäufer: Packagist vendor
-            Appflix Kleinanzeigen: Appflix Classifieds
   - search
+hooks:
+  - hooks/plugin_nav.py
 docs_dir: 'docs-source'
+not_in_nav: |
+  /plugin/**/store.md
+  /plugin/**/store.??.md
+  /plugin/**/store.tpl.md
+  /plugin/**/store.??.tpl.md
+  /plugin/**/manual.md
+  /plugin/**/manual.??.md
+  /plugin/**/manual.tpl.md
+  /plugin/**/manual.??.tpl.md
 site_dir: 'docs-html'
 site_url: 'https://docs.moori.net'
 extra:
@@ -97,101 +93,9 @@ nav:
   - Home: index.md
   - Fehlermeldungen:
       - 'error-messages/index.md'
-  - moori Plugin Dokumentation:
+  - Plugin Dokumentation:
+      # hooks/plugin_nav.py adds the plugin entries after this overview.
       - 'plugin/index.md'
-      - Foundation:
-        - 'plugin/MoorlFoundation/index.md'
-        - 'plugin/MoorlFoundation/demo-assistant.md'
-        - 'plugin/MoorlFoundation/embedded-media.md'
-        - 'plugin/MoorlFoundation/svg-icons.md'
-        - 'plugin/MoorlFoundation/client.md'
-        - 'plugin/MoorlFoundation/ai-chat.md'
-        - 'plugin/MoorlFoundation/listing.md'
-        - 'plugin/MoorlFoundation/advanced-search.md'
-        - 'plugin/MoorlFoundation/features-free.md'
-        - 'plugin/MoorlFoundation/features-premium.md'
-      - Formular Baukasten 2:
-        - 'plugin/MoorlForms/index.md'
-        - 'plugin/MoorlForms/all-features.md'
-        - 'plugin/MoorlForms/how-tos.md'
-        - 'plugin/MoorlFormsClassic/index.md'
-        - 'plugin/MoorlFormsCustomProducts/index.md'
-        - 'plugin/MoorlFormsCustomer/index.md'
-        - 'plugin/MoorlFormsProduct/index.md'
-        - 'plugin/MoorlFormsOrder/index.md'
-        - 'plugin/MoorlFormsPopup/index.md'
-        - 'plugin/MoorlFormsSlides/index.md'
-        - 'plugin/MoorlForms/faq.md'
-      - Flow-Builder Add-Ons:
-        - 'plugin/MoorlFormsHubspot/index.md'
-        - 'plugin/MoorlFormsMautic/index.md'
-        - 'plugin/MoorlFormsWebhook/index.md'
-        - 'plugin/MoorlFormsCsv/index.md'
-      - Formular Baukasten (alt):
-        - 'plugin/MoorlFormBuilder/index.md'
-        - 'plugin/MoorlFormBuilder/setup.md'
-        - 'plugin/MoorlFormBuilder/user.md'
-        - 'plugin/MoorlFormBuilder/mail_templates.md'
-        - 'plugin/MoorlFormBuilder/elements.md'
-        - 'plugin/MoorlFormBuilder/newsletter.md'
-        - 'plugin/MoorlFormBuilder/events.md'
-        - 'plugin/MoorlFormBuilder/interactive.md'
-        - 'plugin/MoorlFormBuilder/faq.md'
-      - Ticket Verkäufer:
-          - 'plugin/MoorlTicketVendor/index.md'
-          - 'plugin/MoorlTicketVendor/customer.md'
-          - 'plugin/MoorlTicketVendor/schema.md'
-      - Zubehör-Finder:
-        - 'plugin/MoorlAccessoryFinder/index.md'
-        - 'plugin/MoorlAccessoryFinder/import-export.md'
-      - Händlersuche:
-        - 'plugin/MoorlMerchantFinder/index.md'
-        - 'plugin/MoorlMerchantPicker/index.md'
-      - Stücklisten Konfigurator:
-        - 'plugin/MoorlPartsListConfigurator/index.md'
-      - Packagist Verkäufer:
-        - 'plugin/MoorlPackagistVendor/index.md'
-      - CMS Elemente:
-        - 'plugin/MoorlCmsBrandSlider/index.md'
-        - 'plugin/MoorlCmsCtaBanner/index.md'
-        - 'plugin/MoorlCmsFlipBox/index.md'
-        - 'plugin/MoorlCmsTestimonial/index.md'
-        - 'plugin/MoorlCmsTwig/index.md'
-        - 'plugin/MoorlShopTheLook/index.md'
-        - 'plugin/MoorlFancyboxGallery/index.md'
-        - 'plugin/MoorlCmsCategoryListing/index.md'
-      - 'plugin/MoorlCrossSelling/index.md'
-      - 'plugin/MoorlTranslator/index.md'
-      - 'plugin/MoorlManufacturer/index.md'
-      - 'plugin/MoorlCustomerPrices/index.md'
-      - 'plugin/MoorlEbics/index.md'
-      - 'plugin/MoorlCreator/index.md'
-      - 'plugin/MoorlGetTheLook/index.md'
-      - 'plugin/MoorlMagazine/index.md'
-      - 'plugin/MoorlStaging/index.md'
-      - 'plugin/MoorlExtCat/index.md'
-      - 'plugin/Moorl360DegreeViewer/index.md'
-      - 'plugin/MoorlAutoLogout/index.md'
-      - 'plugin/MoorlBankConnection/index.md'
-      - 'plugin/MoorlDownloadCenter/index.md'
-      - 'plugin/MoorlCustomerAccounts/index.md'
-      - 'plugin/MoorlInterrupter/index.md'
-      - 'plugin/MoorlCustomerSession/index.md'
-      - 'plugin/MoorlSignIn/index.md'
-      - 'plugin/MoorlProductAccessories/index.md'
-      - 'plugin/MoorlProductConsultant/index.md'
-      - 'plugin/MoorlProductPromo/index.md'
-      - 'plugin/MoorlCombinationDiscount/index.md'
-      - 'plugin/MoorlProductVideo/index.md'
-  - Appflix Plugin Dokumentation:
-      - 'plugin/AppflixDewaShop/index.md'
-      - 'plugin/AppflixStudygood/index.md'
-      - 'plugin/AppflixMultiPdf/index.md'
-      - Appflix Kleinanzeigen:
-        - 'plugin/AppflixCustomerMarket/index.md'
-        - 'plugin/AppflixCustomerMarket/storefront.md'
-        - 'plugin/AppflixCustomerMarket/custom-fields.md'
-  - Shopware Store: 'https://store.shopware.com/moori.html'
-  - Plugin Store: 'https://moori-plugin-store.com/'
-  - Demo Shop: 'https://demo.moori.net/'
-  - Impressum: 'https://moori-plugin-store.com/Impressum/'
+  - Shopware Store: 'https://store.shopware.com/de/extension-partners/moori-media'
+  - Demo Shop: 'https://demo-sw67.moori.net/'
+  - Impressum: 'https://moori.media/de/impressum'

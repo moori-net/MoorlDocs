@@ -5,6 +5,7 @@ on:
     branches: [ master ]
     paths:
       - 'docs-source/**'
+      - 'hooks/**'
       - 'mkdocs.yml'
   workflow_dispatch:
 

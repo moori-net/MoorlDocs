@@ -1,3 +1,4 @@
 /composer.lock
 /.idea/
 /docs-html/
+/hooks/__pycache__/
