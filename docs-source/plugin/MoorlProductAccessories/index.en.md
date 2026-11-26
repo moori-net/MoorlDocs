@@ -45,7 +45,7 @@ Go to `Settings` → [`Demo Assistant`](../MoorlFoundation/demo-assistant.md) an
 
 - **Display of the accessory product name in the configurator**
 - **Update the price based on the current selection**
-- **Create bundle products for the shopping cart**: This setting is required if accessories should have individual prices.
+- **Generate bundle products in shopping cart** must be enabled for comment fields and individual accessory prices.
 - **Show available stock on the product detail page**
 - **Enable for these customer groups**: The configurator is only available for the selected customer groups. Note: This setting will be replaced by the Rule Builder in the future.
 
@@ -71,11 +71,21 @@ In the main administration navigation under `Settings` → `Extensions` → (`Ac
 ### General Settings
 
 - **Name**
-- **Type**: There are currently four different selection types available: `Single selection`, `Multiple selection`, `Single selection with image`, and `Multiple selection with image`.
+- **Type** determines what appears in the configurator. The available types are `Single select`, `Multi select`, `Single image select`, `Multi image select`, and `Comment field`.
 - **Teaser**: Additional informational text for the category
-- **Allow no selection**: The selection in the configurator is optional.
+- **Allow no selection** makes the selection or input optional in the configurator.
 - **Sort order**
 - **Accessory products**: A list of all products assigned to the current category.
+
+### Comment field for bundles
+
+A comment field lets customers enter a multiline comment of up to 1,000 characters for the bundle on the product detail page.
+
+1. Under **Accessory Categories**, create a category with the type **Comment field**. The **Name** is used as the field label. An optional **Teaser** appears above the field.
+2. Enable **Allow no selection** to make the field optional. When the setting is off, the field is required and displays an asterisk and the hint “Please enter a comment.”
+3. Under **Accessory Products**, create an assignment and select the **Product** or **Dynamic product group** and the comment category. Leave the **Accessory** field blank.
+
+The comment appears on the bundle line item in the cart and in the order administration. Shopware carries it over to the bundle order line item's payload under `moorlPaComments`. Customers can also add a comment to a bundle with no accessories selected.
 
 ## Accessory Products
 

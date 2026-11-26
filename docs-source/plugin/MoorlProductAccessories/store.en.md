@@ -1,4 +1,4 @@
-**Important note:** You need the Foundation Plugin, which is available free of charge: [https://store.shopware.com/de/moorl50852475974f/moori-foundation.html](https://store.shopware.com/de/moorl50852475974f/moori-foundation.html)
+**Important note:** You need the Foundation Plugin, which is available free of charge: [Foundation](https://store.shopware.com/en/search?search=MoorlFoundation)
 
 
 Shopware 6 plugin for accessories, product bundles and configurators: assign accessories flexibly, price them individually, and sell them directly in the storefront.

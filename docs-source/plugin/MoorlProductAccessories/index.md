@@ -45,7 +45,7 @@ Gehen Sie zu `Einstellungen` → [`Demo Assistent`](../MoorlFoundation/demo-assi
 
 - **Darstellung des Zubehör-Produktnamens im Konfigurator**
 - **Preis anhand der aktuellen Auswahl aktualisieren**
-- **Bundle-Produkte für den Warenkorb erstellen**: Diese Einstellung ist erforderlich, wenn das Zubehör individuelle Preise erhalten soll.
+- **Bundle Produkte für den Warenkorb erstellen** muss für Kommentarfelder und individuelle Zubehörpreise aktiviert sein.
 - **Verfügbaren Lagerbestand auf der Produktdetailseite anzeigen**
 - **Für diese Kundengruppen aktivieren**: Der Konfigurator ist nur für die ausgewählten Kundengruppen verfügbar. Hinweis: Diese Einstellung wird künftig durch den Rule Builder ersetzt.
 
@@ -71,11 +71,21 @@ Gehen Sie zu `Einstellungen` → [`Demo Assistent`](../MoorlFoundation/demo-assi
 ### Allgemeine Einstellungen
 
 - **Name**
-- **Typ**: Aktuell stehen vier Auswahltypen zur Verfügung: `Einfachauswahl`, `Mehrfachauswahl`, `Einfachauswahl mit Bild` und `Mehrfachauswahl mit Bild`.
+- **Typ** bestimmt, was im Konfigurator angezeigt wird. Zur Auswahl stehen `Einfachauswahl`, `Mehrfachauswahl`, `Einfachauswahl mit Bild`, `Mehrfachauswahl mit Bild` und `Kommentarfeld`.
 - **Teaser**: Zusätzlicher Informationstext zur Kategorie
-- **Keine Auswahl erlauben**: Die Auswahl im Konfigurator ist optional.
+- **Keine Auswahl erlauben** macht die Auswahl oder Eingabe im Konfigurator optional.
 - **Sortierreihenfolge**
 - **Zubehör-Produkte**: Liste aller Produkte, die der aktuellen Kategorie zugeordnet sind.
+
+### Kommentarfeld für Bundles
+
+Über ein Kommentarfeld können Kunden auf der Produktdetailseite einen mehrzeiligen Freitext mit bis zu 1.000 Zeichen zum Bundle eingeben.
+
+1. Legen Sie unter **Zubehör Kategorien** eine Kategorie vom Typ **Kommentarfeld** an. Der **Name** dient als Feldbeschriftung. Ein optionaler **Teaser** erscheint über dem Eingabefeld.
+2. Aktivieren Sie **Keine Auswahl erlauben**, wenn das Feld optional sein soll. Bei deaktivierter Einstellung ist das Feld ein Pflichtfeld. Es wird mit einem Stern und dem Hinweis „Bitte geben Sie einen Kommentar ein.“ gekennzeichnet.
+3. Legen Sie unter **Zubehör Produkte** eine Zuweisung an und wählen Sie das **Produkt** oder die **Dynamische Produktgruppe** sowie die Kommentarkategorie aus. Lassen Sie das Feld **Zubehör** leer.
+
+Der eingegebene Kommentar erscheint an der Bundle-Position im Warenkorb und in der Bestellverwaltung. Shopware übernimmt ihn in den Payload der Bundle-Bestellposition unter `moorlPaComments`. Das funktioniert auch bei einem Bundle ohne ausgewähltes Zubehör.
 
 ## Zubehör-Produkte
 

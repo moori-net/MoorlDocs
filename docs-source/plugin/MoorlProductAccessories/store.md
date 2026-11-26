@@ -1,4 +1,4 @@
-**Wichtiger Hinweis:** Sie benötigen das Foundation Plugin, welches Ihnen kostenlos zur Verfügung steht: [https://store.shopware.com/de/moorl50852475974f/moori-foundation.html](https://store.shopware.com/de/moorl50852475974f/moori-foundation.html)
+**Wichtiger Hinweis:** Sie benötigen das Foundation Plugin, welches Ihnen kostenlos zur Verfügung steht: [Foundation](https://store.shopware.com/de/search?search=MoorlFoundation)
 
 
 Shopware 6 Plugin für Zubehör, Produkt-Bundles und Konfiguratoren: Zubehör flexibel zuweisen, individuell bepreisen und direkt im Storefront verkaufen.
