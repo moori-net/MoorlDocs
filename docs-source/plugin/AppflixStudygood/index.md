@@ -71,6 +71,7 @@ Die Verwaltung der Medien wird hier eingerichtet: [Eingebettete Medien](../Moorl
 - **Name:** Der Name des Kurses
 - **Beschreibung:** Kurze Kursbeschreibung. Die Hauptbeschreibung wird über das Produkt bezogen.
 - **Tutor (optional):** Der Ersteller des Kurses
+- **Zertifikatvorlage (optional):** Die Vorlage für den PDF-Download. [Eigene Zertifikatvorlagen erstellen](create-certificates.md)
 - **Aktiv**
 - **Produkte:** Produkte, die diesen Kurs beinhalten. Der Kurs kann mehreren Produkten zugewiesen werden.
 - **Eingebettete Medien (optional):** Ein Video, z. B. eine kurze Übersicht über den Kursinhalt

@@ -75,6 +75,7 @@ Via the main navigation in the admin: `Content` → `Studygood Courses` → `Add
 - **Name:** The name of the course
 - **Description:** Short course description. The main description is taken from the product.
 - **Tutor (optional):** The creator of the course
+- **Certificate template (optional):** The template for the PDF download. [Create custom certificate templates](create-certificates.en.md)
 - **Active**
 - **Products:** Products that include this course. The course can be assigned to multiple products.
 - **Embedded media (optional):** A video, for example a short overview of the course content
