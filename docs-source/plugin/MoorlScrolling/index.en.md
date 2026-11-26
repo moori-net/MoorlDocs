@@ -33,9 +33,9 @@ This plugin can be purchased in the **Shopware Community Store**.
 
 **Category listings** and **Search results** determine where the feature applies. Both are selected by default; infinite scrolling itself is initially disabled.
 
-![Plugin configuration showing sales-channel selection, activation and loading modes](images/ms-01-configuration-en.png)
+Use **Categories for infinite scrolling** to limit the feature to the selected categories. Search results and unselected subcategories use standard pagination. Leave the selection empty to use the listing switches without a category restriction.
 
-*Example of the default configuration in the Shopware administration.*
+![Plugin configuration showing activation, category selection and loading modes](images/ms-01-configuration-en.png)
 
 ## Sales-channel settings
 
@@ -65,6 +65,8 @@ Previous pages load **manually** by default; following pages load **automaticall
 Opening page 5 directly initially displays that page only. Customers can add page 4 above it or page 6 below it. Inserting earlier products preserves the position of the product currently being viewed.
 
 Automatic loading above requires scrolling down and then back up. Opening a later page therefore does not immediately insert all earlier pages.
+
+![Storefront on page 2 with the Load previous products button](images/ms-04-storefront-page-2-en.png)
 
 ## Preloading pages
 
@@ -96,6 +98,8 @@ The two limits serve different purposes:
 Limiting inserted pages keeps long listings manageable. Products remain available through regular pagination when the limit is reached.
 
 A compact progress bar above the lower loading link shows, for example, **24 of 120 products**. Progress includes all pages up to the last page inserted below, including pages preceding a direct entry. Loading earlier pages or preloading does not increase it. At the listing end, the bar remains at 100%, for example **120 of 120 products**. Only the loading link disappears.
+
+![Storefront with 48 of 96 products and the Load more products button](images/ms-05-storefront-progress-en.png)
 
 ## Pagination and filters
 

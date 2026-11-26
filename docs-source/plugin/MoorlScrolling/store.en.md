@@ -27,7 +27,7 @@ A compact progress bar shows, for example, “24 of 120 products”. Direct entr
 
 ## Settings for each sales channel
 
-Use global defaults and override them per sales channel when needed. Category listings and search results can be enabled separately. Configure loading behavior, preloading, pagination and page URL updates while scrolling.
+Use global defaults and override them per sales channel when needed. Enable category listings and search results separately. You can also limit infinite scrolling to selected categories. Configure loading behavior, preloading, pagination and page URL updates while scrolling.
 
 Configurable limits control automatically inserted pages and the total number of pages in a range. By default, automatic loading pauses after three pages per direction and a range contains at most 20 pages. Set the corresponding limit to 0 to remove it. Regular page links keep further products accessible.
 

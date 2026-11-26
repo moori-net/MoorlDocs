@@ -33,9 +33,9 @@ Dieses Plugin kann im offiziellen **Shopware Community Store** erworben werden.
 
 Über **Kategorie-Listings** und **Suchergebnisse** bestimmst du, in welchen Produktlisten die Funktion verwendet wird. Beide Bereiche sind standardmäßig ausgewählt; das unendliche Scrollen selbst ist nach der Installation zunächst ausgeschaltet.
 
-![Plugin-Konfiguration mit Verkaufskanalauswahl, Aktivierung und Ladeverhalten](images/ms-01-configuration.png)
+Über **Kategorien für unendliches Scrollen** beschränkst du die Funktion auf deine Auswahl. Suchergebnisse und nicht ausgewählte Unterkategorien verwenden die normale Seitennavigation. Bei leerer Auswahl gelten die Schalter für Kategorie-Listings und Suchergebnisse ohne Kategorieeinschränkung.
 
-*Beispielansicht der Standardkonfiguration in der Shopware-Administration.*
+![Plugin-Konfiguration mit Aktivierung, Kategorieauswahl und Ladeverhalten](images/ms-01-configuration-en.png)
 
 ## Einstellungen je Verkaufskanal
 
@@ -45,7 +45,7 @@ Um eine Einstellung nur für diesen Verkaufskanal anzupassen, löse ihre Vererbu
 
 So kann beispielsweise ein Verkaufskanal Produkte automatisch nachladen, während du in einem anderen ausschließlich manuelles Nachladen verwendest oder die Funktion ausschaltest.
 
-![Ausgewählter Verkaufskanal mit geerbten Einstellungen und Verknüpfungssymbolen](images/ms-03-sales-channel.png)
+![Ausgewählter Verkaufskanal mit geerbten Einstellungen und Verknüpfungssymbolen](images/ms-03-sales-channel-en.png)
 
 *Der Verkaufskanal „Storefront“ übernimmt hier die allgemeinen Einstellungen.*
 
@@ -66,6 +66,8 @@ Standardmäßig werden vorherige Seiten **manuell** und nachfolgende Seiten **au
 
 Automatisches Laden vorheriger Seiten beginnt erst, nachdem der Kunde nach unten und wieder nach oben gescrollt hat. Dadurch werden beim direkten Einstieg auf einer späteren Seite nicht sofort alle vorherigen Seiten eingefügt.
 
+![Storefront auf Seite 2 mit der Schaltfläche zum Laden vorheriger Produkte](images/ms-04-storefront-page-2-en.png)
+
 ## Seiten vorladen
 
 Vorladen verkürzt die Wartezeit beim nächsten Nachladevorgang. Die vorbereitete Seite wird zunächst im Hintergrund gehalten und erst angezeigt, wenn der Kunde sie manuell oder automatisch nachlädt.
@@ -76,7 +78,7 @@ Vorladen verkürzt die Wartezeit beim nächsten Nachladevorgang. Die vorbereitet
 | Nächste Seite | Die unmittelbar folgende Seite wird vorbereitet. Dies ist der Standard. |
 | Beide Richtungen | Die unmittelbar vorherige und die unmittelbar folgende Seite werden vorbereitet, soweit sie existieren. |
 
-![Geöffnete Auswahl zum Vorladen sowie Einstellungen für die Ladegrenzen](images/ms-02-preloading.png)
+![Geöffnete Auswahl zum Vorladen sowie Einstellungen für die Ladegrenzen](images/ms-02-preloading-en.png)
 
 *Vorladen und sichtbares Nachladen sind getrennte Einstellungen. Auch bei manuellem Nachladen kann die nächste Seite bereits vorbereitet werden.*
 
@@ -96,6 +98,8 @@ Die beiden Grenzwerte haben unterschiedliche Aufgaben:
 Die Begrenzung der gleichzeitig eingebundenen Seiten hält lange Listen überschaubar. Produkte bleiben auch beim Erreichen der Grenze über die normale Seitennavigation erreichbar.
 
 Sobald der untere Nachladelink angezeigt wird, zeigt ein kleiner Fortschrittsbalken darüber beispielsweise **24 von 120 Produkten**. Der Fortschritt zählt bis zum Ende der zuletzt unten eingebundenen Seite; Seiten vor einem direkten Einstieg werden mitgezählt. Nachladen oberhalb und reines Vorladen verändern den Fortschritt nicht. Am Listenende bleibt der Balken mit 100 % stehen, beispielsweise **120 von 120 Produkten**. Nur der Nachladelink verschwindet.
+
+![Storefront mit 48 von 96 Produkten und der Schaltfläche zum Laden weiterer Produkte](images/ms-05-storefront-progress-en.png)
 
 ## Seitennavigation und Filter
 

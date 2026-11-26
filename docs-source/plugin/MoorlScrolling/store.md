@@ -27,7 +27,7 @@ Ein kompakter Fortschrittsbalken zeigt beispielsweise „24 von 120 Produkten“
 
 ## Passende Einstellungen je Verkaufskanal
 
-Nutze globale Vorgaben und überschreibe sie bei Bedarf je Verkaufskanal. Kategorie-Listings und Suchergebnisse können getrennt aktiviert werden. Ebenso lassen sich das Ladeverhalten, die Vorladung, die Seitennavigation und die Aktualisierung der Seitenadresse beim Scrollen konfigurieren.
+Nutze globale Vorgaben und überschreibe sie bei Bedarf je Verkaufskanal. Aktiviere Kategorie-Listings und Suchergebnisse getrennt. Zusätzlich kannst du unendliches Scrollen auf ausgewählte Kategorien beschränken. Ebenso lassen sich das Ladeverhalten, die Vorladung, die Seitennavigation und die Aktualisierung der Seitenadresse beim Scrollen konfigurieren.
 
 Konfigurierbare Grenzen steuern, wie viele Seiten automatisch und insgesamt in einem Bereich eingefügt werden. Standardmäßig pausiert die Automatik nach drei Seiten je Richtung und ein Bereich umfasst höchstens 20 Seiten. Mit dem Wert 0 lässt sich die jeweilige Grenze aufheben. Weitere Produkte bleiben über reguläre Seitenlinks erreichbar.
 
